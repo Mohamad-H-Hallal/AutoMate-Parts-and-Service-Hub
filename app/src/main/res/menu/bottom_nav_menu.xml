@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_scrap_yard"
+        android:icon="@drawable/scrapyard_icon"
+        android:title="Scrap Yard" />
+
+    <item
+        android:id="@+id/nav_parts"
+        android:icon="@drawable/parts_icon_v2"
+        android:title="Parts" />
+
+    <item
+        android:id="@+id/nav_mechanics"
+        android:icon="@drawable/mechanic_icon"
+        android:title="Mechanics" />
+
+    <item
+        android:id="@+id/nav_diagnostics"
+        android:icon="@drawable/diagnostics_icon"
+        android:title="Diagnostics" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile_nav_icon"
+        android:title="Profile" />
+</menu>
