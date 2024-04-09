@@ -50,8 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void resetPassword(View view) {
         String email = editTextEmail.toString();
-        // Send an HTTP request to your backend server
-        // Make sure to replace "your_backend_url" with the actual URL of your backend script
         String url = "http://192.168.1.106:80/Project/reset_password.php";
         RequestQueue queue = Volley.newRequestQueue(this);
 
