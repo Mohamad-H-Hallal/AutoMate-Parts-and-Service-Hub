@@ -20,6 +20,9 @@
         <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
 
+
+
+
     <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
 
     <!--styles for app-->
