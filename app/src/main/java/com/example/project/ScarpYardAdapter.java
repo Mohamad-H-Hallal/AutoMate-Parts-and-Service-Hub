@@ -52,12 +52,12 @@ public class ScarpYardAdapter extends BaseAdapter {
         final Holder holder = new Holder();
         final View rowView;
         rowView = inflater.inflate(R.layout.row_scrapyard,null);
-        holder.imageView = (ShapeableImageView) rowView.findViewById(R.id.partImageView);
-        holder.txt1 = (TextView) rowView.findViewById(R.id.txtName);
-        holder.txt2 = (TextView) rowView.findViewById(R.id.txtSpecialization);
-        holder.btnCall = (AppCompatButton) rowView.findViewById(R.id.callButton);
-        holder.btnLocation = (AppCompatButton) rowView.findViewById(R.id.locationButton);
-        holder.btnRate = (AppCompatButton) rowView.findViewById(R.id.rateButton);
+        holder.imageView = rowView.findViewById(R.id.partImageView);
+        holder.txt1 = rowView.findViewById(R.id.txtName);
+        holder.txt2 = rowView.findViewById(R.id.txtSpecialization);
+        holder.btnCall = rowView.findViewById(R.id.callButton);
+        holder.btnLocation = rowView.findViewById(R.id.locationButton);
+        holder.btnRate = rowView.findViewById(R.id.rateButton);
         JSONObject obj = data.optJSONObject(position);
         return null;
     }
