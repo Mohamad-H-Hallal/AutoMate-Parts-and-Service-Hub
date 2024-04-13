@@ -163,6 +163,7 @@ public class ProfileFragment extends Fragment {
             phonetext.setEnabled(true);
             phonetext.setEnabled(true);
             specializationtext.setEnabled(true);
+            Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
 
         }
         else{edit.setImageResource(R.drawable.edit_icon);
@@ -171,6 +172,7 @@ public class ProfileFragment extends Fragment {
             phonetext.setEnabled(false);
             phonetext.setEnabled(false);
             specializationtext.setEnabled(false);
+            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
         }
     });
