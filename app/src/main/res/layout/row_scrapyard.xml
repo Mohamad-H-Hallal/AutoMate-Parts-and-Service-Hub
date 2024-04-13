@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="@dimen/loginViewsMargin"
+    android:orientation="horizontal">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/partImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_def_icon"
+        app:shapeAppearance="@style/circle" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/loginViewsMargin"
+        android:layout_marginRight="@dimen/loginViewsMargin"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/colorPrimaryDark" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtLocation"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/loginViewsMargin"-->
+<!--            android:text="Location"-->
+<!--            android:textColor="@color/colorPrimaryDark" />-->
+
+        <TextView
+            android:id="@+id/txtSpecialization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="Specialization"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/callButton"
+                style="@style/circleButton"
+                android:layout_width="49dp"
+                android:drawableStart="@drawable/ic_call" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/locationButton"
+                style="@style/circleButton"
+                android:layout_width="49dp"
+                android:layout_marginLeft="@dimen/loginViewsMargin"
+                android:drawableStart="@drawable/location_icon" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/rateButton"
+            style="@style/circleButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/star_rate_icon"
+            android:text="5/5" />
+
+    </LinearLayout>
+
+</LinearLayout>

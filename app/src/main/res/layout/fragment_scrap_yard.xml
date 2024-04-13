@@ -6,9 +6,9 @@
     tools:context=".ScrapYardFragment"
     android:background="@color/colorPrimary">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Scrap Yard" />
+        android:id="@+id/lv"/>
 
 </FrameLayout>
