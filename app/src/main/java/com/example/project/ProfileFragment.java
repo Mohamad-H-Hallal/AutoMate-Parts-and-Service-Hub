@@ -67,8 +67,10 @@ public class ProfileFragment extends Fragment {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int GALLERY_REQUEST_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
+    private static final int MAP_REQUEST_CODE = 103;
     private double latitude = 33;
     private double longitude = 35;
+    private Boolean editing;
 
 
     public ProfileFragment() {
@@ -126,6 +128,8 @@ public class ProfileFragment extends Fragment {
         phonetext.setEnabled(false);
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
+        editing=false;
+
     }
 
     private void setActions(View v) {
@@ -138,10 +142,39 @@ public class ProfileFragment extends Fragment {
 
     locationtext.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
+            if(editing){
+            Intent i = new Intent(getContext(),editLocation.class);
+            startActivityForResult(i,MAP_REQUEST_CODE);
+            }
+            else{
             Intent i = new Intent(getContext(),MapsLocationActivity.class);
-            startActivity(i);
+            startActivity(i);}
         }
     });
+
+    edit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+        editing=!editing;
+        if(editing){
+        edit.setImageResource(R.drawable.save_icon);
+            name.setEnabled(true);
+            emailtext.setEnabled(true);
+            phonetext.setEnabled(true);
+            phonetext.setEnabled(true);
+            specializationtext.setEnabled(true);
+
+        }
+        else{edit.setImageResource(R.drawable.edit_icon);
+            name.setEnabled(false);
+            emailtext.setEnabled(false);
+            phonetext.setEnabled(false);
+            phonetext.setEnabled(false);
+            specializationtext.setEnabled(false);
+        }
+        }
+    });
+
 
     }
 
@@ -232,6 +265,15 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
                         Toast.makeText(getContext(), "Error capturing image", Toast.LENGTH_SHORT).show();
                     }
                     break;
+
+                case MAP_REQUEST_CODE:
+                    if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
+                        Bundle bundle = data.getExtras();
+                        latitude = bundle.getDouble("latitude");
+                        longitude = bundle.getDouble("longitude");
+
+                    }
+
             }
         }
     }
