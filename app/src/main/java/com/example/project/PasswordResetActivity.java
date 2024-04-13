@@ -5,12 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-public class password_rest extends AppCompatActivity {
+public class PasswordResetActivity extends AppCompatActivity {
 
     private TextInputLayout textInputEmail;
     private EditText editTextEmail;
@@ -31,7 +27,7 @@ public class password_rest extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_password_rest);
+        setContentView(R.layout.activity_password_reset);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         textInputEmail = findViewById(R.id.textInputEmailForPassReset);
         editTextEmail = textInputEmail.getEditText();
@@ -48,16 +44,16 @@ public class password_rest extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Handle the response from the server
                         if (response.equals("success")) {
-                            Toast.makeText(password_rest.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordResetActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(password_rest.this, "Failed to send password reset email", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordResetActivity.this, "Failed to send password reset email", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle errors
-                Toast.makeText(password_rest.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PasswordResetActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
