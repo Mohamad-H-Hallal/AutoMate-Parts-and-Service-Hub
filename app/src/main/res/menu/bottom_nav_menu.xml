@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/nav_diagnostics"
-        android:icon="@drawable/diagnostics_icon"
+        android:icon="@drawable/diagnostics_icon_v2"
         android:title="Diagnostics" />
 
     <item

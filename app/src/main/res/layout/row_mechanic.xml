@@ -19,9 +19,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/loginViewsMargin"
-        android:layout_marginRight="@dimen/loginViewsMargin"
-        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:layout_margin="@dimen/loginViewsMargin"
         android:orientation="vertical">
 
         <TextView
