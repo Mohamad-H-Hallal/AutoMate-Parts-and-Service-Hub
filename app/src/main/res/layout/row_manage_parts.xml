@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/partImageView"
+        android:id="@+id/partsManageImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/loginViewsMargin"
@@ -23,7 +23,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/txtManagePartName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
@@ -37,7 +37,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtMake"
+                android:id="@+id/txtManageMake"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -46,7 +46,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/txtYear"
+                android:id="@+id/txtManageYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -61,7 +61,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtModel"
+                android:id="@+id/txtManageModel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -70,7 +70,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/txtCategory"
+                android:id="@+id/txtManageCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -89,7 +89,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/txtPrice"
+            android:id="@+id/txtManagePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/loginViewsMargin"
@@ -99,7 +99,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/txtNegotiable"
+            android:id="@+id/txtManageNegotiable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -107,7 +107,7 @@
             android:textColor="@color/colorPrimaryDark" />
 
         <TextView
-            android:id="@+id/txtCondition"
+            android:id="@+id/txtManageCondition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -117,7 +117,7 @@
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/clearImageView"
+        android:id="@+id/clearManagePartsImageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/ic_clear"/>

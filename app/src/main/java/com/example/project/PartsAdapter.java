@@ -27,9 +27,8 @@ public class PartsAdapter extends BaseAdapter {
     }
 
     public class Holder {
-        ShapeableImageView imageView;
-        TextView txt1, txt2;
-        AppCompatButton btnCall, btnLocation, btnRate;
+        ShapeableImageView partsImageView;
+        TextView txtPartName, txtMake, txtYear, txtModel, txtCategory, txtPrice, txtNegotiable, txtCondition;
     }
 
     @Override
@@ -52,12 +51,15 @@ public class PartsAdapter extends BaseAdapter {
         final Holder holder = new Holder();
         final View rowView;
         rowView = inflater.inflate(R.layout.row_parts,null);
-        holder.imageView = rowView.findViewById(R.id.partImageView);
-        holder.txt1 = rowView.findViewById(R.id.txtName);
-        holder.txt2 = rowView.findViewById(R.id.txtSpecialization);
-        holder.btnCall = rowView.findViewById(R.id.callButton);
-        holder.btnLocation = rowView.findViewById(R.id.locationButton);
-        holder.btnRate = rowView.findViewById(R.id.rateButton);
+        holder.partsImageView = rowView.findViewById(R.id.partImageView);
+        holder.txtPartName = rowView.findViewById(R.id.txtPartName);
+        holder.txtMake = rowView.findViewById(R.id.txtMake);
+        holder.txtYear = rowView.findViewById(R.id.txtYear);
+        holder.txtModel = rowView.findViewById(R.id.txtModel);
+        holder.txtCategory = rowView.findViewById(R.id.txtCategory);
+        holder.txtPrice = rowView.findViewById(R.id.txtPrice);
+        holder.txtNegotiable = rowView.findViewById(R.id.txtNegotiable);
+        holder.txtCondition = rowView.findViewById(R.id.txtCondition);
         JSONObject obj = data.optJSONObject(position);
         return null;
     }

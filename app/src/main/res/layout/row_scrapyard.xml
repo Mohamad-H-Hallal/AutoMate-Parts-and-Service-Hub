@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/partImageView"
+        android:id="@+id/scrapYardImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="5dp"
@@ -23,7 +23,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/txtScrapYardName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name"
@@ -38,7 +38,7 @@
 <!--            android:textColor="@color/colorPrimaryDark" />-->
 
         <TextView
-            android:id="@+id/txtSpecialization"
+            android:id="@+id/txtScrapYardSpecialization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/loginViewsMargin"
@@ -58,13 +58,13 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/callButton"
+                android:id="@+id/callScrapYardButton"
                 style="@style/circleButton"
                 android:layout_width="49dp"
                 android:drawableStart="@drawable/ic_call" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/locationButton"
+                android:id="@+id/locationMechanicButton"
                 style="@style/circleButton"
                 android:layout_width="49dp"
                 android:layout_marginLeft="@dimen/loginViewsMargin"
@@ -73,7 +73,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/rateButton"
+            android:id="@+id/rateScrapYardButton"
             style="@style/circleButton"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"

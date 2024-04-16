@@ -27,9 +27,9 @@ public class ScarpYardAdapter extends BaseAdapter {
     }
 
     public class Holder {
-        ShapeableImageView imageView;
-        TextView txt1, txt2;
-        AppCompatButton btnCall, btnLocation, btnRate;
+        ShapeableImageView scrapYardImageView;
+        TextView txtScrapYardName, txtScrapYardSpecialization;
+        AppCompatButton callScrapYardButton, locationMechanicButton, rateScrapYardButton;
     }
 
     @Override
@@ -52,12 +52,12 @@ public class ScarpYardAdapter extends BaseAdapter {
         final Holder holder = new Holder();
         final View rowView;
         rowView = inflater.inflate(R.layout.row_scrapyard,null);
-        holder.imageView = rowView.findViewById(R.id.partImageView);
-        holder.txt1 = rowView.findViewById(R.id.txtName);
-        holder.txt2 = rowView.findViewById(R.id.txtSpecialization);
-        holder.btnCall = rowView.findViewById(R.id.callButton);
-        holder.btnLocation = rowView.findViewById(R.id.locationButton);
-        holder.btnRate = rowView.findViewById(R.id.rateButton);
+        holder.scrapYardImageView = rowView.findViewById(R.id.scrapYardImageView);
+        holder.txtScrapYardName = rowView.findViewById(R.id.txtScrapYardName);
+        holder.txtScrapYardSpecialization = rowView.findViewById(R.id.txtScrapYardSpecialization);
+        holder.callScrapYardButton = rowView.findViewById(R.id.callScrapYardButton);
+        holder.locationMechanicButton = rowView.findViewById(R.id.locationMechanicButton);
+        holder.rateScrapYardButton = rowView.findViewById(R.id.rateScrapYardButton);
         JSONObject obj = data.optJSONObject(position);
         return null;
     }

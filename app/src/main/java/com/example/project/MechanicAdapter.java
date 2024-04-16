@@ -27,9 +27,9 @@ public class MechanicAdapter extends BaseAdapter {
     }
 
     public class Holder {
-        ShapeableImageView imageView;
-        TextView txt1, txt2;
-        AppCompatButton btnCall, btnLocation, btnRate;
+        ShapeableImageView mechanicImageView;
+        TextView txtMechanicName, txtMechanicSpecialization;
+        AppCompatButton callMechanicButton, locationMechanicButton, rateMechanicButton;
     }
 
     @Override
@@ -52,12 +52,12 @@ public class MechanicAdapter extends BaseAdapter {
         final Holder holder = new Holder();
         final View rowView;
         rowView = inflater.inflate(R.layout.row_mechanic,null);
-        holder.imageView = rowView.findViewById(R.id.partImageView);
-        holder.txt1 = rowView.findViewById(R.id.txtName);
-        holder.txt2 = rowView.findViewById(R.id.txtSpecialization);
-        holder.btnCall = rowView.findViewById(R.id.callButton);
-        holder.btnLocation = rowView.findViewById(R.id.locationButton);
-        holder.btnRate = rowView.findViewById(R.id.rateButton);
+        holder.mechanicImageView = rowView.findViewById(R.id.mechanicImageView);
+        holder.txtMechanicName = rowView.findViewById(R.id.txtMechanicName);
+        holder.txtMechanicSpecialization = rowView.findViewById(R.id.txtMechanicSpecialization);
+        holder.callMechanicButton = rowView.findViewById(R.id.callMechanicButton);
+        holder.locationMechanicButton = rowView.findViewById(R.id.locationMechanicButton);
+        holder.rateMechanicButton = rowView.findViewById(R.id.rateMechanicButton);
         JSONObject obj = data.optJSONObject(position);
         return null;
     }
