@@ -14,7 +14,7 @@
         android:background="@color/colorAccent"
         android:paddingLeft="31dp"
         android:paddingTop="24dp"
-        android:text="\t\tSetting"
+        android:text="\t\tSettings"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="35sp"
@@ -73,7 +73,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line"
         android:gravity="start"  />
