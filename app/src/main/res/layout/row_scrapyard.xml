@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
@@ -19,6 +19,7 @@
         android:id="@+id/scrapYardImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_def_icon"
@@ -27,15 +28,17 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
 
-        <TextView
-            android:layout_margin="20dp"
-            android:id="@+id/txtScrapYardName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/txtScrapYardName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Name"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintEnd_toStartOf="@+id/callScrapYardButton"
+        app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!--        <TextView-->
 <!--            android:id="@+id/txtLocation"-->
@@ -45,52 +48,54 @@
 <!--            android:text="Location"-->
 <!--            android:textColor="@color/colorPrimaryDark" />-->
 
-        <TextView
-            android:id="@+id/txtScrapYardSpecialization"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loginViewsMargin"
-            android:text="Specialization"
-            android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
-            app:layout_constraintTop_toBottomOf="@id/txtScrapYardName" />
+    <TextView
+        android:id="@+id/txtScrapYardSpecialization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Specialization"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rateScrapYardButton"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
+        app:layout_constraintTop_toBottomOf="@id/txtScrapYardName" />
 
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/callScrapYardButton"
+        style="@style/circleButton"
+        android:layout_width="49dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:drawableStart="@drawable/ic_call"
+        app:layout_constraintEnd_toStartOf="@+id/locationMechanicButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/locationMechanicButton"
+        style="@style/circleButton"
+        android:layout_width="49dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/location_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="callScrapYardButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/callScrapYardButton"
-                style="@style/circleButton"
-                android:layout_width="49dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="70dp"
-                android:drawableStart="@drawable/ic_call"
-                app:layout_constraintStart_toEndOf="@id/txtScrapYardName"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/locationMechanicButton"
-                style="@style/circleButton"
-                android:layout_width="49dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="@dimen/loginViewsMargin"
-                android:drawableStart="@drawable/location_icon"
-                app:layout_constraintStart_toEndOf="@id/callScrapYardButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/rateScrapYardButton"
-            style="@style/circleButton"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="33dp"
-            android:drawableLeft="@drawable/star_rate_icon"
-            android:text="5/5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/locationMechanicButton"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rateScrapYardButton"
+        style="@style/circleButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/star_rate_icon"
+        android:text="5/5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/locationMechanicButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
