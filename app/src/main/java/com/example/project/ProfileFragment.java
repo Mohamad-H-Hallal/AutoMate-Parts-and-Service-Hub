@@ -4,6 +4,7 @@ package com.example.project;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -46,6 +48,8 @@ public class ProfileFragment extends Fragment {
     private TextView specialization;
     private TextView specializationtext;
     private ImageButton edit;
+    private AppCompatButton manageparts;
+    private ImageButton setting;
 
     private Uri uriImage = null;
     private String typeOfImage = "";
@@ -109,13 +113,16 @@ public class ProfileFragment extends Fragment {
         phonetext=v.findViewById(R.id.phonetext);
         specialization=v.findViewById(R.id.specialization);
         specializationtext=v.findViewById(R.id.specializationtext);
+        manageparts = v.findViewById(R.id.manageparts);
         edit=v.findViewById(R.id.edit);
+        setting=v.findViewById(R.id.setting);
         name.setEnabled(false);
         emailtext.setEnabled(false);
         phonetext.setEnabled(false);
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
         editing=false;
+
 
     }
 
@@ -130,7 +137,7 @@ public class ProfileFragment extends Fragment {
     locationtext.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
             if(editing){
-            Intent i = new Intent(getContext(), EditLocationActivity.class);
+            Intent i = new Intent(getContext(),EditLocationActivity.class);
             startActivityForResult(i,MAP_REQUEST_CODE);
             }
             else{
@@ -164,8 +171,25 @@ public class ProfileFragment extends Fragment {
         }
     });
 
+    manageparts.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Intent i = new Intent(getContext(), PartsCategorieActivity.class);
+            startActivity(i);
+        }
+        });
+    setting.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(getContext(), SettingActivity.class);
+            startActivity(i);
+        }
+    });
+
 
     }
+
 
 
     private void showImagePickerDialog() {

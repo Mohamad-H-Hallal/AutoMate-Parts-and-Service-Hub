@@ -117,9 +117,12 @@
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/clearManagePartsImageView"
         android:layout_width="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_clear"/>
+        app:srcCompat="@drawable/delete_icon"
+        android:scaleType="fitXY"
+        android:id="@+id/icon_delete"/>
 
 </LinearLayout>
