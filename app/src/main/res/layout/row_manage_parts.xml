@@ -11,128 +11,146 @@
     android:background="@color/login_bk_color"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/partsManageImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="@dimen/loginViewsMargin"
-        android:layout_marginStart="@dimen/loginViewsMargin"
-        android:scaleType="centerCrop"
-        android:src="@drawable/gear_def_icon"
-        app:shapeAppearance="@style/circle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtManagePartName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/partsManageImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gear_def_icon"
+            app:shapeAppearance="@style/circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:id="@+id/lmp1"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toEndOf="@+id/partsManageImageView"
+            app:layout_constraintEnd_toStartOf="@+id/lmp2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/txtManageMake"
+                android:id="@+id/txtManagePartName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginRight="@dimen/loginViewsMargin"
-                android:text="Make"
-                android:textColor="@color/colorPrimaryDark" />
+                android:text="Name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtManageYear"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="Year"
-                android:textColor="@color/colorPrimaryDark" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtManageMake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:layout_marginRight="@dimen/loginViewsMargin"
+                    android:text="Make"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:id="@+id/txtManageYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="Year"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtManageModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:layout_marginRight="@dimen/loginViewsMargin"
+                    android:text="Model"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:id="@+id/txtManageCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="Category"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/lmp2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/txtManageModel"
+                android:id="@+id/txtManagePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginRight="@dimen/loginViewsMargin"
-                android:text="Model"
+                android:text="USD Price "
+                android:textColor="@color/themeColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtManageNegotiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Negotiable"
                 android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:id="@+id/txtManageCategory"
+                android:id="@+id/txtManageCondition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="Category"
+                android:layout_marginTop="18dp"
+                android:text="Condition"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
 
-    </LinearLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/delete_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/txtManagePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/loginViewsMargin"
-            android:text="USD Price "
-            android:textColor="@color/themeColor"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/txtManageNegotiable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Negotiable"
-            android:textColor="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/txtManageCondition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="Condition"
-            android:textColor="@color/colorPrimaryDark" />
-
-    </LinearLayout>
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="5dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/delete_icon"
-        android:scaleType="fitXY"
-        android:id="@+id/icon_delete"/>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -9,29 +9,37 @@
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
     app:cardCornerRadius="20dp"
-    app:cardElevation="8dp">
+    app:cardElevation="8dp"
+    android:background="@color/login_bk_color">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_gravity="center_horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/partImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:scaleType="centerCrop"
             android:src="@drawable/gear_def_icon"
-            app:shapeAppearance="@style/circle" />
+            app:shapeAppearance="@style/circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/l1"
+            android:layout_marginLeft="@dimen/loginViewsMargin"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toEndOf="@+id/partImageView"
+            app:layout_constraintEnd_toStartOf="@+id/l2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/txtPartName"
@@ -95,9 +103,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:layout_marginRight="@dimen/loginViewsMargin"
+            android:layout_marginBottom="@dimen/loginViewsMargin"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/l2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/txtPrice"
@@ -126,5 +140,5 @@
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
