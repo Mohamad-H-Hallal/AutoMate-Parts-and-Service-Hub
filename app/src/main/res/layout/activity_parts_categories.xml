@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PartsCategorieActivity">
+    tools:context=".PartsCategoriesActivity">
 
     <TextView
         android:id="@+id/parts_title"
@@ -46,7 +46,7 @@
         >
 
     <ExpandableListView
-        android:id="@+id/categorie_list"
+        android:id="@+id/categories_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

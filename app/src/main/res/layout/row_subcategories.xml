@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/subcategorie_name"
+        android:id="@+id/subcategories_name"
         android:layout_margin="20dp"
-        android:text="subcategorie name"
+        android:text="subcategories name"
         android:textSize="20sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_width="wrap_content"

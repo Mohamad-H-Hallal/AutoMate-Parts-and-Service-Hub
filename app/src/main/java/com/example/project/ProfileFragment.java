@@ -4,7 +4,6 @@ package com.example.project;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -175,7 +174,7 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            Intent i = new Intent(getContext(), PartsCategorieActivity.class);
+            Intent i = new Intent(getContext(), PartsCategoriesActivity.class);
             startActivity(i);
         }
         });

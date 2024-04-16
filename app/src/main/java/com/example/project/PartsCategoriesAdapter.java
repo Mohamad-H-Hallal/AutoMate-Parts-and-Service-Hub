@@ -10,12 +10,12 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Map;
 
-public class PartCategorieAdapter extends BaseExpandableListAdapter {
+public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> parentList;
     private Map<String, List<String>> childMap;
 
-    public PartCategorieAdapter(Context context, List<String> parentList, Map<String, List<String>> childMap) {
+    public PartsCategoriesAdapter(Context context, List<String> parentList, Map<String, List<String>> childMap) {
         this.context = context;
         this.parentList = parentList;
         this.childMap = childMap;
@@ -36,15 +36,15 @@ public class PartCategorieAdapter extends BaseExpandableListAdapter {
         String childText = (String) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.row_subcategorie, null);
+            convertView = inflater.inflate(R.layout.row_subcategories, null);
         }
-        TextView txtListChild = convertView.findViewById(R.id.subcategorie_name);
+        TextView txtListChild = convertView.findViewById(R.id.subcategories_name);
         txtListChild.setText(childText);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ManagePartsActivity.class);
-                i.putExtra("categorie", childText);
+                i.putExtra("categories", childText);
                 context.startActivity(i);
             }
         });
@@ -78,7 +78,7 @@ public class PartCategorieAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row_parts_categories, null);
         }
-        TextView lblListHeader = convertView.findViewById(R.id.categorie_name);
+        TextView lblListHeader = convertView.findViewById(R.id.categories_name);
         lblListHeader.setText(parentText);
         return convertView;
     }

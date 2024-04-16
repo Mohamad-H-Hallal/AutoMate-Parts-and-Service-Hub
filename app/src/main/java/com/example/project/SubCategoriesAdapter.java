@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class SubcategorieAdapter extends BaseAdapter{
+public class SubCategoriesAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         return 0;
