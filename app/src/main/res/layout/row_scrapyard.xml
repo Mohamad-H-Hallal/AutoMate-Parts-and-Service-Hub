@@ -29,7 +29,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/circle" />
 
-
+    <LinearLayout
+    android:id="@+id/linear"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toStartOf="@+id/callScrapYardButton"
+    app:layout_constraintHorizontal_bias="0.3"
+    app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
+    app:layout_constraintTop_toTopOf="parent">
         <TextView
             android:id="@+id/txtScrapYardName"
             android:layout_width="wrap_content"
@@ -62,7 +70,7 @@
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
             app:layout_constraintTop_toBottomOf="@id/txtScrapYardName" />
-
+</LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/callScrapYardButton"
@@ -71,6 +79,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:drawableStart="@drawable/ic_call"
+            app:layout_constraintStart_toEndOf="@id/linear"
             app:layout_constraintEnd_toStartOf="@+id/locationMechanicButton"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,8 +91,8 @@
             android:layout_marginEnd="30dp"
             android:drawableStart="@drawable/location_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="callScrapYardButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/callScrapYardButton"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
         <androidx.appcompat.widget.AppCompatButton
