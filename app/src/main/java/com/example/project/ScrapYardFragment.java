@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.SearchView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class ScrapYardFragment extends BaseFragment {
 
     private SearchView searchView;
