@@ -6,26 +6,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ScrapYardFragment"
     android:background="@color/colorPrimary">
-
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardsearch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="26dp"
+    android:elevation="8dp"
+    android:focusable="true"
+    android:backgroundTint="@color/colorAccent">
     <SearchView
         android:id="@+id/scrapYardSearch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:searchIcon="@drawable/ic_search"
         android:queryHint="Search Scrap Yards..."
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/button_background_blue"
         android:iconifiedByDefault="false"
         android:focusable="true"/>
 
+
+</androidx.cardview.widget.CardView>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrapYardListView"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/scrapYardSearch" />
+        app:layout_constraintTop_toBottomOf="@id/cardsearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

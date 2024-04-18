@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/mechanicSearch" />
+        app:layout_constraintTop_toBottomOf="@id/mechanicSearch"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

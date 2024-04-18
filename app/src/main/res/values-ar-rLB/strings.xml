@@ -35,6 +35,8 @@
     <string name="mechanics">ميكانيكيون</string>
     <string name="diagnostics">تشخيص السيارة</string>
     <string name="profile">الحساب</string>
+    <string name="submit">حفظ</string>
+    <string name="cancel">إلغاء</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>
