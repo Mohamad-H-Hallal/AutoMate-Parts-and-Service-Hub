@@ -15,7 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-public class EditLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class EditLocationActivity extends BaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;

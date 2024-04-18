@@ -37,7 +37,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private static final int MAP_REQUEST_CODE = 100;
     private static final int CAMERA_REQUEST_CODE = 1;

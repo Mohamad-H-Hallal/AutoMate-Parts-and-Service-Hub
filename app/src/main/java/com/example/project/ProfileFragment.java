@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -141,7 +141,11 @@ public class ProfileFragment extends Fragment {
             }
             else{
             Intent i = new Intent(getContext(),MapsLocationActivity.class);
-            startActivity(i);}
+            i.putExtra("latitude",latitude);
+            i.putExtra("longitude",longitude);
+            startActivity(i);
+
+            }
         }
     });
 

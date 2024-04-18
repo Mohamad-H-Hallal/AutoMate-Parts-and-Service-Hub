@@ -17,7 +17,7 @@ import com.example.project.databinding.ActivityBottomNavMenuBinding;
 import com.example.project.databinding.ActivityMapsBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BottomNavMenuActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class BottomNavMenuActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bottomNavigationView;
 

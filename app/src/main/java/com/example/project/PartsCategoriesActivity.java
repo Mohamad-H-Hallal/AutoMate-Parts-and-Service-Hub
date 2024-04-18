@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PartsCategoriesActivity extends AppCompatActivity {
+public class PartsCategoriesActivity extends BaseActivity {
     private ExpandableListView parts_list;
     private ExpandableListAdapter PartsCategoriesAdapter;
     private ImageButton back;

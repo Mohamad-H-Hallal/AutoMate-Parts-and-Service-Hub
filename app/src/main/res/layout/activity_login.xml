@@ -14,7 +14,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:paddingTop="20dp">
@@ -31,16 +31,16 @@
 
                 <TextView
                     style="@style/viewParent.headerText.NoMode"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Already \nhave an \nAccount?" />
+                    android:text="@string/already_nhave_an_naccount" />
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lotti"
                     android:layout_width="206dp"
                     android:layout_height="198dp"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
@@ -78,7 +78,7 @@
                 style="@style/viewParent"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:text="Forgot Password?"
+                android:text="@string/forgot_password"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/newsMoreTextSize"
                 android:onClick="resetPassword"/>
@@ -88,14 +88,14 @@
                 style="@style/loginButton"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="Login"
+                android:text="@string/login"
                 android:onClick="login"/>
 
             <TextView
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:onClick="onLoginClick"
-                android:text="New user? Register Now"
+                android:text="@string/new_user_register_now"
                 android:textAlignment="center"
                 android:textColor="@color/themeColor"
                 android:textSize="17sp"

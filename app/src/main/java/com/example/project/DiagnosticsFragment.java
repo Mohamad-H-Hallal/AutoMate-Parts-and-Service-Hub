@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * Use the {@link DiagnosticsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiagnosticsFragment extends Fragment {
+public class DiagnosticsFragment extends BaseFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

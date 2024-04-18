@@ -3,25 +3,25 @@
     <item
         android:id="@+id/nav_scrap_yard"
         android:icon="@drawable/scrapyard_icon"
-        android:title="Scrap Yard" />
+        android:title="@string/scrap_yard" />
 
     <item
         android:id="@+id/nav_parts"
         android:icon="@drawable/parts_icon_v2"
-        android:title="Parts" />
+        android:title="@string/parts" />
 
     <item
         android:id="@+id/nav_mechanics"
         android:icon="@drawable/mechanic_icon"
-        android:title="Mechanics" />
+        android:title="@string/mechanics" />
 
     <item
         android:id="@+id/nav_diagnostics"
         android:icon="@drawable/diagnostics_icon_v2"
-        android:title="Diagnostics" />
+        android:title="@string/diagnostics" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/profile_nav_icon"
-        android:title="Profile" />
+        android:title="@string/profile" />
 </menu>
