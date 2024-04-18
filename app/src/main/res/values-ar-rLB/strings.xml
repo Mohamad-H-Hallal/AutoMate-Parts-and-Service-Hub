@@ -22,7 +22,7 @@
     <string name="name">الاسم</string>
     <string name="location">الموقع</string>
     <string name="register">تسجيل</string>
-    <string name="already_have_an_account">هل لديك حساب بالفعل؟</string>
+    <string name="already_have_an_account">هل لديك\n حساب\n بالفعل؟</string>
     <string name="info">معلومات</string>
     <string name="email">البريد الإلكتروني:</string>
     <string name="location_prof">الموقع:</string>

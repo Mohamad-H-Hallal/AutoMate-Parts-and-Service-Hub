@@ -44,6 +44,7 @@ public class ScarpYardAdapter extends BaseAdapter {
         updateData();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     public void updateData() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String language = preferences.getString("selected_language", "");

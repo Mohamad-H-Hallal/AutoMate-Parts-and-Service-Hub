@@ -34,6 +34,7 @@
     <string name="mechanics">Mechanics</string>
     <string name="diagnostics">Diagnostics</string>
     <string name="profile">Profile</string>
+
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
         <item>General User</item>

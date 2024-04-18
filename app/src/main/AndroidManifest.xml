@@ -26,6 +26,7 @@
             android:name=".SettingActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ManagePartsActivity"
             android:exported="false"
@@ -50,7 +51,8 @@
         <activity
             android:name=".BottomNavMenuActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

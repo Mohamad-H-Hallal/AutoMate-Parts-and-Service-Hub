@@ -8,10 +8,12 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -33,9 +35,19 @@ public class SettingActivity extends BaseActivity {
         save = findViewById(R.id.changel);
         lang = findViewById(R.id.lang);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedLanguage = preferences.getString("selected_language", "");
+        if (selectedLanguage.equals("en")) {
+            lang.setSelection(0); // English
+        } else if (selectedLanguage.equals("ar")) {
+            lang.setSelection(1); // Arabic
+        }
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                startActivity(new Intent(SettingActivity.this, BottomNavMenuActivity.class));
                 finish();
             }
         });
@@ -43,7 +55,7 @@ public class SettingActivity extends BaseActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String language = lang.getSelectedItem().toString();
+                String language = lang.getSelectedItem().toString();
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SettingActivity.this);
                 SharedPreferences.Editor editor = preferences.edit();
 

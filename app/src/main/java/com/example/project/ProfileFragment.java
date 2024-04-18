@@ -182,6 +182,7 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SettingActivity.class);
                 startActivity(i);
+
             }
         });
     }
@@ -228,18 +229,18 @@ public class ProfileFragment extends BaseFragment {
 //        ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
 //    }not used for now
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-                showImagePickerDialog();
-            } else {
-                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PERMISSION_REQUEST_CODE) {
+//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+//                showImagePickerDialog();
+//            } else {
+//                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
