@@ -81,7 +81,7 @@ public class ScarpYardAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Holder holder = new Holder();
         final View rowView;
-        rowView = inflater.inflate(R.layout.row_scrapyard,null);
+        rowView = inflater.inflate(R.layout.row_scrapyard, null);
         holder.scrapYardImageView = rowView.findViewById(R.id.scrapYardImageView);
         holder.txtScrapYardName = rowView.findViewById(R.id.txtScrapYardName);
         holder.txtScrapYardSpecialization = rowView.findViewById(R.id.txtScrapYardSpecialization);
@@ -92,17 +92,17 @@ public class ScarpYardAdapter extends BaseAdapter {
         holder.locationScrapYardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context,MapsLocationActivity.class);
-                i.putExtra("latitude",latitude);
-                i.putExtra("longitude",longitude);
+                Intent i = new Intent(context, MapsLocationActivity.class);
+                i.putExtra("latitude", latitude);
+                i.putExtra("longitude", longitude);
                 context.startActivity(i);
             }
         });
         holder.callScrapYardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri number = Uri.parse("tel:"+phoneNumber);
-                Intent i = new Intent(Intent.ACTION_DIAL,number);
+                Uri number = Uri.parse("tel:" + phoneNumber);
+                Intent i = new Intent(Intent.ACTION_DIAL, number);
                 context.startActivity(i);
             }
         });
@@ -121,7 +121,7 @@ public class ScarpYardAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         currentRating = ratingBar.getRating();
-                        holder.rateScrapYardButton.setText(currentRating+"");
+                        holder.rateScrapYardButton.setText(currentRating + "");
                         Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
                         dismissDialog();
                     }
