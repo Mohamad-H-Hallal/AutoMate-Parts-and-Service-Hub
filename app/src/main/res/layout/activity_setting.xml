@@ -38,6 +38,7 @@
         style="@style/loginButton"
         android:layout_marginTop="60dp"
         android:width="350dp"
+        android:padding="7dp"
         android:drawableLeft="@drawable/changepass_icon"
         android:text="Change Password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,20 +50,59 @@
         style="@style/loginButton"
         android:layout_marginTop="60dp"
         android:width="350dp"
+        android:padding="7dp"
         android:drawableLeft="@drawable/logout_icon"
         android:text="Logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reset_pass" />
+    <TextView
+        android:id="@+id/change_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Language:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintEnd_toStartOf="@id/lang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/changel"
+        app:layout_constraintTop_toBottomOf="@id/logout"/>
+
+    <Spinner
+        android:id="@+id/lang"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:entries="@array/Lang"
+        app:layout_constraintBottom_toTopOf="@id/changel"
+        app:layout_constraintStart_toEndOf="@id/change_lang"
+        app:layout_constraintTop_toBottomOf="@id/logout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/changel"
+        style="@style/loginButton"
+        android:layout_marginTop="30dp"
+        android:width="30dp"
+        android:padding="7dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_lang"
+        app:layout_constraintBottom_toTopOf="@id/line"
+        />
     <View
         android:id="@+id/line"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout" />
+        app:layout_constraintTop_toBottomOf="@+id/changel" />
     <TextView
         android:id="@+id/support"
         android:layout_width="match_parent"

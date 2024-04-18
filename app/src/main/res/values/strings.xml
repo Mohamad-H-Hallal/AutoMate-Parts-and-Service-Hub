@@ -10,5 +10,9 @@
         <item>Mechanic</item>
         <item>Scrap-yard Vendor</item>
     </string-array>
+    <string-array name="Lang">
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
 
 </resources>
