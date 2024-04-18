@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PartsFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    tools:context=".PartsFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/partSearchTextInputLayout"
+    <SearchView
+        android:id="@+id/partSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/button_background_blue"
+        android:layout_margin="10dp"
+        android:queryHint="Search Parts"
+        android:searchIcon="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/themeColor">
-
-        <SearchView
-            android:id="@+id/partSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:searchIcon="@drawable/ic_search"
-            android:queryHint="Search Parts"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:id="@+id/partsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/partsListView"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/partSearchTextInputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/partSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
