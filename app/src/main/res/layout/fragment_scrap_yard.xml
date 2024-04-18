@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ScrapYardFragment"
     android:background="@color/colorPrimary">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/scrapYardSearchTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Scrap Yard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/themeColor">
+
+        <SearchView
+            android:id="@+id/scrapYardSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:searchIcon="@drawable/ic_search"
+            android:queryHint="Search Scrap Yard"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrapYardListView" />
+        android:layout_height="wrap_content"
+        android:id="@+id/scrapYardListView"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/scrapYardSearchTextInputLayout" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

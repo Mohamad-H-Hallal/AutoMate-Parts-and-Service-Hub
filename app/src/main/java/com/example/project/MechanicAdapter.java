@@ -1,14 +1,19 @@
 package com.example.project;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -23,6 +28,11 @@ public class MechanicAdapter extends BaseAdapter {
 
     JSONArray data;
     Context context;
+    double latitude = 33;
+    double longitude = 35;
+    int phoneNumber = 70707070;
+    private float currentRating = 3.5f;
+    private AlertDialog ratingDialog;
     LayoutInflater inflater = null;
 
     public MechanicAdapter(Context context, JSONArray data) {
@@ -75,6 +85,60 @@ public class MechanicAdapter extends BaseAdapter {
         holder.locationMechanicButton = rowView.findViewById(R.id.locationMechanicButton);
         holder.rateMechanicButton = rowView.findViewById(R.id.rateMechanicButton);
         JSONObject obj = data.optJSONObject(position);
+        holder.locationMechanicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,MapsLocationActivity.class);
+                i.putExtra("latitude",latitude);
+                i.putExtra("longitude",longitude);
+                context.startActivity(i);
+            }
+        });
+        holder.callMechanicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri number = Uri.parse("tel:"+phoneNumber);
+                Intent i = new Intent(Intent.ACTION_DIAL,number);
+                context.startActivity(i);
+            }
+        });
+        holder.rateMechanicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View ratingDialogView = inflater.inflate(R.layout.rating_dialog, null);
+                final RatingBar ratingBar = ratingDialogView.findViewById(R.id.rating_bar);
+                final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
+                final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
+                ratingBar.setRating(currentRating);
+                builder.setView(ratingDialogView).setTitle("Rate Mechanic");
+                builder.setView(ratingDialogView).setIcon(R.drawable.star_rate_icon);
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        currentRating = ratingBar.getRating();
+                        holder.rateMechanicButton.setText(currentRating+"");
+                        Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
+                        dismissDialog();
+                    }
+                });
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismissDialog();
+                    }
+                });
+                ratingDialog = builder.create();
+                ratingDialog.show();
+            }
+        });
         return null;
     }
+
+    private void dismissDialog() {
+        if (ratingDialog != null && ratingDialog.isShowing()) {
+            ratingDialog.dismiss();
+        }
+    }
+
 }

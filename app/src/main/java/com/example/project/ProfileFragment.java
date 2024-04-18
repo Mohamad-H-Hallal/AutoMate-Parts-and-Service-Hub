@@ -102,98 +102,89 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void setInitialize(View v) {
-        profile_image=v.findViewById(R.id.profile_image);
-        reset_pass= v.findViewById(R.id.reset_pass);
-        logout=v.findViewById(R.id.logout);
-        name=v.findViewById(R.id.name);
-        locationtext=v.findViewById(R.id.locationtext);
-        emailtext=v.findViewById(R.id.emailtext);
-        phone=v.findViewById(R.id.phone);
-        phonetext=v.findViewById(R.id.phonetext);
-        specialization=v.findViewById(R.id.specialization);
-        specializationtext=v.findViewById(R.id.specializationtext);
+        profile_image = v.findViewById(R.id.profile_image);
+        reset_pass = v.findViewById(R.id.reset_pass);
+        logout = v.findViewById(R.id.logout);
+        name = v.findViewById(R.id.name);
+        locationtext = v.findViewById(R.id.locationtext);
+        emailtext = v.findViewById(R.id.emailtext);
+        phone = v.findViewById(R.id.phone);
+        phonetext = v.findViewById(R.id.phonetext);
+        specialization = v.findViewById(R.id.specialization);
+        specializationtext = v.findViewById(R.id.specializationtext);
         manageparts = v.findViewById(R.id.manageparts);
-        edit=v.findViewById(R.id.edit);
-        setting=v.findViewById(R.id.setting);
+        edit = v.findViewById(R.id.edit);
+        setting = v.findViewById(R.id.setting);
         name.setEnabled(false);
         emailtext.setEnabled(false);
         phonetext.setEnabled(false);
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
-        editing=false;
+        editing = false;
 
 
     }
 
     private void setActions(View v) {
-    profile_image.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-        showImagePickerDialog();
-        }
-    });
-
-    locationtext.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View v) {
-            if(editing){
-            Intent i = new Intent(getContext(),EditLocationActivity.class);
-            startActivityForResult(i,MAP_REQUEST_CODE);
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showImagePickerDialog();
             }
-            else{
-            Intent i = new Intent(getContext(),MapsLocationActivity.class);
-            i.putExtra("latitude",latitude);
-            i.putExtra("longitude",longitude);
-            startActivity(i);
-
-            }
-        }
-    });
-
-    edit.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-        editing=!editing;
-        if(editing){
-        edit.setImageResource(R.drawable.save_icon);
-            name.setEnabled(true);
-            emailtext.setEnabled(true);
-            phonetext.setEnabled(true);
-            phonetext.setEnabled(true);
-            specializationtext.setEnabled(true);
-            Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
-
-        }
-        else{edit.setImageResource(R.drawable.edit_icon);
-            name.setEnabled(false);
-            emailtext.setEnabled(false);
-            phonetext.setEnabled(false);
-            phonetext.setEnabled(false);
-            specializationtext.setEnabled(false);
-            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-        }
-        }
-    });
-
-    manageparts.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            Intent i = new Intent(getContext(), PartsCategoriesActivity.class);
-            startActivity(i);
-        }
         });
-    setting.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(getContext(), SettingActivity.class);
-            startActivity(i);
-        }
-    });
+        locationtext.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (editing) {
+                    Intent i = new Intent(getContext(), EditLocationActivity.class);
+                    startActivityForResult(i, MAP_REQUEST_CODE);
+                } else {
+                    Intent i = new Intent(getContext(), MapsLocationActivity.class);
+                    i.putExtra("latitude", latitude);
+                    i.putExtra("longitude", longitude);
+                    startActivity(i);
 
+                }
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editing = !editing;
+                if (editing) {
+                    edit.setImageResource(R.drawable.save_icon);
+                    name.setEnabled(true);
+                    emailtext.setEnabled(true);
+                    phonetext.setEnabled(true);
+                    phonetext.setEnabled(true);
+                    specializationtext.setEnabled(true);
+                    Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    edit.setImageResource(R.drawable.edit_icon);
+                    name.setEnabled(false);
+                    emailtext.setEnabled(false);
+                    phonetext.setEnabled(false);
+                    phonetext.setEnabled(false);
+                    specializationtext.setEnabled(false);
+                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        manageparts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), PartsCategoriesActivity.class);
+                startActivity(i);
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), SettingActivity.class);
+                startActivity(i);
+            }
+        });
     }
-
-
 
     private void showImagePickerDialog() {
         String[] options = {"Take Photo", "Choose from Gallery"};
@@ -214,18 +205,17 @@ public class ProfileFragment extends BaseFragment {
         });
         builder.show();
     }
+
     private void captureImage() {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
-            startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
+        startActivityForResult(chooser, CAMERA_REQUEST_CODE);
     }
 
     private void openGallery() {
-
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            Intent chooser = Intent.createChooser(galleryIntent, "Select Image Source");
-            startActivityForResult(chooser, GALLERY_REQUEST_CODE);
-
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent chooser = Intent.createChooser(galleryIntent, "Select Image Source");
+        startActivityForResult(chooser, GALLERY_REQUEST_CODE);
     }
 
 //    private boolean checkPermissions() {
@@ -238,25 +228,25 @@ public class ProfileFragment extends BaseFragment {
 //        ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
 //    }not used for now
 
-@Override
-public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == PERMISSION_REQUEST_CODE) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-            showImagePickerDialog();
-        } else {
-            Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                showImagePickerDialog();
+            } else {
+                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
         }
     }
-}
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
-
                     if (data.getData() != null) {
                         uriImage = data.getData();
                         ContentResolver cr = getContext().getContentResolver();
@@ -266,7 +256,6 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
                     } else {
                         Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
                     }
-
                     break;
                 case CAMERA_REQUEST_CODE:
                     if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
@@ -281,20 +270,17 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
                         Toast.makeText(getContext(), "Error capturing image", Toast.LENGTH_SHORT).show();
                     }
                     break;
-
                 case MAP_REQUEST_CODE:
                     if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
                         Bundle bundle = data.getExtras();
                         latitude = bundle.getDouble("latitude");
                         longitude = bundle.getDouble("longitude");
-
+                    }else {
+                        Toast.makeText(getContext(), "Error retrieving location data", Toast.LENGTH_SHORT).show();
                     }
+                    break;
 
             }
         }
     }
-
-
-
-
 }
