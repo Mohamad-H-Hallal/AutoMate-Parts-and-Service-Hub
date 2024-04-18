@@ -31,6 +31,7 @@
     <string name="manage_parts">Manage Parts</string>
     <string name="change_password">Change Password</string>
     <string name="scrap_yard">Scrap Yards</string>
+    <string name="parts_nav">Parts</string>
     <string name="mechanics">Mechanics</string>
     <string name="diagnostics">Diagnostics</string>
     <string name="profile">Profile</string>

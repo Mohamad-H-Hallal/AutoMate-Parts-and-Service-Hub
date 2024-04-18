@@ -45,7 +45,7 @@
             android:layout_margin="20dp"
             android:text="Name"
             android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintEnd_toStartOf="@+id/callScrapYardButton"
+            app:layout_constraintEnd_toStartOf="@id/callScrapYardButton"
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
             app:layout_constraintTop_toTopOf="parent" />

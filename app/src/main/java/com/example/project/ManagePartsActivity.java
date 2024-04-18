@@ -10,7 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ManagePartsActivity extends AppCompatActivity {
+public class ManagePartsActivity extends BaseActivity {
     private ImageButton backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

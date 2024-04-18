@@ -2,12 +2,16 @@ package com.example.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
@@ -19,6 +23,18 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.parentList = parentList;
         this.childMap = childMap;
+        updateData();
+    }
+
+    public void updateData() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String language = preferences.getString("selected_language", "");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        notifyDataSetChanged(); // Notify the adapter that the data has changed
     }
 
     @Override

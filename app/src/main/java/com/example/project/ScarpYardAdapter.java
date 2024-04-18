@@ -1,6 +1,9 @@
 package com.example.project;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class ScarpYardAdapter extends BaseAdapter {
 
     JSONArray data;
@@ -23,7 +28,18 @@ public class ScarpYardAdapter extends BaseAdapter {
     public ScarpYardAdapter(Context context, JSONArray data) {
         this.context = context;
         this.data = data;
+        updateData();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+    public void updateData() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String language = preferences.getString("selected_language", "");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        notifyDataSetChanged(); // Notify the adapter that the data has changed
     }
 
     public class Holder {

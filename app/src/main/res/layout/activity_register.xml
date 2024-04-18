@@ -31,7 +31,7 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Here’s\nyour first\nstep with \nus! "
+                    android:text="@string/here_s_nyour_first_nstep_with_nus"
                     android:textColor="@color/whiteTextColor" />
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -79,7 +79,7 @@
                         <EditText
                             android:id="@+id/editTextName"
                             style="@style/modifiedEditText"
-                            android:hint="Name"
+                            android:hint="@string/name"
                             android:inputType="textPersonName"
                             android:maxLines="1" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +140,7 @@
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:drawableLeft="@drawable/location_icon"
                         android:gravity="left|center"
-                        android:text="Location"
+                        android:text="@string/location"
                         android:onClick="onSelectLocationClick"/>
 
                     <TextView
@@ -159,14 +159,14 @@
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Register" />
+                        android:text="@string/register" />
 
                     <TextView
                         style="@style/parent"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:layout_marginBottom="@dimen/loginViewsMargin"
                         android:onClick="onLoginClick"
-                        android:text="Already have an account?"
+                        android:text="@string/already_have_an_account"
                         android:textAlignment="center"
                         android:textColor="@color/themeColor"
                         android:textSize="17sp"

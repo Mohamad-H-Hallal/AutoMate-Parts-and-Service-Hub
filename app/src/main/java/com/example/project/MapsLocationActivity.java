@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapsLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsLocationActivity extends BaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
@@ -31,7 +32,11 @@ public class MapsLocationActivity extends AppCompatActivity implements OnMapRead
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-        my_location = new LatLng(19.0760, 72.8777);
+        Intent intent = getIntent();
+        if (intent != null) {
+            double lat = Double.parseDouble(intent.getStringExtra("latitude"));
+            double lang =Double.parseDouble(intent.getStringExtra("longitude"));
+        my_location = new LatLng(lat, lang);}
     }
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;

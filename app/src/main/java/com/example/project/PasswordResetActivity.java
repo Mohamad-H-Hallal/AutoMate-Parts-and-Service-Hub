@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PasswordResetActivity extends AppCompatActivity {
+public class PasswordResetActivity extends BaseActivity {
 
     private TextInputLayout textInputEmail;
     private EditText editTextEmail;
