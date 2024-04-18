@@ -33,7 +33,7 @@ public class PartsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchView = view.findViewById(R.id.partSearch);
+        searchView = view.findViewById(R.id.partsSearch);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
