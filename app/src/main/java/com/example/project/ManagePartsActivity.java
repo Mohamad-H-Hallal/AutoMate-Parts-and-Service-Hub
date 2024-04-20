@@ -1,6 +1,8 @@
 package com.example.project;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -17,8 +19,20 @@ public class ManagePartsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manage_parts);
-
         backButton = findViewById(R.id.back_arrow2);
+
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedLanguage = preferences.getString("selected_language", "");
+        if (selectedLanguage.equals("en")) {
+
+            backButton.setImageResource(R.drawable.ic_back_en);
+        } else if (selectedLanguage.equals("ar")) {
+
+            backButton.setImageResource(R.drawable.ic_back_ar);
+        }
+
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

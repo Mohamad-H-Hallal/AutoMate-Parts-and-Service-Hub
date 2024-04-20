@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_back_en"
         app:layout_constraintBottom_toBottomOf="@+id/parts_title"
         app:layout_constraintStart_toStartOf="@id/parts_title"
         app:layout_constraintTop_toTopOf="@id/parts_title"

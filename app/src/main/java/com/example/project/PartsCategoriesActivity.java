@@ -1,6 +1,8 @@
 package com.example.project;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -28,6 +30,14 @@ public class PartsCategoriesActivity extends BaseActivity {
 
         back = findViewById(R.id.back_arrow1);
         parts_list = findViewById(R.id.categories_list);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String selectedLanguage = preferences.getString("selected_language", "");
+        if (selectedLanguage.equals("en")) {
+            back.setImageResource(R.drawable.ic_back_en);
+        } else if (selectedLanguage.equals("ar")) {
+            back.setImageResource(R.drawable.ic_back_ar);
+        }
 
         List<String> parentList = new ArrayList<>();
         parentList.add("Parent 1");

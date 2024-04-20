@@ -39,15 +39,18 @@ public class SettingActivity extends BaseActivity {
         String selectedLanguage = preferences.getString("selected_language", "");
         if (selectedLanguage.equals("en")) {
             lang.setSelection(0); // English
+            back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {
             lang.setSelection(1); // Arabic
+            back.setImageResource(R.drawable.ic_back_ar);
         }
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(SettingActivity.this, BottomNavMenuActivity.class));
+                Intent i =new Intent(SettingActivity.this, BottomNavMenuActivity.class);
+                startActivityForResult(i,100);
+                setResult(RESULT_OK, i);
                 finish();
             }
         });

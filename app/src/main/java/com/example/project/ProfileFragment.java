@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.Objects;
+
 public class ProfileFragment extends BaseFragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -182,7 +184,7 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SettingActivity.class);
                 startActivity(i);
-                getActivity().finish();
+                requireActivity().finish();
 
             }
         });
