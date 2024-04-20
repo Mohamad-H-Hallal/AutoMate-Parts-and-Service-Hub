@@ -182,6 +182,7 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), SettingActivity.class);
                 startActivity(i);
+                getActivity().finish();
 
             }
         });
