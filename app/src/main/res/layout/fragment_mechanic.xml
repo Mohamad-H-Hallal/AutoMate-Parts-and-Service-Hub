@@ -11,7 +11,10 @@
         android:id="@+id/mechanicsCardSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="60dp"
         android:backgroundTint="@color/themeColor"
         android:elevation="8dp"
         android:focusable="true"
@@ -21,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
-            android:id="@+id/mechanicSearch"
+            android:id="@+id/mechanicsSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
@@ -29,6 +32,18 @@
             android:queryHint="Mechanics..."
             android:searchIcon="@drawable/ic_search" />
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mechanicsFilter"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mechanicsCardSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/mechanicsListView"
+        android:src="@drawable/ic_filter"/>
 
     <ListView
         android:id="@+id/mechanicsListView"
