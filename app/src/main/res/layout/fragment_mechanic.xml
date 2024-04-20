@@ -39,6 +39,7 @@
         android:id="@+id/mechanicsFilter"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/filter_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/mechanicsCardSearch"
         app:layout_constraintEnd_toEndOf="parent"

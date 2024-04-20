@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ScrapYardFragment extends BaseFragment {
 
     private SearchView searchView;
+    private ImageView scrapYardImage;
 
     public ScrapYardFragment() {
     }
@@ -38,6 +41,7 @@ public class ScrapYardFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchView = view.findViewById(R.id.scrapYardSearch);
+        scrapYardImage = view.findViewById(R.id.scrapYardFilter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

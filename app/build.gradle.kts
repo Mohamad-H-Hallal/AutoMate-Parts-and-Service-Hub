@@ -36,7 +36,7 @@ android {
 
 dependencies {
     implementation ("com.github.bumptech.glide:glide:4.14.2")
-    implementation("androidx.activity:activity:1.8.2")
+    implementation("androidx.activity:activity:1.9.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.android.volley:volley:1.2.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
