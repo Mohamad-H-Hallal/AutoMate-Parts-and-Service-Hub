@@ -160,7 +160,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/cardview_border">
-
+                <TextView
+                    android:id="@+id/scrapyardname_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/scrapyard_name"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/scrapyardname_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <TextView
                     android:id="@+id/model_detail"
                     android:layout_width="wrap_content"
@@ -170,18 +190,18 @@
                     android:text="@string/model"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/scrapyardname_detail" />
                 <TextView
                     android:id="@+id/model_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/scrapyardname_detailtxt" />
                 <TextView
                     android:id="@+id/make_detail"
                     android:layout_width="wrap_content"
@@ -196,7 +216,7 @@
                     android:id="@+id/make_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
@@ -217,7 +237,7 @@
                     android:id="@+id/year_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
@@ -239,7 +259,7 @@
                     android:id="@+id/category_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
@@ -260,7 +280,7 @@
                     android:id="@+id/subcategory_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
@@ -281,7 +301,7 @@
                     android:id="@+id/condition_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="model"
@@ -303,7 +323,7 @@
                     android:id="@+id/negotiable_detailtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="180dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="30dp"
                     android:textColor="@color/colorPrimaryDark"
