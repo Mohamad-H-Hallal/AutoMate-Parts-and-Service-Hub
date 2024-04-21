@@ -105,10 +105,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsMakeSpinner"
-                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginTop="25dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsMakeText"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/partsModelSpinner"
                 app:layout_constraintTop_toBottomOf="@id/partsClearAll"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:entries="@array/spinner"/>
@@ -131,8 +132,9 @@
                 android:id="@+id/partsModelSpinner"
                 android:layout_marginTop="23dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsModelText"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/partsYearSpinner"
                 app:layout_constraintTop_toBottomOf="@id/partsMakeSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:entries="@array/spinner"/>
@@ -155,8 +157,9 @@
                 android:id="@+id/partsYearSpinner"
                 android:layout_marginTop="23dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsYearText"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/partsCategorySpinner"
                 app:layout_constraintTop_toBottomOf="@id/partsModelSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:entries="@array/spinner"/>
@@ -179,8 +182,9 @@
                 android:id="@+id/partsCategorySpinner"
                 android:layout_marginTop="23dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsCategoryText"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/partsSubCategorySpinner"
                 app:layout_constraintTop_toBottomOf="@id/partsYearSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:entries="@array/spinner"/>
@@ -201,10 +205,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsSubCategorySpinner"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsSubCategoryText"
+                android:backgroundTint="@color/themeColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/partsConditionSpinner"
                 app:layout_constraintTop_toBottomOf="@id/partsCategorySpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:entries="@array/spinner"/>
@@ -222,28 +227,30 @@
                 app:layout_constraintTop_toBottomOf="@id/partsSubCategoryText" />
 
             <Spinner
+                android:id="@+id/partsConditionSpinner"
+                android:backgroundTint="@color/themeColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/partsConditionSpinner"
-                android:layout_marginTop="25dp"
                 android:layout_marginStart="170dp"
-                style="@style/modifiedEditText"
-                app:layout_constraintStart_toEndOf="@id/partsConditionText"
-                app:layout_constraintTop_toBottomOf="@id/partsSubCategorySpinner"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="21dp"
+                android:entries="@array/spinner"
+                app:layout_constraintBottom_toTopOf="@+id/partsNegotiable"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:entries="@array/spinner"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/partsSubCategorySpinner" />
 
             <CheckBox
+                android:id="@+id/partsNegotiable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/partsNegotiable"
-                android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
                 android:text="@string/negotiable"
                 android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsConditionText"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/partsConditionText" />
 
             <TextView
                 android:layout_width="match_parent"
