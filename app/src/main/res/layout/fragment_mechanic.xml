@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:focusable="true"
             android:iconifiedByDefault="false"
-            android:queryHint="@string/searchmechanics"
+            android:queryHint="@string/searchMechanics"
             android:searchIcon="@drawable/ic_search" />
     </androidx.cardview.widget.CardView>
 

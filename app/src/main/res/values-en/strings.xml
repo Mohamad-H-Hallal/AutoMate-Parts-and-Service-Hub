@@ -36,12 +36,18 @@
     <string name="profile">Profile</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
-    <string name="searchmechanics">Search Mechanics…</string>
-    <string name="searchparts">Search Parts…</string>
+    <string name="searchMechanics">Search Mechanics…</string>
+    <string name="searchParts">Search Parts…</string>
     <string name="search_scrap_yards">Search Scrap Yards…</string>
     <string name="part_details">Part Details</string>
     <string name="filter">Filter</string>
-    <string name="makeFilter">Make:</string>
+    <string name="make">Make:</string>
+    <string name="model">Model:</string>
+    <string name="year">Year:</string>
+    <string name="category">Category:</string>
+    <string name="subcategory">SubCategory:</string>
+    <string name="condition">Condition:</string>
+    <string name="negotiable">Negotiable</string>
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
         <item>General User</item>
