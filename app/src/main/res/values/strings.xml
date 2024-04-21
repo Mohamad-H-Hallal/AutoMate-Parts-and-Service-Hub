@@ -40,6 +40,8 @@
     <string name="searchParts">Search Parts…</string>
     <string name="search_scrap_yards">Search Scrap Yards…</string>
     <string name="part_details">Part Details</string>
+    <string name="price">Price:</string>
+    <string name="description">Description:</string>
     <string name="filter">Filter</string>
     <string name="make">Make:</string>
     <string name="model">Model:</string>
@@ -48,6 +50,7 @@
     <string name="subcategory">SubCategory:</string>
     <string name="condition">Condition:</string>
     <string name="negotiable">Negotiable</string>
+    <string name="details">Details:</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

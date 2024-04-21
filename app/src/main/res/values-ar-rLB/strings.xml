@@ -41,6 +41,8 @@
     <string name="searchParts">ابحث عن قطع…</string>
     <string name="search_scrap_yards">ابحث عن ساحة خردة…</string>
     <string name="part_details">تفصيل القطعة</string>
+    <string name="price">السعر:</string>
+    <string name="description">وصف:</string>
     <string name="filter">فلتر</string>
     <string name="make">الماركة:</string>
     <string name="model">طرازها:</string>
@@ -49,6 +51,7 @@
     <string name="subcategory">الفئة الفرعية:</string>
     <string name="condition">الحالة:</string>
     <string name="negotiable">قابل للتفاوض</string>
+    <string name="details">تفاصيل:</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>
