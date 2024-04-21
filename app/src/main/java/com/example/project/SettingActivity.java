@@ -20,6 +20,7 @@ import java.util.Locale;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 
 public class SettingActivity extends BaseActivity {
     private ImageButton back;
@@ -29,6 +30,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         setContentView(R.layout.activity_setting);
 
         back = findViewById(R.id.back_arrow3);
