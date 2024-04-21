@@ -54,6 +54,7 @@
     <string name="details">تفاصيل:</string>
     <string name="from">من</string>
     <string name="to">الى</string>
+    <string name="scrapyard_name">اسم ساحة الخردة:</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>
