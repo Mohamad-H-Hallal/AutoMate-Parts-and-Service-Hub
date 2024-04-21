@@ -54,6 +54,7 @@
     <string name="scrapyard_name">Scrapyard Name:</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="clear_all">Clear all</string>
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
         <item>General User</item>
