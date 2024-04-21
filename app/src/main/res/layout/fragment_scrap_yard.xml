@@ -46,6 +46,52 @@
         app:layout_constraintBottom_toTopOf="@id/scrapYardListView"
         android:src="@drawable/ic_filter" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/scrapYardCardFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="26dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrapYardFilter">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrapYardFilterText"
+                android:text="@string/filter"
+                android:textSize="30sp"
+                android:textColor="@color/darkTextColor"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrapYardMakeText"
+                android:text="@string/makeFilter"
+                android:textSize="20sp"
+                android:textColor="@color/darkTextColor"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scrapYardFilterText"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <ListView
         android:id="@+id/scrapYardListView"
         android:layout_width="match_parent"

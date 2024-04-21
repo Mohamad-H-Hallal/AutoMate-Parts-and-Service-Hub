@@ -41,6 +41,8 @@
     <string name="searchparts">ابحث عن قطع…</string>
     <string name="search_scrap_yards">ابحث عن ساحة خردة…</string>
     <string name="part_details">تفصيل القطعة</string>
+    <string name="filter">فلتر</string>
+    <string name="makeFilter">الماركة:</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>

@@ -40,6 +40,8 @@
     <string name="searchparts">Search Parts…</string>
     <string name="search_scrap_yards">Search Scrap Yards…</string>
     <string name="part_details">Part Details</string>
+    <string name="filter">Filter</string>
+    <string name="makeFilter">Make:</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

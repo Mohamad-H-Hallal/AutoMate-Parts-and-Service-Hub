@@ -22,9 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class SettingActivity extends BaseActivity {
-    private ImageButton  back;
+    private ImageButton back;
     private AppCompatButton save;
     private Spinner lang;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,8 @@ public class SettingActivity extends BaseActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(SettingActivity.this, BottomNavMenuActivity.class);
+                Intent i = new Intent(SettingActivity.this, BottomNavMenuActivity.class);
+                i.putExtra("start_page", 1);
                 startActivity(i);
                 finish();
             }
@@ -60,8 +62,7 @@ public class SettingActivity extends BaseActivity {
                 String language = lang.getSelectedItem().toString();
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SettingActivity.this);
                 SharedPreferences.Editor editor = preferences.edit();
-
-                if (language.equals("English")||language.equals("الإنجليزية")) {
+                if (language.equals("English") || language.equals("الإنجليزية")) {
                     editor.putString("selected_language", "en");
 
                     Locale locale = new Locale("en");
@@ -69,9 +70,7 @@ public class SettingActivity extends BaseActivity {
                     Configuration config = new Configuration();
                     config.locale = locale;
                     SettingActivity.this.getResources().updateConfiguration(config, SettingActivity.this.getResources().getDisplayMetrics());
-
-
-                } else if (language.equals("Arabic")||language.equals("العربية")) {
+                } else if (language.equals("Arabic") || language.equals("العربية")) {
                     editor.putString("selected_language", "ar");
 
                     Locale locale = new Locale("ar");
@@ -83,10 +82,7 @@ public class SettingActivity extends BaseActivity {
                 editor.apply();
                 restartApp();
             }
-
-
         });
-
     }
 
     private void restartApp() {
@@ -95,8 +91,5 @@ public class SettingActivity extends BaseActivity {
         startActivity(intent);
 
     }
-
-
-
 
 }

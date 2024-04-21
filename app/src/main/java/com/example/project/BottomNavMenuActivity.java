@@ -23,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BottomNavMenuActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bottomNavigationView;
+    int def_val = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,12 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.nav_scrap_yard);
+        Intent i = getIntent();
+        def_val = i.getIntExtra("start_page",0);
+        if(def_val == 0)
+            bottomNavigationView.setSelectedItemId(R.id.nav_scrap_yard);
+        else
+            bottomNavigationView.setSelectedItemId(R.id.nav_profile);
     }
     ScrapYardFragment firstFragment = new ScrapYardFragment();
     PartsFragment secondFragment = new PartsFragment();
