@@ -57,6 +57,7 @@
     <string name="scrapyard_name">اسم ساحة الخردة:</string>
     <string name="clear_all">امسح الكل</string>
     <string name="nearest_location">أقرب موقع</string>
+    <string name="filtered_by_nearest_location_n">تمت تصفيته حسب أقرب موقع\n</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>

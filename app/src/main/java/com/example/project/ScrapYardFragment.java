@@ -15,13 +15,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ScrapYardFragment extends BaseFragment {
 
     private SearchView searchView;
-    private ImageView scrapYardImage;
+    private ImageView scrapYardFilter;
+    private TextView scrapYardFilterText;
 
     public ScrapYardFragment() {
     }
@@ -41,7 +43,8 @@ public class ScrapYardFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchView = view.findViewById(R.id.scrapYardSearch);
-        scrapYardImage = view.findViewById(R.id.scrapYardFilter);
+        scrapYardFilter = view.findViewById(R.id.scrapYardFilter);
+        scrapYardFilterText = view.findViewById(R.id.scrapYardFilterText);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -52,6 +55,19 @@ public class ScrapYardFragment extends BaseFragment {
             public boolean onQueryTextChange(String newText) {
 //                adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        scrapYardFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(scrapYardFilterText.getVisibility() == View.VISIBLE){
+                    scrapYardFilterText.setVisibility(View.GONE);
+                    scrapYardFilter.setBackground(null);
+                }else {
+                    scrapYardFilterText.setVisibility(View.VISIBLE);
+                    scrapYardFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
+                }
             }
         });
     }

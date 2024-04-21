@@ -37,18 +37,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/mechanicsFilter"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/mechanicsCardSearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/mechanicsListView"
         android:src="@drawable/ic_filter"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mechanicsFilterText"
+        android:text="@string/filtered_by_nearest_location_n"
+        android:textStyle="bold"
+        android:textColor="@color/darkTextColor"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:layout_marginStart="@dimen/loginViewsMargin"
+        android:layout_marginEnd="@dimen/loginViewsMargin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/mechanicsListView"
+        app:layout_constraintTop_toBottomOf="@id/mechanicsCardSearch"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/mechanicsListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/mechanicsCardSearch" />
+        app:layout_constraintTop_toBottomOf="@id/mechanicsFilterText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

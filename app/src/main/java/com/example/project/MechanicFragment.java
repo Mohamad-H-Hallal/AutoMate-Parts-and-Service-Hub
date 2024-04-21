@@ -4,15 +4,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 public class MechanicFragment extends BaseFragment {
 
     private SearchView searchView;
+    private ImageView mechanicsFilter;
+    private TextView mechanicsFilterText;
 
     public MechanicFragment() {
     }
@@ -33,6 +38,8 @@ public class MechanicFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchView = view.findViewById(R.id.mechanicsSearch);
+        mechanicsFilter = view.findViewById(R.id.mechanicsFilter);
+        mechanicsFilterText = view.findViewById(R.id.mechanicsFilterText);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -43,6 +50,19 @@ public class MechanicFragment extends BaseFragment {
             public boolean onQueryTextChange(String newText) {
 //                adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        mechanicsFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mechanicsFilterText.getVisibility() == View.VISIBLE){
+                    mechanicsFilterText.setVisibility(View.GONE);
+                    mechanicsFilter.setBackground(null);
+                }else {
+                    mechanicsFilterText.setVisibility(View.VISIBLE);
+                    mechanicsFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
+                }
             }
         });
     }
