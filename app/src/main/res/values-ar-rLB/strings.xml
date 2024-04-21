@@ -56,6 +56,7 @@
     <string name="to">الى</string>
     <string name="scrapyard_name">اسم ساحة الخردة:</string>
     <string name="clear_all">امسح الكل</string>
+    <string name="nearest_location">أقرب موقع</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>

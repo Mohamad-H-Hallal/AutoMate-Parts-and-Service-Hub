@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -58,8 +59,10 @@ public class PartsFragment extends BaseFragment {
             public void onClick(View v) {
                 if(partsCardFilter.getVisibility() == View.VISIBLE){
                     partsCardFilter.setVisibility(View.GONE);
+                    partsFilter.setBackground(null);
                 }else {
                     partsCardFilter.setVisibility(View.VISIBLE);
+                    partsFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
                 }
             }
         });
