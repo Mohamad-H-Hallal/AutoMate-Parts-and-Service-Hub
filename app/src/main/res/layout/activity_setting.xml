@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_back_en"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_title"
+        app:layout_constraintBottom_toBottomOf="@id/setting_title"
         app:layout_constraintStart_toStartOf="@id/setting_title"
         app:layout_constraintTop_toTopOf="@id/setting_title"
         app:layout_constraintVertical_bias="1.0" />

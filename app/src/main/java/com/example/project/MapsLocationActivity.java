@@ -33,9 +33,9 @@ public class MapsLocationActivity extends BaseActivity implements OnMapReadyCall
             mapFragment.getMapAsync(this);
         }
         Intent intent = getIntent();
-        if (intent != null) {
-            double lat = Double.parseDouble(intent.getStringExtra("latitude"));
-            double lang =Double.parseDouble(intent.getStringExtra("longitude"));
+        if (intent != null && intent.hasExtra("latitude") && intent.hasExtra("longitude")) {
+            double lat = intent.getDoubleExtra("latitude", 0.0);
+            double lang =intent.getDoubleExtra("longitude", 0.0);
         my_location = new LatLng(lat, lang);}
     }
     public void onMapReady(@NonNull GoogleMap googleMap) {

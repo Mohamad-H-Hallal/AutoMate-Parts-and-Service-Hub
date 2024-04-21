@@ -49,8 +49,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(SettingActivity.this, BottomNavMenuActivity.class);
-                startActivityForResult(i,100);
-                setResult(RESULT_OK, i);
+                startActivity(i);
                 finish();
             }
         });

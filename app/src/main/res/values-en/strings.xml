@@ -9,7 +9,7 @@
     <string name="language">Language:</string>
     <string name="save">Save</string>
     <string name="help_and_support">Help and Support</string>
-    <string name="already_nhave_an_naccount">Already \nhave an \nAccount?</string>
+    <string name="already_nhave_an_naccount">Welcome \nto \nAutoMate!</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="login">Login</string>
     <string name="new_user_register_now">New user? Register Now</string>
@@ -36,6 +36,10 @@
     <string name="profile">Profile</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="searchmechanics">Search Mechanics…</string>
+    <string name="searchparts">Search Parts…</string>
+    <string name="search_scrap_yards">Search Scrap Yards…</string>
+    <string name="part_details">Part Details</string>
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
         <item>General User</item>

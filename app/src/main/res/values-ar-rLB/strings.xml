@@ -10,7 +10,7 @@
     <string name="language">اللغة:</string>
     <string name="save">حفظ</string>
     <string name="help_and_support">المساعدة والدعم</string>
-    <string name="already_nhave_an_naccount">هل لديك حساب؟</string>
+    <string name="already_nhave_an_naccount">مرحبا\n بك</string>
     <string name="forgot_password">هل نسيت كلمة المرور؟</string>
     <string name="login">تسجيل الدخول</string>
     <string name="new_user_register_now">مستخدم جديد؟ سجل الآن</string>
@@ -22,7 +22,7 @@
     <string name="name">الاسم</string>
     <string name="location">الموقع</string>
     <string name="register">تسجيل</string>
-    <string name="already_have_an_account">هل لديك\n حساب\n بالفعل؟</string>
+    <string name="already_have_an_account">هل لديك حساب بالفعل؟</string>
     <string name="info">معلومات</string>
     <string name="email">البريد الإلكتروني:</string>
     <string name="location_prof">الموقع:</string>
@@ -37,6 +37,10 @@
     <string name="profile">الحساب</string>
     <string name="submit">حفظ</string>
     <string name="cancel">إلغاء</string>
+    <string name="searchmechanics">ابحث عن ميكانيكي…</string>
+    <string name="searchparts">ابحث عن قطع…</string>
+    <string name="search_scrap_yards">ابحث عن ساحة خردة…</string>
+    <string name="part_details">تفصيل القطعة</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>

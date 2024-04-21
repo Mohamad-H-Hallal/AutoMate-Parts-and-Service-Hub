@@ -23,15 +23,17 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".PartDetailsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".SettingActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ManagePartsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".PartsCategoriesActivity"
             android:exported="false"
@@ -52,7 +54,7 @@
             android:name=".BottomNavMenuActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
