@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="30dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="@string/model"
+                    android:text="model"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@id/model_detail"
                     app:layout_constraintTop_toTopOf="parent" />

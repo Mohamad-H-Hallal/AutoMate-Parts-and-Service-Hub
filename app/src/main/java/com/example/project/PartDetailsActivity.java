@@ -35,8 +35,8 @@ public class PartDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_part_details);
+
         horizontalScrollView = findViewById(R.id.horizontalScrollView);
         LinearLayout imageContainer = findViewById(R.id.imageContainer);
         miniMapView = findViewById(R.id.miniMapView);

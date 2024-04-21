@@ -25,7 +25,6 @@ public class PartsCategoriesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_parts_categories);
 
         back = findViewById(R.id.back_arrow1);

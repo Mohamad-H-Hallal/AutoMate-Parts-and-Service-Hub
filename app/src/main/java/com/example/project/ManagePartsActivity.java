@@ -17,7 +17,6 @@ public class ManagePartsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manage_parts);
         backButton = findViewById(R.id.back_arrow2);
 
