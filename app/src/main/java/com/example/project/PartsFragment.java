@@ -56,7 +56,11 @@ public class PartsFragment extends BaseFragment {
         partsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                partsCardFilter.setVisibility(View.VISIBLE);
+                if(partsCardFilter.getVisibility() == View.VISIBLE){
+                    partsCardFilter.setVisibility(View.GONE);
+                }else {
+                    partsCardFilter.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

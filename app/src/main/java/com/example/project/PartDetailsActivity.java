@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,7 +37,7 @@ public class PartDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_part_details);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         horizontalScrollView = findViewById(R.id.horizontalScrollView);
         LinearLayout imageContainer = findViewById(R.id.imageContainer);
         miniMapView = findViewById(R.id.miniMapView);
