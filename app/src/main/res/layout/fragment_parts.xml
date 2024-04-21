@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsClearAll"
-                android:text="Clear all"
+                android:text="@string/clear_all"
                 android:textSize="15sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_marginTop="38dp"
