@@ -4,16 +4,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 public class PartsFragment extends BaseFragment {
 
     private SearchView searchView;
+    private ImageView partsFilter;
+    private CardView partsCardFilter;
 
     public PartsFragment() {
     }
@@ -34,6 +38,8 @@ public class PartsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchView = view.findViewById(R.id.partsSearch);
+        partsFilter = view.findViewById(R.id.partsFilter);
+        partsCardFilter = view.findViewById(R.id.partsCardFilter);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -44,6 +50,13 @@ public class PartsFragment extends BaseFragment {
             public boolean onQueryTextChange(String newText) {
 //                adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        partsFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                partsCardFilter.setVisibility(View.VISIBLE);
             }
         });
     }

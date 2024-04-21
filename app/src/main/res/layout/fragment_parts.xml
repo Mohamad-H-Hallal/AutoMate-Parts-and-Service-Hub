@@ -47,7 +47,7 @@
         android:src="@drawable/ic_filter"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/scrapYardCardFilter"
+        android:id="@+id/partsCardFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
@@ -56,6 +56,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         app:cardCornerRadius="26dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/partsFilter">
@@ -218,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsNegotiable"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginStart="15dp"
                 android:text="@string/negotiable"
                 android:textSize="20sp"
