@@ -51,6 +51,8 @@
     <string name="condition">Condition:</string>
     <string name="negotiable">Negotiable</string>
     <string name="details">Details:</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
         <item>General User</item>

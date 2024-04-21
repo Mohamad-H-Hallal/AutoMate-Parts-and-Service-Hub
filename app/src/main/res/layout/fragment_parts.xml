@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@id/partsCardSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/partsListView"
-        android:src="@drawable/ic_filter"/>
+        android:src="@drawable/ic_filter" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/partsCardFilter"
@@ -56,7 +56,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         app:cardCornerRadius="26dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/partsFilter">
@@ -70,12 +70,24 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/partsFilterText"
                 android:text="@string/filter"
-                android:textSize="30sp"
+                android:textSize="35sp"
                 android:textColor="@color/primaryTextColor"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/partsClearAll"
+                android:text="Clear all"
+                android:textSize="15sp"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginTop="38dp"
+                android:layout_marginEnd="@dimen/loginViewsMargin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,18 +99,19 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsFilterText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsFilterText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsMakeSpinner"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsMakeText"
-                app:layout_constraintTop_toBottomOf="@id/partsFilterText"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/partsClearAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,18 +123,19 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsMakeText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsMakeText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsModelSpinner"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginStart="150dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsModelText"
                 app:layout_constraintTop_toBottomOf="@id/partsMakeSpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,18 +147,19 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsModelText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsModelText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsYearSpinner"
                 android:layout_marginTop="23dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsYearText"
                 app:layout_constraintTop_toBottomOf="@id/partsModelSpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -156,18 +171,19 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsYearText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsYearText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsCategorySpinner"
                 android:layout_marginTop="23dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsCategoryText"
                 app:layout_constraintTop_toBottomOf="@id/partsYearSpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -179,18 +195,19 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsCategoryText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsCategoryText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsSubCategorySpinner"
                 android:layout_marginTop="23dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsSubCategoryText"
                 app:layout_constraintTop_toBottomOf="@id/partsCategorySpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -202,30 +219,82 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsSubCategoryText"/>
+                app:layout_constraintTop_toBottomOf="@id/partsSubCategoryText" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsConditionSpinner"
-                android:layout_marginTop="23dp"
-                android:layout_marginStart="150dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="170dp"
                 style="@style/modifiedEditText"
                 app:layout_constraintStart_toEndOf="@id/partsConditionText"
                 app:layout_constraintTop_toBottomOf="@id/partsSubCategorySpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:entries="@array/spinner"/>
 
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/partsNegotiable"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="15dp"
                 android:text="@string/negotiable"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsConditionSpinner"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/partsConditionText"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/partsPrice"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginEnd="@dimen/loginViewsMargin"
+                android:text="@string/price"
+                android:textColor="@color/darkTextColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/partsNegotiable"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/partsPriceFromEditText"
+                android:layout_marginEnd="200dp"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                style="@style/modifiedEditText"
+                android:hint="@string/from"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/partsPrice"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/partsPriceToEditText"
+                android:layout_marginStart="200dp"
+                android:layout_marginEnd="@dimen/loginViewsMargin"
+                style="@style/modifiedEditText"
+                android:hint="@string/to"
+                app:layout_constraintStart_toEndOf="@id/partsPriceFromEditText"
+                app:layout_constraintTop_toBottomOf="@id/partsPrice"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/partsFilterSubmit"
+                style="@style/loginButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginBottom="@dimen/loginViewsMargin"
+                android:text="@string/submit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/partsPriceToEditText"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
