@@ -58,6 +58,7 @@
     <string name="clear_all">امسح الكل</string>
     <string name="nearest_location">أقرب موقع</string>
     <string name="filtered_by_nearest_location_n">تمت تصفيته حسب أقرب موقع\n</string>
+    <string name="location_prof_click">عرض الموقع</string>
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
         <item>مستخدم عام</item>
@@ -68,4 +69,6 @@
         <item>الإنجليزية</item>
         <item>العربية</item>
     </string-array>
+
+
 </resources>

@@ -40,11 +40,13 @@ public class PartsCategoriesActivity extends BaseActivity {
             back.setImageResource(R.drawable.ic_back_ar);
         }
 
-        List<String> parentList = new ArrayList<>();
+        List<String> parentList = new ArrayList<String>();
+
         parentList.add("Parent 1");
         parentList.add("Parent 2");
 
-        Map<String, List<String>> childMap = new HashMap<>();
+        Map<String, List<String>> childMap =  new HashMap<>();
+
         childMap.put("Parent 1", Arrays.asList("Child 1", "Child 2"));
         childMap.put("Parent 2", Arrays.asList("Child 3", "Child 4"));
 
@@ -59,4 +61,7 @@ public class PartsCategoriesActivity extends BaseActivity {
 
 
     }
+
+
+
 }

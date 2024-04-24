@@ -27,7 +27,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
 
                 <TextView
                     style="@style/viewParent.headerText.NoMode"
@@ -51,6 +53,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputEmail"
                 style="@style/parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="@dimen/loginViewsMargin">
 
                 <EditText
@@ -64,6 +68,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputPassword"
                 style="@style/parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="@dimen/loginViewsMargin">
 
                 <EditText
@@ -77,6 +83,8 @@
             <TextView
                 style="@style/viewParent"
                 android:layout_gravity="end"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/forgot_password"
                 android:textColor="@color/primaryTextColor"

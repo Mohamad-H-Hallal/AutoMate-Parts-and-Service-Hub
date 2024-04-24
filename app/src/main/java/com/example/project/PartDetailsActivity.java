@@ -1,6 +1,9 @@
 package com.example.project;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
@@ -9,6 +12,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +36,8 @@ public class PartDetailsActivity extends BaseActivity {
     HorizontalScrollView horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
+    TextView location;
+    TextView phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,8 @@ public class PartDetailsActivity extends BaseActivity {
         LinearLayout imageContainer = findViewById(R.id.imageContainer);
         miniMapView = findViewById(R.id.miniMapView);
         back = findViewById(R.id.back_arrow4);
+        location = findViewById(R.id.location_part_click);
+        phone = findViewById(R.id.phone_detailtxt);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -111,6 +119,27 @@ public class PartDetailsActivity extends BaseActivity {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(33, 35), 12));
             }
         });
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),MapsLocationActivity.class);
+                i.putExtra("latitude",33);
+                i.putExtra("longitude",35);
+                startActivity(i);
+            }
+        });
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNumber = (String) phone.getText();
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(i);
+            }
+        });
+
     }
 
     // Remember to manage the lifecycle of the MapView

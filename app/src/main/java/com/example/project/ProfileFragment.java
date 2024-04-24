@@ -120,7 +120,6 @@ public class ProfileFragment extends BaseFragment {
         name.setEnabled(false);
         emailtext.setEnabled(false);
         phonetext.setEnabled(false);
-        phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
         editing = false;
 
@@ -157,8 +156,11 @@ public class ProfileFragment extends BaseFragment {
                     name.setEnabled(true);
                     emailtext.setEnabled(true);
                     phonetext.setEnabled(true);
-                    phonetext.setEnabled(true);
                     specializationtext.setEnabled(true);
+                    name.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    emailtext.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimary));
                     Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -166,8 +168,11 @@ public class ProfileFragment extends BaseFragment {
                     name.setEnabled(false);
                     emailtext.setEnabled(false);
                     phonetext.setEnabled(false);
-                    phonetext.setEnabled(false);
                     specializationtext.setEnabled(false);
+                    name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    emailtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 }
             }
