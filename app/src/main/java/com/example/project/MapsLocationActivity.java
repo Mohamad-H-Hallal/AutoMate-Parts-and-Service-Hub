@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsLocationActivity extends BaseActivity implements OnMapReadyCallback {
 
@@ -44,6 +45,7 @@ public class MapsLocationActivity extends BaseActivity implements OnMapReadyCall
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.addMarker(new MarkerOptions().position(my_location).title("Marker Title").snippet("Marker Description"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(my_location, 12f));
 
     }

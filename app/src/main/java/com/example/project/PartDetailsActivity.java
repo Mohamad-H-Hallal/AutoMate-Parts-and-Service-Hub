@@ -28,6 +28,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class PartDetailsActivity extends BaseActivity {
     HorizontalScrollView horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
-    TextView location;
+    ShapeableImageView location;
     TextView phone;
 
     @Override
@@ -116,7 +117,9 @@ public class PartDetailsActivity extends BaseActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // Customize the map as needed
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(33, 35), 12));
+                LatLng location = new LatLng(33, 35);
+                googleMap.addMarker(new MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
             }
         });
 

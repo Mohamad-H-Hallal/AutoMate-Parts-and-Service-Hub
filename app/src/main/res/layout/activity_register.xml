@@ -75,6 +75,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputName"
                         style="@style/parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
                             android:id="@+id/editTextName"
@@ -87,6 +89,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputEmail"
                         style="@style/parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
                             android:id="@+id/editTextEmail"
@@ -99,6 +103,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin">
                         <EditText
                             android:id="@+id/editTextPassword"
@@ -111,6 +117,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputMobile"
                         style="@style/parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:visibility="gone">
                         <EditText
@@ -124,6 +132,8 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputSpecialization"
                         style="@style/parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:visibility="gone">
                         <EditText
@@ -138,8 +148,10 @@
                         android:id="@+id/locationButton"
                         style="@style/locationButton"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:drawableLeft="@drawable/location_icon"
-                        android:gravity="left|center"
+                        android:drawableStart="@drawable/location_icon"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="start|center"
                         android:text="@string/location"
                         android:onClick="onSelectLocationClick"/>
 
@@ -151,6 +163,8 @@
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spinnerAccountType"
                         style="@style/modifiedEditText"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:entries="@array/spinner" />
 

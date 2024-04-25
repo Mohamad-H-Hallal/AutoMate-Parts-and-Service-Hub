@@ -42,7 +42,7 @@
             android:id="@+id/name_part"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="40dp"
             android:textStyle="bold"
             android:text="name"
             android:textColor="@color/colorPrimaryDark"
@@ -124,13 +124,15 @@
             android:id="@+id/pricetxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
             android:text="200$"
             android:textColor="@color/themeColor"
             android:textSize="35sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/details"
             app:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
 
         <TextView
@@ -139,6 +141,7 @@
             android:layout_height="wrap_content"
             android:text="@string/details"
             android:textStyle="bold"
+            android:layout_marginTop="30dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -424,21 +427,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView_description"
-            app:layout_constraintHorizontal_bias="0.25"/>
-        <TextView
-            android:id="@+id/location_part_click"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginStart="10dp"
-            android:textSize="18sp"
-            android:text="@string/location_prof_click"
-            android:textColor="@color/themeColor"
-            app:layout_constraintTop_toBottomOf="@id/cardView_description"
-            app:layout_constraintStart_toEndOf="@id/location_part"
-            app:layout_constraintBottom_toTopOf="@id/cv_minimap"/>
+            app:layout_constraintTop_toBottomOf="@id/cardView_description" />
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_minimap"
@@ -459,6 +449,13 @@
                 android:id="@+id/miniMapView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/location_part_click"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/expand_icon"
+                android:layout_margin="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
