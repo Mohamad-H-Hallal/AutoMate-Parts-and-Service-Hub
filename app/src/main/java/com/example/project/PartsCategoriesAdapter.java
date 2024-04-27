@@ -19,11 +19,13 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
     private Context context;
     private String[] parentList;
     private Map<String, String[]> childMap;
+    private int viewr;
 
-    public PartsCategoriesAdapter(Context context, String[] parentList, Map<String, String[]> childMap) {
+    public PartsCategoriesAdapter(Context context, String[] parentList, Map<String, String[]> childMap,int viewr) {
         this.context = context;
         this.parentList = parentList;
         this.childMap = childMap;
+        this.viewr = viewr;
         updateData();
     }
 
@@ -60,9 +62,13 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(viewr == 0){
                 Intent i = new Intent(context, ManagePartsActivity.class);
                 i.putExtra("categories", childText);
-                context.startActivity(i);
+                context.startActivity(i);}
+                else{
+                    //open viewer intent here
+                }
             }
         });
         return convertView;

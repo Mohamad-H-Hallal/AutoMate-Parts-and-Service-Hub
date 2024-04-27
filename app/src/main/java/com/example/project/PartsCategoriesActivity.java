@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -48,8 +49,10 @@ public class PartsCategoriesActivity extends BaseActivity {
             childMap.put(parentList[i], subcategories[i].split(";"));
         }
 
+        Intent i = getIntent();
+        int v = i.getIntExtra("viewer", 0);
 
-        PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap);
+        PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap,v);
         parts_list.setAdapter(adapter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
