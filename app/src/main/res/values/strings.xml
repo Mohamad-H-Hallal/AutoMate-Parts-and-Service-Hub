@@ -73,5 +73,32 @@
         <item>Arabic</item>
     </string-array>
 
+<string-array name="categories">
+    <item>Engine Components</item>
+    <item>Transmission and Drivetrain</item>
+    <item>Suspension and Steering</item>
+    <item>Braking System</item>
+    <item>Electrical System</item>
+    <item>Cooling System</item>
+    <item>Exhaust System</item>
+    <item>Fuel System</item>
+    <item>Interior Components</item>
+    <item>Exterior Components</item>
+</string-array>
+
+
+    <string-array name="subcategories">
+        <item>Cylinder block;Pistons;Crankshaft;Camshaft;Valves;Timing belt/chain;Intake manifold;Exhaust manifold;Fuel injectors;Spark plugs;Engine control unit (ECU)</item>
+        <item>Transmission (manual or automatic);Clutch (for manual transmission);Gearbox;Drive shafts;Differential;Axles;Transfer case (for 4-wheel drive)</item>
+        <item>Shock absorbers/Struts;Springs;Control arms;Tie rods;Steering rack;Power steering pump;Ball joints;Bushings</item>
+        <item>Brake calipers;Brake pads;Brake rotors;Brake lines;Brake master cylinder;Brake booster;Parking brake assembly</item>
+        <item>Battery;Alternator;Starter motor;Ignition system;Wiring harnesses;Fuses and relays;Lights (headlights, taillights, turn signals);Sensors (ABS sensors, oxygen sensors, etc.)</item>
+        <item>Radiator;Water pump;Thermostat;Cooling fans;Hoses;Coolant reservoir</item>
+        <item>Exhaust pipes;Catalytic converter;Muffler;Exhaust manifold</item>
+        <item>Fuel tank;Fuel pump;Fuel filter;Fuel injectors;Throttle body;Air filter</item>
+        <item>Seats;Dashboard;Steering wheel;Instrument cluster;HVAC system (heating, ventilation, and air conditioning);Audio system</item>
+        <item>Body panels;Bumpers;Mirrors;Doors;Windows;Windshield wipers and washer system</item>
+    </string-array>
+
 
 </resources>

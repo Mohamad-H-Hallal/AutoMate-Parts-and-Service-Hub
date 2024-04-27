@@ -13,13 +13,14 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> parentList;
-    private Map<String, List<String>> childMap;
+    private String[] parentList;
+    private Map<String, String[]> childMap;
 
-    public PartsCategoriesAdapter(Context context, List<String> parentList, Map<String, List<String>> childMap) {
+    public PartsCategoriesAdapter(Context context, String[] parentList, Map<String, String[]> childMap) {
         this.context = context;
         this.parentList = parentList;
         this.childMap = childMap;
@@ -39,7 +40,7 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return childMap.get(parentList.get(groupPosition)).get(childPosition);
+        return Objects.requireNonNull(childMap.get(parentList[groupPosition]))[childPosition];
     }
 
     @Override
@@ -69,17 +70,17 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return childMap.get(parentList.get(groupPosition)).size();
+        return Objects.requireNonNull(childMap.get(parentList[groupPosition])).length;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return parentList.get(groupPosition);
+        return parentList[groupPosition];
     }
 
     @Override
     public int getGroupCount() {
-        return parentList.size();
+        return parentList.length;
     }
 
     @Override

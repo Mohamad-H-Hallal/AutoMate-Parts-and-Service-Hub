@@ -40,15 +40,14 @@ public class PartsCategoriesActivity extends BaseActivity {
             back.setImageResource(R.drawable.ic_back_ar);
         }
 
-        List<String> parentList = new ArrayList<String>();
+        String[] parentList = getResources().getStringArray(R.array.categories);
+        String[] subcategories = getResources().getStringArray(R.array.subcategories);
 
-        parentList.add("Parent 1");
-        parentList.add("Parent 2");
+        Map<String, String[]> childMap =  new HashMap<>();
+        for (int i = 0; i < parentList.length; i++) {
+            childMap.put(parentList[i], subcategories[i].split(";"));
+        }
 
-        Map<String, List<String>> childMap =  new HashMap<>();
-
-        childMap.put("Parent 1", Arrays.asList("Child 1", "Child 2"));
-        childMap.put("Parent 2", Arrays.asList("Child 3", "Child 4"));
 
         PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap);
         parts_list.setAdapter(adapter);
