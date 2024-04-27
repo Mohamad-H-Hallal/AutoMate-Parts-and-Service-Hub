@@ -104,6 +104,8 @@
             <TextView
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:onClick="onLoginClick"
                 android:text="@string/new_user_register_now"
                 android:textAlignment="center"
