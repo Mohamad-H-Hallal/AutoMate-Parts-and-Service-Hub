@@ -11,10 +11,10 @@
         android:id="@+id/partsCardSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="70dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@color/themeColor"
         android:elevation="8dp"
         android:focusable="true"
@@ -34,302 +34,309 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
+        android:id="@+id/partsFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/partsFilter"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
         android:elevation="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/partsCardSearch"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_filter"
         app:layout_constraintBottom_toTopOf="@id/partsListView"
-        android:src="@drawable/ic_filter" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/partsCardSearch"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/partsCardFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:elevation="12dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        app:cardCornerRadius="26dp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="26dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/partsFilter">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true">
 
-            <TextView
-                android:id="@+id/partsFilterText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="10dp"
-                android:text="@string/filter"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="35sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/partsClearAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="@dimen/loginViewsMargin"
-                android:text="@string/clear_all"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/partsMakeSpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/partsMakeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/make"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsFilterText" />
-
-            <Spinner
-                android:id="@+id/partsMakeSpinner"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@id/partsModelSpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsMakeText"
-                app:layout_constraintTop_toBottomOf="@id/partsClearAll" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/partsModelText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/model"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsMakeText" />
+                <TextView
+                    android:id="@+id/partsFilterText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/filter"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="35sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/partsModelSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@id/partsYearSpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsModelText"
-                app:layout_constraintTop_toBottomOf="@id/partsMakeSpinner" />
+                <TextView
+                    android:id="@+id/partsClearAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="@dimen/loginViewsMargin"
+                    android:text="@string/clear_all"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/partsMakeSpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/partsYearText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/year"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsModelText" />
+                <TextView
+                    android:id="@+id/partsMakeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/make"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
 
-            <Spinner
-                android:id="@+id/partsYearSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@id/partsCategorySpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsYearText"
-                app:layout_constraintTop_toBottomOf="@id/partsModelSpinner" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsFilterText" />
 
-            <TextView
-                android:id="@+id/partsCategoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/category"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsYearText" />
+                <Spinner
+                    android:id="@+id/partsMakeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@id/partsModelSpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsMakeText"
+                    app:layout_constraintTop_toBottomOf="@id/partsClearAll" />
 
-            <Spinner
-                android:id="@+id/partsCategorySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@id/partsSubCategorySpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsCategoryText"
-                app:layout_constraintTop_toBottomOf="@id/partsYearSpinner" />
+                <TextView
+                    android:id="@+id/partsModelText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/model"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsMakeText" />
 
-            <TextView
-                android:id="@+id/partsSubCategoryText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/subcategory"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsCategoryText" />
+                <Spinner
+                    android:id="@+id/partsModelSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@id/partsYearSpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsModelText"
+                    app:layout_constraintTop_toBottomOf="@id/partsMakeSpinner" />
 
-            <Spinner
-                android:id="@+id/partsSubCategorySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@id/partsConditionSpinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsSubCategoryText"
-                app:layout_constraintTop_toBottomOf="@id/partsCategorySpinner" />
+                <TextView
+                    android:id="@+id/partsYearText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/year"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsModelText" />
 
-            <TextView
-                android:id="@+id/partsConditionText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/condition"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsSubCategoryText" />
+                <Spinner
+                    android:id="@+id/partsYearSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@id/partsCategorySpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsYearText"
+                    app:layout_constraintTop_toBottomOf="@id/partsModelSpinner" />
 
-            <Spinner
-                android:id="@+id/partsConditionSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="21dp"
-                android:textAlignment="textStart"
-                android:backgroundTint="@color/themeColor"
-                android:entries="@array/spinner"
-                app:layout_constraintBottom_toTopOf="@+id/partsNegotiable"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsConditionText"
-                app:layout_constraintTop_toBottomOf="@id/partsSubCategorySpinner" />
+                <TextView
+                    android:id="@+id/partsCategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/category"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsYearText" />
 
-            <CheckBox
-                android:id="@+id/partsNegotiable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/negotiable"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsConditionText" />
+                <Spinner
+                    android:id="@+id/partsCategorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@id/partsSubCategorySpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsCategoryText"
+                    app:layout_constraintTop_toBottomOf="@id/partsYearSpinner" />
 
-            <CheckBox
-                android:id="@+id/partsLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/nearest_location"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/partsNegotiable"
-                app:layout_constraintTop_toBottomOf="@id/partsConditionText" />
+                <TextView
+                    android:id="@+id/partsSubCategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/subcategory"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsCategoryText" />
 
-            <TextView
-                android:id="@+id/partsPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginEnd="@dimen/loginViewsMargin"
-                android:text="@string/price"
-                android:textColor="@color/darkTextColor"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partsNegotiable" />
+                <Spinner
+                    android:id="@+id/partsSubCategorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@id/partsConditionSpinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsSubCategoryText"
+                    app:layout_constraintTop_toBottomOf="@id/partsCategorySpinner" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/linearPrice"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/partsPrice"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:id="@+id/partsConditionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/condition"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsSubCategoryText" />
 
-            <EditText
-                android:id="@+id/partsPriceFromEditText"
-                style="@style/modifiedEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/loginViewsMargin"
-                android:layout_marginEnd="10dp"
-                android:hint="@string/from"
-                android:inputType="number"
-                android:layout_weight="1"/>
+                <Spinner
+                    android:id="@+id/partsConditionSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="21dp"
+                    android:backgroundTint="@color/themeColor"
+                    android:entries="@array/spinner"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toTopOf="@+id/partsNegotiable"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsConditionText"
+                    app:layout_constraintTop_toBottomOf="@id/partsSubCategorySpinner" />
 
-            <EditText
-                android:id="@+id/partsPriceToEditText"
-                style="@style/modifiedEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/loginViewsMargin"
-                android:layout_marginStart="10dp"
-                android:hint="@string/to"
-                android:inputType="number"
-                android:layout_weight="1"/>
-            </LinearLayout>
+                <CheckBox
+                    android:id="@+id/partsNegotiable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/negotiable"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsConditionText" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/partsFilterSubmit"
-                style="@style/loginButton"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginBottom="@dimen/loginViewsMargin"
-                android:text="@string/submit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearPrice" />
+                <CheckBox
+                    android:id="@+id/partsLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:text="@string/nearest_location"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/partsNegotiable"
+                    app:layout_constraintTop_toBottomOf="@id/partsConditionText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/partsPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/loginViewsMargin"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:layout_marginEnd="@dimen/loginViewsMargin"
+                    android:text="@string/price"
+                    android:textColor="@color/darkTextColor"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsNegotiable" />
+
+                <LinearLayout
+                    android:id="@+id/linearPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partsPrice">
+
+                    <EditText
+                        android:id="@+id/partsPriceFromEditText"
+                        style="@style/modifiedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:hint="@string/from"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/partsPriceToEditText"
+                        style="@style/modifiedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_weight="1"
+                        android:hint="@string/to"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/partsFilterSubmit"
+                    style="@style/loginButton"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/loginViewsMargin"
+                    android:layout_marginBottom="@dimen/loginViewsMargin"
+                    android:text="@string/submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearPrice" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
     </androidx.cardview.widget.CardView>
 
