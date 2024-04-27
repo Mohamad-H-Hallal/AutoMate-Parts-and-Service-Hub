@@ -6,6 +6,30 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/star_rate_icon"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate Me!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/darkTextColor"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+    </LinearLayout>
+
     <RatingBar
         android:id="@+id/rating_bar"
         android:layout_width="wrap_content"

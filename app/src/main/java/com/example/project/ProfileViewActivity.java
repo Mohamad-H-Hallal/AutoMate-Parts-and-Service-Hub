@@ -87,8 +87,7 @@ public class ProfileViewActivity extends AppCompatActivity {
                 final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
                 final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
                 ratingBar.setRating(currentRating);
-                builder.setView(ratingDialogView).setTitle("Rate Mechanic");// or scrapyard
-                builder.setView(ratingDialogView).setIcon(R.drawable.star_rate_icon);
+                builder.setView(ratingDialogView);
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
