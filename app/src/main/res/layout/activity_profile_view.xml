@@ -32,6 +32,7 @@
         app:layout_constraintStart_toStartOf="@id/pr_title"
         app:layout_constraintTop_toTopOf="@id/pr_title"
         app:layout_constraintVertical_bias="1.0" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/v_guideline"
         android:layout_width="wrap_content"
@@ -53,11 +54,11 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
         app:cardCornerRadius="20dp"
-        app:layout_constraintVertical_bias="0.7"
         app:layout_constraintBottom_toTopOf="@+id/v_manageparts"
         app:layout_constraintEnd_toStartOf="@+id/v_guideline2"
         app:layout_constraintStart_toStartOf="@+id/v_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/pr_title">
+        app:layout_constraintTop_toBottomOf="@+id/pr_title"
+        app:layout_constraintVertical_bias="0.7">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -246,24 +247,22 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-
                 app:layout_constraintStart_toStartOf="@+id/v_gl"
                 app:layout_constraintTop_toBottomOf="@id/v_specialization" />
 
             <TextView
                 android:id="@+id/v_biotext"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="texttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                android:layout_marginStart="130dp"
+                android:layout_marginEnd="30dp"
+                android:text="textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttvetvhjbefhvbhdcbiwhdcbnwhicbwihcbicbwihcbihcbehcbeuhcbehucbehucvcbehubcvuffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffxqswdyctfvuygbuhn3bfgyvtdwxysbhjnudcwuevbfgyycdbwhxusnjidchubvgfyebchudwnijchuebvfgybrbeuhcdnjiwehuvbfgyeuhcndwjicdnhuvgbybhucenidjwcnhnuvbgyhucdnwijcundubvygycuhdnwijxschdubgyvfgrecudhnwijxsmndceubevgfyruchdniwjxsmnhcdbuegevyfuchendiwjxmffffffffuujcbtttttttttttttttttttttttttttttt"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/v_bio"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/v_gl2"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@+id/v_bio" />
+                app:layout_constraintStart_toStartOf="@id/v_gl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/v_bio"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -320,7 +319,8 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/v_rating"
-        app:layout_constraintStart_toStartOf="@id/v_guideline"/>
+        app:layout_constraintStart_toStartOf="@id/v_guideline" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/v_rating"
         style="@style/loginButton"
@@ -329,8 +329,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/v_guideline2"
-        app:layout_constraintStart_toEndOf="@id/v_manageparts"/>
-
+        app:layout_constraintStart_toEndOf="@id/v_manageparts" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
