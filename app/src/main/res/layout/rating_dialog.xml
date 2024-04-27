@@ -21,8 +21,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rate Me!"
-        android:textSize="20sp"
+        android:text="@string/rate_me"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/darkTextColor"
         android:layout_marginStart="10dp"

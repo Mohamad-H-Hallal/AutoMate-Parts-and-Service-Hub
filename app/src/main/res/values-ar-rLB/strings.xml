@@ -60,7 +60,7 @@
     <string name="filtered_by_nearest_location_n">تمت تصفيته حسب أقرب موقع\n</string>
     <string name="view_parts">عرض القطع</string>
     <string name="biography">سيرة شخصية:</string>
-    <string name="rate_me">Rate Me</string>
+    <string name="rate_me">قيمني</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
