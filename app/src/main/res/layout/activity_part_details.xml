@@ -396,7 +396,7 @@
                 android:layout_height="match_parent" />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/location_part_click"
-                android:layout_gravity="bottom|left"
+                android:layout_gravity="bottom|right"
                 android:src="@drawable/expand_icon"
                 android:layout_margin="10dp"
                 android:layout_width="30dp"

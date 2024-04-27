@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="130dp"
                 android:layout_marginEnd="30dp"
-                android:text="textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttvetvhjbefhvbhdcbiwhdcbnwhicbwihcbicbwihcbihcbehcbeuhcbehucbehucvcbehubcvuffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffxqswdyctfvuygbuhn3bfgyvtdwxysbhjnudcwuevbfgyycdbwhxusnjidchubvgfyebchudwnijchuebvfgybrbeuhcdnjiwehuvbfgyeuhcndwjicdnhuvgbybhucenidjwcnhnuvbgyhucdnwijcundubvygycuhdnwijxschdubgyvfgrecudhnwijxsmndceubevgfyruchdniwjxsmnhcdbuegevyfuchendiwjxmffffffffuujcbtttttttttttttttttttttttttttttt"
+                android:text="sfdbgefbgwfewr"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/v_gl2"
@@ -330,6 +330,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/v_guideline2"
         app:layout_constraintStart_toEndOf="@id/v_manageparts" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
