@@ -35,315 +35,318 @@
 
 
     <ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/pr_title"
         app:layout_constraintBottom_toBottomOf="parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/v_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/v_guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/v_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/v_manageparts"
-        app:layout_constraintEnd_toStartOf="@+id/v_guideline2"
-        app:layout_constraintStart_toStartOf="@+id/v_guideline">
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/v_gl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/v_guideline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintGuide_begin="20dp" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/v_gl2"
+                android:id="@+id/v_guideline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintGuide_end="20dp" />
 
-            <TextView
-                android:id="@+id/v_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="10dp"
-                android:text="name"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/v_rating_bar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <RatingBar
-                android:id="@+id/v_rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:clickable="false"
-                android:foregroundTint="@color/colorPrimaryDark"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:progressBackgroundTint="#50727B"
-                android:progressTint="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@id/v_info"
-                app:layout_constraintEnd_toStartOf="@+id/v_gl2"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@id/v_name" />
-
-            <TextView
-                android:id="@+id/v_info"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/v_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:text="@string/info"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:backgroundTint="@color/colorAccent"
+                app:cardCornerRadius="20dp"
+               app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/v_ll"
+                app:layout_constraintEnd_toStartOf="@+id/v_guideline2"
+                app:layout_constraintStart_toStartOf="@+id/v_guideline">
 
-                app:layout_constraintBottom_toTopOf="@+id/v_view2"
-                app:layout_constraintEnd_toStartOf="@id/v_gl2"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@+id/v_rating_bar" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp">
 
-            <View
-                android:id="@+id/v_view2"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorPrimaryDark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/v_info" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/v_gl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="20dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/v_gl2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="20dp" />
+
+                    <TextView
+                        android:id="@+id/v_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="name"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/v_rating_bar"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RatingBar
+                        android:id="@+id/v_rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:clickable="false"
+                        android:foregroundTint="@color/colorPrimaryDark"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:progressBackgroundTint="#50727B"
+                        android:progressTint="@color/colorPrimary"
+                        app:layout_constraintBottom_toTopOf="@id/v_info"
+                        app:layout_constraintEnd_toStartOf="@+id/v_gl2"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@id/v_name" />
+
+                    <TextView
+                        android:id="@+id/v_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="start"
+                        android:text="@string/info"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+
+                        app:layout_constraintBottom_toTopOf="@+id/v_view2"
+                        app:layout_constraintEnd_toStartOf="@id/v_gl2"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@+id/v_rating_bar" />
+
+                    <View
+                        android:id="@+id/v_view2"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorPrimaryDark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v_info" />
 
 
-            <TextView
-                android:id="@+id/v_email"
+                    <TextView
+                        android:id="@+id/v_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/email"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toTopOf="@+id/v_view2" />
+
+                    <TextView
+                        android:id="@+id/v_emailtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="test@example.com"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/v_email"
+                        app:layout_constraintStart_toEndOf="@+id/v_email" />
+
+                    <TextView
+                        android:id="@+id/v_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/location_prof"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@+id/v_email" />
+
+                    <TextView
+                        android:id="@+id/v_locationtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="View Location"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/v_location"
+                        app:layout_constraintStart_toEndOf="@+id/v_location" />
+
+                    <TextView
+                        android:id="@+id/v_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/phone"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@+id/v_location" />
+
+                    <TextView
+                        android:id="@+id/v_phonetext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="your phone number"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/v_phone"
+                        app:layout_constraintStart_toEndOf="@+id/v_phone" />
+
+                    <TextView
+                        android:id="@+id/v_specialization"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/specialization"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@+id/v_phone" />
+
+                    <TextView
+                        android:id="@+id/v_specializationtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="text"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/v_specialization"
+                        app:layout_constraintStart_toEndOf="@+id/v_specialization" />
+
+                    <TextView
+                        android:id="@+id/v_bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/biography"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/v_gl"
+                        app:layout_constraintTop_toBottomOf="@id/v_specialization" />
+
+                    <TextView
+                        android:id="@+id/v_biotext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="130dp"
+                        android:layout_marginEnd="30dp"
+                        android:text="textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/v_gl2"
+                        app:layout_constraintStart_toStartOf="@id/v_gl"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/v_bio"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/v_image_bg"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:elevation="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_bg"
+                app:layout_constraintBottom_toTopOf="@id/v_view"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toStartOf="@id/v_guideline2"
+                app:layout_constraintStart_toStartOf="@id/v_guideline"
+                app:layout_constraintTop_toTopOf="@id/v_view"
+                app:shapeAppearanceOverlay="@style/circle" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/v_image_bgw"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:elevation="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_bgw"
+                app:layout_constraintBottom_toTopOf="@id/v_view"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toStartOf="@id/v_guideline2"
+                app:layout_constraintStart_toStartOf="@id/v_guideline"
+                app:layout_constraintTop_toTopOf="@id/v_view"
+                app:shapeAppearanceOverlay="@style/circle" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/v_profile_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:elevation="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_def_icon"
+                app:layout_constraintBottom_toTopOf="@id/v_view"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toStartOf="@id/v_guideline2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/v_guideline"
+                app:layout_constraintTop_toTopOf="@id/v_view"
+                app:shapeAppearance="@style/circle" />
+
+            <LinearLayout
+                android:id="@+id/v_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/email"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toTopOf="@+id/v_view2" />
-
-            <TextView
-                android:id="@+id/v_emailtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="test@example.com"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/v_email"
-                app:layout_constraintStart_toEndOf="@+id/v_email" />
-
-            <TextView
-                android:id="@+id/v_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/location_prof"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@+id/v_email" />
-
-            <TextView
-                android:id="@+id/v_locationtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="View Location"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/v_location"
-                app:layout_constraintStart_toEndOf="@+id/v_location" />
-
-            <TextView
-                android:id="@+id/v_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/phone"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@+id/v_location" />
-
-            <TextView
-                android:id="@+id/v_phonetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="your phone number"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/v_phone"
-                app:layout_constraintStart_toEndOf="@+id/v_phone" />
-
-            <TextView
-                android:id="@+id/v_specialization"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/specialization"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@+id/v_phone" />
-
-            <TextView
-                android:id="@+id/v_specializationtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="text"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/v_specialization"
-                app:layout_constraintStart_toEndOf="@+id/v_specialization" />
-
-            <TextView
-                android:id="@+id/v_bio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/biography"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/v_gl"
-                app:layout_constraintTop_toBottomOf="@id/v_specialization" />
-
-            <TextView
-                android:id="@+id/v_biotext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="130dp"
-                android:layout_marginEnd="30dp"
-                android:text="textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/v_gl2"
-                app:layout_constraintStart_toStartOf="@id/v_gl"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@id/v_bio"/>
+                app:layout_constraintEnd_toEndOf="@id/v_guideline2"
+                app:layout_constraintStart_toStartOf="@id/v_guideline"
+                app:layout_constraintTop_toBottomOf="@id/v_view">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/v_manageparts"
+                    style="@style/loginButton"
+                    android:text="@string/view_parts"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/v_rating"
+                    style="@style/loginButton"
+                    android:text="@string/rate_me"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/v_image_bg"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:elevation="2dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profile_bg"
-        app:layout_constraintBottom_toTopOf="@id/v_view"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
-        app:layout_constraintStart_toStartOf="@id/v_guideline"
-        app:layout_constraintTop_toTopOf="@id/v_view"
-        app:shapeAppearanceOverlay="@style/circle" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/v_image_bgw"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:elevation="2dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profile_bgw"
-        app:layout_constraintBottom_toTopOf="@id/v_view"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
-        app:layout_constraintStart_toStartOf="@id/v_guideline"
-        app:layout_constraintTop_toTopOf="@id/v_view"
-        app:shapeAppearanceOverlay="@style/circle" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/v_profile_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:elevation="2dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profile_def_icon"
-        app:layout_constraintBottom_toTopOf="@id/v_view"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/v_guideline"
-        app:layout_constraintTop_toTopOf="@id/v_view"
-        app:layout_constraintVertical_bias="0.5"
-        app:shapeAppearance="@style/circle" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/v_manageparts"
-            style="@style/loginButton"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@string/view_parts"
-            android:textColor="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/v_rating"
-            app:layout_constraintStart_toStartOf="@id/v_guideline" />
-
-        <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/v_rating"
-        style="@style/loginButton"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/rate_me"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/v_guideline2"
-        app:layout_constraintTop_toBottomOf="@id/v_view"
-        app:layout_constraintStart_toEndOf="@id/v_manageparts" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
