@@ -67,7 +67,9 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
                 i.putExtra("categories", childText);
                 context.startActivity(i);}
                 else{
-                    //open viewer intent here
+                    Intent i = new Intent(context, ViewPartsActivity.class);
+                    i.putExtra("categories", childText);
+                    context.startActivity(i);
                 }
             }
         });
