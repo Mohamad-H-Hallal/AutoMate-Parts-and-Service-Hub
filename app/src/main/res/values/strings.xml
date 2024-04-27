@@ -57,6 +57,9 @@
     <string name="clear_all">Clear all</string>
     <string name="nearest_location">Nearest Location</string>
     <string name="filtered_by_nearest_location_n">Filtered by Nearest Location\n</string>
+    <string name="view_parts">View Parts</string>
+    <string name="biography">Biography:</string>
+    <string name="rate_me">Rate Me</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

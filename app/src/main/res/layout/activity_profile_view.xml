@@ -7,43 +7,57 @@
     android:background="@color/colorPrimary"
     tools:context=".ProfileFragment">
 
+    <TextView
+        android:id="@+id/pr_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:paddingStart="52dp"
+        android:paddingTop="10dp"
+        android:text="@string/profile"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/back_arrow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_back_en"
+        app:layout_constraintBottom_toBottomOf="@id/pr_title"
+        app:layout_constraintStart_toStartOf="@id/pr_title"
+        app:layout_constraintTop_toTopOf="@id/pr_title"
+        app:layout_constraintVertical_bias="1.0" />
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/v_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/v_guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="20dp" />
 
-    <ImageButton
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/setting_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/view"
+        android:id="@+id/v_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/manageparts"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintBottom_toTopOf="@+id/v_manageparts"
+        app:layout_constraintEnd_toStartOf="@+id/v_guideline2"
+        app:layout_constraintStart_toStartOf="@+id/v_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/pr_title">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -51,39 +65,39 @@
             android:paddingBottom="20dp">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl"
+                android:id="@+id/v_gl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="20dp" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl2"
+                android:id="@+id/v_gl2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="20dp" />
 
-            <EditText
-                android:id="@+id/name"
+            <TextView
+                android:id="@+id/v_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="70dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
                 android:text="name"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/rating_bar"
+                app:layout_constraintBottom_toTopOf="@id/v_rating_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
-                android:id="@+id/rating_bar"
+                android:id="@+id/v_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -93,13 +107,13 @@
                 android:numStars="5"
                 android:progressBackgroundTint="#50727B"
                 android:progressTint="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@id/info"
-                app:layout_constraintEnd_toStartOf="@+id/gl2"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toBottomOf="@id/name" />
+                app:layout_constraintBottom_toTopOf="@id/v_info"
+                app:layout_constraintEnd_toStartOf="@+id/v_gl2"
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@id/v_name" />
 
             <TextView
-                android:id="@+id/info"
+                android:id="@+id/v_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -110,24 +124,24 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
 
-                app:layout_constraintBottom_toTopOf="@+id/view2"
-                app:layout_constraintEnd_toStartOf="@id/gl2"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toBottomOf="@+id/rating_bar" />
+                app:layout_constraintBottom_toTopOf="@+id/v_view2"
+                app:layout_constraintEnd_toStartOf="@id/v_gl2"
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@+id/v_rating_bar" />
 
             <View
-                android:id="@+id/view2"
+                android:id="@+id/v_view2"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/info" />
+                app:layout_constraintTop_toBottomOf="@+id/v_info" />
 
 
             <TextView
-                android:id="@+id/email"
+                android:id="@+id/v_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -136,22 +150,22 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toTopOf="@+id/view2" />
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toTopOf="@+id/v_view2" />
 
-            <EditText
-                android:id="@+id/emailtext"
+            <TextView
+                android:id="@+id/v_emailtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="test@example.com"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/email"
-                app:layout_constraintStart_toEndOf="@+id/email" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/v_email"
+                app:layout_constraintStart_toEndOf="@+id/v_email" />
 
             <TextView
-                android:id="@+id/location"
+                android:id="@+id/v_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -160,22 +174,22 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@+id/v_email" />
 
             <TextView
-                android:id="@+id/locationtext"
+                android:id="@+id/v_locationtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/your_location"
+                android:text="View Location"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/location"
-                app:layout_constraintStart_toEndOf="@+id/location" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/v_location"
+                app:layout_constraintStart_toEndOf="@+id/v_location" />
 
             <TextView
-                android:id="@+id/phone"
+                android:id="@+id/v_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -184,24 +198,22 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toBottomOf="@+id/location" />
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@+id/v_location" />
 
-            <EditText
-                android:id="@+id/phonetext"
+            <TextView
+                android:id="@+id/v_phonetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="your phone number"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBaseline_toBaselineOf="@+id/phone"
-                app:layout_constraintStart_toEndOf="@+id/phone" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/v_phone"
+                app:layout_constraintStart_toEndOf="@+id/v_phone" />
 
             <TextView
-                android:id="@+id/specialization"
+                android:id="@+id/v_specialization"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -210,89 +222,115 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/gl"
-                app:layout_constraintTop_toBottomOf="@+id/phone" />
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@+id/v_phone" />
 
-            <EditText
-                android:id="@+id/specializationtext"
+            <TextView
+                android:id="@+id/v_specializationtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="text"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBaseline_toBaselineOf="@+id/specialization"
-                app:layout_constraintStart_toEndOf="@+id/specialization" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/v_specialization"
+                app:layout_constraintStart_toEndOf="@+id/v_specialization" />
+
+            <TextView
+                android:id="@+id/v_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/biography"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="@+id/v_gl"
+                app:layout_constraintTop_toBottomOf="@id/v_specialization" />
+
+            <TextView
+                android:id="@+id/v_biotext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="texttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/v_bio"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/v_gl2"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/v_bio" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_bg"
+        android:id="@+id/v_image_bg"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:elevation="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_bg"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@id/v_view"
         app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
+        app:layout_constraintStart_toStartOf="@id/v_guideline"
+        app:layout_constraintTop_toTopOf="@id/v_view"
         app:shapeAppearanceOverlay="@style/circle" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_bgw"
+        android:id="@+id/v_image_bgw"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:elevation="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_bgw"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@id/v_view"
         app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
+        app:layout_constraintStart_toStartOf="@id/v_guideline"
+        app:layout_constraintTop_toTopOf="@id/v_view"
         app:shapeAppearanceOverlay="@style/circle" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/profile_image"
+        android:id="@+id/v_profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:elevation="2dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_def_icon"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@id/v_view"
         app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@id/v_guideline2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@id/v_guideline"
+        app:layout_constraintTop_toTopOf="@id/v_view"
         app:layout_constraintVertical_bias="0.5"
         app:shapeAppearance="@style/circle" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/manageparts"
+        android:id="@+id/v_manageparts"
         style="@style/loginButton"
         android:layout_marginBottom="20dp"
-        android:text="@string/manage_parts"
+        android:text="@string/view_parts"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/edit"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/profile_bg"
-        android:src="@drawable/edit_icon"
+        app:layout_constraintEnd_toStartOf="@id/v_rating"
+        app:layout_constraintStart_toStartOf="@id/v_guideline"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/v_rating"
+        style="@style/loginButton"
+        android:layout_marginBottom="20dp"
+        android:text="@string/rate_me"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/v_guideline2"
+        app:layout_constraintStart_toEndOf="@id/v_manageparts"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

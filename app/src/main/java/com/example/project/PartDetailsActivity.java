@@ -1,6 +1,5 @@
 package com.example.project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,33 +7,27 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartDetailsActivity extends BaseActivity {
-    HorizontalScrollView horizontalScrollView;
+    ViewPager horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
     ShapeableImageView location;
@@ -46,7 +39,6 @@ public class PartDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_part_details);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         horizontalScrollView = findViewById(R.id.horizontalScrollView);
-        LinearLayout imageContainer = findViewById(R.id.imageContainer);
         miniMapView = findViewById(R.id.miniMapView);
         back = findViewById(R.id.back_arrow4);
         location = findViewById(R.id.location_part_click);
@@ -82,7 +74,13 @@ public class PartDetailsActivity extends BaseActivity {
             }
         });
 
-//        List<String> imageUrls = fetchImageUrlsFromDatabase(); // Implement this method to fetch image URLs
+
+
+//        List<String> imageUrls = getImageUrlsFromDatabase(); // Retrieve image URLs from your database
+        ImageSliderAdapter adapter = new ImageSliderAdapter(this);
+//        ImageSliderAdapter adapter = new ImageSliderAdapter(this, imageUrls);
+        horizontalScrollView.setAdapter(adapter);
+
 
 //        int imageWidth = getResources().getDimensionPixelSize(R.dimen.image_width);
 //        int imageHeight = getResources().getDimensionPixelSize(R.dimen.image_height);
