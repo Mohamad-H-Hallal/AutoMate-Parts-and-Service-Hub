@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddPartsActivity"
-    android:background="@color/login_bk_color">
+    android:background="@color/login_bk_color"
+    tools:context=".AddPartsActivity">
 
     <TextView
         android:id="@+id/addPartTitle"
@@ -37,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="57dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addPartTitle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +70,8 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartMake"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:id="@+id/addPartModel"
@@ -94,7 +95,9 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartModel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartMakeSpinner"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:id="@+id/addPartYear"
@@ -118,7 +121,9 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartYear"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartModelSpinner"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:id="@+id/addPartCategory"
@@ -142,7 +147,9 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartCategory"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartYearSpinner"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:id="@+id/addPartSubCategory"
@@ -166,7 +173,9 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartSubCategory"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartCategorySpinner"
+                android:entries="@array/spinner"/>
 
             <TextView
                 android:id="@+id/addPartCondition"
@@ -190,60 +199,76 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartCondition"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartSubCategorySpinner"
+                android:entries="@array/spinner"/>
 
             <CheckBox
+                android:id="@+id/addPartNegotiable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/addPartNegotiable"
                 android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
                 android:text="@string/negotiable"
                 android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/addPartCondition"/>
-
-            <EditText
-            android:id="@+id/addPartName"
-            style="@style/modifiedEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:hint="@string/name"
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addPartNegotiable"/>
-
-            <EditText
-                android:id="@+id/addPartPrice"
-                style="@style/modifiedEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:hint="@string/addPrice"
-                android:inputType="numberDecimal"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartName"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartCondition" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputAddPartName"
+                style="@style/parent"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addPartNegotiable">
+
+                <EditText
+                    android:id="@+id/addPartName"
+                    style="@style/modifiedEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputAddPartPrice"
+                style="@style/parent"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputAddPartName">
+
+                <EditText
+                    android:id="@+id/addPartPrice"
+                    style="@style/modifiedEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/addPrice"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
+                style="@style/loginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/loginButton"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:text="@string/add"
-                app:layout_constraintTop_toBottomOf="@id/addPartPrice"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputAddPartPrice" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
