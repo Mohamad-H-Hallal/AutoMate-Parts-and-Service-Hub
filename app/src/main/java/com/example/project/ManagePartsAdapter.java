@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,14 @@ public class ManagePartsAdapter extends BaseAdapter {
         holder.txtCondition = rowView.findViewById(R.id.txtManageCondition);
         holder.delete = rowView.findViewById(R.id.icon_delete);
         JSONObject obj = data.optJSONObject(position);
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditPartActivity.class);
+                intent.putExtra("id", obj.optString("id"));
+                context.startActivity(intent);
+            }
+        });
         return null;
     }
 }
