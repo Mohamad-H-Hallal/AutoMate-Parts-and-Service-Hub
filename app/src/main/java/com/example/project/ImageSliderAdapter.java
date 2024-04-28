@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ImageSliderAdapter extends FragmentStatePagerAdapter {
 
-    private List<Integer> imageList;
+    private List<String> imageList;
 
-    public ImageSliderAdapter(FragmentManager fm, List<Integer> imageList) {
+    public ImageSliderAdapter(FragmentManager fm, List<String> imageList) {
         super(fm);
         this.imageList = imageList;
     }

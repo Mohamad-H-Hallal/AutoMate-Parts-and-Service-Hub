@@ -14,14 +14,14 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class EditImageFragment extends Fragment {
 
-    private static final String ARG_IMAGE_RES = "image_res";
+    private static final String ARG_IMAGE_RES = "image_url";
 
-    private int imageRes;
+    private String imageRes;
 
-    public static EditImageFragment newInstance(int imageRes) {
+    public static EditImageFragment newInstance(String imageRes) {
         EditImageFragment fragment = new EditImageFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_IMAGE_RES, imageRes);
+        args.putString(ARG_IMAGE_RES, imageRes);
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,7 +30,7 @@ public class EditImageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imageRes = getArguments().getInt(ARG_IMAGE_RES);
+            imageRes = getArguments().getString(ARG_IMAGE_RES);
         }
     }
 

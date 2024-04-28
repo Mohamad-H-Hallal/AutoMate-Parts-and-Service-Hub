@@ -15,6 +15,7 @@ import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,7 +36,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -181,8 +188,17 @@ public class RegisterActivity extends BaseActivity {
                     if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
                         Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                         if (imageBitmap != null) {
+                            // Save the captured image to a file in external storage
+                            File imageFile = saveImageToFile(imageBitmap);
+                            if (imageFile != null) {
 
-                            setProfilePicture(imageBitmap);
+                                uriImage = Uri.fromFile(imageFile);
+
+                                String imageUrl = uriImage.toString();
+                                Glide.with(this).load(uriImage).into(profilePictureView);
+                            } else {
+                                Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(this, "Failed to get image from camera", Toast.LENGTH_SHORT).show();
                         }
@@ -216,6 +232,37 @@ public class RegisterActivity extends BaseActivity {
     public void onSelectLocationClick(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivityForResult(intent, MAP_REQUEST_CODE);
+    }
+
+    private File saveImageToFile(Bitmap imageBitmap) {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "AutoMate");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(mediaFile);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return mediaFile;
     }
 
 }
