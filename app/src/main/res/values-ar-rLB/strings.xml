@@ -61,6 +61,7 @@
     <string name="view_parts">عرض القطع</string>
     <string name="biography">سيرة شخصية:</string>
     <string name="rate_me">قيمني</string>
+    <string name="add_image">إضافة صورة</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

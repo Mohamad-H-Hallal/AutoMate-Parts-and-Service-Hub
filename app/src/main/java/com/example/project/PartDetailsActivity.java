@@ -75,10 +75,13 @@ public class PartDetailsActivity extends BaseActivity {
         });
 
 
+        List<Integer> imageList = new ArrayList<>();
+        // Add your image resources to the list
+        imageList.add(R.drawable.test);
+        imageList.add(R.drawable.test);
+        imageList.add(R.drawable.test);
 
-//        List<String> imageUrls = getImageUrlsFromDatabase(); // Retrieve image URLs from your database
-        ImageSliderAdapter adapter = new ImageSliderAdapter(this);
-//        ImageSliderAdapter adapter = new ImageSliderAdapter(this, imageUrls);
+        ImageSliderAdapter adapter = new ImageSliderAdapter(getSupportFragmentManager(), imageList);
         horizontalScrollView.setAdapter(adapter);
 
 

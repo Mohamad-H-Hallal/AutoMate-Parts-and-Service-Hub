@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewtest"
+        android:id="@+id/e_cardViewtest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -18,9 +18,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/images_scroll"
+            android:id="@+id/e_images_scroll"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="centerCrop"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/e_images_delete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="10dp"
+            android:src="@drawable/delete_icon"
+            android:elevation="10dp"/>
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

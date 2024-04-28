@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void resetPassword(View view) {
-        Intent resetPass = new Intent(this, ProfileViewActivity.class);
+        Intent resetPass = new Intent(this, PartDetailsActivity.class);
         startActivity(resetPass);
     }
 
