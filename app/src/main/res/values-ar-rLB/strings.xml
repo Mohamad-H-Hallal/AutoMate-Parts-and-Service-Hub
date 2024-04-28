@@ -63,6 +63,8 @@
     <string name="rate_me">قيمني</string>
     <string name="add_image">إضافة صورة</string>
     <string name="add_part">اضافة قطعة</string>
+    <string name="addPrice">السعر (بالدولار)</string>
+    <string name="add">أضف</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
