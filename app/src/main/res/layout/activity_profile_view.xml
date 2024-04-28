@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/back_arrow4"
+        android:id="@+id/back_arrow6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="2dp"

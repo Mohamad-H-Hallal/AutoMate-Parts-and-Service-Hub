@@ -43,7 +43,7 @@ public class ProfileViewActivity extends BaseActivity {
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         bar = findViewById(R.id.v_rating_bar);
         bar.setRating((float)3.5);
-        back = findViewById(R.id.back_arrow4);
+        back = findViewById(R.id.back_arrow6);
         location = findViewById(R.id.v_locationtext);
         rate = findViewById(R.id.v_rating);
         partsview = findViewById(R.id.v_manageparts);
