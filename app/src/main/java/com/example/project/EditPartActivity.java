@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.MotionEvent;
@@ -29,8 +30,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EditPartActivity extends BaseActivity {
     ViewPager horizontalScrollView;
@@ -38,7 +46,7 @@ public class EditPartActivity extends BaseActivity {
     ImageButton back;
     ShapeableImageView location;
     TextView phone;
-    List<Integer> imageList;
+    List<String> imageList;
     ImageEditAdapter adapter;
     TextView add;
     private String typeOfImage = "";
@@ -149,12 +157,12 @@ public class EditPartActivity extends BaseActivity {
         Intent chooser = Intent.createChooser(galleryIntent, "Select Image Source");
         startActivityForResult(chooser, GALLERY_REQUEST_CODE);
     }
-    public void addImage(int imageRes) {
+    public void addImage(String imageRes) {
         imageList.add(imageRes);
         adapter.notifyDataSetChanged();
     }
 
-    public void deleteImage(int imageRes) {
+    public void deleteImage(String imageRes) {
         int position = imageList.indexOf(imageRes);
         if (position != -1) {
             imageList.remove(position);
@@ -169,6 +177,7 @@ public class EditPartActivity extends BaseActivity {
                 case GALLERY_REQUEST_CODE:
                     if (data.getData() != null) {
                         uriImage = data.getData();
+                        addImage(uriImage.toString());
                         ContentResolver cr = this.getContentResolver();
                         typeOfImage = cr.getType(uriImage);
                         nameOfImage = "icon_" + System.currentTimeMillis() + "." + typeOfImage.replace("image/", "");
@@ -180,9 +189,19 @@ public class EditPartActivity extends BaseActivity {
                     if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
                         Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                         if (imageBitmap != null) {
+                            // Save the captured image to a file in external storage
+                            File imageFile = saveImageToFile(imageBitmap);
+                            if (imageFile != null) {
+                                // Get the URI of the saved image file
+                                uriImage = Uri.fromFile(imageFile);
 
-
-                        } else {
+                                // Now, you can use uriImage to get the URL if needed
+                                String imageUrl = uriImage.toString();
+                                // Use imageUrl as needed
+                            } else {
+                                Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
                             Toast.makeText(this, "Failed to get image from camera", Toast.LENGTH_SHORT).show();
                         }
                     } else {
@@ -201,6 +220,37 @@ public class EditPartActivity extends BaseActivity {
 
             }
         }
+    }
+
+    private File saveImageToFile(Bitmap imageBitmap) {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "AutoMate");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(mediaFile);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return mediaFile;
     }
 
     @Override

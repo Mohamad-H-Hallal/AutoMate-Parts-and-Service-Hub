@@ -13,14 +13,14 @@ import com.bumptech.glide.Glide;
 
 public class ImageFragment extends Fragment {
 
-    private static final String ARG_IMAGE_RES = "image_res";
+    private static final String ARG_IMAGE_RES = "image_url";
 
-    private int imageRes;
+    private String imageRes;
 
-    public static ImageFragment newInstance(int imageRes) {
+    public static ImageFragment newInstance(String imageRes) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_IMAGE_RES, imageRes);
+        args.putString(ARG_IMAGE_RES, imageRes);
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,7 +29,7 @@ public class ImageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imageRes = getArguments().getInt(ARG_IMAGE_RES);
+            imageRes = getArguments().getString(ARG_IMAGE_RES);
         }
     }
 

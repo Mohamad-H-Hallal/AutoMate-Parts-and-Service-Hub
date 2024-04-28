@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileFragment extends BaseFragment {
@@ -270,8 +278,18 @@ public class ProfileFragment extends BaseFragment {
                     if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
                         Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                         if (imageBitmap != null) {
+                            // Save the captured image to a file in external storage
+                            File imageFile = saveImageToFile(imageBitmap);
+                            if (imageFile != null) {
 
-                            profile_image.setImageBitmap(imageBitmap);
+                                uriImage = Uri.fromFile(imageFile);
+
+                                String imageUrl = uriImage.toString();
+                                Glide.with(this).load(uriImage).into(profile_image);
+
+                            } else {
+                                Toast.makeText(getContext(), "Failed to save image", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(getContext(), "Failed to get image from camera", Toast.LENGTH_SHORT).show();
                         }
@@ -291,5 +309,35 @@ public class ProfileFragment extends BaseFragment {
 
             }
         }
+    }
+    private File saveImageToFile(Bitmap imageBitmap) {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "AutoMate");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(mediaFile);
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return mediaFile;
     }
 }

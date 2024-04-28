@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ImageEditAdapter extends FragmentStatePagerAdapter {
 
-    private List<Integer> imageList;
+    private List<String> imageList;
 
-    public ImageEditAdapter(FragmentManager fm, List<Integer> imageList) {
+    public ImageEditAdapter(FragmentManager fm, List<String> imageList) {
         super(fm);
         this.imageList = imageList;
     }
