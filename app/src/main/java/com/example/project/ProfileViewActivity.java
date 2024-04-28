@@ -26,7 +26,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ProfileViewActivity extends AppCompatActivity {
+public class ProfileViewActivity extends BaseActivity {
     RatingBar bar;
     ImageButton back;
     TextView location;
