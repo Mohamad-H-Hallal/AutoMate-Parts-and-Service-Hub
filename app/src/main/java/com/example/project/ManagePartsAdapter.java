@@ -70,6 +70,13 @@ public class ManagePartsAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        return null;
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete from databse
+                notifyDataSetChanged();
+            }
+        });
+            return null;
     }
 }

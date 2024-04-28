@@ -60,6 +60,7 @@
     <string name="view_parts">View Parts</string>
     <string name="biography">Biography:</string>
     <string name="rate_me">Rate Me</string>
+    <string name="add_image">Add Image</string>
     <string name="add_part">Add Part</string>
 
     <string-array name="spinner">

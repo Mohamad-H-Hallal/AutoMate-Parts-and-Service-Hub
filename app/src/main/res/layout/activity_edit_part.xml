@@ -1,9 +1,430 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".EditPartActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/e_part_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:paddingStart="52dp"
+            android:paddingTop="10dp"
+            android:text="@string/part_details"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/back_arrow8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_back_en"
+            app:layout_constraintBottom_toBottomOf="@id/e_part_details_title"
+            app:layout_constraintStart_toStartOf="@id/e_part_details_title"
+            app:layout_constraintTop_toTopOf="@id/e_part_details_title"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/e_name_part"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:text="name"
+            android:textColor="@color/colorPrimaryDark"
+
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_part_details_title" />
+
+        <TextView
+            android:id="@+id/e_add_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_image"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toTopOf="@+id/e_horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="@id/e_horizontalScrollView"
+            app:layout_constraintTop_toBottomOf="@id/e_name_part"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/e_horizontalScrollView"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_name_part">
+
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <EditText
+            android:id="@+id/e_pricetxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="200$"
+            android:textColor="@color/themeColor"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/e_details"
+            app:layout_constraintTop_toBottomOf="@id/e_horizontalScrollView" />
+
+        <TextView
+            android:id="@+id/e_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_pricetxt" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/e_cardView_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:padding="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_details">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/cardview_border">
+                <TextView
+                    android:id="@+id/e_scrapyardname_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/scrapyard_name"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/e_scrapyardname_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_scrapyardname_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/e_model_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/model"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detail" />
+                <EditText
+                    android:id="@+id/e_model_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_model_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detailtxt" />
+                <TextView
+                    android:id="@+id/e_make_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/make"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_model_detail" />
+                <EditText
+                    android:id="@+id/e_make_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_make_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_model_detailtxt" />
+                <TextView
+                    android:id="@+id/e_year_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/year"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_make_detail" />
+                <EditText
+                    android:id="@+id/e_year_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_year_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_make_detailtxt" />
+                <TextView
+                    android:id="@+id/e_category_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/category"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_year_detail" />
+
+                <EditText
+                    android:id="@+id/e_category_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_category_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_year_detailtxt" />
+                <TextView
+                    android:id="@+id/e_subcategory_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/subcategory"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_category_detail" />
+                <EditText
+                    android:id="@+id/e_subcategory_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_subcategory_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_category_detailtxt" />
+                <TextView
+                    android:id="@+id/e_condition_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/condition"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_subcategory_detail" />
+                <EditText
+                    android:id="@+id/e_condition_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_condition_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_subcategory_detailtxt" />
+                <TextView
+                    android:id="@+id/e_negotiable_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/negotiable"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_condition_detail" />
+                <EditText
+                    android:id="@+id/e_negotiable_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="model"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_negotiable_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_condition_detailtxt"/>
+                <TextView
+                    android:id="@+id/e_phone_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/phone"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_negotiable_detail" />
+
+                <EditText
+                    android:id="@+id/e_phone_detailtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="180dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/themeColor"
+                    android:text="70 055678"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/e_phone_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/e_negotiable_detailtxt"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/e_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="@string/description"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_cardView_details" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/e_cardView_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_description">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="30dp"
+                android:background="@drawable/cardview_border">
+
+                <EditText
+                    android:id="@+id/e_descriptiontxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="good product!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/e_location_part"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="@string/location_prof"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_cardView_description" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/e_cv_minimap"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/e_location_part">
+
+            <com.example.project.CustomMapView
+                android:id="@+id/e_miniMapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/e_location_part_click"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/edit_icon"
+                android:layout_margin="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

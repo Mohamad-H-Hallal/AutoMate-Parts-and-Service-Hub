@@ -7,18 +7,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class ImageSliderAdapter extends FragmentStatePagerAdapter {
+public class ImageEditAdapter extends FragmentStatePagerAdapter {
 
     private List<Integer> imageList;
 
-    public ImageSliderAdapter(FragmentManager fm, List<Integer> imageList) {
+    public ImageEditAdapter(FragmentManager fm, List<Integer> imageList) {
         super(fm);
         this.imageList = imageList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ImageFragment.newInstance(imageList.get(position));
+        return EditImageFragment.newInstance(imageList.get(position));
     }
 
     @Override
