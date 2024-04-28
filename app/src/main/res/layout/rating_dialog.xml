@@ -1,68 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/rate_alert_dialog"
     android:layout_gravity="center"
+    android:background="@drawable/rate_alert_dialog"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/rd_l1"
+        android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/star_rate_icon"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/loginViewsMargin"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:src="@drawable/star_rate_icon" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rate_me"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/darkTextColor"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/loginViewsMargin"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="@string/rate_me"
+            android:textColor="@color/darkTextColor"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <RatingBar
         android:id="@+id/rating_bar"
+        style="@style/Widget.AppCompat.RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:layout_margin="10dp"
         android:layout_gravity="center_horizontal"
-        style="@style/Widget.AppCompat.RatingBar" />
+        android:layout_margin="@dimen/loginViewsMargin"
+        android:numStars="5" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submit_button"
+            style="@style/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
-            style="@style/loginButton"
+            android:layout_weight="1"
             android:text="@string/submit" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cancel_button"
+            style="@style/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            style="@style/loginButton"
+            android:layout_weight="1"
             android:text="@string/cancel" />
 
     </LinearLayout>
+
 </LinearLayout>

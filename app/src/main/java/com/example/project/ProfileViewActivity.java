@@ -1,11 +1,16 @@
 package com.example.project;
 
+import static java.security.AccessController.getContext;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -15,6 +20,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -82,7 +88,7 @@ public class ProfileViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ProfileViewActivity.this);
-                View ratingDialogView = getLayoutInflater().inflate(R.layout.rating_dialog, null);
+                View ratingDialogView = LayoutInflater.from(ProfileViewActivity.this).inflate(R.layout.rating_dialog, null);
                 final RatingBar ratingBar = ratingDialogView.findViewById(R.id.rating_bar);
                 final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
                 final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
@@ -107,6 +113,7 @@ public class ProfileViewActivity extends AppCompatActivity {
                     }
                 });
                 ratingDialog = builder.create();
+                ratingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ratingDialog.show();
             }
         });
