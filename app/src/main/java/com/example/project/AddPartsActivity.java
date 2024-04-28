@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
@@ -29,5 +30,11 @@ public class AddPartsActivity extends BaseActivity {
         } else if (selectedLanguage.equals("ar")) {
             back.setImageResource(R.drawable.ic_back_ar);
         }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

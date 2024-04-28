@@ -23,14 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
-            android:id="@+id/scrapYardSearch"
+        <androidx.appcompat.widget.SearchView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/scrapYardSearch"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_scrap_yards"
             android:focusable="true"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/search_scrap_yards"
-            android:searchIcon="@drawable/ic_search" />
+            app:searchIcon="@drawable/ic_search"/>
     </androidx.cardview.widget.CardView>
 
     <ImageView

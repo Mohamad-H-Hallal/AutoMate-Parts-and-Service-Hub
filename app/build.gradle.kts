@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.project"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     implementation("androidx.activity:activity:1.9.0")
+    implementation("com.android.car.ui:car-ui-lib:2.6.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.android.volley:volley:1.2.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")

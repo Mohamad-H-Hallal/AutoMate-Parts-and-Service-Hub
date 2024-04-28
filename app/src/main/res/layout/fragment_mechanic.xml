@@ -23,14 +23,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SearchView
-            android:id="@+id/mechanicsSearch"
+        <androidx.appcompat.widget.SearchView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/mechanicsSearch"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/searchMechanics"
             android:focusable="true"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/searchMechanics"
-            android:searchIcon="@drawable/ic_search" />
+            app:searchIcon="@drawable/ic_search"/>
     </androidx.cardview.widget.CardView>
 
     <ImageView

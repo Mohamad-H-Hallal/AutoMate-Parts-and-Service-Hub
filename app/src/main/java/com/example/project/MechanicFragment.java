@@ -4,18 +4,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 public class MechanicFragment extends BaseFragment {
 
-    private SearchView searchView;
+    private androidx.appcompat.widget.SearchView searchView;
     private ImageView mechanicsFilter;
     private TextView mechanicsFilterText;
 
