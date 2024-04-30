@@ -419,7 +419,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/e_location_part_click"
-                android:layout_gravity="bottom|right"
+                android:layout_gravity="top|right"
                 android:src="@drawable/edit_icon"
                 android:layout_margin="10dp"
                 android:layout_width="30dp"
