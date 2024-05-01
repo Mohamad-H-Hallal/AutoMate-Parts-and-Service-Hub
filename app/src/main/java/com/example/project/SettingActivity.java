@@ -18,14 +18,16 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 public class SettingActivity extends BaseActivity {
     private ImageButton back;
-    private AppCompatButton save;
+    private AppCompatButton save,logout;
     private Spinner lang;
+    private UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class SettingActivity extends BaseActivity {
         back = findViewById(R.id.back_arrow3);
         save = findViewById(R.id.changel);
         lang = findViewById(R.id.lang);
+        logout = findViewById(R.id.logout);
+        userData = new UserData(this);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -84,6 +88,29 @@ public class SettingActivity extends BaseActivity {
                 restartApp();
             }
         });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                    builder.setTitle("Logout");
+                    builder.setMessage("Are you sure?");
+                    builder.setIcon(R.drawable.logout_icon);
+                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                        userData.logout();
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        intent.putExtra("tab", "1");
+                        startActivity(intent);
+
+                            finish();
+
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
+                }
+        });
+
     }
 
     private void restartApp() {

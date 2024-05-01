@@ -44,15 +44,19 @@ public class LoginActivity extends BaseActivity {
 
     public void login(View view) {
         startActivity(new Intent(this, BottomNavMenuActivity.class));
+        finish();
     }
 
     public void onLoginClick(View View) {
         startActivity(new Intent(this, RegisterActivity.class));
+        finish();
     }
 
     public void resetPassword(View view) {
         Intent resetPass = new Intent(this, PartDetailsActivity.class);
         startActivity(resetPass);
+        finish();
+
     }
 
     private String getLanguagePreference() {

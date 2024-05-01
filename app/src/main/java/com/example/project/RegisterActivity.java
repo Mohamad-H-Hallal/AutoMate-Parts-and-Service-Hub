@@ -1,5 +1,7 @@
 package com.example.project;
 
+import static com.example.project.GetImagePath.getRealPath;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -17,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -50,6 +54,7 @@ public class RegisterActivity extends BaseActivity {
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int GALLERY_REQUEST_CODE = 2;
     Spinner sp;
+    AppCompatButton regbtn;
     TextInputLayout til1, til2;
 
     TextView locationText;
@@ -69,6 +74,7 @@ public class RegisterActivity extends BaseActivity {
         sp = findViewById(R.id.spinnerAccountType);
         til1 = findViewById(R.id.textInputMobile);
         til2 = findViewById(R.id.textInputSpecialization);
+        regbtn = findViewById(R.id.registerButton);
 
         locationText = findViewById(R.id.locationText);
         profilePictureView = findViewById(R.id.profileImageView);
@@ -93,6 +99,37 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        regbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(uriImage != null){
+
+                    uploadImage();
+//                insertUser();
+
+
+                }else {
+                    Toast.makeText(RegisterActivity.this, "Choose icon", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void uploadImage(){
+        String filePath = getRealPath(this, uriImage);
+        ImageUploaderClass.uploadImage(filePath, nameOfImage, "images/users", new ImageUploaderClass.onSuccessfulTask() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailed(String error) {
+                Log.d("test",error);
             }
         });
     }
@@ -191,11 +228,9 @@ public class RegisterActivity extends BaseActivity {
                             // Save the captured image to a file in external storage
                             File imageFile = saveImageToFile(imageBitmap);
                             if (imageFile != null) {
-
                                 uriImage = Uri.fromFile(imageFile);
-
-                                String imageUrl = uriImage.toString();
                                 Glide.with(this).load(uriImage).into(profilePictureView);
+                                nameOfImage = "icon_" + System.currentTimeMillis() + ".jpg";
                             } else {
                                 Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
                             }

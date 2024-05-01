@@ -23,6 +23,10 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".EditPartActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
