@@ -2,6 +2,8 @@ package com.example.project.FileUpload;
 
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.File;
@@ -22,16 +24,17 @@ public class ImageUploaderClass {
 
     public static void uploadImage(String filePath,String name, String folder_name,  onSuccessfulTask task) {
         try {
-            AppImagesService apiInterface = RetrofitApiClient.getClient().create( AppImagesService.class);
-            File file = new File(filePath);//shof l doc 2iza sar error
+            AppImagesService apiInterface = RetrofitApiClient.getClient().create(AppImagesService.class);
+            File file = new File(filePath);
             RequestBody requestFile = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", name, requestFile);
             MultipartBody.Part folder = MultipartBody.Part.createFormData("folder", folder_name);
-            Call<String> call = apiInterface.UploadImage(body,folder);
+            Call<String> call = apiInterface.UploadImage(body, folder);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                     String responseBody = response.body();
+
                     if (responseBody != null) {
                         if ("ok".equals(responseBody)) {
                             task.onSuccess();
@@ -39,18 +42,21 @@ public class ImageUploaderClass {
                             task.onFailed(responseBody);
                         }
                     } else {
+
                         task.onFailed(null);
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<String> call, @NonNull  Throwable t) {
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                     task.onFailed(t.getMessage());
                 }
 
             });
+        } catch (Exception e) {
+            Log.e("ImageUploader", "Error uploading image", e);
+            task.onFailed(e.getMessage());
         }
-        catch (Exception ignored){}
     }
 
 }

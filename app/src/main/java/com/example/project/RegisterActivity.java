@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -120,7 +121,14 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void uploadImage(){
-        String filePath = getRealPath(this, uriImage);
+        String filePath=null;
+
+        if (Objects.equals(uriImage.getScheme(), "content")) {
+            filePath = getRealPath(this, uriImage);
+        } else if (Objects.equals(uriImage.getScheme(), "file")) {
+            filePath = uriImage.getPath();
+        }
+
         ImageUploaderClass.uploadImage(filePath, nameOfImage, "images/users", new ImageUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
@@ -129,10 +137,11 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFailed(String error) {
-                Log.d("test",error);
+            Log.d("error",error);
             }
         });
     }
+
 
     public void onChooseImageClicked(View view) {
         showImagePickerDialog();
