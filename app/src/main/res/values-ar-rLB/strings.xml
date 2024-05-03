@@ -65,9 +65,12 @@
     <string name="add_part">اضافة قطعة</string>
     <string name="addPrice">السعر (بالدولار)</string>
     <string name="add">أضف</string>
-    <string name="enter_old_pass">أدخل كلمة المرور القديمة:</string>
-    <string name="enter_new_pass">أدخل كلمة المرور الجديدة:</string>
-    <string name="enter_confirm_pass">أعد إدخال كلمة\nالمرور الجديدة:</string>
+    <string name="enter_old_pass">كلمة المرور القديمة:</string>
+    <string name="enter_new_pass">كلمة المرور الجديدة:</string>
+    <string name="enter_confirm_pass">تأكيد كلمة المرور\nالجديدة:</string>
+    <string name="old_password">كلمة المرور القديمة</string>
+    <string name="new_password">كلمة المرور الجديدة</string>
+    <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

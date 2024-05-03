@@ -28,6 +28,7 @@ public class SettingActivity extends BaseActivity {
     private AppCompatButton save,logout;
     private Spinner lang;
     private UserData userData;
+    private AppCompatButton chagpass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,15 @@ public class SettingActivity extends BaseActivity {
         lang = findViewById(R.id.lang);
         logout = findViewById(R.id.logout);
         userData = new UserData(this);
+        chagpass = findViewById(R.id.reset_pass);
+
+        chagpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SettingActivity.this, ChangePasswordActivity.class);
+                startActivity(i);
+            }
+        });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
