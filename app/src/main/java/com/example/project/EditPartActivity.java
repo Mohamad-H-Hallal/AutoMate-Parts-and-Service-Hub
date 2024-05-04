@@ -110,7 +110,7 @@ public class EditPartActivity extends BaseActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),EditLocationActivity.class);
+                Intent i = new Intent(getApplicationContext(),MapsLocationActivity.class);
                 i.putExtra("latitude",33);
                 i.putExtra("longitude",35);
                 startActivityForResult(i, MAP_REQUEST_CODE);

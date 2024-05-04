@@ -47,16 +47,14 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
-    public void onLoginClick(View View) {
+    public void onRegisterClick(View View) {
         startActivity(new Intent(this, RegisterActivity.class));
-        finish();
     }
 
     public void resetPassword(View view) {
         Intent resetPass = new Intent(this, PartDetailsActivity.class);
         startActivity(resetPass);
         finish();
-
     }
 
     private String getLanguagePreference() {

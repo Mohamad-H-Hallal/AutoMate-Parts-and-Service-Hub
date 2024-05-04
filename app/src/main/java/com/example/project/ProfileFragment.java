@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -39,12 +40,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class ProfileFragment extends BaseFragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private ShapeableImageView profile_image;
     private ImageButton reset_pass;
@@ -77,23 +72,9 @@ public class ProfileFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
     @Override
@@ -162,13 +143,11 @@ public class ProfileFragment extends BaseFragment {
                 if (editing) {
                     edit.setImageResource(R.drawable.save_icon);
                     name.setEnabled(true);
-                    emailtext.setEnabled(true);
                     phonetext.setEnabled(true);
                     specializationtext.setEnabled(true);
-                    name.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    emailtext.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -177,10 +156,9 @@ public class ProfileFragment extends BaseFragment {
                     emailtext.setEnabled(false);
                     phonetext.setEnabled(false);
                     specializationtext.setEnabled(false);
-                    name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    emailtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+                    phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+                    specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -302,7 +280,7 @@ public class ProfileFragment extends BaseFragment {
                         Bundle bundle = data.getExtras();
                         latitude = bundle.getDouble("latitude");
                         longitude = bundle.getDouble("longitude");
-                    }else {
+                    } else {
                         Toast.makeText(getContext(), "Error retrieving location data", Toast.LENGTH_SHORT).show();
                     }
                     break;
@@ -310,6 +288,7 @@ public class ProfileFragment extends BaseFragment {
             }
         }
     }
+
     private File saveImageToFile(Bitmap imageBitmap) {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "AutoMate");
 

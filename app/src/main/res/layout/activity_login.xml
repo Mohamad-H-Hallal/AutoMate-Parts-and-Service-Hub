@@ -106,7 +106,7 @@
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:onClick="onLoginClick"
+                android:onClick="onRegisterClick"
                 android:text="@string/new_user_register_now"
                 android:textAlignment="center"
                 android:textColor="@color/themeColor"

@@ -3,8 +3,10 @@ package com.example.project;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -29,6 +32,7 @@ public class SettingActivity extends BaseActivity {
     private Spinner lang;
     private UserData userData;
     private AppCompatButton chagpass;
+    private TextView call, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,25 @@ public class SettingActivity extends BaseActivity {
         logout = findViewById(R.id.logout);
         userData = new UserData(this);
         chagpass = findViewById(R.id.reset_pass);
+        call = findViewById(R.id.hasPhone);
+        email = findViewById(R.id.hasEmail);
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri number = Uri.parse("tel:+96170123456");
+                Intent i = new Intent(Intent.ACTION_DIAL, number);
+                startActivity(i);
+            }
+        });
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:administrator@gmail.com"));
+                startActivity(emailIntent);
+            }
+        });
 
         chagpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +150,6 @@ public class SettingActivity extends BaseActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
-
     }
 
 }

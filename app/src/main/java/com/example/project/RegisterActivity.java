@@ -254,7 +254,7 @@ public class RegisterActivity extends BaseActivity {
                     if (data != null) {
                         double latitude = data.getDoubleExtra("latitude", 0);
                         double longitude = data.getDoubleExtra("longitude", 0);
-                        locationText.setText("Latitude: " + latitude + ", Longitude: " + longitude);
+                        locationText.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
                     } else {
                         Toast.makeText(this, "Error retrieving location data", Toast.LENGTH_SHORT).show();
                     }
@@ -271,6 +271,7 @@ public class RegisterActivity extends BaseActivity {
 
     public void onLoginClick(View view) {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     public void onSelectLocationClick(View view) {

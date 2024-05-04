@@ -348,12 +348,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="@dimen/loginViewsMargin"
                     android:text="@string/view_parts"
+                    android:visibility="visible"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/v_rating"
                     style="@style/loginButton"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="@dimen/loginViewsMargin"
                     android:layout_weight="1"
                     android:text="@string/rate_me"

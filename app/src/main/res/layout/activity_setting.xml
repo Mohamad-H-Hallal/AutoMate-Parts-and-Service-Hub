@@ -127,4 +127,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line" />
+
+    <TextView
+        android:id="@+id/hasEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/themeColor"
+        android:text="@string/email_administrator_gmail_com"
+        app:layout_constraintTop_toBottomOf="@id/support"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/hasPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:textColor="@color/themeColor"
+        android:text="@string/phone_administrator"
+        app:layout_constraintTop_toBottomOf="@id/hasEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

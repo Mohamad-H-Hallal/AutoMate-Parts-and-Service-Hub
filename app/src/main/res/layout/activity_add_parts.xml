@@ -43,9 +43,55 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/addPartYearSpinner"
-            app:layout_constraintTop_toBottomOf="@+id/addPartYearSpinner">
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/addPartImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/add_circle"
+                android:text="@string/add_image"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/addPartHorizontalScrollView"
+                app:layout_constraintBottom_toTopOf="@id/addPartHorizontalScrollView"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toTopOf="@id/addPartMake"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/addPartDefImagesScroll"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/addPartHorizontalScrollView"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.viewpager.widget.ViewPager>
 
             <TextView
                 android:id="@+id/addPartMake"
@@ -58,7 +104,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/addPartHorizontalScrollView" />
 
             <Spinner
                 android:id="@+id/addPartMakeSpinner"

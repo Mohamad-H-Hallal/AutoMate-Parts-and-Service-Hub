@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         app:cardCornerRadius="20dp"
-
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +20,7 @@
             android:id="@+id/images_scroll"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"/>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
