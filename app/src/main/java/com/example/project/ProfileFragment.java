@@ -1,6 +1,8 @@
 package com.example.project;
 
 
+import static com.example.project.GetImagePath.getRealPath;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -20,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
@@ -116,12 +120,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void setActions(View v) {
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showImagePickerDialog();
-            }
-        });
+
         locationtext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (editing) {
@@ -140,7 +139,27 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 editing = !editing;
-                if (editing) {
+                if(!editing){
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+                builder.setTitle("Edit Profile");
+                builder.setMessage("Are you sure you want to save?");
+                builder.setIcon(R.drawable.save_icon);
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    if(uriImage!=null){
+                        uploadImage();}
+                    edit.setImageResource(R.drawable.edit_icon);
+                    name.setEnabled(false);
+                    phonetext.setEnabled(false);
+                    specializationtext.setEnabled(false);
+                    name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                });
+                builder.setNegativeButton("No", null);
+                builder.show();}
+                if(editing){
                     edit.setImageResource(R.drawable.save_icon);
                     name.setEnabled(true);
                     phonetext.setEnabled(true);
@@ -150,19 +169,17 @@ public class ProfileFragment extends BaseFragment {
                     specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
 
-                } else {
-                    edit.setImageResource(R.drawable.edit_icon);
-                    name.setEnabled(false);
-                    emailtext.setEnabled(false);
-                    phonetext.setEnabled(false);
-                    specializationtext.setEnabled(false);
-                    name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                    phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                    specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
+            profile_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(editing){
+                    showImagePickerDialog();}
+                }
+            });
         manageparts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,7 +281,7 @@ public class ProfileFragment extends BaseFragment {
 
                                 String imageUrl = uriImage.toString();
                                 Glide.with(this).load(uriImage).into(profile_image);
-
+                                nameOfImage = "icon_" + System.currentTimeMillis() + ".jpg";
                             } else {
                                 Toast.makeText(getContext(), "Failed to save image", Toast.LENGTH_SHORT).show();
                             }
@@ -287,6 +304,28 @@ public class ProfileFragment extends BaseFragment {
 
             }
         }
+    }
+
+    private void uploadImage(){
+        String filePath=null;
+
+        if (Objects.equals(uriImage.getScheme(), "content")) {
+            filePath = getRealPath(getContext(), uriImage);
+        } else if (Objects.equals(uriImage.getScheme(), "file")) {
+            filePath = uriImage.getPath();
+        }
+
+        ImageUploaderClass.uploadImage(filePath, nameOfImage, "images/users", new ImageUploaderClass.onSuccessfulTask() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailed(String error) {
+                Log.d("error",error);
+            }
+        });
     }
 
     private File saveImageToFile(Bitmap imageBitmap) {

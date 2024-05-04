@@ -197,6 +197,7 @@ public class EditPartActivity extends BaseActivity {
 
                                 // Now, you can use uriImage to get the URL if needed
                                 String imageUrl = uriImage.toString();
+                                addImage(imageUrl);
                                 // Use imageUrl as needed
                             } else {
                                 Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();

@@ -137,7 +137,6 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFailed(String error) {
-            Log.d("error",error);
             }
         });
     }
@@ -264,10 +263,6 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    private void setProfilePicture(Bitmap profileImage) {
-        profilePictureView = findViewById(R.id.profileImageView);
-        profilePictureView.setImageBitmap(profileImage);
-    }
 
     public void onLoginClick(View view) {
         startActivity(new Intent(this, LoginActivity.class));
