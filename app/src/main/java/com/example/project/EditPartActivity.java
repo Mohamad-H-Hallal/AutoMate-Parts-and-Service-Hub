@@ -1,7 +1,10 @@
 package com.example.project;
 
+import static com.example.project.GetImagePath.getRealPath;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -28,6 +32,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
@@ -39,19 +44,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EditPartActivity extends BaseActivity {
     ViewPager horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
     ShapeableImageView location;
+    CardView editpartdefault;
     TextView phone;
     List<String> imageList;
     ImageEditAdapter adapter;
     TextView add;
-    private String typeOfImage = "";
-    private String nameOfImage = "";
-    private Uri uriImage = null;
+    private String typeOfeachImage = "";
+    private String nameOfeachImage = "";
+    private ArrayList<Uri> uriImage;
     private double latitude = 33;
     private double longitude = 35;
     private static final int GALLERY_REQUEST_CODE = 110;
@@ -71,6 +78,8 @@ public class EditPartActivity extends BaseActivity {
         location = findViewById(R.id.e_location_part_click);
         phone = findViewById(R.id.e_phone_detailtxt);
         add = findViewById(R.id.e_add_image);
+        editpartdefault = findViewById(R.id.editpartdefault);
+        uriImage=new ArrayList<Uri>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -153,11 +162,15 @@ public class EditPartActivity extends BaseActivity {
     }
 
     private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent chooser = Intent.createChooser(galleryIntent, "Select Image Source");
-        startActivityForResult(chooser, GALLERY_REQUEST_CODE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
     public void addImage(String imageRes) {
+        if(!imageList.isEmpty()) {
+            editpartdefault.setVisibility(View.GONE);
+        }
         imageList.add(imageRes);
         adapter.notifyDataSetChanged();
     }
@@ -168,6 +181,9 @@ public class EditPartActivity extends BaseActivity {
             imageList.remove(position);
             adapter.notifyDataSetChanged();
         }
+        if(imageList.isEmpty()) {
+            editpartdefault.setVisibility(View.VISIBLE);
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -175,12 +191,17 @@ public class EditPartActivity extends BaseActivity {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
-                    if (data.getData() != null) {
-                        uriImage = data.getData();
-                        addImage(uriImage.toString());
-                        ContentResolver cr = this.getContentResolver();
-                        typeOfImage = cr.getType(uriImage);
-                        nameOfImage = "icon_" + System.currentTimeMillis() + "." + typeOfImage.replace("image/", "");
+                    if (data != null && data.getData() != null) {
+                        addImage(data.getData().toString());
+                        uriImage.add(data.getData());
+                    } else if (data != null && data.getClipData() != null) {
+                        // Handle multiple image selection
+                        ClipData clipData = data.getClipData();
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            Uri uri = clipData.getItemAt(i).getUri();
+                            addImage(uri.toString());
+                            uriImage.add(uri);
+                        }
                     } else {
                         Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
                     }
@@ -192,13 +213,9 @@ public class EditPartActivity extends BaseActivity {
                             // Save the captured image to a file in external storage
                             File imageFile = saveImageToFile(imageBitmap);
                             if (imageFile != null) {
-                                // Get the URI of the saved image file
-                                uriImage = Uri.fromFile(imageFile);
-
-                                // Now, you can use uriImage to get the URL if needed
-                                String imageUrl = uriImage.toString();
+                                String imageUrl = Uri.fromFile(imageFile).toString();
                                 addImage(imageUrl);
-                                // Use imageUrl as needed
+                                uriImage.add(Uri.fromFile(imageFile));
                             } else {
                                 Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
                             }
@@ -221,6 +238,33 @@ public class EditPartActivity extends BaseActivity {
 
             }
         }
+    }
+    private void uploadImages(ArrayList<Uri> imagesuri){
+        for (int i = 0; i < imagesuri.size(); i++) {
+            String filePath=null;
+
+            if (Objects.equals(imagesuri.get(i).getScheme(), "content")) {
+                filePath = getRealPath(this, imagesuri.get(i));
+            } else if (Objects.equals(imagesuri.get(i).getScheme(), "file")) {
+                filePath = imagesuri.get(i).getPath();
+            }
+            ContentResolver cr = this.getContentResolver();
+            typeOfeachImage = cr.getType(imagesuri.get(i));
+            if (typeOfeachImage != null) {
+                nameOfeachImage = "icon_" + System.currentTimeMillis() + "." + typeOfeachImage.replace("image/", "");
+            } else {
+                nameOfeachImage = "icon_" + System.currentTimeMillis() + ".jpg";
+            }
+            ImageUploaderClass.uploadImage(filePath, nameOfeachImage, "images/parts", new ImageUploaderClass.onSuccessfulTask() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onFailed(String error) {
+                }
+            });}
     }
 
     private File saveImageToFile(Bitmap imageBitmap) {

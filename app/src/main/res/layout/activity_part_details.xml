@@ -59,6 +59,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/partDetailCardView"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginStart="40dp"

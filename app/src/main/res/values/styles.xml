@@ -59,6 +59,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="reverseLoginButton" parent="viewParent">
+        <item name="android:background">@drawable/button_background_white</item>
+        <item name="android:textColor">@color/themeColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="locationButton" parent="parent">
         <item name="android:background">@drawable/button_background_black</item>
         <item name="android:textColor">@color/whiteTextColor</item>

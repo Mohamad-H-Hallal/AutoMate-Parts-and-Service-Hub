@@ -6,12 +6,15 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -28,11 +31,12 @@ import androidx.core.content.ContextCompat;
 
 public class SettingActivity extends BaseActivity {
     private ImageButton back;
-    private AppCompatButton save,logout;
+    private AppCompatButton save, logout;
     private Spinner lang;
     private UserData userData;
     private AppCompatButton chagpass;
     private TextView call, email;
+    private AlertDialog Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,23 +129,37 @@ public class SettingActivity extends BaseActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                View DialogView = LayoutInflater.from(SettingActivity.this).inflate(R.layout.logout_dialog, null);
+                final AppCompatButton yesButton = DialogView.findViewById(R.id.lo_yes_button);
+                final AppCompatButton noButton = DialogView.findViewById(R.id.lo_no_button);
+                builder.setView(DialogView);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
-                    builder.setTitle("Logout");
-                    builder.setMessage("Are you sure?");
-                    builder.setIcon(R.drawable.logout_icon);
-                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         userData.logout();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                         intent.putExtra("tab", "1");
                         startActivity(intent);
-
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
                             finish();
-
-                    });
-                    builder.setNegativeButton("No", null);
-                    builder.show();
-                }
+                        }
+                    }
+                });
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                Dialog = builder.create();
+                Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog.show();
+            }
         });
 
     }

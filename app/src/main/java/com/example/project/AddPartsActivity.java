@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -50,6 +51,7 @@ public class AddPartsActivity extends BaseActivity {
 private static final int CAMERA_REQUEST_CODE=150;
 private static final int GALLERY_REQUEST_CODE=170;
     private ImageButton back;
+    private CardView addPartCardView;
     List<String> imageList;
     ImageEditAdapter adapter;
     private ViewPager  addPartHorizontalScrollView;
@@ -65,6 +67,7 @@ private static final int GALLERY_REQUEST_CODE=170;
         setContentView(R.layout.activity_add_parts);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         back = findViewById(R.id.back_arrow7);
+        addPartCardView = findViewById(R.id.addPartCardView);
         addpartimage = findViewById(R.id.addPartImage);
         addPartHorizontalScrollView = findViewById(R.id.addPartHorizontalScrollView);
         addPartButton = findViewById(R.id.addPartButton);
@@ -100,14 +103,20 @@ private static final int GALLERY_REQUEST_CODE=170;
         });
 
         imageList = new ArrayList<>();
+        for (int i = 0; i <uriImages.size();i++){
+            imageList.add(uriImages.get(i).toString());
+        }
         adapter =new ImageEditAdapter(getSupportFragmentManager(),imageList);
         addPartHorizontalScrollView.setAdapter(adapter);
 
     }
 
     public void addImage(String imageRes) {
-        imageList.add(imageRes);
-        adapter.notifyDataSetChanged();
+        if(!imageList.isEmpty()) {
+            addPartCardView.setVisibility(View.GONE);
+        }
+            imageList.add(imageRes);
+            adapter.notifyDataSetChanged();
     }
 
     public void deleteImage(String imageRes) {
@@ -115,6 +124,9 @@ private static final int GALLERY_REQUEST_CODE=170;
         if (position != -1) {
             imageList.remove(position);
             adapter.notifyDataSetChanged();
+        }
+        if(imageList.isEmpty()) {
+            addPartCardView.setVisibility(View.VISIBLE);
         }
     }
 

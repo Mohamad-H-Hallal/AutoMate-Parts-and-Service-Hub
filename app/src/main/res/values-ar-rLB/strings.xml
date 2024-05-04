@@ -73,6 +73,18 @@
     <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
     <string name="email_administrator_gmail_com">administrator@gmail.com :البريد الإلكتروني</string>
     <string name="phone_administrator">الهاتف: +96170123456</string>
+    <string name="get_started">ابدأ الآن</string>
+    <string name="get_started_body">لقد حصلت على تجربة مجانية لمدة 30 يومًا. بعد 30 يومًا، سيتحول اشتراكك تلقائيًا إلى خطة مدفوعة مقابل 10 دولارات أمريكية شهريًا.</string>
+    <string name="get_started_title">ابدأ باستخدام تجربتك المجانية!</string>
+    <string name="upgrade_now">اشترك الآن</string>
+    <string name="upgrade_now_body">لقد انتهت صلاحية اشتراكك ولم يعد بإمكانك الوصول إلى حسابك. قم بالترقية الآن لمواصلة الاستمتاع بالتجربة الكاملة مقابل 10 دولارات أمريكية فقط شهريًا.</string>
+    <string name="upgrade_now_title">لقد انتهى اشتراكك!</string>
+    <string name="yes">نعم</string>
+    <string name="no">كلا</string>
+    <string name="confirm_save_title">تأكيد الحفظ</string>
+    <string name="confirm_save_body">هل أنت متأكد أنك تريد الحفظ؟</string>
+    <string name="logout_title">تسجيل خروج</string>
+    <string name="logout_body">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

@@ -75,6 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@id/e_name_part" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/editpartdefault"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="30dp"

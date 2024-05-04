@@ -44,6 +44,10 @@ public class EditImageFragment extends Fragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getActivity() != null && getActivity() instanceof AddPartsActivity) {
+                    ((AddPartsActivity) getActivity()).deleteImage(imageRes);
+
+                }
                 if (getActivity() != null && getActivity() instanceof EditPartActivity) {
                     ((EditPartActivity) getActivity()).deleteImage(imageRes);
                 }

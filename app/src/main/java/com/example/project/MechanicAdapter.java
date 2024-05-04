@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -106,7 +108,7 @@ public class MechanicAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View ratingDialogView = inflater.inflate(R.layout.rating_dialog, null);
+                View ratingDialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog, null);
                 final RatingBar ratingBar = ratingDialogView.findViewById(R.id.rating_bar);
                 final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
                 final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
@@ -128,6 +130,7 @@ public class MechanicAdapter extends BaseAdapter {
                     }
                 });
                 ratingDialog = builder.create();
+                ratingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ratingDialog.show();
             }
         });

@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,7 @@ public class ProfileFragment extends BaseFragment {
     private ImageButton edit;
     private AppCompatButton manageparts;
     private ImageButton setting;
+    private AlertDialog Dialog;
 
     private Uri uriImage = null;
     private String typeOfImage = "";
@@ -139,27 +143,46 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 editing = !editing;
-                if(!editing){
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-                builder.setTitle("Edit Profile");
-                builder.setMessage("Are you sure you want to save?");
-                builder.setIcon(R.drawable.save_icon);
-                builder.setPositiveButton("Yes", (dialog, which) -> {
-                    if(uriImage!=null){
-                        uploadImage();}
-                    edit.setImageResource(R.drawable.edit_icon);
-                    name.setEnabled(false);
-                    phonetext.setEnabled(false);
-                    specializationtext.setEnabled(false);
-                    name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                if (!editing) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    View DialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_mode_dialog, null);
+                    final AppCompatButton yesButton = DialogView.findViewById(R.id.cs_yes_button);
+                    final AppCompatButton noButton = DialogView.findViewById(R.id.cs_no_button);
+                    builder.setView(DialogView);
+                    yesButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (uriImage != null) {
+                                uploadImage();
+                            }
+                            edit.setImageResource(R.drawable.edit_icon);
+                            name.setEnabled(false);
+                            phonetext.setEnabled(false);
+                            specializationtext.setEnabled(false);
+                            name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                            if (Dialog != null && Dialog.isShowing()) {
+                                Dialog.dismiss();
+                            }
+                        }
+                    });
+                    noButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editing = !editing;
+                            if (Dialog != null && Dialog.isShowing()) {
+                                Dialog.dismiss();
+                            }
+                        }
+                    });
+                    Dialog = builder.create();
+                    Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    Dialog.show();
+                }
 
-                });
-                builder.setNegativeButton("No", null);
-                builder.show();}
-                if(editing){
+                if (editing) {
                     edit.setImageResource(R.drawable.save_icon);
                     name.setEnabled(true);
                     phonetext.setEnabled(true);
@@ -168,18 +191,18 @@ public class ProfileFragment extends BaseFragment {
                     phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
-
                 }
 
             }
         });
-            profile_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(editing){
-                    showImagePickerDialog();}
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editing) {
+                    showImagePickerDialog();
                 }
-            });
+            }
+        });
         manageparts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -306,8 +329,8 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    private void uploadImage(){
-        String filePath=null;
+    private void uploadImage() {
+        String filePath = null;
 
         if (Objects.equals(uriImage.getScheme(), "content")) {
             filePath = getRealPath(getContext(), uriImage);
@@ -323,7 +346,7 @@ public class ProfileFragment extends BaseFragment {
 
             @Override
             public void onFailed(String error) {
-                Log.d("error",error);
+                Log.d("error", error);
             }
         });
     }

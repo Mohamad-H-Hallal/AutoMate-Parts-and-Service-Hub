@@ -83,7 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
-                android:id="@+id/rating_bar"
+                android:id="@+id/p_rating_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -275,7 +275,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/manageparts"
         style="@style/loginButton"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:text="@string/manage_parts"
         android:visibility="visible"
         android:textColor="@color/colorPrimaryDark"

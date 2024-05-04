@@ -72,6 +72,18 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="email_administrator_gmail_com">Email: administrator@gmail.com</string>
     <string name="phone_administrator">Phone: +96170123456</string>
+    <string name="get_started">Get Started</string>
+    <string name="get_started_body">You\'ve unlocked a 30-day free trial. After 30 days, your subscription will automatically switch to a paid plan for 10 USD per month.</string>
+    <string name="get_started_title">Get Started with Your Free Trial!</string>
+    <string name="upgrade_now">Upgrade Now</string>
+    <string name="upgrade_now_body">Your subscription has expired and you can no longer access your account. Upgrade now to continue enjoying the full experience for only 10 USD per month.</string>
+    <string name="upgrade_now_title">Your Subscription Has Ended!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="confirm_save_title">Confirm Save</string>
+    <string name="confirm_save_body">Are you sure you want to save?</string>
+    <string name="logout_title">Logout</string>
+    <string name="logout_body">Are you sure you want to logout?</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

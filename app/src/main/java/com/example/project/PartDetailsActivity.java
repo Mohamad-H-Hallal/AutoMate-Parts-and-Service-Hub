@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class PartDetailsActivity extends BaseActivity {
     ImageButton back;
     ShapeableImageView location;
     TextView phone;
+    CardView partDetailCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class PartDetailsActivity extends BaseActivity {
         back = findViewById(R.id.back_arrow4);
         location = findViewById(R.id.location_part_click);
         phone = findViewById(R.id.phone_detailtxt);
+        partDetailCardView = findViewById(R.id.partDetailCardView);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -79,6 +82,9 @@ public class PartDetailsActivity extends BaseActivity {
         // Add your image resources to the list
 
 
+        if(!imageList.isEmpty()){
+            partDetailCardView.setVisibility(View.GONE);
+        }
         ImageSliderAdapter adapter = new ImageSliderAdapter(getSupportFragmentManager(), imageList);
         horizontalScrollView.setAdapter(adapter);
 
