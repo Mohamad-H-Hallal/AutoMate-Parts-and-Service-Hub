@@ -85,6 +85,17 @@
     <string name="confirm_save_body">هل أنت متأكد أنك تريد الحفظ؟</string>
     <string name="logout_title">تسجيل خروج</string>
     <string name="logout_body">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="payment">طريقة الدفع</string>
+    <string name="omt">OMT</string>
+    <string name="whish">WHISH</string>
+    <string name="pay">ادفع</string>
+    <string name="subscription_payment_prompt_message_omt">لإعادة تنشيط حسابك، يرجى اتباع الخطوات التالية:\n\n1. قم بزيارة أقرب موقع OMT.\n2. قم بتوفير التفاصيل التالية:\n - بطاقة الهوية الخاصة بك\n - الاسم الأول\n - اسم العائلة\n - المبلغ: 10 دولارات أمريكية\n3. قم بتحويل المبلغ إلى رقم الهاتف: +96170123456.\n4. اجمع الإيصال بعد المعاملة.\n5. حدد موقع LTN (رقم التحويل المحلي) على الإيصال. إنه رمز مكون من 12 رقمًا.\n6. افتح التطبيق واضغط على الزر \'الدفع\'.\n7. أدخل التفاصيل التالية:\n - LTN\n - الاسم الأول\n - اسم العائلة\n8. سيتم إلغاء حظر حسابك عند إكماله بنجاح.\n\nنشكرك على تعاونك.</string>
+    <string name="subscription_payment_prompt_message_whish">لإعادة تنشيط حسابك، يرجى اتباع الخطوات التالية:\n\n1. قم بزيارة أقرب موقع WHISH.\n2. قم بتوفير التفاصيل التالية:\n - بطاقة الهوية الخاصة بك\n - الاسم الأول\n - اسم العائلة\n - المبلغ: 10 دولارات أمريكية\n3. قم بتحويل المبلغ إلى رقم الهاتف: +96170123456.\n4. اجمع الإيصال بعد المعاملة.\n5. حدد موقع LTN (رقم التحويل المحلي) على الإيصال. إنه رمز مكون من 12 رقمًا.\n6. افتح التطبيق واضغط على الزر \'الدفع\'.\n7. أدخل التفاصيل التالية:\n - LTN\n - الاسم الأول\n - اسم العائلة\n8. سيتم إلغاء حظر حسابك عند إكماله بنجاح.\n\nنشكرك على تعاونك.</string>
+    <string name="payment_detials">بيانات الدفع</string>
+    <string name="ltn">LTN</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">اسم العائلة</string>
+    <string name="subscription_completed">اكتمل الاشتراك!</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

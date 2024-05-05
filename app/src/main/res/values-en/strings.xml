@@ -84,6 +84,17 @@
     <string name="confirm_save_body">Are you sure you want to save?</string>
     <string name="logout_title">Logout</string>
     <string name="logout_body">Are you sure you want to logout?</string>
+    <string name="payment">Payment Methods</string>
+    <string name="omt">OMT</string>
+    <string name="whish">WHISH</string>
+    <string name="pay">Pay</string>
+    <string name="subscription_payment_prompt_message_omt">To reactivate your account, please follow these steps:\n\n1. Visit the nearest OMT location.\n2. Provide the following details:\n   - Your ID\n   - First Name\n   - Last Name\n   - Amount: 10 USD\n3. Transfer the amount to this phone number: +96170123456.\n4. Collect the receipt after the transaction.\n5. Locate the LTN (Local Transfer Number) on the receipt. It\'s a 12-digit code.\n6. Open the app and Press the \'Pay\' button.\n7. Enter the following details:\n   - LTN\n   - First Name\n   - Last Name\n8. Your account will be unblocked upon successful completion.\n\nThank you for your cooperation.</string>
+    <string name="subscription_payment_prompt_message_whish">To reactivate your account, please follow these steps:\n\n1. Visit the nearest WHISH location.\n2. Provide the following details:\n   - Your ID\n   - First Name\n   - Last Name\n   - Amount: 10 USD\n3. Transfer the amount to this phone number: +96170123456.\n4. Collect the receipt after the transaction.\n5. Locate the LTN (Local Transfer Number) on the receipt. It\'s a 12-digit code.\n6. Open the app and Press the \'Pay\' button.\n7. Enter the following details:\n   - LTN\n   - First Name\n   - Last Name\n8. Your account will be unblocked upon successful completion.\n\nThank you for your cooperation.</string>
+    <string name="payment_detials">Payment Detials</string>
+    <string name="ltn">LTN</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="subscription_completed">Subscription Completed!</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

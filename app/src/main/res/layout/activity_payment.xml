@@ -8,4 +8,236 @@
     android:background="@color/login_bk_color"
     tools:context=".PaymentActivity">
 
+    <TextView
+        android:id="@+id/paymentTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/themeColor"
+        android:paddingStart="52dp"
+        android:paddingTop="10dp"
+        android:text="@string/payment"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/back_arrow10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/themeColor"
+        android:src="@drawable/ic_back_en"
+        app:layout_constraintBottom_toBottomOf="@id/paymentTitle"
+        app:layout_constraintStart_toStartOf="@id/paymentTitle"
+        app:layout_constraintTop_toTopOf="@id/paymentTitle"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/paymentTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/loginViewsMargin">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/baseOMTCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/themeColor"
+                android:elevation="8dp"
+                app:cardCornerRadius="26dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/omt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:layout_marginBottom="@dimen/loginViewsMargin"
+                        android:text="@string/omt"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/omtCardView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/omtViewPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_down"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_marginBottom="@dimen/loginViewsMargin"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/omtViewPay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_up"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/omtCardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/login_bk_color"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/omt"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/darkTextColor"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginEnd="30dp"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                android:text="@string/subscription_payment_prompt_message_omt"/>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/omtPay"
+                                style="@style/loginButton"
+                                android:text="@string/pay"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                android:layout_marginBottom="@dimen/loginViewsMargin"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="60dp"
+                android:backgroundTint="@color/themeColor"
+                android:elevation="8dp"
+                app:cardCornerRadius="26dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/baseOMTCardView"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/whish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:layout_marginBottom="@dimen/loginViewsMargin"
+                        android:text="@string/whish"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/whishCardView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/whishViewPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_down"
+                        android:layout_margin="@dimen/loginViewsMargin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/whishViewPay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_up"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/whishCardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/login_bk_color"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/whish"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                android:layout_marginEnd="30dp"
+                                android:text="@string/subscription_payment_prompt_message_whish"
+                                android:textColor="@color/darkTextColor" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/whishPay"
+                                style="@style/loginButton"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/loginViewsMargin"
+                                android:layout_marginBottom="@dimen/loginViewsMargin"
+                                android:text="@string/pay"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
