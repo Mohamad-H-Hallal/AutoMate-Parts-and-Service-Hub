@@ -143,10 +143,10 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/icon_delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/delete_icon"
             app:layout_constraintEnd_toEndOf="parent"
