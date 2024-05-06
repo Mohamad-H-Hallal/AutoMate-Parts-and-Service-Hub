@@ -21,17 +21,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -53,8 +47,8 @@ public class EditPartActivity extends BaseActivity {
     ShapeableImageView location;
     CardView editpartdefault;
     TextView phone;
-    List<String> imageList;
-    ImageEditAdapter adapter;
+    ArrayList<String> imageList;
+    ImageAddAdapter adapter;
     TextView add;
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
@@ -89,7 +83,7 @@ public class EditPartActivity extends BaseActivity {
             back.setImageResource(R.drawable.ic_back_ar);
         }
         imageList=new ArrayList<>();
-        adapter =new ImageEditAdapter(getSupportFragmentManager(),imageList);
+        adapter =new ImageAddAdapter(this,imageList);
         horizontalScrollView.setAdapter(adapter);
 
 

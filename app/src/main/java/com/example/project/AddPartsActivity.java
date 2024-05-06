@@ -20,20 +20,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.example.project.FileUpload.ImageUploaderClass;
 
 import java.io.File;
@@ -52,8 +47,8 @@ private static final int CAMERA_REQUEST_CODE=150;
 private static final int GALLERY_REQUEST_CODE=170;
     private ImageButton back;
     private CardView addPartCardView;
-    List<String> imageList;
-    ImageEditAdapter adapter;
+    ArrayList<String> imageList;
+    ImageAddAdapter adapter;
     private ViewPager  addPartHorizontalScrollView;
     TextView addpartimage;
     private ActivityResultLauncher<Intent> activityResultLauncher;
@@ -99,14 +94,13 @@ private static final int GALLERY_REQUEST_CODE=170;
             public void onClick(View v) {
                 if(!uriImages.isEmpty()){
                 uploadImages(uriImages);}
+
             }
         });
 
         imageList = new ArrayList<>();
-        for (int i = 0; i <uriImages.size();i++){
-            imageList.add(uriImages.get(i).toString());
-        }
-        adapter =new ImageEditAdapter(getSupportFragmentManager(),imageList);
+
+        adapter =new ImageAddAdapter(this,imageList);
         addPartHorizontalScrollView.setAdapter(adapter);
 
     }
@@ -117,18 +111,24 @@ private static final int GALLERY_REQUEST_CODE=170;
         }
             imageList.add(imageRes);
             adapter.notifyDataSetChanged();
+
     }
 
-    public void deleteImage(String imageRes) {
-        int position = imageList.indexOf(imageRes);
-        if (position != -1) {
-            imageList.remove(position);
-            adapter.notifyDataSetChanged();
+
+    public void deleteImage() {
+        int p = addPartHorizontalScrollView.getCurrentItem();
+        if (adapter != null && p >= 0 && p < imageList.size()) {
+            uriImages.remove(p);
+            imageList.remove(p);
+            addPartHorizontalScrollView.setAdapter(new ImageAddAdapter(this, imageList));
+            addPartHorizontalScrollView.setCurrentItem(p-1,true);
         }
-        if(imageList.isEmpty()) {
+
+        if (imageList.isEmpty()) {
             addPartCardView.setVisibility(View.VISIBLE);
         }
     }
+
 
 
     private void showImagePickerDialog() {
@@ -152,19 +152,50 @@ private static final int GALLERY_REQUEST_CODE=170;
     }
 
     private void captureImage() {
-
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
+        } else {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
-            startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+            startActivityForResult(chooser, CAMERA_REQUEST_CODE);}
     }
 
     private void openGallery() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
+        } else {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);}
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
+                startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
