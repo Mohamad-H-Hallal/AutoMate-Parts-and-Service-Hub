@@ -59,6 +59,7 @@ public class ProfileFragment extends BaseFragment {
     private TextView specialization;
     private TextView specializationtext;
     private ImageButton edit;
+    private ImageButton pay;
     private AppCompatButton manageparts;
     private ImageButton setting;
     private AlertDialog Dialog;
@@ -114,6 +115,7 @@ public class ProfileFragment extends BaseFragment {
         manageparts = v.findViewById(R.id.manageparts);
         edit = v.findViewById(R.id.edit);
         setting = v.findViewById(R.id.setting);
+        pay = v.findViewById(R.id.pay);
         name.setEnabled(false);
         emailtext.setEnabled(false);
         phonetext.setEnabled(false);
@@ -217,6 +219,14 @@ public class ProfileFragment extends BaseFragment {
                 startActivity(i);
                 requireActivity().finish();
 
+            }
+        });
+
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),PaymentActivity.class));
+                requireActivity().finish();
             }
         });
     }

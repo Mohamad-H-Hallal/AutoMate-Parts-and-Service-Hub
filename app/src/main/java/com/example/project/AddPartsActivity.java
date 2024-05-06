@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.project.FileUpload.ImageUploaderClass;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,20 +43,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class AddPartsActivity extends BaseActivity {
-private static final int CAMERA_REQUEST_CODE=150;
-private static final int GALLERY_REQUEST_CODE=170;
+public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.OnImageRemoveListener {
+
+    private static final int CAMERA_REQUEST_CODE = 150;
+    private static final int GALLERY_REQUEST_CODE = 170;
+
     private ImageButton back;
     private CardView addPartCardView;
     ArrayList<String> imageList;
     ImageAddAdapter adapter;
-    private ViewPager  addPartHorizontalScrollView;
+    private ViewPager addPartHorizontalScrollView;
     TextView addpartimage;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
     ArrayList<Uri> uriImages;
     private AppCompatButton addPartButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,32 +89,33 @@ private static final int GALLERY_REQUEST_CODE=170;
         addpartimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            showImagePickerDialog();
+                showImagePickerDialog();
             }
         });
 
         addPartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!uriImages.isEmpty()){
-                uploadImages(uriImages);}
+                if (!uriImages.isEmpty()) {
+                    uploadImages(uriImages);
+                }
 
             }
         });
 
         imageList = new ArrayList<>();
 
-        adapter =new ImageAddAdapter(this,imageList);
+        adapter = new ImageAddAdapter(this, imageList, this);
         addPartHorizontalScrollView.setAdapter(adapter);
 
     }
 
     public void addImage(String imageRes) {
-        if(!imageList.isEmpty()) {
+        if (!imageList.isEmpty()) {
             addPartCardView.setVisibility(View.GONE);
         }
-            imageList.add(imageRes);
-            adapter.notifyDataSetChanged();
+        imageList.add(imageRes);
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -120,8 +125,8 @@ private static final int GALLERY_REQUEST_CODE=170;
         if (adapter != null && p >= 0 && p < imageList.size()) {
             uriImages.remove(p);
             imageList.remove(p);
-            addPartHorizontalScrollView.setAdapter(new ImageAddAdapter(this, imageList));
-            addPartHorizontalScrollView.setCurrentItem(p-1,true);
+            addPartHorizontalScrollView.setAdapter(new ImageAddAdapter(this, imageList,this));
+            addPartHorizontalScrollView.setCurrentItem(p - 1, true);
         }
 
         if (imageList.isEmpty()) {
@@ -129,6 +134,10 @@ private static final int GALLERY_REQUEST_CODE=170;
         }
     }
 
+    @Override
+    public void onImageRemoved(int position) {
+        deleteImage();
+    }
 
 
     private void showImagePickerDialog() {
@@ -158,7 +167,8 @@ private static final int GALLERY_REQUEST_CODE=170;
         } else {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
-            startActivityForResult(chooser, CAMERA_REQUEST_CODE);}
+            startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+        }
     }
 
     private void openGallery() {
@@ -166,10 +176,11 @@ private static final int GALLERY_REQUEST_CODE=170;
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
         } else {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);}
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        }
 
     }
 
@@ -202,17 +213,17 @@ private static final int GALLERY_REQUEST_CODE=170;
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
 
-                        if (data != null && data.getData() != null) {
-                            addImage(data.getData().toString());
-                            uriImages.add(data.getData());
-                        } else if (data != null && data.getClipData() != null) {
-                            // Handle multiple image selection
-                            ClipData clipData = data.getClipData();
-                            for (int i = 0; i < clipData.getItemCount(); i++) {
-                                Uri uri = clipData.getItemAt(i).getUri();
-                                addImage(uri.toString());
-                                uriImages.add(uri);
-                            }
+                    if (data != null && data.getData() != null) {
+                        addImage(data.getData().toString());
+                        uriImages.add(data.getData());
+                    } else if (data != null && data.getClipData() != null) {
+                        // Handle multiple image selection
+                        ClipData clipData = data.getClipData();
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            Uri uri = clipData.getItemAt(i).getUri();
+                            addImage(uri.toString());
+                            uriImages.add(uri);
+                        }
 
 
                     } else {
@@ -243,15 +254,16 @@ private static final int GALLERY_REQUEST_CODE=170;
             }
         }
     }
-    private void uploadImages(ArrayList<Uri> imagesuri){
-        for (int i = 0; i < imagesuri.size(); i++) {
-        String filePath=null;
 
-        if (Objects.equals(imagesuri.get(i).getScheme(), "content")) {
-            filePath = getRealPath(this, imagesuri.get(i));
-        } else if (Objects.equals(imagesuri.get(i).getScheme(), "file")) {
-            filePath = imagesuri.get(i).getPath();
-        }
+    private void uploadImages(ArrayList<Uri> imagesuri) {
+        for (int i = 0; i < imagesuri.size(); i++) {
+            String filePath = null;
+
+            if (Objects.equals(imagesuri.get(i).getScheme(), "content")) {
+                filePath = getRealPath(this, imagesuri.get(i));
+            } else if (Objects.equals(imagesuri.get(i).getScheme(), "file")) {
+                filePath = imagesuri.get(i).getPath();
+            }
             ContentResolver cr = this.getContentResolver();
             typeOfeachImage = cr.getType(imagesuri.get(i));
             if (typeOfeachImage != null) {
@@ -259,16 +271,17 @@ private static final int GALLERY_REQUEST_CODE=170;
             } else {
                 nameOfeachImage = "icon_" + System.currentTimeMillis() + ".jpg";
             }
-        ImageUploaderClass.uploadImage(filePath, nameOfeachImage, "images/parts", new ImageUploaderClass.onSuccessfulTask() {
-            @Override
-            public void onSuccess() {
+            ImageUploaderClass.uploadImage(filePath, nameOfeachImage, "images/parts", new ImageUploaderClass.onSuccessfulTask() {
+                @Override
+                public void onSuccess() {
 
-            }
+                }
 
-            @Override
-            public void onFailed(String error) {
-            }
-        });}
+                @Override
+                public void onFailed(String error) {
+                }
+            });
+        }
     }
 
 

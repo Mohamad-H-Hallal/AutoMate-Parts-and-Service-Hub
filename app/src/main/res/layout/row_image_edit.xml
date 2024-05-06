@@ -26,14 +26,14 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/e_images_delete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:clickable="true"
             android:layout_gravity="top|end"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:layout_marginEnd="@dimen/loginViewsMargin"
             android:background="@color/transparent"
-            android:src="@drawable/delete_icon" />
+            android:src="@drawable/trash_bin" />
 
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

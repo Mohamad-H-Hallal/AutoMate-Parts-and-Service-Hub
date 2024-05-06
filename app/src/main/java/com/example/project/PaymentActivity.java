@@ -89,13 +89,17 @@ public class PaymentActivity extends AppCompatActivity {
         omtPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(PaymentActivity.this, PayCompletionActivity.class),REQUEST_CODE);
+                Intent i = new Intent(PaymentActivity.this, PayCompletionActivity.class);
+                i.putExtra("type","omt");
+                startActivityForResult(i,REQUEST_CODE);
             }
         });
         whishPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(PaymentActivity.this, PayCompletionActivity.class),REQUEST_CODE);
+                Intent i = new Intent(PaymentActivity.this, PayCompletionActivity.class);
+                i.putExtra("type","whish");
+                startActivityForResult(i,REQUEST_CODE);
             }
         });
     }

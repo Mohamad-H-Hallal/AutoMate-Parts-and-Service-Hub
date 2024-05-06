@@ -83,8 +83,8 @@ public class EditPartActivity extends BaseActivity {
             back.setImageResource(R.drawable.ic_back_ar);
         }
         imageList=new ArrayList<>();
-        adapter =new ImageAddAdapter(this,imageList);
-        horizontalScrollView.setAdapter(adapter);
+//        adapter =new ImageAddAdapter(this,imageList);
+//        horizontalScrollView.setAdapter(adapter);
 
 
 

@@ -24,6 +24,7 @@ public class PayCompletionActivity extends AppCompatActivity {
     private ImageButton back;
     private AppCompatButton paymentSubmit;
     private AlertDialog Dialog;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class PayCompletionActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(PayCompletionActivity.this, BottomNavMenuActivity.class);
+                i.putExtra("start_page", 1);
+                startActivity(i);
                 finish();
             }
         });
@@ -59,6 +63,7 @@ public class PayCompletionActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(PayCompletionActivity.this, BottomNavMenuActivity.class);
                         Intent resultIntent = new Intent();
+                        type = getIntent().getStringExtra("type");
                         setResult(RESULT_OK, resultIntent);
                         if (Dialog != null && Dialog.isShowing()) {
                             Dialog.dismiss();
