@@ -9,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -53,7 +54,22 @@ public class ImageAddAdapter extends PagerAdapter {
         Glide.with(context).load(images.get(position)).into(imageView); // Using Glide for image loading
 
         ShapeableImageView deleteButton = view.findViewById(R.id.e_images_delete);
-        deleteButton.setOnClickListener(v -> mListener.onImageRemoved(position));
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Delete image");
+                builder.setMessage("Are you sure?");
+                builder.setIcon(R.drawable.delete_icon);
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    mListener.onImageRemoved(position);
+                });
+                builder.setNegativeButton("No", null);
+                builder.show();
+
+            }
+        });
 
         container.addView(view);
         return view;

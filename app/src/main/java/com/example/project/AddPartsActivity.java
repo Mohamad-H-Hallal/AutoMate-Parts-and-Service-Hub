@@ -111,11 +111,11 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     }
 
     public void addImage(String imageRes) {
+        imageList.add(imageRes);
+        adapter.notifyDataSetChanged();
         if (!imageList.isEmpty()) {
             addPartCardView.setVisibility(View.GONE);
         }
-        imageList.add(imageRes);
-        adapter.notifyDataSetChanged();
 
     }
 

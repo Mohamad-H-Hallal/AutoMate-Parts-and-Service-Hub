@@ -9,6 +9,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -19,24 +20,27 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageEditAdapter extends PagerAdapter {
     private Context context;
-    private ArrayList<String> images;// Replace with your image data source (e.g., URLs or file paths)
+    private ArrayList<String> imagesfromuser;// Replace with your image data source (e.g., URLs or file paths)
+    private ArrayList<String> imagesfromdb;
     private OnImageRemoveListener mListener;
 
 
-    public ImageEditAdapter(Context context, ArrayList<String> images,OnImageRemoveListener listener) {
+    public ImageEditAdapter(Context context, ArrayList<String> imagesfromdb, ArrayList<String> imagesfromuser,OnImageRemoveListener listener) {
         this.context = context;
-        this.images = images;
+        this.imagesfromuser = imagesfromuser;
         this.mListener = listener;
+        this.imagesfromdb = imagesfromdb;
     }
 
     @Override
     public int getCount() {
-        return images.size();
+        return imagesfromuser.size()+imagesfromdb.size();
     }
 
 
@@ -51,14 +55,40 @@ public class ImageEditAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.row_image_edit, container, false);
         ShapeableImageView imageView = view.findViewById(R.id.e_images_scroll);
-        Glide.with(context).load(Parts_IMAGES_DIR + images.get(position))
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .error(R.drawable.test)
-                .into(imageView);
+
+        String imagePath;
+        if (position < imagesfromdb.size()) {
+            imagePath = imagesfromdb.get(position);
+            Glide.with(context).load(Parts_IMAGES_DIR + imagePath)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .error(R.drawable.test)
+                    .into(imageView);
+        } else {
+
+            int adjustedPosition = position - imagesfromdb.size();
+            imagePath = imagesfromuser.get(adjustedPosition);
+            Glide.with(context).load(imagePath).into(imageView);
+
+        }
 
         ShapeableImageView deleteButton = view.findViewById(R.id.e_images_delete);
-        deleteButton.setOnClickListener(v -> mListener.onImageRemoved(position));
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                builder.setTitle("Delete image");
+                                                builder.setMessage("Are you sure?");
+                                                builder.setIcon(R.drawable.delete_icon);
+                                                builder.setPositiveButton("Yes", (dialog, which) -> {
+                                                    mListener.onImageRemoved(position);
+                                                });
+                                                builder.setNegativeButton("No", null);
+                                                builder.show();
+
+                                            }
+                                        });
 
         container.addView(view);
         return view;

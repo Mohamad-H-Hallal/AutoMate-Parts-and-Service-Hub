@@ -1,5 +1,6 @@
 package com.example.project;
 
+import static com.example.project.Configuration.IP;
 import static com.example.project.GetImagePath.getRealPath;
 
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,11 +23,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -40,15 +48,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class EditPartActivity extends BaseActivity {
+public class EditPartActivity extends BaseActivity implements ImageEditAdapter.OnImageRemoveListener {
     ViewPager horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
     ShapeableImageView location;
     CardView editpartdefault;
     TextView phone;
-    ArrayList<String> imageList;
-    ImageAddAdapter adapter;
+    ArrayList<String> imageListfromdb;
+    ArrayList<String> imageListfromuser;
+    ImageEditAdapter adapter;
     TextView add;
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
@@ -82,9 +91,10 @@ public class EditPartActivity extends BaseActivity {
         } else if (selectedLanguage.equals("ar")) {
             back.setImageResource(R.drawable.ic_back_ar);
         }
-        imageList=new ArrayList<>();
-//        adapter =new ImageAddAdapter(this,imageList);
-//        horizontalScrollView.setAdapter(adapter);
+        imageListfromdb = new ArrayList<>();
+        imageListfromuser=new ArrayList<>();
+        adapter =new ImageEditAdapter(this,imageListfromdb,imageListfromuser,this);
+        horizontalScrollView.setAdapter(adapter);
 
 
 
@@ -150,34 +160,92 @@ public class EditPartActivity extends BaseActivity {
     }
 
     private void captureImage() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
+        } else {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
-        startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+        startActivityForResult(chooser, CAMERA_REQUEST_CODE);}
     }
 
     private void openGallery() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
+        } else {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
-    }
-    public void addImage(String imageRes) {
-        if(!imageList.isEmpty()) {
-            editpartdefault.setVisibility(View.GONE);
-        }
-        imageList.add(imageRes);
-        adapter.notifyDataSetChanged();
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);}
     }
 
-    public void deleteImage(String imageRes) {
-        int position = imageList.indexOf(imageRes);
-        if (position != -1) {
-            imageList.remove(position);
-            adapter.notifyDataSetChanged();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
+                startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
         }
-        if(imageList.isEmpty()) {
-            editpartdefault.setVisibility(View.VISIBLE);
+    }
+
+
+    public void addImage(String imageRes) {
+        imageListfromuser.add(imageRes);
+        adapter.notifyDataSetChanged();
+        if(!imageListfromuser.isEmpty() || !imageListfromdb.isEmpty()) {
+            editpartdefault.setVisibility(View.GONE);
         }
+    }
+
+    public void deleteImage(int position) {
+        if (position < imageListfromdb.size()) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?name=" + imageListfromdb.get(position), response -> {
+                Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
+                // Remove the image path from the list after successful deletion
+                imageListfromdb.remove(position);
+                horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
+                // Check if both lists are empty and show the default view if necessary
+                if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
+                    editpartdefault.setVisibility(View.VISIBLE);
+                }
+            }, error -> {
+                // Error handling
+            });
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        } else {
+            // If the image is from the user's list, remove it from the user's list
+            int adjustedPosition = position - imageListfromdb.size();
+            imageListfromuser.remove(adjustedPosition);
+            uriImage.remove(adjustedPosition);
+            horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
+            // Check if both lists are empty and show the default view if necessary
+            if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
+                editpartdefault.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
+
+    @Override
+    public void onImageRemoved(int position) {
+        deleteImage(position);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -292,27 +360,4 @@ public class EditPartActivity extends BaseActivity {
         return mediaFile;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        miniMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        miniMapView.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        miniMapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        miniMapView.onLowMemory();
-    }
 }
