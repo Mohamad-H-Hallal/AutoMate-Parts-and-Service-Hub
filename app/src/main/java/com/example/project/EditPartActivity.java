@@ -35,6 +35,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.FileUpload.ImageUploaderClass;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
@@ -96,22 +101,18 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         adapter =new ImageEditAdapter(this,imageListfromdb,imageListfromuser,this);
         horizontalScrollView.setAdapter(adapter);
 
-
-
-        miniMapView.setOnTouchListener(new View.OnTouchListener() {
+        miniMapView.onCreate(savedInstanceState);
+        miniMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        miniMapView.setScrollable(false);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        miniMapView.setScrollable(true);
-                        break;
-                }
-                return false;
+            public void onMapReady(GoogleMap googleMap) {
+                // Customize the map as needed
+                LatLng location = new LatLng(33, 35);
+                googleMap.addMarker(new MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
             }
         });
+
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -358,6 +359,30 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         }
 
         return mediaFile;
+    }
+    // Remember to manage the lifecycle of the MapView
+    @Override
+    protected void onResume() {
+        super.onResume();
+        miniMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        miniMapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        miniMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        miniMapView.onLowMemory();
     }
 
 }

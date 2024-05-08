@@ -96,6 +96,7 @@
     <string name="first_name">الاسم الأول</string>
     <string name="last_name">اسم العائلة</string>
     <string name="subscription_completed">اكتمل الاشتراك!</string>
+    <string name="yearofxp">:سنوات الخبرة</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

@@ -7,7 +7,17 @@
     android:background="@color/colorPrimary"
     tools:context=".ProfileFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -139,7 +149,7 @@
                 app:layout_constraintStart_toStartOf="@+id/gl"
                 app:layout_constraintTop_toTopOf="@+id/view2" />
 
-            <EditText
+            <TextView
                 android:id="@+id/emailtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -184,7 +194,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/gl"
                 app:layout_constraintTop_toBottomOf="@+id/location" />
 
@@ -196,7 +206,7 @@
                 android:text="your phone number"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBaseline_toBaselineOf="@+id/phone"
                 app:layout_constraintStart_toEndOf="@+id/phone" />
 
@@ -210,7 +220,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/gl"
                 app:layout_constraintTop_toBottomOf="@+id/phone" />
 
@@ -222,9 +232,59 @@
                 android:text="text"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBaseline_toBaselineOf="@+id/specialization"
-                app:layout_constraintStart_toEndOf="@+id/specialization" />
+                android:visibility="visible"
+                app:layout_constraintBaseline_toBaselineOf="@id/specialization"
+                app:layout_constraintStart_toEndOf="@id/specialization" />
+            <TextView
+                android:id="@+id/yearofxp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/yearofxp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@+id/gl"
+                app:layout_constraintTop_toBottomOf="@+id/specialization" />
+
+            <EditText
+                android:id="@+id/yearofxptext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="text"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:visibility="visible"
+                app:layout_constraintBaseline_toBaselineOf="@id/yearofxp"
+                app:layout_constraintStart_toEndOf="@id/yearofxp" />
+            <TextView
+                android:id="@+id/biography"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/biography"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@+id/gl"
+                app:layout_constraintTop_toBottomOf="@+id/yearofxp" />
+
+            <EditText
+                android:id="@+id/biographytext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="text"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:visibility="visible"
+                app:layout_constraintBaseline_toBaselineOf="@id/biography"
+                app:layout_constraintStart_toEndOf="@id/biography" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -290,7 +350,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:elevation="8dp"
-        android:background="@drawable/profile_bg"
+        android:background="@drawable/floating_bt_bg"
         android:src="@drawable/edit_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -299,14 +359,17 @@
         android:id="@+id/pay"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/profile_bg"
         android:elevation="8dp"
+        android:background="@drawable/floating_bt_bg"
         android:src="@drawable/payment_icon"
+        android:layout_gravity="bottom|end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/manageparts"
         app:layout_constraintStart_toStartOf="parent" />
 
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

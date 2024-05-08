@@ -88,32 +88,6 @@ public class PartDetailsActivity extends BaseActivity {
         ImageSliderAdapter adapter = new ImageSliderAdapter(getSupportFragmentManager(), imageList);
         horizontalScrollView.setAdapter(adapter);
 
-
-//        int imageWidth = getResources().getDimensionPixelSize(R.dimen.image_width);
-//        int imageHeight = getResources().getDimensionPixelSize(R.dimen.image_height);
-//
-//        for (String imageUrl : imageUrls) {
-//            ShapeableImageView imageView = new ShapeableImageView(this);
-//            imageView.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageHeight));
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//            Glide.with(this).load(imageUrl).into(imageView); // Use Glide or any other image loading library to load images from URL
-//
-//            CardView cardView = new CardView(this);
-//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.WRAP_CONTENT,
-//                    LinearLayout.LayoutParams.WRAP_CONTENT);
-//            layoutParams.setMargins(8, 8, 8, 8); // Set margins as needed
-//            cardView.setLayoutParams(layoutParams);
-//            cardView.setRadius(getResources().getDimension(R.dimen.card_corner_radius));
-//            cardView.setElevation(getResources().getDimension(R.dimen.card_elevation));
-//            // Add ImageView to CardView
-//            cardView.addView(imageView);
-//
-//            // Add CardView to the LinearLayout container
-//            imageContainer.addView(cardView);
-//        }
-
-
         miniMapView = findViewById(R.id.miniMapView);
 
 // Set up the map asynchronously

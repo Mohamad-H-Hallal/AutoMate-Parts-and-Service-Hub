@@ -168,7 +168,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/e_scrapyardname_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_model_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_model_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_make_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_make_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_year_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_year_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_category_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -288,7 +288,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_category_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_subcategory_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -312,7 +312,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_subcategory_detail" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/e_condition_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -325,29 +325,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_subcategory_detailtxt" />
 
-                    <TextView
+                    <CheckBox
                         android:id="@+id/e_negotiable_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginStart="20dp"
                         android:text="@string/negotiable"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_condition_detail" />
 
-                    <EditText
-                        android:id="@+id/e_negotiable_detailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_marginTop="30dp"
-                        android:text="model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/e_negotiable_detail"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_condition_detailtxt" />
+
 
                     <TextView
                         android:id="@+id/e_phone_detail"
@@ -361,7 +352,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_negotiable_detail" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/e_phone_detailtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -374,7 +365,7 @@
                         app:layout_constraintBaseline_toBaselineOf="@id/e_phone_detail"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_negotiable_detailtxt" />
+                        app:layout_constraintTop_toBottomOf="@id/e_negotiable_detail" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -475,4 +466,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        style="@style/FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/save_icon"
+        app:fabCustomSize="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

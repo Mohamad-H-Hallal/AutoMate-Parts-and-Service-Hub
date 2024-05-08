@@ -95,6 +95,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="subscription_completed">Subscription Completed!</string>
+    <string name="yearofxp">Years Of Experience:</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
