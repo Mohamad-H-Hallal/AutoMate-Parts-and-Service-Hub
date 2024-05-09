@@ -97,6 +97,7 @@
     <string name="subscription_completed">Subscription Completed!</string>
     <string name="yearofxp">Years of Experience:</string>
     <string name="subscription">Subscription</string>
+    <string name="add_part_description">Description</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

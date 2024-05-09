@@ -42,7 +42,7 @@
     <string name="search_scrap_yards">ابحث عن ساحة خردة…</string>
     <string name="part_details">تفصيل القطعة</string>
     <string name="price">السعر:</string>
-    <string name="description">وصف:</string>
+    <string name="description">الوصف:</string>
     <string name="filter">فلتر</string>
     <string name="make">الماركة:</string>
     <string name="model">طرازها:</string>
@@ -98,6 +98,7 @@
     <string name="subscription_completed">اكتمل الاشتراك!</string>
     <string name="yearofxp">:سنوات الخبرة</string>
     <string name="subscription">الاشتراك</string>
+    <string name="add_part_description">الوصف</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
