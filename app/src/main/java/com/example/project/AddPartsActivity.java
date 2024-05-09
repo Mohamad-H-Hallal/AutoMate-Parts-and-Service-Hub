@@ -1,5 +1,6 @@
 package com.example.project;
 
+import static com.example.project.Configuration.IP;
 import static com.example.project.GetImagePath.getRealPath;
 
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +31,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.google.android.material.imageview.ShapeableImageView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,6 +69,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     private String nameOfeachImage = "";
     ArrayList<Uri> uriImages;
     private AppCompatButton addPartButton;
+    private Spinner make,model,year,category,subcategories,condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +81,32 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addpartimage = findViewById(R.id.addPartImage);
         addPartHorizontalScrollView = findViewById(R.id.addPartHorizontalScrollView);
         addPartButton = findViewById(R.id.addPartButton);
+        make = findViewById(R.id.addPartMakeSpinner);
+        model = findViewById(R.id.addPartModelSpinner);
+        year = findViewById(R.id.addPartYearSpinner);
+        category = findViewById(R.id.addPartCategorySpinner);
+        subcategories = findViewById(R.id.addPartSubCategorySpinner);
+        condition = findViewById(R.id.addPartConditionSpinner);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "get_all_categories.php", response -> {
+            try{
+            JSONArray jsonArray = new JSONArray(response);
+            List<String> categories = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String categoryName = jsonObject.getString("name");
+                    categories.add(categoryName);
+                }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        }, error -> {
+            // Error handling
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
         uriImages = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
