@@ -240,6 +240,33 @@
                         app:layout_constraintStart_toEndOf="@id/specialization" />
 
                     <TextView
+                        android:id="@+id/subscription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/subscription"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="@+id/gl"
+                        app:layout_constraintTop_toBottomOf="@+id/specialization" />
+
+                    <EditText
+                        android:id="@+id/subscriptiontext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="text"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        app:layout_constraintBaseline_toBaselineOf="@id/subscription"
+                        app:layout_constraintStart_toEndOf="@id/subscription" />
+
+
+                    <TextView
                         android:id="@+id/yearofxp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -251,7 +278,7 @@
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/specialization" />
+                        app:layout_constraintTop_toBottomOf="@+id/subscription" />
 
                     <EditText
                         android:id="@+id/yearofxptext"
