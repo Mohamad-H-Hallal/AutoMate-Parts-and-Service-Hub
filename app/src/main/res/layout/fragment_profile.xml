@@ -253,7 +253,7 @@
                         app:layout_constraintStart_toStartOf="@+id/gl"
                         app:layout_constraintTop_toBottomOf="@+id/specialization" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/subscriptiontext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -308,13 +308,15 @@
 
                     <EditText
                         android:id="@+id/biographytext"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="text"
+                        android:layout_marginEnd="8dp"
+                        android:text="wvgwfccccccccccecvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="@id/gl2"
                         app:layout_constraintBaseline_toBaselineOf="@id/biography"
                         app:layout_constraintStart_toEndOf="@id/biography" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

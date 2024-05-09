@@ -269,18 +269,16 @@
 
                     <TextView
                         android:id="@+id/v_biotext"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="130dp"
-                        android:layout_marginEnd="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:text="textttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/v_yearofxptext"
                         app:layout_constraintBaseline_toBaselineOf="@id/v_bio"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/v_gl2"
-                        app:layout_constraintStart_toStartOf="@id/v_gl" />
+                        app:layout_constraintStart_toEndOf="@id/v_bio"
+                        app:layout_constraintEnd_toEndOf="@id/v_gl2"/>
 
                     <TextView
                         android:id="@+id/v_yearofxp"
@@ -297,17 +295,14 @@
 
                     <TextView
                         android:id="@+id/v_yearofxptext"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginStart="200dp"
+                        android:layout_marginStart="8dp"
                         android:text="text"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/v_specializationtext"
                         app:layout_constraintBaseline_toBaselineOf="@id/v_yearofxp"
-                        app:layout_constraintEnd_toStartOf="@id/v_gl2"
-                        app:layout_constraintStart_toEndOf="@id/v_gl" />
+                        app:layout_constraintStart_toEndOf="@id/v_yearofxp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
