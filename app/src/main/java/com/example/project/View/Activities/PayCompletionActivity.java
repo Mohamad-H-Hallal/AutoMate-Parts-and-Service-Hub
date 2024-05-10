@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.project.R;
 
-public class PayCompletionActivity extends AppCompatActivity {
+public class PayCompletionActivity extends BaseActivity {
 
     private ImageButton back;
     private AppCompatButton paymentSubmit;

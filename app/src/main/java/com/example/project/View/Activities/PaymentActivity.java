@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 import com.example.project.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
-public class PaymentActivity extends AppCompatActivity {
+public class PaymentActivity extends BaseActivity {
 
     private ImageButton back;
     private ShapeableImageView omtViewPay,whishViewPay,omtViewPay2,whishViewPay2;
