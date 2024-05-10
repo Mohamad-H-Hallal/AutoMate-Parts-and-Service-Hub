@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_bk_color"
-    tools:context=".PaymentActivity">
+    tools:context=".View.Activities.PaymentActivity">
 
     <TextView
         android:id="@+id/paymentTitle"

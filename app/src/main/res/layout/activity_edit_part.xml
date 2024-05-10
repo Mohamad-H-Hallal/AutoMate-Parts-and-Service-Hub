@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".EditPartActivity">
+    tools:context=".View.Activities.EditPartActivity">
 
     <TextView
         android:id="@+id/e_part_details_title"

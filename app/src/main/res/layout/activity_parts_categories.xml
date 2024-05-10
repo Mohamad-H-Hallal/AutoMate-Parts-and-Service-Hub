@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PartsCategoriesActivity">
+    tools:context=".View.Activities.PartsCategoriesActivity">
 
     <TextView
         android:id="@+id/parts_title"
