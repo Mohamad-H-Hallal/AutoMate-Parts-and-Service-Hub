@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.project.R;
 
-public class ViewPartsActivity extends AppCompatActivity {
+public class ViewPartsActivity extends BaseActivity {
     ImageButton backButton;
     ListView lv;
     @Override
