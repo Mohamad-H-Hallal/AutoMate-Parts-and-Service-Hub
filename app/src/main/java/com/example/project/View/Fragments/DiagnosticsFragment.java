@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
@@ -18,6 +19,7 @@ public class DiagnosticsFragment extends BaseFragment {
 
     private ImageView carDataFilter;
     private CardView carDataCardFilter;
+    private AppCompatButton importData;
 
     public DiagnosticsFragment() {
         // Required empty public constructor
