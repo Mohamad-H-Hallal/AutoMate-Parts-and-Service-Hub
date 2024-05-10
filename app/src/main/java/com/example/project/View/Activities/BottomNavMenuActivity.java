@@ -77,6 +77,4 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
             }
         return false;
     }
-
-
 }

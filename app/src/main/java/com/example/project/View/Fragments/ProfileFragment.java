@@ -51,6 +51,7 @@ import java.util.Objects;
 
 public class ProfileFragment extends BaseFragment {
 
+    private static final int PAYMENT_REQUEST_CODE = 17;
     private ShapeableImageView profile_image;
     private ImageButton reset_pass;
     private ImageButton logout;
@@ -228,8 +229,7 @@ public class ProfileFragment extends BaseFragment {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), PaymentActivity.class));
-                requireActivity().finish();
+                startActivityForResult(new Intent(getContext(), PaymentActivity.class),PAYMENT_REQUEST_CODE );
             }
         });
     }
@@ -337,6 +337,8 @@ public class ProfileFragment extends BaseFragment {
                         Toast.makeText(getContext(), "Error retrieving location data", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case PAYMENT_REQUEST_CODE:
+                    requireActivity().finish();
 
             }
         }

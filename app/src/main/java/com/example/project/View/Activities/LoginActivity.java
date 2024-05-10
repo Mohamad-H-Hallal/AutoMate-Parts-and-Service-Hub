@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void resetPassword(View view) {
-        Intent resetPass = new Intent(this, EditPartActivity.class);
+        Intent resetPass = new Intent(this, PaymentActivity.class);
         startActivity(resetPass);
         finish();
     }
