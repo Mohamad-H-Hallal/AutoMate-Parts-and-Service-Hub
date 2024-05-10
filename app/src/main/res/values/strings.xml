@@ -98,6 +98,11 @@
     <string name="yearofxp">Years of Experience:</string>
     <string name="subscription">Subscription</string>
     <string name="add_part_description">Description</string>
+    <string name="import_car_s_diagnostics">Import Car\'s Diagnostics</string>
+    <string name="day">Day:</string>
+    <string name="month">Month:</string>
+    <string name="car_data_year">Year:</string>
+    <string name="hour">Hour:</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

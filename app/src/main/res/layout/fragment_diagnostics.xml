@@ -1,11 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DiagnosticsFragment"
     android:background="@color/colorPrimary">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/importData"
+        style="@style/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="70dp"
+        android:text="@string/import_car_s_diagnostics"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/carDataFilter"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/importData"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_filter"/>
 
-</FrameLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/carDataCardFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="12dp"
+        android:visibility="gone"
+        app:cardCornerRadius="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/carDataFilter">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/carDataFilterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginTop="10dp"
+                android:text="@string/filter"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="35sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dayFilterText"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="@string/day"
+                android:textColor="@color/darkTextColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/carDataFilterText" />
+
+            <Spinner
+                android:id="@+id/daySpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/themeColor"
+                android:entries="@array/spinner"
+                app:layout_constraintBaseline_toBaselineOf="@id/dayFilterText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/monthFilterText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/monthFilterText"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="@string/month"
+                android:textColor="@color/darkTextColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dayFilterText" />
+
+            <Spinner
+                android:id="@+id/monthSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/themeColor"
+                android:entries="@array/spinner"
+                app:layout_constraintBaseline_toBaselineOf="@id/monthFilterText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/monthFilterText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/yearFilterText"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="@string/car_data_year"
+                android:textColor="@color/darkTextColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monthFilterText" />
+
+            <Spinner
+                android:id="@+id/yearSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/themeColor"
+                android:entries="@array/spinner"
+                app:layout_constraintBaseline_toBaselineOf="@id/yearFilterText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/monthFilterText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hourFilterText"
+                android:layout_marginStart="@dimen/loginViewsMargin"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:text="@string/hour"
+                android:textColor="@color/darkTextColor"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yearFilterText" />
+
+            <Spinner
+                android:id="@+id/hourSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="@color/themeColor"
+                android:entries="@array/spinner"
+                app:layout_constraintBaseline_toBaselineOf="@id/hourFilterText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/monthFilterText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/carDataFilterSubmit"
+                style="@style/loginButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginBottom="@dimen/loginViewsMargin"
+                android:text="@string/submit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hourSpinner" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ListView
+        android:id="@+id/mechanicsListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/importData" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

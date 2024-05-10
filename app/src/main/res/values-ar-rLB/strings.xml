@@ -99,6 +99,11 @@
     <string name="yearofxp">:سنوات الخبرة</string>
     <string name="subscription">الاشتراك</string>
     <string name="add_part_description">الوصف</string>
+    <string name="import_car_s_diagnostics">استيراد تشخيصات السيارة</string>
+    <string name="day">اليوم:</string>
+    <string name="month">الشهر:</string>
+    <string name="car_data_year">السنة:</string>
+    <string name="hour">الساعة:</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
