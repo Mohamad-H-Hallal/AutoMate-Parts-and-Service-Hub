@@ -24,63 +24,63 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".PayCompletionActivity"
+            android:name=".View.Activities.PayCompletionActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".PaymentActivity"
+            android:name=".View.Activities.PaymentActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".View.Activities.ChangePasswordActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EditPartActivity"
+            android:name=".View.Activities.EditPartActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ViewPartsActivity"
+            android:name=".View.Activities.ViewPartsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AddPartsActivity"
+            android:name=".View.Activities.AddPartsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileViewActivity"
+            android:name=".View.Activities.ProfileViewActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PartDetailsActivity"
+            android:name=".View.Activities.PartDetailsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".View.Activities.SettingActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ManagePartsActivity"
+            android:name=".View.Activities.ManagePartsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PartsCategoriesActivity"
+            android:name=".View.Activities.PartsCategoriesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EditLocationActivity"
+            android:name=".View.Activities.EditLocationActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MapsLocationActivity"
+            android:name=".View.Activities.MapsLocationActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PasswordResetActivity"
+            android:name=".View.Activities.PasswordResetActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BottomNavMenuActivity"
+            android:name=".View.Activities.BottomNavMenuActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -90,15 +90,15 @@
             android:value="AIzaSyAUrzJX7cTpSfDH7axO3OBNCQv3KJGRcSU" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".View.Activities.MapsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".View.Activities.RegisterActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".View.Activities.LoginActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

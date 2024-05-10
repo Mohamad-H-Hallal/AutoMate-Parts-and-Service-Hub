@@ -1,7 +1,7 @@
 package com.example.project.FileUpload;
 
 
-import static com.example.project.Configuration.IP;
+import static com.example.project.Controller.Configuration.IP;
 
 import java.util.concurrent.TimeUnit;
 
