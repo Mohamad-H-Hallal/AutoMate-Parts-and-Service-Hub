@@ -9,11 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -50,7 +53,7 @@ public class RegisterActivity extends BaseActivity {
     Spinner sp;
     AppCompatButton regbtn;
     TextInputLayout til1, til2;
-
+    private AlertDialog Dialog;
     TextView locationText;
 
     private Uri uriImage = null;
@@ -140,23 +143,32 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void showImagePickerDialog() {
-        String[] options = {"Take Photo", "Choose from Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Profile Picture");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+        View DialogView = LayoutInflater.from(RegisterActivity.this).inflate(R.layout.picture_dialog, null);
+        final AppCompatButton takeButton = DialogView.findViewById(R.id.takePhotoButton);
+        final AppCompatButton chooseButton = DialogView.findViewById(R.id.chooseGalleryButton);
+        builder.setView(DialogView);
+        takeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        captureImage();
-                        break;
-                    case 1:
-                        openGallery();
-                        break;
+            public void onClick(View v) {
+                captureImage();
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
                 }
             }
         });
-        builder.show();
+        chooseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
+                }
+            }
+        });
+        Dialog = builder.create();
+        Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog.show();
     }
 
     private void captureImage() {

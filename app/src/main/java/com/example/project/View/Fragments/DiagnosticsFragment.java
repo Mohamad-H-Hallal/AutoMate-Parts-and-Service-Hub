@@ -2,6 +2,7 @@ package com.example.project.View.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -78,6 +79,8 @@ public class DiagnosticsFragment extends BaseFragment {
         carDataFilter = view.findViewById(R.id.carDataFilter);
         carDataCardFilter = view.findViewById(R.id.carDataCardFilter);
         importData = view.findViewById(R.id.importData);
+        progressBar = view.findViewById(R.id.progress_bar_id);
+        statusText = view.findViewById(R.id.status_text);
         importData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,22 +114,17 @@ public class DiagnosticsFragment extends BaseFragment {
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    //    private void requestBluetoothEnable() {
-//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-//            return;
-//        }
-//        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-//    }
-
     private void requestBluetoothEnable() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
             return;
         }
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
     }
+
 
     private void checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
@@ -148,10 +146,10 @@ public class DiagnosticsFragment extends BaseFragment {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == REQUEST_ENABLE_BT) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 checkAndRequestPermissions();
             } else {
-                Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continuecc.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -163,7 +161,7 @@ public class DiagnosticsFragment extends BaseFragment {
             if (resultCode == Activity.RESULT_OK) {
                 checkAndRequestPermissions();
             } else {
-                Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continuepp.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -179,7 +177,7 @@ public class DiagnosticsFragment extends BaseFragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE); // Show progress bar
-            statusText.setText("Connecting..."); // Update status text
+            statusText.setText(getResources().getString(R.string.connecting)); // Update status text
         }
 
         @Override
@@ -200,7 +198,7 @@ public class DiagnosticsFragment extends BaseFragment {
 
         private void receiveFile(BluetoothSocket socket) throws IOException {
             File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File file = new File(directory, "received_file.zip");
+            File file = new File(directory, "car_data.zip");
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = new FileOutputStream(file);
 
@@ -212,7 +210,6 @@ public class DiagnosticsFragment extends BaseFragment {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
                 totalBytes += bytesRead;
-                // Update progress bar (assuming it has a max value set to file size)
                 progressBar.setProgress((int) ((totalBytes * 1.0f) / fileSize * 100));
             }
 
@@ -227,14 +224,14 @@ public class DiagnosticsFragment extends BaseFragment {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            statusText.setText("Downloading..."); // Update status text during download
+            statusText.setText(getResources().getString(R.string.downloading)); // Update status text during download
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE); // Hide progress bar
-            statusText.setText("File received successfully!"); // Update status text on success
+            statusText.setText(getResources().getString(R.string.file_saved)); // Update status text on success
         }
     }
 }

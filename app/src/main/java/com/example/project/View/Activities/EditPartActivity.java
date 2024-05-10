@@ -12,11 +12,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -65,6 +69,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     ArrayList<String> imageListfromuser;
     ImageEditAdapter adapter;
     TextView add;
+    private AlertDialog Dialog;
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
     private ArrayList<Uri> uriImage;
@@ -142,23 +147,32 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     }
 
     private void showImagePickerDialog() {
-        String[] options = {"Take Photo", "Choose from Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Profile Picture");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+        View DialogView = LayoutInflater.from(EditPartActivity.this).inflate(R.layout.picture_dialog, null);
+        final AppCompatButton takeButton = DialogView.findViewById(R.id.takePhotoButton);
+        final AppCompatButton chooseButton = DialogView.findViewById(R.id.chooseGalleryButton);
+        builder.setView(DialogView);
+        takeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        captureImage();
-                        break;
-                    case 1:
-                        openGallery();
-                        break;
+            public void onClick(View v) {
+                captureImage();
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
                 }
             }
         });
-        builder.show();
+        chooseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
+                }
+            }
+        });
+        Dialog = builder.create();
+        Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog.show();
     }
 
     private void captureImage() {

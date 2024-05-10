@@ -104,6 +104,13 @@
     <string name="month">الشهر:</string>
     <string name="car_data_year">السنة:</string>
     <string name="hour">الساعة:</string>
+    <string name="status">الحالة:</string>
+    <string name="connecting">توصيل...</string>
+    <string name="downloading">جارى التحميل...</string>
+    <string name="file_saved">تم استلام الملف بنجاح!</string>
+    <string name="select_a_picture">اختر صورة</string>
+    <string name="take_a_photo">التقط صورة</string>
+    <string name="choose_from_gallery">اختر من المعرض</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
