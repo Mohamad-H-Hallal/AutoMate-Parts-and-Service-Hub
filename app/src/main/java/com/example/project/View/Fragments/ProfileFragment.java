@@ -151,53 +151,12 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(View view) {
                 editing = !editing;
                 if (!editing) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    View DialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_mode_dialog, null);
-                    final AppCompatButton yesButton = DialogView.findViewById(R.id.cs_yes_button);
-                    final AppCompatButton noButton = DialogView.findViewById(R.id.cs_no_button);
-                    builder.setView(DialogView);
-                    yesButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (uriImage != null) {
-                                uploadImage();
-                            }
-                            edit.setImageResource(R.drawable.edit_icon);
-                            name.setEnabled(false);
-                            phonetext.setEnabled(false);
-                            specializationtext.setEnabled(false);
-                            name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                            if (Dialog != null && Dialog.isShowing()) {
-                                Dialog.dismiss();
-                            }
-                        }
-                    });
-                    noButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            editing = !editing;
-                            if (Dialog != null && Dialog.isShowing()) {
-                                Dialog.dismiss();
-                            }
-                        }
-                    });
-                    Dialog = builder.create();
-                    Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    Dialog.show();
+                    showSaveConfirmationDialog();
                 }
 
                 if (editing) {
-                    edit.setImageResource(R.drawable.save_icon);
-                    name.setEnabled(true);
-                    phonetext.setEnabled(true);
-                    specializationtext.setEnabled(true);
-                    name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                    phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                    specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                    Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
+                    // Toggle editing mode
+                    toggleEditingMode();
                 }
 
             }
@@ -230,7 +189,7 @@ public class ProfileFragment extends BaseFragment {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), PaymentActivity.class),PAYMENT_REQUEST_CODE );
+                startActivityForResult(new Intent(getContext(), PaymentActivity.class), PAYMENT_REQUEST_CODE);
             }
         });
     }
@@ -264,6 +223,66 @@ public class ProfileFragment extends BaseFragment {
         Dialog.show();
     }
 
+    private void showSaveConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_mode_dialog, null);
+        final AppCompatButton yesButton = dialogView.findViewById(R.id.cs_yes_button);
+        final AppCompatButton noButton = dialogView.findViewById(R.id.cs_no_button);
+        builder.setView(dialogView);
+
+        // Create the dialog
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCanceledOnTouchOutside(false); // Prevent dismissal by clicking outside
+
+        // Handle click listeners for the dialog buttons
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (uriImage != null) {
+                    uploadImage();
+                }
+                saveChanges();
+                dialog.dismiss(); // Dismiss the dialog
+            }
+        });
+
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editing = !editing;
+                dialog.dismiss(); // Dismiss the dialog
+            }
+        });
+
+        // Show the dialog
+        dialog.show();
+    }
+
+    private void saveChanges() {
+        // Save changes logic here
+        edit.setImageResource(R.drawable.edit_icon);
+        name.setEnabled(false);
+        phonetext.setEnabled(false);
+        specializationtext.setEnabled(false);
+        name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void toggleEditingMode() {
+        // Toggle editing mode
+        edit.setImageResource(R.drawable.save_icon);
+        name.setEnabled(true);
+        phonetext.setEnabled(true);
+        specializationtext.setEnabled(true);
+        name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
+    }
+
     private void captureImage() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
@@ -276,28 +295,6 @@ public class ProfileFragment extends BaseFragment {
         startActivityForResult(chooser, GALLERY_REQUEST_CODE);
     }
 
-//    private boolean checkPermissions() {
-//        int cameraPermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA);
-//        int storagePermission = ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//
-//        return cameraPermission == PackageManager.PERMISSION_GRANTED && storagePermission == PackageManager.PERMISSION_GRANTED;
-//    }
-//    private void requestPermissions() {
-//        ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-//    }not used for now
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == PERMISSION_REQUEST_CODE) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-//                showImagePickerDialog();
-//            } else {
-//                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
