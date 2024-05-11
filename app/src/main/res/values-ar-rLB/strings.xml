@@ -111,6 +111,7 @@
     <string name="select_a_picture">اختر صورة</string>
     <string name="take_a_photo">التقط صورة</string>
     <string name="choose_from_gallery">اختر من المعرض</string>
+    <string name="error_occurred">فشل نقل الملف. الرجاء التحقق من الاتصال والمحاولة مرة أخرى.</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

@@ -110,6 +110,7 @@
     <string name="select_a_picture">Select a Picture</string>
     <string name="take_a_photo">Take a Photo</string>
     <string name="choose_from_gallery">Choose From Gallery</string>
+    <string name="error_occurred">File transfer failed. Please check the connection and try again.</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
