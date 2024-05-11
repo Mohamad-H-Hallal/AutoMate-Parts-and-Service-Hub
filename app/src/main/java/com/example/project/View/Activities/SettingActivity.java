@@ -128,7 +128,6 @@ public class SettingActivity extends BaseActivity {
                 final AppCompatButton yesButton = DialogView.findViewById(R.id.lo_yes_button);
                 final AppCompatButton noButton = DialogView.findViewById(R.id.lo_no_button);
                 builder.setView(DialogView);
-
                 yesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -1,15 +1,22 @@
 package com.example.project.View.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.example.project.R;
+import com.example.project.View.Activities.AddPartsActivity;
+import com.example.project.View.Activities.LoginActivity;
+import com.example.project.View.Activities.SettingActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
@@ -18,9 +25,10 @@ public class ImageAddAdapter extends PagerAdapter {
     private Context context;
     private ArrayList<String> images;// Replace with your image data source (e.g., URLs or file paths)
     private OnImageRemoveListener mListener;
+    private AlertDialog Dialog;
 
 
-    public ImageAddAdapter(Context context, ArrayList<String> images,OnImageRemoveListener listener) {
+    public ImageAddAdapter(Context context, ArrayList<String> images, OnImageRemoveListener listener) {
         this.context = context;
         this.images = images;
         this.mListener = listener;
@@ -30,7 +38,6 @@ public class ImageAddAdapter extends PagerAdapter {
     public int getCount() {
         return images.size();
     }
-
 
 
     @Override
@@ -49,17 +56,31 @@ public class ImageAddAdapter extends PagerAdapter {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Delete image");
-                builder.setMessage("Are you sure?");
-                builder.setIcon(R.drawable.delete_icon);
-                builder.setPositiveButton("Yes", (dialog, which) -> {
-                    mListener.onImageRemoved(position);
+                View DialogView = LayoutInflater.from(context).inflate(R.layout.delete_dialog, null);
+                final AppCompatButton yesButton = DialogView.findViewById(R.id.del_yes_button);
+                final AppCompatButton noButton = DialogView.findViewById(R.id.del_no_button);
+                builder.setView(DialogView);
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onImageRemoved(position);
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
                 });
-                builder.setNegativeButton("No", null);
-                builder.show();
-
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                Dialog = builder.create();
+                Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog.show();
             }
         });
 

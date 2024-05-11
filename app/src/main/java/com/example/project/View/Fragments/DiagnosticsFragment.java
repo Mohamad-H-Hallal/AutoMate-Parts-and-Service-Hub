@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -37,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Map;
 import java.util.UUID;
 
 import com.example.project.R;
@@ -52,6 +55,9 @@ public class DiagnosticsFragment extends BaseFragment {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 2;
 
+    private ActivityResultLauncher<Intent> requestEnableBluetooth;
+    private ActivityResultLauncher<String[]> requestMultiplePermissions;
+
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket socket;
     private ProgressBar progressBar;
@@ -64,6 +70,27 @@ public class DiagnosticsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestEnableBluetooth = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        connectToDevice();
+                    } else {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    }
+                }
+        );
+
+        requestMultiplePermissions = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                permissions -> {
+                    for (Map.Entry<String, Boolean> entry : permissions.entrySet()) {
+                        Log.d("MyTag", entry.getKey() + " = " + entry.getValue());
+                    }
+                }
+        );
     }
 
     @Override
@@ -81,16 +108,8 @@ public class DiagnosticsFragment extends BaseFragment {
         importData = view.findViewById(R.id.importData);
         progressBar = view.findViewById(R.id.progress_bar_id);
         statusText = view.findViewById(R.id.status_text);
-        importData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isBluetoothEnabled()) {
-                    requestBluetoothEnable();
-                    return;
-                }
-                checkAndRequestPermissions();
-            }
-        });
+        importData.setOnClickListener(v -> requestBluetooth());
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
             Toast.makeText(getContext(), "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show();
@@ -110,6 +129,24 @@ public class DiagnosticsFragment extends BaseFragment {
         });
     }
 
+    private void requestBluetooth() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            requestMultiplePermissions.launch(
+                    new String[]{
+                            Manifest.permission.BLUETOOTH_SCAN,
+                            Manifest.permission.BLUETOOTH_CONNECT,
+                            Manifest.permission.BLUETOOTH_ADMIN,
+                            Manifest.permission.BLUETOOTH
+                    }
+            );
+        } else {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            requestEnableBluetooth.launch(enableBtIntent);
+        }
+
+    }
+
+
     private boolean isBluetoothEnabled() {
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
@@ -118,7 +155,7 @@ public class DiagnosticsFragment extends BaseFragment {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
+            requestPermissions(new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
             return;
         }
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -130,7 +167,7 @@ public class DiagnosticsFragment extends BaseFragment {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
+            requestPermissions(new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
         } else {
             connectToDevice();
         }
@@ -168,6 +205,7 @@ public class DiagnosticsFragment extends BaseFragment {
 
 
     private void connectToDevice() {
+        Log.d("test","i am in the connectToDevice method");
         new ConnectTask().execute();
     }
 
@@ -184,8 +222,10 @@ public class DiagnosticsFragment extends BaseFragment {
         protected Void doInBackground(Void... voids) {
             try {
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
-                BluetoothSocket socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                Log.d("test",socket.toString());
                 socket.connect();
+                //signal
                 receiveFile(socket);
             } catch (IOException e) {
                 Log.e(TAG, "Error connecting to server", e);

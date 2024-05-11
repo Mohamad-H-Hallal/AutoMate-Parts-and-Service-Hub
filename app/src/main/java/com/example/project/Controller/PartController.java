@@ -48,4 +48,5 @@ public class PartController {
 
         return imageUrls;
     }
+
 }

@@ -203,6 +203,186 @@
         <item>Used</item>
     </string-array>
 
+    <string-array name="make_choices">
+        <item>Select Make</item>
+        <item>Acura</item>
+        <item>Alfa Romeo</item>
+        <item>Aston Martin</item>
+        <item>Audi</item>
+        <item>Baic</item>
+        <item>Bentley</item>
+        <item>BMW</item>
+        <item>Brilliance</item>
+        <item>Bugatti</item>
+        <item>Buick</item>
+        <item>Cadillac</item>
+        <item>Changan</item>
+        <item>Chery</item>
+        <item>Chevrolet</item>
+        <item>Chrysler</item>
+        <item>Citroën</item>
+        <item>Daewoo</item>
+        <item>Daihatsu</item>
+        <item>Datsun</item>
+        <item>Dodge</item>
+        <item>Ds</item>
+        <item>Faw</item>
+        <item>Ferrari</item>
+        <item>Fiat</item>
+        <item>Ford</item>
+        <item>Forthing</item>
+        <item>GAC</item>
+        <item>Geely</item>
+        <item>Genesis</item>
+        <item>Gmc</item>
+        <item>Great Wall</item>
+        <item>Hafei</item>
+        <item>Haima</item>
+        <item>Hanteng</item>
+        <item>Haval</item>
+        <item>Hawtai</item>
+        <item>Honda</item>
+        <item>Hongqi</item>
+        <item>Hummer</item>
+        <item>Hyundai</item>
+        <item>Infiniti</item>
+        <item>Isuzu</item>
+        <item>Jac</item>
+        <item>Jaguar</item>
+        <item>Jeep</item>
+        <item>Jetour</item>
+        <item>Jinbei</item>
+        <item>Kaiyi</item>
+        <item>Kenbo</item>
+        <item>Kia</item>
+        <item>Lada</item>
+        <item>Lamborghini</item>
+        <item>Land Rover</item>
+        <item>Lexus</item>
+        <item>Lincoln</item>
+        <item>Mahindra</item>
+        <item>Maserati</item>
+        <item>Mazda</item>
+        <item>McLaren</item>
+        <item>Mercedes</item>
+        <item>Mercury</item>
+        <item>MG</item>
+        <item>Mini</item>
+        <item>Mitsubishi</item>
+        <item>Nissan</item>
+        <item>Opel</item>
+        <item>Peugeot</item>
+        <item>Pontiac</item>
+        <item>Porsche</item>
+        <item>Proton</item>
+        <item>Renault</item>
+        <item>Rolls Royce</item>
+        <item>Saipa</item>
+        <item>Scion</item>
+        <item>Seat</item>
+        <item>Skoda</item>
+        <item>Soueast</item>
+        <item>Speranza</item>
+        <item>SsangYong</item>
+        <item>Subaru</item>
+        <item>Suzuki</item>
+        <item>Tata</item>
+        <item>Toyota</item>
+        <item>Volkswagen</item>
+        <item>Volvo</item>
+        <item>Zotye</item>
+    </string-array>
+
+    <string-array name="model_choices">
+        <item>Select Model</item>
+        <item>Select Model;Integra;TLX;RDX;MDX;ZDX;Legend;NSX;Vigor;RL;SLX;TL;CL;EL;RSX;TSX;CSX;ILX;RLX;CDX</item>
+        <item>Select Model;145;146;147;Giulietta;MiTo;155;156;159;Giulia;GT;Brera;4C;8C Competizione;Stelvio;33 Stradale;164;166;Spider;GTV</item>
+        <item>Select Model;DB7;DB9;DB11;DBS V12;Virage;Vantage;Vanquish;Rapide;V8 Vantage;V12 Vantage;One-77;Vulcan;Zagato;DBX;DBS</item>
+        <item>Select Model;100/A6;80;90;Cabriolet;A1;A2;A3;A4;A5;A6;A7;A8;Duo;TT Coupé;TT;TTS;TT RS;Q2;Q3;Q5;Q7;Q8;S1;S2;S3;S4;S5;S6;S7;S8;RS 4;RS 6;RS5;RS7;R8;S2 Coupé;Avant RS 2</item>
+        <item>Select Model;BJ2020;BJ2032;BJ212;BJ2023;BJ2024;BJ2030;BJ2037;BJ2042;BJ2043;BJ2046;BJ2050;BJ20;BJ40;BJ60;BJ80;D20;X25;X55;X65;Senova D-Series;Senova X-Series;Senova CC;BJ40 Plus;BJ40 City Hunter;BJ80 Plus;BJ20 New Energy;D50;X35;X55 New Energy;X7</item>
+        <item>Select Model;Turbo R;Continental R;Brooklands;Azure;Arnage;Continental GT;Continental Flying Spur;Continental GTC;Continental T;Arnage T;Arnage R;Azure Mulliner;Brooklands Coupé;Mulsanne;Bentayga;Continental Supersports;Flying Spur</item>
+        <item>Select Model;1 Series;2 Series;3 Series;4 Series;5 Series;7 Series;8 Series;X1;X2;X3;X4;X5;X6;X7;Z4</item>
+        <item>Select Model;BC3;Tun;BS2;BS4;BS6;H3;H230;H330;H530;V3;V5;V6;V7</item>
+        <item>Select Model;EB110;Veyron;Chiron;Divo;La Voiture Noire;Centodeice;Bolide</item>
+        <item>Select Model;LaCrosse;Regal;Verano;Enclave;Encore GX;Envision;GL8;Century;Skylark;LeSabre;Riviera;Park Avenue;Roadmaster;Rendezvous;Rainier;Excelle;Terraza;Lucerne</item>
+        <item>Select Model;CT4;CT5;CT6;Escalade;XT4;XT5;XT6;Eldorado;de Ville;Seville;Fleetwood;Catera;CTS;SRX;XLR;DTS;BLS;STS;ATS;XTS</item>
+        <item>Select Model;CS15;CS35;CS35 Plus;CS55;CS75;CS85;CS95;Alsvin;Eado;Linmax;Raeton CC;A800;Joice;Ruixing;UNI-K;UNI-T;UNI-V;Chana Eulove;Chana Star;Chana Star 9;Chana Star S460;Chana Taurustar;Chana CM7;Chana CX70;Oshan X70A;Linmax;Raeton;Raeton Plus;CM8;CX20;CX30</item>
+        <item>Select Model;QQ;QQme;QQ6/Cowin 1;A15/Cowin 2;A19/E3/Cowin E3;A11/Fulwin;A13/Fulwin 2;A3/J3;A5;A1;E5;Eastar;Arrizo 3;Arrizo 5;Arrizo 5 Plus;Arrizo 7;Arrizo GX;Tiggo 3;Tiggo 3x;Tiggo 5;Tiggo 5x;Omoda 5;Exeed LX;Exeed RX;Exeed TXL;Exeed VX</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+        <item>Select Model</item>
+    </string-array>
+
     <string-array name="year_choices">
         <item>Select Year</item>
         <item>1990</item>
