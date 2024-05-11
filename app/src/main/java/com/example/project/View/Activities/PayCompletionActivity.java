@@ -41,9 +41,6 @@ public class PayCompletionActivity extends BaseActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PayCompletionActivity.this, BottomNavMenuActivity.class);
-                i.putExtra("start_page", 1);
-                startActivity(i);
                 finish();
             }
         });

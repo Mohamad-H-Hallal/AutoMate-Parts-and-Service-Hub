@@ -103,6 +103,13 @@
     <string name="month">Month:</string>
     <string name="car_data_year">Year:</string>
     <string name="hour">Hour:</string>
+    <string name="status">Status:</string>
+    <string name="connecting">Connecting...</string>
+    <string name="downloading">Downloading...</string>
+    <string name="file_saved">File received successfully!</string>
+    <string name="select_a_picture">Select a Picture</string>
+    <string name="take_a_photo">Take a Photo</string>
+    <string name="choose_from_gallery">Choose From Gallery</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
