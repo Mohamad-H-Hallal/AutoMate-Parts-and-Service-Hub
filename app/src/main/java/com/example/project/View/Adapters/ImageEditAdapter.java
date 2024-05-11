@@ -50,12 +50,13 @@ public class ImageEditAdapter extends PagerAdapter {
 
         String imagePath;
         if (position < imagesfromdb.size()) {
+            if(!imagesfromdb.isEmpty()){
             imagePath = imagesfromdb.get(position);
             Glide.with(context).load(Parts_IMAGES_DIR + imagePath)
                     .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .error(R.drawable.test)
-                    .into(imageView);
+                    .into(imageView);}
         } else {
 
             int adjustedPosition = position - imagesfromdb.size();

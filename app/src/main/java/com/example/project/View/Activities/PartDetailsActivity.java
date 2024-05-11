@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.project.Controller.PartController;
 import com.example.project.CustomMapView;
 import com.example.project.R;
 import com.example.project.View.Adapters.ImageSliderAdapter;
@@ -34,6 +35,7 @@ public class PartDetailsActivity extends BaseActivity {
     ShapeableImageView location;
     TextView phone;
     CardView partDetailCardView;
+    PartController part_controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class PartDetailsActivity extends BaseActivity {
         location = findViewById(R.id.location_part_click);
         phone = findViewById(R.id.phone_detailtxt);
         partDetailCardView = findViewById(R.id.partDetailCardView);
+        part_controller = new PartController();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -77,15 +80,15 @@ public class PartDetailsActivity extends BaseActivity {
             }
         });
 
+        ArrayList<String> imageList = new ArrayList<>();
+//        imageList = part_controller.imagespath(this,lid lal part);
 
-        List<String> imageList = new ArrayList<>();
-        // Add your image resources to the list
 
 
         if(!imageList.isEmpty()){
             partDetailCardView.setVisibility(View.GONE);
         }
-        ImageSliderAdapter adapter = new ImageSliderAdapter(getSupportFragmentManager(), imageList);
+        ImageSliderAdapter adapter = new ImageSliderAdapter(this, imageList);
         horizontalScrollView.setAdapter(adapter);
 
         miniMapView = findViewById(R.id.miniMapView);

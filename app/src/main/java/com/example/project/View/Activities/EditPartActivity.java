@@ -33,6 +33,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.project.Controller.PartController;
 import com.example.project.CustomMapView;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.R;
@@ -73,6 +74,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     private static final int GALLERY_REQUEST_CODE = 110;
     private static final int CAMERA_REQUEST_CODE = 120;
     private static final int MAP_REQUEST_CODE = 130;
+    PartController part_controller ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         phone = findViewById(R.id.e_phone_detailtxt);
         add = findViewById(R.id.e_add_image);
         editpartdefault = findViewById(R.id.editpartdefault);
+        part_controller = new PartController();
         uriImage=new ArrayList<Uri>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,7 +100,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         } else if (selectedLanguage.equals("ar")) {
             back.setImageResource(R.drawable.ic_back_ar);
         }
-        imageListfromdb = new ArrayList<>();
+
+//        imageListfromdb = part_controller.imagespath(this,lid lal part);
+
         imageListfromuser=new ArrayList<>();
         adapter =new ImageEditAdapter(this,imageListfromdb,imageListfromuser,this);
         horizontalScrollView.setAdapter(adapter);
