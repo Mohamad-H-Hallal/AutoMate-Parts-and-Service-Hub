@@ -21,7 +21,10 @@ import android.widget.Spinner;
 
 import com.example.project.R;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PartsFragment extends BaseFragment {
 
@@ -90,22 +93,70 @@ public class PartsFragment extends BaseFragment {
                 }
             }
         });
+
+        Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
+        Map<String, List<String>> makeModelMap = new HashMap<>();
+        String[] categoriesArray = getResources().getStringArray(R.array.categories_choices);
+        String[] years = getResources().getStringArray(R.array.year_choices);
+        String[] subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices);
+        String[] makeArray = getResources().getStringArray(R.array.make_choices);
+        String[] modelArray = getResources().getStringArray(R.array.model_choices);
+        String[] conditionArray = getResources().getStringArray(R.array.condition_choices);
+
+        for (int i = 0; i < categoriesArray.length; i++) {
+            String category = categoriesArray[i];
+            String[] subcategories = subcategoriesArray[i].split(";");
+            categorySubcategoryMap.put(category, Arrays.asList(subcategories));
+        }
+
+        for (int i = 0; i < makeArray.length; i++) {
+            String make = makeArray[i];
+            String[] model = modelArray[i].split(";");
+            makeModelMap.put(make, Arrays.asList(model));
+        }
+
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, conditionArray);
+        partsConditionSpinner.setAdapter(conditionAdapter);
+        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, makeArray);
+        partsMakeSpinner.setAdapter(makeAdapter);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, years);
+        partsYearSpinner.setAdapter(yearAdapter);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriesArray);
+        partsCategorySpinner.setAdapter(categoryAdapter);
+
         partsMakeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String selectedMake = partsMakeSpinner.getSelectedItem().toString();
-                // Populate model spinner based on the selected make
-//                populateModelSpinner(selectedMake);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMake = (String) parent.getItemAtPosition(position);
+                List<String> model = makeModelMap.get(selectedMake);
+
+                // Populate the subcategorySpinner with subcategories for the selected category
+                ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, model);
+                partsModelSpinner.setAdapter(modelAdapter);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // Handle nothing selected
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle case where nothing is selected
+            }
+        });
+
+        partsCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                List<String> subcategories = categorySubcategoryMap.get(selectedCategory);
+
+                // Populate the subcategorySpinner with subcategories for the selected category
+                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, subcategories);
+                partsSubCategorySpinner.setAdapter(subcategoryAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle case where nothing is selected
             }
         });
 
     }
-
-
-
 }

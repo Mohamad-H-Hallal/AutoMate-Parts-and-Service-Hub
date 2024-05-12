@@ -1,12 +1,16 @@
 package com.example.project.View.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.PagerAdapter;
+
 import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 
 import com.bumptech.glide.Glide;
@@ -21,9 +25,10 @@ public class ImageEditAdapter extends PagerAdapter {
     private ArrayList<String> imagesfromuser;// Replace with your image data source (e.g., URLs or file paths)
     private ArrayList<String> imagesfromdb;
     private OnImageRemoveListener mListener;
+    private AlertDialog Dialog;
 
 
-    public ImageEditAdapter(Context context, ArrayList<String> imagesfromdb, ArrayList<String> imagesfromuser,OnImageRemoveListener listener) {
+    public ImageEditAdapter(Context context, ArrayList<String> imagesfromdb, ArrayList<String> imagesfromuser, OnImageRemoveListener listener) {
         this.context = context;
         this.imagesfromuser = imagesfromuser;
         this.mListener = listener;
@@ -32,9 +37,8 @@ public class ImageEditAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return imagesfromuser.size()+imagesfromdb.size();
+        return imagesfromuser.size() + imagesfromdb.size();
     }
-
 
 
     @Override
@@ -50,13 +54,14 @@ public class ImageEditAdapter extends PagerAdapter {
 
         String imagePath;
         if (position < imagesfromdb.size()) {
-            if(!imagesfromdb.isEmpty()){
-            imagePath = imagesfromdb.get(position);
-            Glide.with(context).load(Parts_IMAGES_DIR + imagePath)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .error(R.drawable.test)
-                    .into(imageView);}
+            if (!imagesfromdb.isEmpty()) {
+                imagePath = imagesfromdb.get(position);
+                Glide.with(context).load(Parts_IMAGES_DIR + imagePath)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .error(R.drawable.test)
+                        .into(imageView);
+            }
         } else {
 
             int adjustedPosition = position - imagesfromdb.size();
@@ -67,21 +72,35 @@ public class ImageEditAdapter extends PagerAdapter {
 
         ShapeableImageView deleteButton = view.findViewById(R.id.e_images_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                builder.setTitle("Delete image");
-                                                builder.setMessage("Are you sure?");
-                                                builder.setIcon(R.drawable.delete_icon);
-                                                builder.setPositiveButton("Yes", (dialog, which) -> {
-                                                    mListener.onImageRemoved(position);
-                                                });
-                                                builder.setNegativeButton("No", null);
-                                                builder.show();
-
-                                            }
-                                        });
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View DialogView = LayoutInflater.from(context).inflate(R.layout.delete_dialog, null);
+                final AppCompatButton yesButton = DialogView.findViewById(R.id.del_yes_button);
+                final AppCompatButton noButton = DialogView.findViewById(R.id.del_no_button);
+                builder.setView(DialogView);
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onImageRemoved(position);
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                Dialog = builder.create();
+                Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog.show();
+            }
+        });
 
         container.addView(view);
         return view;

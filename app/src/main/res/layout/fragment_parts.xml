@@ -113,7 +113,6 @@
                     android:layout_marginStart="170dp"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsMakeText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsMakeText" />
@@ -137,7 +136,6 @@
                     android:layout_marginStart="170dp"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsModelText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsModelText" />
@@ -161,7 +159,6 @@
                     android:layout_marginStart="170dp"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsYearText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsYearText" />
@@ -185,7 +182,6 @@
                     android:layout_marginStart="170dp"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsCategoryText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsCategoryText" />
@@ -209,7 +205,6 @@
                     android:layout_marginStart="170dp"
                     android:layout_marginTop="25dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsSubCategoryText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsSubCategoryText" />
@@ -234,7 +229,6 @@
                     android:layout_marginTop="25dp"
                     android:layout_marginBottom="21dp"
                     android:backgroundTint="@color/themeColor"
-                    android:entries="@array/spinner"
                     app:layout_constraintBaseline_toBaselineOf="@id/partsConditionText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/partsConditionText" />

@@ -2,20 +2,19 @@ package com.example.project.View.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.Socket;
 import java.util.UUID;
 
 import com.example.project.R;
@@ -117,8 +115,9 @@ public class DiagnosticsFragment extends BaseFragment {
     private void requestBluetoothEnable() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_ENABLE_BT);
             return;
         }
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -128,9 +127,9 @@ public class DiagnosticsFragment extends BaseFragment {
 
     private void checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
         } else {
             connectToDevice();
         }
@@ -140,7 +139,7 @@ public class DiagnosticsFragment extends BaseFragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_WRITE_STORAGE_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 connectToDevice();
             } else {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
@@ -168,10 +167,11 @@ public class DiagnosticsFragment extends BaseFragment {
 
 
     private void connectToDevice() {
+        Log.d("test","i am in the connectToDevice method");
         new ConnectTask().execute();
     }
 
-    private class ConnectTask extends AsyncTask<Void, Void, Void> {
+    private class ConnectTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -181,18 +181,45 @@ public class DiagnosticsFragment extends BaseFragment {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Boolean doInBackground(Void... voids) {
             try {
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
-                BluetoothSocket socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
-                socket.connect();
-                receiveFile(socket);
+                bluetoothAdapter.cancelDiscovery();
+                socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+                try {
+                    socket.connect();
+                    receiveFile(socket);
+                } catch (IOException e) {
+                    Log.e(TAG, "Error connecting to server", e);
+                    try {
+                        socket.close();
+                    } catch (IOException closeException) {
+                        Log.e(TAG, "Could not close the client socket", closeException);
+                    }
+                }
+
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if (socket != null && !socket.isConnected()) {
+                            try {
+                                socket.close();
+                            } catch (IOException e) {
+                                Log.e(TAG, "Could not close the client socket", e);
+                            }
+                        }
+                    }
+                }, 10000);
+
+                return true;
             } catch (IOException e) {
-                Log.e(TAG, "Error connecting to server", e);
+                Log.e(TAG, "Error creating socket", e);
+                return false; // Failed to create socket
             } catch (SecurityException e) {
                 Log.e(TAG, "Security exception during connection", e);
+                return false; // Security exception occurred
             }
-            return null;
+
         }
 
 
@@ -213,25 +240,49 @@ public class DiagnosticsFragment extends BaseFragment {
                 progressBar.setProgress((int) ((totalBytes * 1.0f) / fileSize * 100));
             }
 
-            outputStream.close();
-            inputStream.close();
-            socket.close();
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             Log.d(TAG, "File received: " + file.getAbsolutePath());
             publishProgress(); // Trigger UI update on successful file reception
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
+            int progress = values[0];
+            progressBar.setProgress(progress);
             statusText.setText(getResources().getString(R.string.downloading)); // Update status text during download
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE); // Hide progress bar
-            statusText.setText(getResources().getString(R.string.file_saved)); // Update status text on success
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            progressBar.setVisibility(View.GONE);
+            if (result) {
+                statusText.setText(getResources().getString(R.string.file_saved));
+            } else {
+                statusText.setText(getResources().getString(R.string.error_occurred));
+            }
         }
     }
 }
