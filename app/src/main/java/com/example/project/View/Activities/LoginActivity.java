@@ -4,13 +4,16 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.project.Controller.AuthenticationHelper;
 import com.example.project.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -42,9 +45,35 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(View view) {
-        startActivity(new Intent(this, BottomNavMenuActivity.class));
-        finish();
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+        authenticateUser(email, password);
     }
+
+    private void authenticateUser(final String email, final String password) {
+        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                return AuthenticationHelper.authenticateUser(email, password);
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                // Handle the response from the server
+                handleAuthenticationResult(result);
+            }
+        };
+        asyncTask.execute();
+    }
+
+    private void handleAuthenticationResult(String result) {
+        if (result.equals("success")) {
+            startActivity(new Intent(this, BottomNavMenuActivity.class));
+            finish();
+        } else {
+            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void onRegisterClick(View View) {
         startActivity(new Intent(this, RegisterActivity.class));
