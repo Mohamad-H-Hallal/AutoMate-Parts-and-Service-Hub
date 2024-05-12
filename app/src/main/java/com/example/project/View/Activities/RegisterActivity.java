@@ -176,8 +176,9 @@ public class RegisterActivity extends BaseActivity {
                         } else {
                             Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
                         }
-                    } else
+                    } else {
                         Toast.makeText(RegisterActivity.this, "Choose your account type!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(RegisterActivity.this, "Choose icon", Toast.LENGTH_SHORT).show();
                 }
