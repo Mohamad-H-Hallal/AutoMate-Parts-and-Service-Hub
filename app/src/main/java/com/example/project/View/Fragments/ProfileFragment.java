@@ -139,7 +139,7 @@ public class ProfileFragment extends BaseFragment {
         biographytext = v.findViewById(R.id.biographytext);
         manageparts = v.findViewById(R.id.manageparts);
         edit = v.findViewById(R.id.edit);
-        p_rating_bar=v.findViewById(R.id.p_rating_bar);
+        p_rating_bar = v.findViewById(R.id.p_rating_bar);
 
         setting = v.findViewById(R.id.setting);
         pay = v.findViewById(R.id.pay);
@@ -150,7 +150,7 @@ public class ProfileFragment extends BaseFragment {
         editing = false;
         UserController usercontroller = new UserController();
         UserData userdata = new UserData(requireContext());
-        if(userdata.getAccountType().equals("General User")){
+        if (userdata.getAccountType().equals("General User")) {
             usercontroller.getUserData(requireContext(), userdata.getId(), new UserController.UserDataListener() {
                 @Override
                 public void onUserDataReceived(UserModel user) {
@@ -178,12 +178,13 @@ public class ProfileFragment extends BaseFragment {
                             .error(R.drawable.test)
                             .into(profile_image);
                 }
-            
+
                 @Override
                 public void onError(VolleyError error) {
                     // Handle error
                 }
-            });} else if (userdata.getAccountType().equals("Mechanic")) {
+            });
+        } else if (userdata.getAccountType().equals("Mechanic")) {
             usercontroller.getMechanicData(requireContext(), userdata.getId(), new UserController.MechanicDataListener() {
                 @Override
                 public void onMechanicDataReceived(MechanicModel user) {
@@ -223,8 +224,8 @@ public class ProfileFragment extends BaseFragment {
                     // Handle error
                 }
             });
-            
-                } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
+
+        } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
             usercontroller.getScrapyardData(requireContext(), userdata.getId(), new UserController.ScrapyardDataListener() {
                 @Override
                 public void onScrapyardDataReceived(ScrapyardModel user) {
@@ -266,7 +267,6 @@ public class ProfileFragment extends BaseFragment {
         }
 
     }
-
 
 
     private void setActions(View v) {

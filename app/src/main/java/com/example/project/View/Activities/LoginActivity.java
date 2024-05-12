@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Locale;
 
 
-public class LoginActivity extends BaseActivity implements UserController.AuthenticationCallback{
+public class LoginActivity extends BaseActivity implements UserController.AuthenticationCallback {
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputPassword;
     private EditText editTextEmail;
@@ -29,12 +29,10 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         String language = getLanguagePreference();
         if (!language.isEmpty()) {
             setLocale(language);
         }
-
         setContentView(R.layout.activity_login);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         textInputEmail = findViewById(R.id.textInputEmail);
@@ -47,24 +45,28 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     public void login(View view) {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
-        UserController.authenticateUser(this, email, password, this);
+        if (!(email.isEmpty() || password.isEmpty())) {
+            UserController.authenticateUser(this, email, password, this);
+        } else {
+            Toast.makeText(this, "Please enter your credentials!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onSuccess(String response) {
-        // Handle successful authentication
         startActivity(new Intent(this, BottomNavMenuActivity.class));
         finish();
     }
 
     @Override
     public void onError(String error) {
-        // Handle authentication error
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
 
     public void onRegisterClick(View View) {
+        editTextEmail.setText("");
+        editTextPassword.setText("");
         startActivity(new Intent(this, RegisterActivity.class));
     }
 

@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class UserController {
@@ -34,35 +33,78 @@ public class UserController {
     public static void authenticateUser(final Context context, final String email, final String password, final AuthenticationCallback callback) {
         String url = IP + "/authenticate.php";
 
-        try {
-            String data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") +
-                    "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+        RequestQueue queue = Volley.newRequestQueue(context);
 
-            // Instantiate the RequestQueue
-            RequestQueue queue = Volley.newRequestQueue(context);
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("password", password);
 
-            // Request a string response from the provided URL
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonResponse = new JSONObject(response);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            if (status.equals("success")) {
                                 int id = jsonResponse.getInt("id");
                                 String accountType = jsonResponse.getString("account_type");
                                 UserData userData = new UserData(context);
                                 userData.setUserData(id, accountType);
                                 callback.onSuccess("success");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                callback.onError("Error: " + e.getMessage());
+                            } else {
+                                String message = jsonResponse.getString("message");
+                                callback.onError(message);
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onError("Error: " + e.getMessage());
                         }
-                    }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface AuthenticationCallback {
+        void onSuccess(String response);
+        void onError(String error);
+    }
+
+    public static void registerUser(final Context context, final String name, final String email, final String password, final double latitude, final double longitude, final String accountType, final String icon, final String phone, final String specialization, final RegistrationCallback callback) {
+        String url = Configuration.IP + "/register.php";
+
+        try {
+            String data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") +
+                    "&" + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") +
+                    "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") +
+                    "&" + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(latitude), "UTF-8") +
+                    "&" + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(longitude), "UTF-8") +
+                    "&" + URLEncoder.encode("account_type", "UTF-8") + "=" + URLEncoder.encode(accountType, "UTF-8") +
+                    "&" + URLEncoder.encode("icon", "UTF-8") + "=" + URLEncoder.encode(icon, "UTF-8") +
+                    "&" + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8") +
+                    "&" + URLEncoder.encode("specialization", "UTF-8") + "=" + URLEncoder.encode(specialization, "UTF-8");
+
+            RequestQueue queue = Volley.newRequestQueue(context);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    callback.onRegistrationSuccess(response);
+                }
+                }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    // Handle error response
-                    callback.onError("Error: " + error.getMessage());
+                    callback.onRegistrationError("Error: " + error.getMessage());
                 }
             }) {
                 @Override
@@ -76,18 +118,17 @@ public class UserController {
                 }
             };
 
-            // Add the request to the RequestQueue
             queue.add(stringRequest);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            callback.onError("Error: " + e.getMessage());
+            callback.onRegistrationError("Error: " + e.getMessage());
         }
     }
 
-    public interface AuthenticationCallback {
-        void onSuccess(String response);
-        void onError(String error);
+    public interface RegistrationCallback {
+        void onRegistrationSuccess(String response);
+        void onRegistrationError(String error);
     }
 
     public interface UserDataListener {

@@ -5,7 +5,6 @@ import static com.example.project.Controller.GetImagePath.getRealPath;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,6 +18,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +31,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.project.Controller.UserController;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -52,14 +53,16 @@ public class RegisterActivity extends BaseActivity {
     private static final int GALLERY_REQUEST_CODE = 2;
     Spinner sp;
     AppCompatButton regbtn;
-    TextInputLayout til1, til2;
+    TextInputLayout textInputMobile, textInputSpecialization, textInputName, textInputEmail, textInputPassword;
     private AlertDialog Dialog;
     TextView locationText;
-
+    EditText editTextName, editTextEmail, editTextPassword, editTextMobile, editTextSpecialization;
     private Uri uriImage = null;
     private String nameOfImage = "";
     private String typeOfImage = "";
     private ShapeableImageView profilePictureView;
+    double latitude;
+    double longitude;
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     @SuppressLint("MissingInflatedId")
@@ -69,10 +72,17 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         sp = findViewById(R.id.spinnerAccountType);
-        til1 = findViewById(R.id.textInputMobile);
-        til2 = findViewById(R.id.textInputSpecialization);
+        textInputMobile = findViewById(R.id.textInputMobile);
+        textInputSpecialization = findViewById(R.id.textInputSpecialization);
         regbtn = findViewById(R.id.registerButton);
-
+        textInputName = findViewById(R.id.textInputName);
+        textInputEmail = findViewById(R.id.textInputEmail);
+        textInputPassword = findViewById(R.id.textInputPassword);
+        editTextName = textInputName.getEditText();
+        editTextEmail = textInputEmail.getEditText();
+        editTextPassword = textInputPassword.getEditText();
+        editTextMobile = textInputMobile.getEditText();
+        editTextSpecialization = textInputSpecialization.getEditText();
         locationText = findViewById(R.id.locationText);
         profilePictureView = findViewById(R.id.profileImageView);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -80,14 +90,14 @@ public class RegisterActivity extends BaseActivity {
                 switch (pos) {
                     case 0:
                     case 1:
-                        til1.setVisibility(View.GONE);
-                        til2.setVisibility(View.GONE);
+                        textInputMobile.setVisibility(View.GONE);
+                        textInputSpecialization.setVisibility(View.GONE);
 
                         break;
                     case 2:
                     case 3:
-                        til1.setVisibility(View.VISIBLE);
-                        til2.setVisibility(View.VISIBLE);
+                        textInputMobile.setVisibility(View.VISIBLE);
+                        textInputSpecialization.setVisibility(View.VISIBLE);
 
                         break;
                 }
@@ -102,13 +112,73 @@ public class RegisterActivity extends BaseActivity {
         regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(uriImage != null){
+                if (uriImage != null) {
+                    String name = editTextName.getText().toString();
+                    String email = editTextEmail.getText().toString();
+                    String password = editTextPassword.getText().toString();
+                    String accountType = sp.getSelectedItem().toString();
+                    String icon = nameOfImage;
+                    String phone = editTextMobile.getText().toString();
+                    String specialization = editTextSpecialization.getText().toString();
+                    String strLatitude = String.valueOf(latitude);
+                    String strLongitude = String.valueOf(longitude);
+                    if (accountType.equals(sp.getItemAtPosition(1).toString())) {
+                        if (!(name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
+                            uploadImage();
+                            UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "General User", icon, phone, specialization, new UserController.RegistrationCallback() {
+                                @Override
+                                public void onRegistrationSuccess(String response) {
+                                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
 
-                    uploadImage();
-//                insertUser();
+                                @Override
+                                public void onRegistrationError(String error) {
+                                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else if (accountType.equals(sp.getItemAtPosition(2).toString())) {
+                        if (!(phone.isEmpty() || specialization.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
+                            uploadImage();
+                            UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Mechanic", icon, phone, specialization, new UserController.RegistrationCallback() {
+                                @Override
+                                public void onRegistrationSuccess(String response) {
+                                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
 
+                                @Override
+                                public void onRegistrationError(String error) {
+                                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else if (accountType.equals(sp.getItemAtPosition(3).toString())) {
+                        if (!(phone.isEmpty() || specialization.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
+                            uploadImage();
+                            UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Scrap-Yard Vendor", icon, phone, specialization, new UserController.RegistrationCallback() {
+                                @Override
+                                public void onRegistrationSuccess(String response) {
+                                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
 
-                }else {
+                                @Override
+                                public void onRegistrationError(String error) {
+                                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else
+                        Toast.makeText(RegisterActivity.this, "Choose your account type!", Toast.LENGTH_SHORT).show();
+                } else {
                     Toast.makeText(RegisterActivity.this, "Choose icon", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -116,8 +186,8 @@ public class RegisterActivity extends BaseActivity {
 
     }
 
-    private void uploadImage(){
-        String filePath=null;
+    private void uploadImage() {
+        String filePath = null;
 
         if (Objects.equals(uriImage.getScheme(), "content")) {
             filePath = getRealPath(this, uriImage);
@@ -128,7 +198,6 @@ public class RegisterActivity extends BaseActivity {
         ImageUploaderClass.uploadImage(filePath, nameOfImage, "images/users", new ImageUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
-
             }
 
             @Override
@@ -256,8 +325,8 @@ public class RegisterActivity extends BaseActivity {
                     break;
                 case MAP_REQUEST_CODE:
                     if (data != null) {
-                        double latitude = data.getDoubleExtra("latitude", 0);
-                        double longitude = data.getDoubleExtra("longitude", 0);
+                        latitude = data.getDoubleExtra("latitude", 0);
+                        longitude = data.getDoubleExtra("longitude", 0);
                         locationText.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
                     } else {
                         Toast.makeText(this, "Error retrieving location data", Toast.LENGTH_SHORT).show();
@@ -266,7 +335,6 @@ public class RegisterActivity extends BaseActivity {
             }
         }
     }
-
 
 
     public void onLoginClick(View view) {
