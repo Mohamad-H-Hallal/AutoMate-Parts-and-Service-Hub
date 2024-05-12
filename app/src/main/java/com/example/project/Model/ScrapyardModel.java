@@ -1,17 +1,18 @@
 package com.example.project.Model;
 
 public class ScrapyardModel {
-    String name,email,account_type,icon,date,phone,specialization,biography,subscription;
+    String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
     int scrapyard_id;
     double latitude,longitude;
     float rating;
 
-    public ScrapyardModel(String name, String email, String account_type, String icon, String date, String phone, String specialization, String biography, String subscription, int scrapyard_id, double latitude, double longitude, float rating) {
+    public ScrapyardModel(String name, String email, String account_type, String icon, String date,String end_date, String phone, String specialization, String biography, String subscription, int scrapyard_id, double latitude, double longitude, float rating) {
         this.name = name;
         this.email = email;
         this.account_type = account_type;
         this.icon = icon;
         this.date = date;
+        this.end_date=end_date;
         this.phone = phone;
         this.specialization = specialization;
         this.biography = biography;
@@ -20,6 +21,14 @@ public class ScrapyardModel {
         this.latitude = latitude;
         this.longitude = longitude;
         this.rating = rating;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public String getName() {

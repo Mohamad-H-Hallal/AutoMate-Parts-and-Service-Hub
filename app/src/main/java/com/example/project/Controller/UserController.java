@@ -96,7 +96,7 @@ public class UserController {
     }
 
     public void getUserData(Context context, int user_id, UserDataListener listener) {
-        // Create a StringRequest with POST method
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, IP + "select_user.php",
                 new Response.Listener<String>() {
                     @Override
@@ -136,7 +136,6 @@ public class UserController {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                // Add POST parameters, if any
                 params.put("id", String.valueOf(user_id));
                 return params;
             }
@@ -167,6 +166,7 @@ public class UserController {
                             double longitude = jsonObject.getDouble("longitude");
                             String icon = jsonObject.getString("icon");
                             String date = jsonObject.getString("date");
+                            String end_date = jsonObject.getString("end_date");
                             String phone = jsonObject.getString("phone");
                             String specialization = jsonObject.getString("specialization");
                             String biography = jsonObject.getString("biography");
@@ -176,7 +176,7 @@ public class UserController {
 
                             // Assuming userData.getAccountType() is a synchronous method
                             UserData userData = new UserData(context);
-                            MechanicModel user = new MechanicModel(name, email, latitude, longitude, userData.getAccountType(), icon, date, phone, specialization, biography, subscription, user_id, year_of_experience, rating);
+                            MechanicModel user = new MechanicModel(name, email, latitude, longitude, userData.getAccountType(), icon, date,end_date, phone, specialization, biography, subscription, user_id, year_of_experience, rating);
 
                             // Pass the UserModel object to the listener
                             listener.onMechanicDataReceived(user);
@@ -231,6 +231,7 @@ public class UserController {
                             double longitude = jsonObject.getDouble("longitude");
                             String icon = jsonObject.getString("icon");
                             String date = jsonObject.getString("date");
+                            String end_date = jsonObject.getString("end_date");
                             String phone = jsonObject.getString("phone");
                             String specialization = jsonObject.getString("specialization");
                             String biography = jsonObject.getString("biography");
@@ -239,7 +240,7 @@ public class UserController {
 
 
                             UserData userData = new UserData(context);
-                            ScrapyardModel user = new ScrapyardModel(name, email, userData.getAccountType(), icon, date, phone, specialization, biography, subscription, user_id, latitude, longitude, rating);
+                            ScrapyardModel user = new ScrapyardModel(name, email, userData.getAccountType(), icon, date,end_date, phone, specialization, biography, subscription, user_id, latitude, longitude, rating);
 
 
                             listener.onScrapyardDataReceived(user);

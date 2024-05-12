@@ -133,6 +133,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onFailed(String error) {
+
             }
         });
     }

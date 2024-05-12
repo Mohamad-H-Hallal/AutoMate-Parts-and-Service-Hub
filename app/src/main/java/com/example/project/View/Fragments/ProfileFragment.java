@@ -2,6 +2,7 @@ package com.example.project.View.Fragments;
 
 
 import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
+import static com.example.project.Controller.Configuration.USER_IMAGES_DIR;
 import static com.example.project.Controller.GetImagePath.getRealPath;
 
 import android.app.Activity;
@@ -211,10 +212,10 @@ public class ProfileFragment extends BaseFragment {
                     p_rating_bar.setVisibility(View.VISIBLE);
                     latitude = user.getLatitude();
                     longitude = user.getLongitude();
-                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                    Glide.with(requireContext()).load(USER_IMAGES_DIR + user.getIcon())
                             .skipMemoryCache(true)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .error(R.drawable.test)
+                            .error(R.drawable.profile_def_icon)
                             .into(profile_image);
                 }
 
