@@ -13,14 +13,14 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.project.Controller.AuthenticationHelper;
+import com.example.project.Controller.UserController;
 import com.example.project.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Locale;
 
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements UserController.AuthenticationCallback{
     private TextInputLayout textInputEmail;
     private TextInputLayout textInputPassword;
     private EditText editTextEmail;
@@ -47,31 +47,20 @@ public class LoginActivity extends BaseActivity {
     public void login(View view) {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
-        authenticateUser(email, password);
+        UserController.authenticateUser(this, email, password, this);
     }
 
-    private void authenticateUser(final String email, final String password) {
-        AsyncTask<Void, Void, String> asyncTask = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                return AuthenticationHelper.authenticateUser(email, password);
-            }
-            @Override
-            protected void onPostExecute(String result) {
-                // Handle the response from the server
-                handleAuthenticationResult(result);
-            }
-        };
-        asyncTask.execute();
+    @Override
+    public void onSuccess(String response) {
+        // Handle successful authentication
+        startActivity(new Intent(this, BottomNavMenuActivity.class));
+        finish();
     }
 
-    private void handleAuthenticationResult(String result) {
-        if (result.equals("success")) {
-            startActivity(new Intent(this, BottomNavMenuActivity.class));
-            finish();
-        } else {
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void onError(String error) {
+        // Handle authentication error
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
 
