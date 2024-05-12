@@ -1,15 +1,57 @@
 package com.example.project.Model;
 
 public class ScrapyardModel {
-    String scrapyard_id,subscription,phone,biography,specialization,date;
+    String name,email,account_type,icon,date,phone,specialization,biography,subscription;
+    int scrapyard_id;
+    double latitude,longitude;
+    float rating;
 
-    public ScrapyardModel(String scrapyard_id, String date, String specialization, String biography, String phone, String subscription) {
-        this.scrapyard_id = scrapyard_id;
+    public ScrapyardModel(String name, String email, String account_type, String icon, String date, String phone, String specialization, String biography, String subscription, int scrapyard_id, double latitude, double longitude, float rating) {
+        this.name = name;
+        this.email = email;
+        this.account_type = account_type;
+        this.icon = icon;
         this.date = date;
+        this.phone = phone;
         this.specialization = specialization;
         this.biography = biography;
-        this.phone = phone;
         this.subscription = subscription;
+        this.scrapyard_id = scrapyard_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.rating = rating;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAccount_type() {
+        return account_type;
+    }
+
+    public void setAccount_type(String account_type) {
+        this.account_type = account_type;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDate() {
@@ -20,12 +62,12 @@ public class ScrapyardModel {
         this.date = date;
     }
 
-    public String getBiography() {
-        return biography;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getSpecialization() {
@@ -36,12 +78,12 @@ public class ScrapyardModel {
         this.specialization = specialization;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getBiography() {
+        return biography;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     public String getSubscription() {
@@ -52,11 +94,35 @@ public class ScrapyardModel {
         this.subscription = subscription;
     }
 
-    public String getScrapyard_id() {
+    public int getScrapyard_id() {
         return scrapyard_id;
     }
 
-    public void setScrapyard_id(String scrapyard_id) {
+    public void setScrapyard_id(int scrapyard_id) {
         this.scrapyard_id = scrapyard_id;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

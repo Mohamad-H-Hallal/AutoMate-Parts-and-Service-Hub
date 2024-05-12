@@ -1,12 +1,12 @@
 package com.example.project.View.Fragments;
 
 
+import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 import static com.example.project.Controller.GetImagePath.getRealPath;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -27,17 +27,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Controller.UserController;
+import com.example.project.Controller.UserData;
 import com.example.project.FileUpload.ImageUploaderClass;
+import com.example.project.Model.MechanicModel;
+import com.example.project.Model.ScrapyardModel;
+import com.example.project.Model.UserModel;
 import com.example.project.R;
 import com.example.project.View.Activities.EditLocationActivity;
 import com.example.project.View.Activities.MapsLocationActivity;
 import com.example.project.View.Activities.PartsCategoriesActivity;
 import com.example.project.View.Activities.PaymentActivity;
-import com.example.project.View.Activities.RegisterActivity;
 import com.example.project.View.Activities.SettingActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -63,9 +70,16 @@ public class ProfileFragment extends BaseFragment {
     private TextView phonetext;
     private TextView specialization;
     private TextView specializationtext;
+    private TextView subscription;
+    private TextView subscriptiontext;
+    private TextView yearofxp;
+    private TextView yearofxptext;
+    private TextView biographytext;
+    private TextView biography;
     private ImageButton edit;
     private ImageButton pay;
     private AppCompatButton manageparts;
+    private RatingBar p_rating_bar;
     private ImageButton setting;
     private AlertDialog Dialog;
 
@@ -117,8 +131,16 @@ public class ProfileFragment extends BaseFragment {
         phonetext = v.findViewById(R.id.phonetext);
         specialization = v.findViewById(R.id.specialization);
         specializationtext = v.findViewById(R.id.specializationtext);
+        subscription = v.findViewById(R.id.subscription);
+        subscriptiontext = v.findViewById(R.id.subscriptiontext);
+        yearofxp = v.findViewById(R.id.yearofxp);
+        yearofxptext = v.findViewById(R.id.yearofxptext);
+        biography = v.findViewById(R.id.biography);
+        biographytext = v.findViewById(R.id.biographytext);
         manageparts = v.findViewById(R.id.manageparts);
         edit = v.findViewById(R.id.edit);
+        p_rating_bar=v.findViewById(R.id.p_rating_bar);
+
         setting = v.findViewById(R.id.setting);
         pay = v.findViewById(R.id.pay);
         name.setEnabled(false);
@@ -126,9 +148,126 @@ public class ProfileFragment extends BaseFragment {
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
         editing = false;
+        UserController usercontroller = new UserController();
+        UserData userdata = new UserData(requireContext());
+        if(userdata.getAccountType().equals("General User")){
+            usercontroller.getUserData(requireContext(), userdata.getId(), new UserController.UserDataListener() {
+                @Override
+                public void onUserDataReceived(UserModel user) {
+                    name.setText(user.getName());
+                    emailtext.setText(user.getEmail());
+                    phone.setVisibility(View.GONE);
+                    phonetext.setVisibility(View.GONE);
+                    specialization.setVisibility(View.GONE);
+                    specializationtext.setVisibility(View.GONE);
+                    p_rating_bar.setVisibility(View.GONE);
+                    yearofxp.setVisibility(View.GONE);
+                    yearofxptext.setVisibility(View.GONE);
+                    biographytext.setVisibility(View.GONE);
+                    biography.setVisibility(View.GONE);
+                    subscription.setVisibility(View.GONE);
+                    subscriptiontext.setVisibility(View.GONE);
+                    manageparts.setVisibility(View.GONE);
+                    pay.setVisibility(View.GONE);
+                    p_rating_bar.setVisibility(View.GONE);
+                    latitude = user.getLatitude();
+                    longitude = user.getLongitude();
+                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                            .skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .error(R.drawable.test)
+                            .into(profile_image);
+                }
+            
+                @Override
+                public void onError(VolleyError error) {
+                    // Handle error
+                }
+            });} else if (userdata.getAccountType().equals("Mechanic")) {
+            usercontroller.getMechanicData(requireContext(), userdata.getId(), new UserController.MechanicDataListener() {
+                @Override
+                public void onMechanicDataReceived(MechanicModel user) {
+                    name.setText(user.getName());
+                    emailtext.setText(user.getEmail());
+                    phone.setVisibility(View.VISIBLE);
+                    phonetext.setVisibility(View.VISIBLE);
+                    phonetext.setText(user.getPhone());
+                    specialization.setVisibility(View.VISIBLE);
+                    specializationtext.setVisibility(View.VISIBLE);
+                    specializationtext.setText(user.getSpecialization());
+                    p_rating_bar.setVisibility(View.VISIBLE);
+                    p_rating_bar.setRating(user.getRating());
+                    yearofxp.setVisibility(View.VISIBLE);
+                    yearofxptext.setVisibility(View.VISIBLE);
+                    yearofxptext.setText(user.getYear_of_experience());
+                    biographytext.setVisibility(View.VISIBLE);
+                    biographytext.setText(user.getBiography());
+                    biography.setVisibility(View.VISIBLE);
+                    subscription.setVisibility(View.VISIBLE);
+                    subscriptiontext.setVisibility(View.VISIBLE);
+                    subscriptiontext.setText(user.getSubscription());
+                    manageparts.setVisibility(View.GONE);
+                    pay.setVisibility(View.VISIBLE);
+                    p_rating_bar.setVisibility(View.VISIBLE);
+                    latitude = user.getLatitude();
+                    longitude = user.getLongitude();
+                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                            .skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .error(R.drawable.test)
+                            .into(profile_image);
+                }
 
+                @Override
+                public void onError(VolleyError error) {
+                    // Handle error
+                }
+            });
+            
+                } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
+            usercontroller.getScrapyardData(requireContext(), userdata.getId(), new UserController.ScrapyardDataListener() {
+                @Override
+                public void onScrapyardDataReceived(ScrapyardModel user) {
+                    name.setText(user.getName());
+                    emailtext.setText(user.getEmail());
+                    phone.setVisibility(View.VISIBLE);
+                    phonetext.setVisibility(View.VISIBLE);
+                    phonetext.setText(user.getPhone());
+                    specialization.setVisibility(View.VISIBLE);
+                    specializationtext.setVisibility(View.VISIBLE);
+                    specializationtext.setText(user.getSpecialization());
+                    p_rating_bar.setVisibility(View.VISIBLE);
+                    p_rating_bar.setRating(user.getRating());
+                    yearofxp.setVisibility(View.GONE);
+                    yearofxptext.setVisibility(View.GONE);
+                    biographytext.setVisibility(View.VISIBLE);
+                    biographytext.setText(user.getBiography());
+                    biography.setVisibility(View.VISIBLE);
+                    subscription.setVisibility(View.VISIBLE);
+                    subscriptiontext.setVisibility(View.VISIBLE);
+                    subscriptiontext.setText(user.getSubscription());
+                    manageparts.setVisibility(View.VISIBLE);
+                    pay.setVisibility(View.VISIBLE);
+                    p_rating_bar.setVisibility(View.VISIBLE);
+                    latitude = user.getLatitude();
+                    longitude = user.getLongitude();
+                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                            .skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .error(R.drawable.test)
+                            .into(profile_image);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    // Handle error
+                }
+            });
+        }
 
     }
+
+
 
     private void setActions(View v) {
 

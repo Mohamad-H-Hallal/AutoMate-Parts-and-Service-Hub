@@ -180,6 +180,20 @@ public class DiagnosticsFragment extends BaseFragment {
             statusText.setText(getResources().getString(R.string.connecting)); // Update status text
         }
 
+        private void sendSignal(BluetoothSocket socket) throws IOException {
+            OutputStream outputStream = socket.getOutputStream();
+            String signal = "START_TRANSFER"; // Define your signal here
+            outputStream.write(signal.getBytes());
+            outputStream.flush();
+        }
+        private boolean waitForSignal(BluetoothSocket socket) throws IOException {
+            InputStream inputStream = socket.getInputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            String receivedSignal = new String(buffer, 0, bytesRead);
+            return receivedSignal.equals("START_TRANSFER"); // Adjust the condition based on your signal
+        }
+
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
@@ -188,7 +202,13 @@ public class DiagnosticsFragment extends BaseFragment {
                 socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
                 try {
                     socket.connect();
-                    receiveFile(socket);
+                    sendSignal(socket);
+                    if (waitForSignal(socket)) {
+                        receiveFile(socket); // Start receiving the file
+                        return true; // File transfer successful
+                    } else {
+                        return false; // Server didn't acknowledge the signal
+                    }
                 } catch (IOException e) {
                     Log.e(TAG, "Error connecting to server", e);
                     try {
@@ -211,7 +231,7 @@ public class DiagnosticsFragment extends BaseFragment {
                     }
                 }, 10000);
 
-                return true;
+
             } catch (IOException e) {
                 Log.e(TAG, "Error creating socket", e);
                 return false; // Failed to create socket
@@ -219,8 +239,9 @@ public class DiagnosticsFragment extends BaseFragment {
                 Log.e(TAG, "Security exception during connection", e);
                 return false; // Security exception occurred
             }
-
+            return false;
         }
+
 
 
         private void receiveFile(BluetoothSocket socket) throws IOException {

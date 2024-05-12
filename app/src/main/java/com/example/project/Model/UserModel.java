@@ -1,24 +1,24 @@
 package com.example.project.Model;
 
 public class UserModel {
-    String id,name,email,password,latitude,longitude,account_type,icon;
-
-    public UserModel(String id, String name, String email, String password, String latitude, String longitude, String account_type, String icon) {
+    int id;
+    String name,email,account_type,icon;
+    double latitude,longitude;
+    public UserModel(int id, String name, String email, double latitude, double longitude, String account_type, String icon) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.latitude = latitude;
         this.longitude = longitude;
         this.account_type = account_type;
         this.icon = icon;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,27 +38,19 @@ public class UserModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

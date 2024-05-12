@@ -13,9 +13,9 @@ public class UserData {
         editor = sharedPreferences.edit();
     }
 
-    public void setUserData(String id, String accountType) {
+    public void setUserData(int id, String accountType) {
         editor.putBoolean("isLogin", true);
-        editor.putString("id", id);
+        editor.putInt("id", id);
         editor.putString("accountType", accountType);
         editor.apply();
     }
@@ -24,8 +24,8 @@ public class UserData {
         return sharedPreferences.getBoolean("isLogin", false);
     }
 
-    public String getId() {
-        return sharedPreferences.getString("id", "");
+    public int getId() {
+        return sharedPreferences.getInt("id", 0);
     }
 
     public String getAccountType() {
