@@ -1,12 +1,12 @@
 package com.example.project.Model;
 
 public class MechanicModel {
-    String name,email,account_type,icon,date,phone,specialization,biography,subscription;
+    String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
         int mechanic_id,year_of_experience;
         double latitude,longitude;
         float rating;
 
-    public MechanicModel(String name, String email, double latitude, double longitude, String account_type, String icon, String date, String phone, String specialization, String biography,String subscription, int mechanic_id, int year_of_experience,float rating) {
+    public MechanicModel(String name, String email, double latitude, double longitude, String account_type, String icon, String date,String end_date, String phone, String specialization, String biography,String subscription, int mechanic_id, int year_of_experience,float rating) {
         this.name = name;
         this.email = email;
         this.latitude = latitude;
@@ -14,6 +14,7 @@ public class MechanicModel {
         this.account_type = account_type;
         this.icon = icon;
         this.date = date;
+        this.end_date=end_date;
         this.phone = phone;
         this.specialization = specialization;
         this.biography = biography;
@@ -21,6 +22,14 @@ public class MechanicModel {
         this.year_of_experience = year_of_experience;
         this.rating=rating;
         this.subscription=subscription;
+    }
+
+    public String getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
     }
 
     public String getSubscription() {
