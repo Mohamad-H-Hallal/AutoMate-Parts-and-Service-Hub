@@ -88,6 +88,7 @@ public class PartsFragment extends BaseFragment {
                 return false;
             }
         });
+
         fill_filter();
         partsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
