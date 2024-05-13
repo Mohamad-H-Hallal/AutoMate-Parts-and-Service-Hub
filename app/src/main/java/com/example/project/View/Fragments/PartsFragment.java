@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.project.Controller.PartController;
+import com.example.project.Model.PartModel;
 import com.example.project.R;
+import com.example.project.View.Adapters.PartsAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +41,7 @@ public class PartsFragment extends BaseFragment {
     private CheckBox partsNegotiable,partsLocation;
     private EditText partsPriceFromEditText,partsPriceToEditText;
     private AppCompatButton partsFilterSubmit;
+    private ListView partsListView;
 
     public PartsFragment() {
     }
@@ -67,6 +74,7 @@ public class PartsFragment extends BaseFragment {
         partsLocation = view.findViewById(R.id.partsLocation);
         partsPriceFromEditText = view.findViewById(R.id.partsPriceFromEditText);
         partsPriceToEditText = view.findViewById(R.id.partsPriceToEditText);
+        partsListView = view.findViewById(R.id.partsListView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -80,7 +88,7 @@ public class PartsFragment extends BaseFragment {
                 return false;
             }
         });
-
+        fill_filter();
         partsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +101,28 @@ public class PartsFragment extends BaseFragment {
                 }
             }
         });
+
+        PartController partc = new PartController();
+        partc.fetchParts(requireContext(),new PartController.PartFetchListener() {
+
+     @Override
+    public void onPartsFetched(List<PartModel> parts, ArrayList<String> image_path) {
+         PartsAdapter adapter = new PartsAdapter(requireContext(),parts,image_path);
+         partsListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onError(String error) {
+        Log.d("error",error);
+    }
+});
+
+
+
+    }
+
+
+    public void fill_filter(){
 
         Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
         Map<String, List<String>> makeModelMap = new HashMap<>();
@@ -130,7 +160,7 @@ public class PartsFragment extends BaseFragment {
                 String selectedMake = (String) parent.getItemAtPosition(position);
                 List<String> model = makeModelMap.get(selectedMake);
 
-                // Populate the subcategorySpinner with subcategories for the selected category
+
                 ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, model);
                 partsModelSpinner.setAdapter(modelAdapter);
             }
@@ -157,6 +187,5 @@ public class PartsFragment extends BaseFragment {
                 // Handle case where nothing is selected
             }
         });
-
     }
 }

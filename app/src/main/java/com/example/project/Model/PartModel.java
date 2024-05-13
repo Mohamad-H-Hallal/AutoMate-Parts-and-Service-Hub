@@ -1,30 +1,28 @@
 package com.example.project.Model;
 
 public class PartModel {
-    String id,make,model,year,category,subcategory,description,part_condition,name,price,negotiable,scrapyard_id,images;
+    String make,model,category,subcategory,description,part_condition,name;
+    int id,year,scrapyard_id;
+    boolean negotiable;
+    double price;
 
-    public PartModel(String id, String make, String model, String year, String category, String subcategory, String description, String part_condition, String name, String price, String negotiable, String scrapyard_id, String images) {
-        this.id = id;
+    public PartModel(String make, String model, String category, String subcategory, String description, String part_condition, String name, int id, int year, int scrapyard_id, boolean negotiable, double price) {
         this.make = make;
         this.model = model;
-        this.year = year;
         this.category = category;
         this.subcategory = subcategory;
         this.description = description;
         this.part_condition = part_condition;
         this.name = name;
-        this.price = price;
-        this.negotiable = negotiable;
-        this.scrapyard_id = scrapyard_id;
-        this.images = images;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
         this.id = id;
+        this.year = year;
+        this.scrapyard_id = scrapyard_id;
+        this.negotiable = negotiable;
+        this.price = price;
+    }
+
+    public PartModel() {
+
     }
 
     public String getMake() {
@@ -33,14 +31,6 @@ public class PartModel {
 
     public void setMake(String make) {
         this.make = make;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public String getModel() {
@@ -91,35 +81,43 @@ public class PartModel {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
+    public int getId() {
+        return id;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNegotiable() {
-        return negotiable;
+    public int getYear() {
+        return year;
     }
 
-    public void setNegotiable(String negotiable) {
-        this.negotiable = negotiable;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public String getScrapyard_id() {
+    public int getScrapyard_id() {
         return scrapyard_id;
     }
 
-    public void setScrapyard_id(String scrapyard_id) {
+    public void setScrapyard_id(int scrapyard_id) {
         this.scrapyard_id = scrapyard_id;
     }
 
-    public String getImages() {
-        return images;
+    public boolean isNegotiable() {
+        return negotiable;
     }
 
-    public void setImages(String images) {
-        this.images = images;
+    public void setNegotiable(boolean negotiable) {
+        this.negotiable = negotiable;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
