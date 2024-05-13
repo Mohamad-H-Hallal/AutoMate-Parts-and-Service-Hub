@@ -28,6 +28,7 @@ import com.google.gson.JsonObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -83,6 +84,7 @@ public class UserController {
 
     public interface AuthenticationCallback {
         void onSuccess(int id, String accountType, String endDate);
+
         void onError(String error);
     }
 
@@ -107,7 +109,7 @@ public class UserController {
                 public void onResponse(String response) {
                     callback.onRegistrationSuccess(response);
                 }
-                }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     callback.onRegistrationError("Error: " + error.getMessage());
@@ -134,17 +136,19 @@ public class UserController {
 
     public interface RegistrationCallback {
         void onRegistrationSuccess(String response);
+
         void onRegistrationError(String error);
     }
 
     public interface UserDataListener {
         void onUserDataReceived(UserModel user);
+
         void onError(VolleyError error);
     }
 
     public void getUserData(Context context, int user_id, UserDataListener listener) {
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id=" + user_id, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -188,12 +192,13 @@ public class UserController {
 
     public interface MechanicDataListener {
         void onMechanicDataReceived(MechanicModel user);
+
         void onError(VolleyError error);
     }
 
     public void getMechanicData(Context context, int user_id, MechanicDataListener listener) {
         // Create a StringRequest with POST method
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id=" + user_id, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -216,7 +221,7 @@ public class UserController {
 
                             // Assuming userData.getAccountType() is a synchronous method
                             UserData userData = new UserData(context);
-                            MechanicModel user = new MechanicModel(name, email, latitude, longitude, userData.getAccountType(), icon, date,end_date, phone, specialization, biography, subscription, user_id, year_of_experience, rating);
+                            MechanicModel user = new MechanicModel(name, email, latitude, longitude, userData.getAccountType(), icon, date, end_date, phone, specialization, biography, subscription, user_id, year_of_experience, rating);
 
                             // Pass the UserModel object to the listener
                             listener.onMechanicDataReceived(user);
@@ -245,12 +250,13 @@ public class UserController {
 
     public interface ScrapyardDataListener {
         void onScrapyardDataReceived(ScrapyardModel user);
+
         void onError(VolleyError error);
     }
 
     public void getScrapyardData(Context context, int user_id, ScrapyardDataListener listener) {
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id=" + user_id, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -271,7 +277,7 @@ public class UserController {
 
 
                             UserData userData = new UserData(context);
-                            ScrapyardModel user = new ScrapyardModel(name, email, userData.getAccountType(), icon, date,end_date, phone, specialization, biography, subscription, user_id, latitude, longitude, rating);
+                            ScrapyardModel user = new ScrapyardModel(name, email, userData.getAccountType(), icon, date, end_date, phone, specialization, biography, subscription, user_id, latitude, longitude, rating);
 
 
                             listener.onScrapyardDataReceived(user);
@@ -296,9 +302,9 @@ public class UserController {
         requestQueue.add(stringRequest);
     }
 
-    public void updateUserImage(Context context,int user_id,String name_of_image){
+    public void updateUserImage(Context context, int user_id, String name_of_image) {
         RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest request = new StringRequest(Request.Method.POST, IP+"update_user_image.php",
+        StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user_image.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -336,49 +342,47 @@ public class UserController {
     }
 
     private void updateUser(Context context, int userId, String name, double longitude, double latitude, int yearOfExperience, String specialization, String biography, String phone) {
-      try{
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userId), "UTF-8") +
-                "&"+URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")+
-                "&" + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(longitude), "UTF-8")+
-                "&" + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(latitude), "UTF-8")+
-                "&" + URLEncoder.encode("year_of_experience", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(yearOfExperience), "UTF-8")+
-                "&" + URLEncoder.encode("specialization", "UTF-8") + "=" + URLEncoder.encode(specialization, "UTF-8")+
-                "&" + URLEncoder.encode("biography", "UTF-8") + "=" + URLEncoder.encode(biography, "UTF-8")+
-                "&" + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
+        try {
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userId), "UTF-8") +
+                    "&" + URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") +
+                    "&" + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(longitude), "UTF-8") +
+                    "&" + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(latitude), "UTF-8") +
+                    "&" + URLEncoder.encode("year_of_experience", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(yearOfExperience), "UTF-8") +
+                    "&" + URLEncoder.encode("specialization", "UTF-8") + "=" + URLEncoder.encode(specialization, "UTF-8") +
+                    "&" + URLEncoder.encode("biography", "UTF-8") + "=" + URLEncoder.encode(biography, "UTF-8") +
+                    "&" + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
 
-        StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("test",response);
+            StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("test", response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("test", error.toString());
+                        }
+                    }) {
+                @Override
+                public byte[] getBody() {
+                    try {
+                        return data.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return null;
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("test",error.toString());
-                    }
-                }){
-            @Override
-            public byte[] getBody() {
-                try {
-                    return data.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return null;
                 }
-            }
-        };
-        queue.add(request);}
-      catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-        Log.d("Error: " , e.getMessage());
-    }
+            };
+            queue.add(request);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.d("Error: ", e.getMessage());
+        }
 
     }
-
-
 
 
     public static void submitPaymentDetails(Context context, String firstName, String lastName, String ltn, String type, PaymentCallback callback) {
@@ -426,6 +430,7 @@ public class UserController {
 
     public interface PaymentCallback {
         void onSuccess(String response);
+
         void onError(String error);
     }
 }
