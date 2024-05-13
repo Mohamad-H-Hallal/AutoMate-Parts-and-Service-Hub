@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -48,10 +48,10 @@
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
-                app:cardCornerRadius="20dp"
                 android:layout_marginTop="130dp"
                 android:layout_marginBottom="60dp"
+                android:backgroundTint="@color/colorAccent"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/manageparts"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintHorizontal_bias="0.1"
@@ -316,8 +316,8 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="@id/gl2"
                         app:layout_constraintBaseline_toBaselineOf="@id/biography"
+                        app:layout_constraintEnd_toEndOf="@id/gl2"
                         app:layout_constraintStart_toEndOf="@id/biography" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -383,13 +383,15 @@
                 android:id="@+id/edit"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/floating_bt_bg"
                 android:elevation="8dp"
                 android:src="@drawable/edit_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
 
             <ImageButton
                 android:id="@+id/pay"

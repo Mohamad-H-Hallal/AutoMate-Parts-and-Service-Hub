@@ -83,7 +83,6 @@ public class ProfileFragment extends BaseFragment {
     private RatingBar p_rating_bar;
     private ImageButton setting;
     private AlertDialog Dialog;
-
     private Uri uriImage = null;
     private String typeOfImage = "";
     private String nameOfImage = "";
@@ -117,11 +116,13 @@ public class ProfileFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setInitialize(view);
+
         setActions(view);
 
     }
 
     private void setInitialize(View v) {
+
         profile_image = v.findViewById(R.id.profile_image);
         reset_pass = v.findViewById(R.id.reset_pass);
         logout = v.findViewById(R.id.logout);
@@ -148,10 +149,13 @@ public class ProfileFragment extends BaseFragment {
         emailtext.setEnabled(false);
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
+        biographytext.setEnabled(false);
+        yearofxptext.setEnabled(false);
         editing = false;
         UserController usercontroller = new UserController();
         UserData userdata = new UserData(requireContext());
         if (userdata.getAccountType().equals("General User")) {
+            Log.d("test","i am in the setInitialize");
             usercontroller.getUserData(requireContext(), userdata.getId(), new UserController.UserDataListener() {
                 @Override
                 public void onUserDataReceived(UserModel user) {
@@ -173,22 +177,23 @@ public class ProfileFragment extends BaseFragment {
                     p_rating_bar.setVisibility(View.GONE);
                     latitude = user.getLatitude();
                     longitude = user.getLongitude();
-                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                    Glide.with(requireContext()).load(USER_IMAGES_DIR + user.getIcon())
                             .skipMemoryCache(true)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .error(R.drawable.test)
+                            .error(R.drawable.profile_def_icon)
                             .into(profile_image);
                 }
 
                 @Override
                 public void onError(VolleyError error) {
-                    // Handle error
+                    Log.d("test",error.toString());
                 }
             });
         } else if (userdata.getAccountType().equals("Mechanic")) {
             usercontroller.getMechanicData(requireContext(), userdata.getId(), new UserController.MechanicDataListener() {
                 @Override
                 public void onMechanicDataReceived(MechanicModel user) {
+
                     name.setText(user.getName());
                     emailtext.setText(user.getEmail());
                     phone.setVisibility(View.VISIBLE);
@@ -201,9 +206,10 @@ public class ProfileFragment extends BaseFragment {
                     p_rating_bar.setRating(user.getRating());
                     yearofxp.setVisibility(View.VISIBLE);
                     yearofxptext.setVisibility(View.VISIBLE);
-                    yearofxptext.setText(user.getYear_of_experience());
+                    yearofxptext.setText(String.valueOf(user.getYear_of_experience()));
                     biographytext.setVisibility(View.VISIBLE);
-                    biographytext.setText(user.getBiography());
+                    if(!user.getBiography().equals("NULL")){
+                    biographytext.setText(user.getBiography());}
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
@@ -222,7 +228,7 @@ public class ProfileFragment extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    // Handle error
+                    Log.d("test",error.toString());
                 }
             });
 
@@ -243,7 +249,8 @@ public class ProfileFragment extends BaseFragment {
                     yearofxp.setVisibility(View.GONE);
                     yearofxptext.setVisibility(View.GONE);
                     biographytext.setVisibility(View.VISIBLE);
-                    biographytext.setText(user.getBiography());
+                    if(!user.getBiography().equals("NULL")){
+                    biographytext.setText(user.getBiography());}
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
@@ -253,16 +260,17 @@ public class ProfileFragment extends BaseFragment {
                     p_rating_bar.setVisibility(View.VISIBLE);
                     latitude = user.getLatitude();
                     longitude = user.getLongitude();
-                    Glide.with(requireContext()).load(Parts_IMAGES_DIR + user.getIcon())
+                    Glide.with(requireContext()).load(USER_IMAGES_DIR + user.getIcon())
                             .skipMemoryCache(true)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .error(R.drawable.test)
+                            .error(R.drawable.profile_def_icon)
                             .into(profile_image);
+
                 }
 
                 @Override
                 public void onError(VolleyError error) {
-                    // Handle error
+                    Log.d("test",error.toString());
                 }
             });
         }
@@ -379,8 +387,21 @@ public class ProfileFragment extends BaseFragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserData userdata = new UserData(requireContext());
+                UserController user = new UserController();
                 if (uriImage != null) {
                     uploadImage();
+                    user.updateUserImage(requireContext(),userdata.getId(),nameOfImage);
+                }
+                String cname = name.getText().toString();
+
+                if (userdata.getAccountType().equals("General User")) {
+                user.updateUser(requireContext(),userdata.getId(),cname,longitude,latitude);
+                }else if (userdata.getAccountType().equals("Mechanic")){
+                user.updateMechanic(requireContext(), userdata.getId(), cname,longitude,latitude,Integer.parseInt(yearofxptext.getText().toString()),specializationtext.getText().toString(),biographytext.getText().toString(),phonetext.getText().toString());
+                } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
+
+                    user.updateScrapyard(requireContext(), userdata.getId(), cname,longitude,latitude,specializationtext.getText().toString(),biographytext.getText().toString(),phonetext.getText().toString());
                 }
                 saveChanges();
                 dialog.dismiss(); // Dismiss the dialog
@@ -400,11 +421,13 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void saveChanges() {
-        // Save changes logic here
+
         edit.setImageResource(R.drawable.edit_icon);
         name.setEnabled(false);
         phonetext.setEnabled(false);
         specializationtext.setEnabled(false);
+        yearofxptext.setEnabled(false);
+        biographytext.setEnabled(false);
         name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -417,6 +440,8 @@ public class ProfileFragment extends BaseFragment {
         name.setEnabled(true);
         phonetext.setEnabled(true);
         specializationtext.setEnabled(true);
+        yearofxptext.setEnabled(true);
+        biographytext.setEnabled(true);
         name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
@@ -431,8 +456,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        Intent chooser = Intent.createChooser(galleryIntent, "Select Image Source");
-        startActivityForResult(chooser, GALLERY_REQUEST_CODE);
+        startActivityForResult(galleryIntent,GALLERY_REQUEST_CODE);
     }
 
 

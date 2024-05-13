@@ -6,12 +6,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -19,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.project.Model.MechanicModel;
 import com.example.project.Model.ScrapyardModel;
 import com.example.project.Model.UserModel;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -138,17 +143,17 @@ public class UserController {
 
     public void getUserData(Context context, int user_id, UserDataListener listener) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, IP + "select_user.php",
-                new Response.Listener<String>() {
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String name = jsonObject.getString("name");
-                            String email = jsonObject.getString("email");
-                            double latitude = jsonObject.getDouble("latitude");
-                            double longitude = jsonObject.getDouble("longitude");
-                            String icon = jsonObject.getString("icon");
+
+                            String name = response.getString("name");
+                            String email = response.getString("email");
+                            double latitude = response.getDouble("latitude");
+                            double longitude = response.getDouble("longitude");
+                            String icon = response.getString("icon");
 
                             // Assuming userData.getAccountType() is a synchronous method
                             UserData userData = new UserData(context);
@@ -172,15 +177,7 @@ public class UserController {
                         // Pass the error to the listener
                         listener.onError(error);
                     }
-                }) {
-            // Override the getParams method to include parameters for POST request
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", String.valueOf(user_id));
-                return params;
-            }
-        };
+                });
 
         // Add the request to the RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -195,25 +192,26 @@ public class UserController {
 
     public void getMechanicData(Context context, int user_id, MechanicDataListener listener) {
         // Create a StringRequest with POST method
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, IP + "select_user.php",
-                new Response.Listener<String>() {
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
+
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String name = jsonObject.getString("name");
-                            String email = jsonObject.getString("email");
-                            double latitude = jsonObject.getDouble("latitude");
-                            double longitude = jsonObject.getDouble("longitude");
-                            String icon = jsonObject.getString("icon");
-                            String date = jsonObject.getString("date");
-                            String end_date = jsonObject.getString("end_date");
-                            String phone = jsonObject.getString("phone");
-                            String specialization = jsonObject.getString("specialization");
-                            String biography = jsonObject.getString("biography");
-                            String subscription = jsonObject.getString("subscription");
-                            int year_of_experience = jsonObject.getInt("year_of_experience");
-                            float rating = (float) jsonObject.getDouble("rating");
+
+                            String name = response.getString("name");
+                            String email = response.getString("email");
+                            double latitude = response.getDouble("latitude");
+                            double longitude = response.getDouble("longitude");
+                            String icon = response.getString("icon");
+                            String date = response.getString("date");
+                            String end_date = response.getString("end_date");
+                            String phone = response.getString("phone");
+                            String specialization = response.getString("specialization");
+                            String biography = response.getString("biography");
+                            String subscription = response.getString("subscription");
+                            int year_of_experience = response.getInt("year_of_experience");
+                            float rating = (float) response.getDouble("rating");
 
                             // Assuming userData.getAccountType() is a synchronous method
                             UserData userData = new UserData(context);
@@ -237,16 +235,7 @@ public class UserController {
                         // Pass the error to the listener
                         listener.onError(error);
                     }
-                }) {
-            // Override the getParams method to include parameters for POST request
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                // Add POST parameters, if any
-                params.put("id", String.valueOf(user_id));
-                return params;
-            }
-        };
+                });
 
         // Add the request to the RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -259,25 +248,25 @@ public class UserController {
     }
 
     public void getScrapyardData(Context context, int user_id, ScrapyardDataListener listener) {
-        // Create a StringRequest with POST method
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, IP + "select_user.php",
-                new Response.Listener<String>() {
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, IP + "select_user.php?id="+user_id,null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String name = jsonObject.getString("name");
-                            String email = jsonObject.getString("email");
-                            double latitude = jsonObject.getDouble("latitude");
-                            double longitude = jsonObject.getDouble("longitude");
-                            String icon = jsonObject.getString("icon");
-                            String date = jsonObject.getString("date");
-                            String end_date = jsonObject.getString("end_date");
-                            String phone = jsonObject.getString("phone");
-                            String specialization = jsonObject.getString("specialization");
-                            String biography = jsonObject.getString("biography");
-                            String subscription = jsonObject.getString("subscription");
-                            float rating = (float) jsonObject.getDouble("rating");
+
+                            String name = response.getString("name");
+                            String email = response.getString("email");
+                            double latitude = response.getDouble("latitude");
+                            double longitude = response.getDouble("longitude");
+                            String icon = response.getString("icon");
+                            String date = response.getString("date");
+                            String end_date = response.getString("end_date");
+                            String phone = response.getString("phone");
+                            String specialization = response.getString("specialization");
+                            String biography = response.getString("biography");
+                            String subscription = response.getString("subscription");
+                            float rating = (float) response.getDouble("rating");
 
 
                             UserData userData = new UserData(context);
@@ -301,20 +290,94 @@ public class UserController {
                         // Pass the error to the listener
                         listener.onError(error);
                     }
-                }) {
-            // Override the getParams method to include parameters for POST request
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                // Add POST parameters, if any
-                params.put("id", String.valueOf(user_id));
-                return params;
-            }
-        };
-
-        // Add the request to the RequestQueue
+                });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
+
+    public void updateUserImage(Context context,int user_id,String name_of_image){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest request = new StringRequest(Request.Method.POST, IP+"update_user_image.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(user_id)); // Replace with actual user ID
+                params.put("icon", name_of_image);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
+
+    public void updateUser(Context context, int userId, String name, double longitude, double latitude) {
+        updateUser(context, userId, name, longitude, latitude, 0, "", "", "");
+    }
+
+    public void updateMechanic(Context context, int userId, String name, double longitude, double latitude, int yearOfExperience, String specialization, String biography, String phone) {
+        updateUser(context, userId, name, longitude, latitude, yearOfExperience, specialization, biography, phone);
+    }
+
+    public void updateScrapyard(Context context, int userId, String name, double longitude, double latitude, String specialization, String biography, String phone) {
+        updateUser(context, userId, name, longitude, latitude, 0, specialization, biography, phone);
+    }
+
+    private void updateUser(Context context, int userId, String name, double longitude, double latitude, int yearOfExperience, String specialization, String biography, String phone) {
+      try{
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String data = URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(userId), "UTF-8") +
+                "&"+URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")+
+                "&" + URLEncoder.encode("longitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(longitude), "UTF-8")+
+                "&" + URLEncoder.encode("latitude", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(latitude), "UTF-8")+
+                "&" + URLEncoder.encode("year_of_experience", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(yearOfExperience), "UTF-8")+
+                "&" + URLEncoder.encode("specialization", "UTF-8") + "=" + URLEncoder.encode(specialization, "UTF-8")+
+                "&" + URLEncoder.encode("biography", "UTF-8") + "=" + URLEncoder.encode(biography, "UTF-8")+
+                "&" + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
+
+        StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("test",response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("test",error.toString());
+                    }
+                }){
+            @Override
+            public byte[] getBody() {
+                try {
+                    return data.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        };
+        queue.add(request);}
+      catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+        Log.d("Error: " , e.getMessage());
+    }
+
+    }
+
+
+
 
 }
