@@ -9,7 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -48,15 +48,15 @@
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="80dp"
                 android:layout_marginBottom="60dp"
                 android:backgroundTint="@color/colorAccent"
                 app:cardCornerRadius="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/manageparts"
+                app:layout_constraintBottom_toTopOf="@+id/edit"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/setting">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -258,7 +258,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="text"
+                        android:text="Active until"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
@@ -285,7 +285,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="text"
+                        android:text="0"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
@@ -312,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="wvgwfccccccccccecvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                        android:text="No Biography"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
@@ -385,13 +385,11 @@
                 android:layout_height="70dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginEnd="20dp"
-                app:layout_constraintVertical_bias="1"
                 android:background="@drawable/floating_bt_bg"
                 android:elevation="8dp"
                 android:src="@drawable/edit_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageButton
                 android:id="@+id/pay"
@@ -399,12 +397,10 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintVertical_bias="1"
                 android:background="@drawable/floating_bt_bg"
                 android:elevation="8dp"
                 android:src="@drawable/payment_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

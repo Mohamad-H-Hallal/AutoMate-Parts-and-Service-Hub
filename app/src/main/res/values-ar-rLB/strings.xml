@@ -97,7 +97,7 @@
     <string name="last_name">اسم العائلة</string>
     <string name="subscription_completed">اكتمل الاشتراك!</string>
     <string name="yearofxp">:سنوات الخبرة</string>
-    <string name="subscription">الاشتراك</string>
+    <string name="subscription">:الاشتراك</string>
     <string name="add_part_description">الوصف</string>
     <string name="import_car_s_diagnostics">استيراد تشخيصات السيارة</string>
     <string name="day">اليوم:</string>
