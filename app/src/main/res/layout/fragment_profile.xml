@@ -48,7 +48,7 @@
                 android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="60dp"
                 android:backgroundTint="@color/colorAccent"
                 app:cardCornerRadius="20dp"
@@ -399,11 +399,12 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="@dimen/loginViewsMargin"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="48dp"
                 android:background="@drawable/floating_bt_bg"
                 android:elevation="8dp"
                 android:src="@drawable/payment_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/manageparts"
+                app:layout_constraintTop_toBottomOf="@+id/view"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
