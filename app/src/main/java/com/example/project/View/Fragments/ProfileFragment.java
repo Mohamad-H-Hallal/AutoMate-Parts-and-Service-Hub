@@ -62,8 +62,6 @@ public class ProfileFragment extends BaseFragment {
 
     private static final int PAYMENT_REQUEST_CODE = 17;
     private ShapeableImageView profile_image;
-    private ImageButton reset_pass;
-    private ImageButton logout;
     private TextView name;
     private TextView locationtext;
     private TextView emailtext;
@@ -124,8 +122,6 @@ public class ProfileFragment extends BaseFragment {
     private void setInitialize(View v) {
 
         profile_image = v.findViewById(R.id.profile_image);
-        reset_pass = v.findViewById(R.id.reset_pass);
-        logout = v.findViewById(R.id.logout);
         name = v.findViewById(R.id.name);
         locationtext = v.findViewById(R.id.locationtext);
         emailtext = v.findViewById(R.id.emailtext);
@@ -142,7 +138,6 @@ public class ProfileFragment extends BaseFragment {
         manageparts = v.findViewById(R.id.manageparts);
         edit = v.findViewById(R.id.edit);
         p_rating_bar = v.findViewById(R.id.p_rating_bar);
-
         setting = v.findViewById(R.id.setting);
         pay = v.findViewById(R.id.pay);
         name.setEnabled(false);
