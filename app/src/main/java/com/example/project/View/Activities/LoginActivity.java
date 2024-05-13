@@ -1,22 +1,28 @@
 package com.example.project.View.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 import com.example.project.Controller.UserController;
 import com.example.project.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 
@@ -25,6 +31,7 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     private TextInputLayout textInputPassword;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private AlertDialog Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +60,44 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     }
 
     @Override
-    public void onSuccess(String response) {
-        startActivity(new Intent(this, BottomNavMenuActivity.class));
-        finish();
+    public void onSuccess(int id, String accountType, String endDate) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(calendar.getTime());
+        if (endDate != null && endDate.equals(currentDate)) {
+            editTextEmail.setText("");
+            editTextPassword.setText("");
+            showUpgradePrompt();
+        } else {
+            startActivity(new Intent(this, BottomNavMenuActivity.class));
+            finish();
+        }
     }
 
     @Override
     public void onError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showUpgradePrompt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        View DialogView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.payment_warning_dialog, null);
+        final AppCompatButton upgradeButton = DialogView.findViewById(R.id.upgradeNow);
+        builder.setView(DialogView);
+        upgradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, PaymentActivity.class);
+                startActivity(intent);
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
+                }
+            }
+        });
+        Dialog = builder.create();
+        Dialog.setCanceledOnTouchOutside(false);
+        Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog.show();
     }
 
 

@@ -43,6 +43,7 @@
         android:text="@string/upgrade_now_body"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/upgradeNow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/loginButton"
