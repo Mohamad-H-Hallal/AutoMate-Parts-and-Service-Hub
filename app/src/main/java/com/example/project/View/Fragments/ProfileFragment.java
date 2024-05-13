@@ -150,7 +150,7 @@ public class ProfileFragment extends BaseFragment {
         UserController usercontroller = new UserController();
         UserData userdata = new UserData(requireContext());
         if (userdata.getAccountType().equals("General User")) {
-            Log.d("test","i am in the setInitialize");
+            Log.d("test", "i am in the setInitialize");
             usercontroller.getUserData(requireContext(), userdata.getId(), new UserController.UserDataListener() {
                 @Override
                 public void onUserDataReceived(UserModel user) {
@@ -181,7 +181,7 @@ public class ProfileFragment extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    Log.d("test",error.toString());
+                    Log.d("test", error.toString());
                 }
             });
         } else if (userdata.getAccountType().equals("Mechanic")) {
@@ -203,8 +203,9 @@ public class ProfileFragment extends BaseFragment {
                     yearofxptext.setVisibility(View.VISIBLE);
                     yearofxptext.setText(String.valueOf(user.getYear_of_experience()));
                     biographytext.setVisibility(View.VISIBLE);
-                    if(!user.getBiography().equals("NULL")){
-                    biographytext.setText(user.getBiography());}
+                    if (!user.getBiography().equals("NULL")) {
+                        biographytext.setText(user.getBiography());
+                    }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
@@ -223,7 +224,7 @@ public class ProfileFragment extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    Log.d("test",error.toString());
+                    Log.d("test", error.toString());
                 }
             });
 
@@ -244,8 +245,9 @@ public class ProfileFragment extends BaseFragment {
                     yearofxp.setVisibility(View.GONE);
                     yearofxptext.setVisibility(View.GONE);
                     biographytext.setVisibility(View.VISIBLE);
-                    if(!user.getBiography().equals("NULL")){
-                    biographytext.setText(user.getBiography());}
+                    if (!user.getBiography().equals("NULL")) {
+                        biographytext.setText(user.getBiography());
+                    }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
@@ -265,7 +267,7 @@ public class ProfileFragment extends BaseFragment {
 
                 @Override
                 public void onError(VolleyError error) {
-                    Log.d("test",error.toString());
+                    Log.d("test", error.toString());
                 }
             });
         }
@@ -386,17 +388,17 @@ public class ProfileFragment extends BaseFragment {
                 UserController user = new UserController();
                 if (uriImage != null) {
                     uploadImage();
-                    user.updateUserImage(requireContext(),userdata.getId(),nameOfImage);
+                    user.updateUserImage(requireContext(), userdata.getId(), nameOfImage);
                 }
                 String cname = name.getText().toString();
 
                 if (userdata.getAccountType().equals("General User")) {
-                user.updateUser(requireContext(),userdata.getId(),cname,longitude,latitude);
-                }else if (userdata.getAccountType().equals("Mechanic")){
-                user.updateMechanic(requireContext(), userdata.getId(), cname,longitude,latitude,Integer.parseInt(yearofxptext.getText().toString()),specializationtext.getText().toString(),biographytext.getText().toString(),phonetext.getText().toString());
+                    user.updateUser(requireContext(), userdata.getId(), cname, longitude, latitude);
+                } else if (userdata.getAccountType().equals("Mechanic")) {
+                    user.updateMechanic(requireContext(), userdata.getId(), cname, longitude, latitude, Integer.parseInt(yearofxptext.getText().toString()), specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
                 } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
 
-                    user.updateScrapyard(requireContext(), userdata.getId(), cname,longitude,latitude,specializationtext.getText().toString(),biographytext.getText().toString(),phonetext.getText().toString());
+                    user.updateScrapyard(requireContext(), userdata.getId(), cname, longitude, latitude, specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
                 }
                 saveChanges();
                 dialog.dismiss(); // Dismiss the dialog
@@ -451,7 +453,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent,GALLERY_REQUEST_CODE);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
     }
 
 

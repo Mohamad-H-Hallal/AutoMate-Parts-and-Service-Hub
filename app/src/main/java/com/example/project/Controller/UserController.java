@@ -353,40 +353,40 @@ public class UserController {
                     "&" + URLEncoder.encode("biography", "UTF-8") + "=" + URLEncoder.encode(biography, "UTF-8") +
                     "&" + URLEncoder.encode("phone", "UTF-8") + "=" + URLEncoder.encode(phone, "UTF-8");
 
-        StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject res = new JSONObject(response);
-                            Log.d("test",res.getString("success"));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+            StringRequest request = new StringRequest(Request.Method.POST, IP + "update_user.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject res = new JSONObject(response);
+                                Log.d("test", res.getString("success"));
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
 
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("test", error.toString());
+                        }
+                    }) {
+                @Override
+                public byte[] getBody() {
+                    try {
+                        return data.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return null;
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("test",error.toString());
-                    }
-                }){
-            @Override
-            public byte[] getBody() {
-                try {
-                    return data.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return null;
                 }
-            }
-        };
-        queue.add(request);}
-      catch (UnsupportedEncodingException e) {
-        e.printStackTrace();
-        Log.d("Error: " , e.getMessage());
-    }
+            };
+            queue.add(request);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.d("Error: ", e.getMessage());
+        }
 
     }
 
