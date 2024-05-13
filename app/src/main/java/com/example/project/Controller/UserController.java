@@ -318,4 +318,51 @@ public class UserController {
         requestQueue.add(stringRequest);
     }
 
+    public static void submitPaymentDetails(Context context, String firstName, String lastName, String ltn, String type, PaymentCallback callback) {
+        String url = IP + "/payment.php";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            if (status.equals("success")) {
+                                callback.onSuccess(jsonResponse.getString("message"));
+                            } else {
+                                callback.onError(jsonResponse.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onError("Error: " + e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(UserData.getId()));
+                params.put("account_type", UserData.getAccountType());
+                params.put("first_name", firstName);
+                params.put("last_name", lastName);
+                params.put("LTN", ltn);
+                params.put("type", type);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface PaymentCallback {
+        void onSuccess(String response);
+        void onError(String error);
+    }
 }

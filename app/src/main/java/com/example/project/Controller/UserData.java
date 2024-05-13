@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class UserData {
 
-    private final SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences = null;
     private final SharedPreferences.Editor editor;
 
     public UserData(Context context) {
@@ -24,11 +24,11 @@ public class UserData {
         return sharedPreferences.getBoolean("isLogin", false);
     }
 
-    public int getId() {
+    public static int getId() {
         return sharedPreferences.getInt("id", 0);
     }
 
-    public String getAccountType() {
+    public static String getAccountType() {
         return sharedPreferences.getString("accountType", "");
     }
 
