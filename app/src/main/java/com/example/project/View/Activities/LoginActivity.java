@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
@@ -32,6 +33,7 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     private EditText editTextEmail;
     private EditText editTextPassword;
     private AlertDialog Dialog;
+    private static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, PaymentActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE);
                 if (Dialog != null && Dialog.isShowing()) {
                     Dialog.dismiss();
                 }
@@ -134,6 +136,14 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
         config.locale = locale;
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            finish();
+        }
     }
 
 }

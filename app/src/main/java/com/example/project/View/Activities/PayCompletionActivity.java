@@ -100,7 +100,7 @@ public class PayCompletionActivity extends BaseActivity {
                             UserController.submitPaymentDetails(PayCompletionActivity.this, firstName, lastName, ltn, type, new UserController.PaymentCallback() {
                                 @Override
                                 public void onSuccess(String response) {
-                                    Intent intent = new Intent(PayCompletionActivity.this, LoginActivity.class);
+                                    Intent intent = new Intent(PayCompletionActivity.this, BottomNavMenuActivity.class);
                                     setResult(RESULT_OK, resultIntent);
                                     Toast.makeText(PayCompletionActivity.this, response, Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
