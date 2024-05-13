@@ -83,12 +83,21 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View DialogView = LayoutInflater.from(LoginActivity.this).inflate(R.layout.payment_warning_dialog, null);
         final AppCompatButton upgradeButton = DialogView.findViewById(R.id.upgradeNow);
+        final AppCompatButton cancelButton = DialogView.findViewById(R.id.cancelUpgrade);
         builder.setView(DialogView);
         upgradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, PaymentActivity.class);
                 startActivity(intent);
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
+                }
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (Dialog != null && Dialog.isShowing()) {
                     Dialog.dismiss();
                 }
