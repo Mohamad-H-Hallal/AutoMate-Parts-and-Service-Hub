@@ -18,6 +18,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import android.bluetooth.BluetoothAdapter;
@@ -27,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ public class DiagnosticsFragment extends BaseFragment {
     private BluetoothSocket socket;
     private ProgressBar progressBar;
     private TextView statusText;
+    private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
 
     public DiagnosticsFragment() {
         // Required empty public constructor
@@ -79,6 +82,24 @@ public class DiagnosticsFragment extends BaseFragment {
         importData = view.findViewById(R.id.importData);
         progressBar = view.findViewById(R.id.progress_bar_id);
         statusText = view.findViewById(R.id.status_text);
+        daySpinner = view.findViewById(R.id.daySpinner);
+        monthSpinner = view.findViewById(R.id.monthSpinner);
+        yearSpinner = view.findViewById(R.id.yearSpinner);
+        hourSpinner = view.findViewById(R.id.hourSpinner);
+
+        String[] dayArray = getResources().getStringArray(R.array.day_choices);
+        ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, dayArray);
+        daySpinner.setAdapter(dayAdapter);
+        String[] monthArray = getResources().getStringArray(R.array.month_choices);
+        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, monthArray);
+        monthSpinner.setAdapter(monthAdapter);
+        String[] yearArray = getResources().getStringArray(R.array.year_choices);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, yearArray);
+        yearSpinner.setAdapter(yearAdapter);
+        String[] hourArray = getResources().getStringArray(R.array.hour_choices);
+        ArrayAdapter<String> hourAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, hourArray);
+        hourSpinner.setAdapter(hourAdapter);
+
         importData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

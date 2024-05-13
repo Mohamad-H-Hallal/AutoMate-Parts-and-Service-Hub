@@ -42,14 +42,41 @@
         android:layout_marginEnd="30dp"
         android:text="@string/upgrade_now_body"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/loginButton"
-        android:text="@string/upgrade_now"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="@dimen/loginViewsMargin"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/upgradeNow"
+            style="@style/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:text="@string/upgrade_now" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelUpgrade"
+            style="@style/reverseLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:elevation="4dp"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
 
 </LinearLayout>

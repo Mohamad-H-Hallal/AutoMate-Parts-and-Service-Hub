@@ -123,9 +123,9 @@ public class RegisterActivity extends BaseActivity {
                     String specialization = editTextSpecialization.getText().toString();
                     String strLatitude = String.valueOf(latitude);
                     String strLongitude = String.valueOf(longitude);
-                    if (accountType.equals(sp.getItemAtPosition(1).toString())) {
-                        if (!(name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
-                            uploadImage();
+                    if (!(name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
+                        uploadImage();
+                        if (accountType.equals(sp.getItemAtPosition(1).toString())) {
                             UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "General User", icon, phone, specialization, new UserController.RegistrationCallback() {
                                 @Override
                                 public void onRegistrationSuccess(String response) {
@@ -138,53 +138,79 @@ public class RegisterActivity extends BaseActivity {
                                     Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (accountType.equals(sp.getItemAtPosition(2).toString())) {
-                        if (!(phone.isEmpty() || specialization.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
-                            uploadImage();
-                            UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Mechanic", icon, phone, specialization, new UserController.RegistrationCallback() {
-                                @Override
-                                public void onRegistrationSuccess(String response) {
-                                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                        } else if (accountType.equals(sp.getItemAtPosition(2).toString())) {
+                            if (!(phone.isEmpty() || specialization.isEmpty())) {
+                                UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Mechanic", icon, phone, specialization, new UserController.RegistrationCallback() {
+                                    @Override
+                                    public void onRegistrationSuccess(String response) {
+                                        if (response.equals("User registered successfully")) {
+                                            showPaymentDialog();
+                                            Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
 
-                                @Override
-                                public void onRegistrationError(String error) {
-                                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (accountType.equals(sp.getItemAtPosition(3).toString())) {
-                        if (!(phone.isEmpty() || specialization.isEmpty() || name.isEmpty() || email.isEmpty() || password.isEmpty() || icon.isEmpty() || strLatitude.isEmpty() || strLongitude.isEmpty())) {
-                            uploadImage();
-                            UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Scrap-Yard Vendor", icon, phone, specialization, new UserController.RegistrationCallback() {
-                                @Override
-                                public void onRegistrationSuccess(String response) {
-                                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                                    @Override
+                                    public void onRegistrationError(String error) {
+                                        Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (accountType.equals(sp.getItemAtPosition(3).toString())) {
+                            if (!(phone.isEmpty() || specialization.isEmpty())) {
+                                UserController.registerUser(RegisterActivity.this, name, email, password, latitude, longitude, "Scrap-Yard Vendor", icon, phone, specialization, new UserController.RegistrationCallback() {
+                                    @Override
+                                    public void onRegistrationSuccess(String response) {
+                                        if (response.equals("User registered successfully")) {
+                                            showPaymentDialog();
+                                            Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
 
-                                @Override
-                                public void onRegistrationError(String error) {
-                                    Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    @Override
+                                    public void onRegistrationError(String error) {
+                                        Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Choose your account type!", Toast.LENGTH_SHORT).show();
                         }
-                    } else
-                        Toast.makeText(RegisterActivity.this, "Choose your account type!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Enter all needed information!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(RegisterActivity.this, "Choose icon", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
+    private void showPaymentDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        View dialogView = LayoutInflater.from(RegisterActivity.this).inflate(R.layout.payment_def_dialog, null);
+        final AppCompatButton getStartedButton = dialogView.findViewById(R.id.getStarted);
+        builder.setView(dialogView);
+        Dialog = builder.create();
+        Dialog.setCanceledOnTouchOutside(false);
+        Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog.show();
+        getStartedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Dialog != null && Dialog.isShowing()) {
+                    Dialog.dismiss();
+                    finish();
+                }
+            }
+        });
     }
 
     private void uploadImage() {

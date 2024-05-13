@@ -424,6 +424,88 @@
         <item>٢٠٢٤</item>
     </string-array>
 
+    <string-array name="day_choices">
+        <item>اختر اليوم</item>
+        <item>١</item>
+        <item>٢</item>
+        <item>٣</item>
+        <item>٤</item>
+        <item>٥</item>
+        <item>٦</item>
+        <item>٧</item>
+        <item>٨</item>
+        <item>٩</item>
+        <item>١٠</item>
+        <item>١١</item>
+        <item>١٢</item>
+        <item>١٣</item>
+        <item>١٤</item>
+        <item>١٥</item>
+        <item>١٦</item>
+        <item>١٧</item>
+        <item>١٨</item>
+        <item>١٩</item>
+        <item>٢٠</item>
+        <item>٢١</item>
+        <item>٢٢</item>
+        <item>٢٣</item>
+        <item>٢٤</item>
+        <item>٢٥</item>
+        <item>٢٦</item>
+        <item>٢٧</item>
+        <item>٢٨</item>
+        <item>٢٩</item>
+        <item>٣٠</item>
+        <item>٣١</item>
+    </string-array>
 
+    <string-array name="month_choices">
+        <item>اختر الشهر</item>
+        <item>١</item>
+        <item>٢</item>
+        <item>٣</item>
+        <item>٤</item>
+        <item>٥</item>
+        <item>٦</item>
+        <item>٧</item>
+        <item>٨</item>
+        <item>٩</item>
+        <item>١٠</item>
+        <item>١١</item>
+        <item>١٢</item>
+    </string-array>
+
+    <string-array name="year_choise_d">
+        <item>اختر السنة</item>
+        <item>٢٠٢٤</item>
+    </string-array>
+
+    <string-array name="hour_choices">
+        <item>اختر الساعة</item>
+        <item>٠٠</item>
+        <item>٠١</item>
+        <item>٠٢</item>
+        <item>٠٣</item>
+        <item>٠٤</item>
+        <item>٠٥</item>
+        <item>٠٦</item>
+        <item>٠٧</item>
+        <item>٠٨</item>
+        <item>٠٩</item>
+        <item>١٠</item>
+        <item>١١</item>
+        <item>١٢</item>
+        <item>١٣</item>
+        <item>١٤</item>
+        <item>١٥</item>
+        <item>١٦</item>
+        <item>١٧</item>
+        <item>١٨</item>
+        <item>١٩</item>
+        <item>٢٠</item>
+        <item>٢١</item>
+        <item>٢٢</item>
+        <item>٢٣</item>
+    </string-array>
 
 </resources>

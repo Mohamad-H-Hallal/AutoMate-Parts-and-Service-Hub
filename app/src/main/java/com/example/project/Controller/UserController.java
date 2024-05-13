@@ -54,9 +54,10 @@ public class UserController {
                             if (status.equals("success")) {
                                 int id = jsonResponse.getInt("id");
                                 String accountType = jsonResponse.getString("account_type");
+                                String endDate = jsonResponse.optString("end_date", null);
                                 UserData userData = new UserData(context);
                                 userData.setUserData(id, accountType);
-                                callback.onSuccess("success");
+                                callback.onSuccess(id, accountType, endDate);
                             } else {
                                 String message = jsonResponse.getString("message");
                                 callback.onError(message);
@@ -81,7 +82,7 @@ public class UserController {
     }
 
     public interface AuthenticationCallback {
-        void onSuccess(String response);
+        void onSuccess(int id, String accountType, String endDate);
         void onError(String error);
     }
 
