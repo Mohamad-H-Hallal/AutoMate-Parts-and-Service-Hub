@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Model.PartModel;
 
@@ -17,7 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PartController {
 
@@ -106,6 +109,59 @@ public class PartController {
 
     public interface PartFetchListener {
         void onPartsFetched(List<PartModel> parts,ArrayList<String> image_path);
+        void onError(String error);
+    }
+
+    public static void addPart(Context context, String name, String make, String model, String year, String category, String subcategory, String description, String condition, String price, boolean negotiable, ArrayList<String> images, final PartCallback callback) {
+
+        String url = IP + "/add_part.php";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            callback.onResponse(status, message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onError("Error: " + e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name);
+                params.put("make", make);
+                params.put("model", model);
+                params.put("year", year);
+                params.put("category", category);
+                params.put("subcategory", subcategory);
+                params.put("condition", condition);
+                params.put("description", description);
+                params.put("price", price);
+                params.put("negotiable", String.valueOf(negotiable));
+                for (int i = 0; i < images.size(); i++) {
+                    params.put("images[" + i + "]", images.get(i));
+                }
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface PartCallback {
+        void onResponse(String status, String message);
         void onError(String error);
     }
 

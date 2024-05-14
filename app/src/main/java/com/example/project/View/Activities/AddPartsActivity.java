@@ -18,8 +18,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,9 +41,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.project.Controller.PartController;
+import com.example.project.Controller.TwoDecimalPlacesInputFilter;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.R;
 import com.example.project.View.Adapters.ImageAddAdapter;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +71,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     private ImageButton back;
     private CardView addPartCardView;
     ArrayList<String> imageList;
+    ArrayList<String> imagePaths;
     ImageAddAdapter adapter;
     private ViewPager addPartHorizontalScrollView;
     TextView addpartimage;
@@ -74,7 +81,10 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     ArrayList<Uri> uriImages;
     private AlertDialog Dialog;
     private AppCompatButton addPartButton;
-    private Spinner make,model,year,category,subcategories,condition;
+    private Spinner make, model, year, category, subcategories, condition;
+    private TextInputLayout textInputAddPartName, textInputAddPartPrice, textInputAddPartDescription;
+    private EditText addPartName, addPartPrice, addPartDescription;
+    private CheckBox addPartNegotiable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,26 +102,16 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         category = findViewById(R.id.addPartCategorySpinner);
         subcategories = findViewById(R.id.addPartSubCategorySpinner);
         condition = findViewById(R.id.addPartConditionSpinner);
+        textInputAddPartName = findViewById(R.id.textInputAddPartName);
+        textInputAddPartPrice = findViewById(R.id.textInputAddPartPrice);
+        textInputAddPartDescription = findViewById(R.id.textInputAddPartDescription);
+        addPartName = textInputAddPartName.getEditText();
+        addPartPrice = textInputAddPartPrice.getEditText();
+        addPartDescription = textInputAddPartDescription.getEditText();
+        addPartNegotiable = findViewById(R.id.addPartNegotiable);
+        TwoDecimalPlacesInputFilter filter = new TwoDecimalPlacesInputFilter();
+        addPartPrice.setFilters(new InputFilter[]{filter});
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "get_all_categories.php", response -> {
-            try{
-            JSONArray jsonArray = new JSONArray(response);
-            List<String> categories = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String categoryName = jsonObject.getString("name");
-                    categories.add(categoryName);
-                }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        }, error -> {
-            // Error handling
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
         uriImages = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -138,15 +138,59 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!uriImages.isEmpty()) {
-                    uploadImages(uriImages);
-                }
+                String makeChoice = make.getSelectedItem().toString();
+                String modelChoice = model.getSelectedItem().toString();
+                String yearChoice = year.getSelectedItem().toString();
+                String categoryChoice = category.getSelectedItem().toString();
+                String subcategoryChoice = subcategories.getSelectedItem().toString();
+                String conditionChoice = condition.getSelectedItem().toString();
+                boolean nego = addPartNegotiable.isChecked();
+                String name = addPartName.getText().toString();
+                String price = addPartPrice.getText().toString();
+                String description = addPartDescription.getText().toString();
 
+                if (makeChoice.equals("Select Make") || modelChoice.equals("Select Model") || yearChoice.equals("Select Year") || categoryChoice.equals("Select Category") || subcategoryChoice.equals("Select SubCategory") || conditionChoice.equals("Select Condition") || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(AddPartsActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!uriImages.isEmpty()) {
+                        uploadImages(uriImages);
+                        PartController.addPart(AddPartsActivity.this, name, makeChoice, modelChoice, yearChoice, categoryChoice, subcategoryChoice, description, conditionChoice, price, nego, imagePaths, new PartController.PartCallback() {
+                            @Override
+                            public void onResponse(String status, String message) {
+                                if (status.equals("success")) {
+                                    Toast.makeText(AddPartsActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    clearInputFields();
+                                } else {
+                                    Toast.makeText(AddPartsActivity.this, message, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                Toast.makeText(AddPartsActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else {
+                        Toast.makeText(AddPartsActivity.this, "Please select images", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            private void clearInputFields() {
+                addPartName.setText("");
+                addPartPrice.setText("");
+                addPartDescription.setText("");
+                make.setSelection(0);
+                model.setSelection(0);
+                year.setSelection(0);
+                category.setSelection(0);
+                subcategories.setSelection(0);
+                condition.setSelection(0);
+                addPartNegotiable.setChecked(false);
             }
         });
 
         imageList = new ArrayList<>();
-
         adapter = new ImageAddAdapter(this, imageList, this);
         addPartHorizontalScrollView.setAdapter(adapter);
 
@@ -167,7 +211,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         if (adapter != null && p >= 0 && p < imageList.size()) {
             uriImages.remove(p);
             imageList.remove(p);
-            addPartHorizontalScrollView.setAdapter(new ImageAddAdapter(this, imageList,this));
+            addPartHorizontalScrollView.setAdapter(new ImageAddAdapter(this, imageList, this));
             addPartHorizontalScrollView.setCurrentItem(p - 1, true);
         }
 
@@ -319,8 +363,10 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             typeOfeachImage = cr.getType(imagesuri.get(i));
             if (typeOfeachImage != null) {
                 nameOfeachImage = "icon_" + System.currentTimeMillis() + "." + typeOfeachImage.replace("image/", "");
+                imagePaths.add(nameOfeachImage);
             } else {
                 nameOfeachImage = "icon_" + System.currentTimeMillis() + ".jpg";
+                imagePaths.add(nameOfeachImage);
             }
             ImageUploaderClass.uploadImage(filePath, nameOfeachImage, "images/parts", new ImageUploaderClass.onSuccessfulTask() {
                 @Override
