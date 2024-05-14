@@ -139,7 +139,8 @@ public class MechanicAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         currentRating = ratingBar.getRating();
-                        holder.rateMechanicButton.setText(currentRating+"");
+                        //
+                        holder.rateMechanicButton.setText(currentRating+"/5");
                         Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
                         dismissDialog();
                     }
@@ -155,7 +156,7 @@ public class MechanicAdapter extends BaseAdapter {
                 ratingDialog.show();
             }
         });
-        return null;
+        return rowView;
     }
 
     private void dismissDialog() {
