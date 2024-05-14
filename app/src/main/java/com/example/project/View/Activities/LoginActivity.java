@@ -69,12 +69,17 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(calendar.getTime());
         try {
-            Date parsedEndDate = dateFormat.parse(endDate);
-            Date currentDateObject = dateFormat.parse(currentDate);
-            if (endDate != null && (parsedEndDate.before(currentDateObject) || parsedEndDate.equals(currentDateObject))) {
-                editTextEmail.setText("");
-                editTextPassword.setText("");
-                showUpgradePrompt();
+            if (endDate != null) {
+                Date parsedEndDate = dateFormat.parse(endDate);
+                Date currentDateObject = dateFormat.parse(currentDate);
+                if (parsedEndDate.before(currentDateObject) || parsedEndDate.equals(currentDateObject)) {
+                    editTextEmail.setText("");
+                    editTextPassword.setText("");
+                    showUpgradePrompt();
+                } else {
+                    startActivity(new Intent(this, BottomNavMenuActivity.class));
+                    finish();
+                }
             } else {
                 startActivity(new Intent(this, BottomNavMenuActivity.class));
                 finish();
@@ -83,6 +88,7 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onError(String error) {
