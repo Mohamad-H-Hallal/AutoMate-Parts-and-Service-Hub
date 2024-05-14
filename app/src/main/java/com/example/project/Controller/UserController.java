@@ -439,4 +439,44 @@ public class UserController {
 
         void onError(String error);
     }
+
+    public static void changePassword(Context context, String oldPassword, String newPassword, final UserController.ChangePasswordCallback callback) {
+        String url = IP + "/change_password.php";
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            callback.onResponse(status, message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onError("Error: " + e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(UserData.getId()));
+                params.put("old_password", oldPassword);
+                params.put("new_password", newPassword);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface ChangePasswordCallback {
+        void onResponse(String status, String message);
+        void onError(String error);
+    }
 }

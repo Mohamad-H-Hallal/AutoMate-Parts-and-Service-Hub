@@ -28,7 +28,7 @@ public class SettingActivity extends BaseActivity {
     private AppCompatButton save, logout;
     private Spinner lang;
     private UserData userData;
-    private AppCompatButton chagpass;
+    private AppCompatButton changePass;
     private TextView call, email;
     private AlertDialog Dialog;
 
@@ -43,7 +43,7 @@ public class SettingActivity extends BaseActivity {
         lang = findViewById(R.id.lang);
         logout = findViewById(R.id.logout);
         userData = new UserData(this);
-        chagpass = findViewById(R.id.reset_pass);
+        changePass = findViewById(R.id.reset_pass);
         call = findViewById(R.id.hasPhone);
         email = findViewById(R.id.hasEmail);
 
@@ -64,7 +64,7 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        chagpass.setOnClickListener(new View.OnClickListener() {
+        changePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(SettingActivity.this, ChangePasswordActivity.class);
