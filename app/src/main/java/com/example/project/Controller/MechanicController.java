@@ -89,14 +89,15 @@ public class MechanicController {
         void onError(VolleyError error);
     }
 
-    public void submitRating(Context context, float rate, int user_id, MechanicController.MechanicRateListener listener) {
-        String url = IP + "submit_rating.php?rate=" + rate + "&user_id=" + user_id;
+    public void submitRating(Context context, float rate, int user_id,int mechanic_id, MechanicController.MechanicRateListener listener) {
+        String url = IP + "submit_rating.php?rate=" + rate + "&user_id=" + user_id+"&mechanic_id="+mechanic_id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.d("test",response);
                             float newRating = Float.parseFloat(response);
                             listener.onrateMechanicDataReceived(newRating);
                         } catch (NumberFormatException e) {
