@@ -155,7 +155,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                 String price = addPartPrice.getText().toString();
                 String description = addPartDescription.getText().toString();
 
-                if (makeChoice.equals("Select Make") || modelChoice.equals("Select Model") || yearChoice.equals("Select Year") || categoryChoice.equals("Select Category") || subcategoryChoice.equals("Select SubCategory") || conditionChoice.equals("Select Condition") || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
+                if (makeChoice.equals(make.getItemAtPosition(0).toString()) || modelChoice.equals(model.getItemAtPosition(0).toString()) || yearChoice.equals(year.getItemAtPosition(0).toString()) || categoryChoice.equals(category.getItemAtPosition(0).toString()) || subcategoryChoice.equals(subcategories.getItemAtPosition(0).toString()) || conditionChoice.equals(condition.getItemAtPosition(0).toString()) || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
                     Toast.makeText(AddPartsActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     if (!uriImages.isEmpty()) {
