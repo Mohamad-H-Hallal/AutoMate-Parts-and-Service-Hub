@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.project.R;
@@ -45,7 +46,7 @@ public class ManagePartsAdapter extends BaseAdapter {
     public class Holder {
         ShapeableImageView partsImageView;
         TextView txtPartName, txtMake, txtYear, txtModel, txtCategory, txtPrice, txtNegotiable, txtCondition;
-        ShapeableImageView delete;
+        ImageView delete;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ManagePartsAdapter extends BaseAdapter {
         final View rowView;
         rowView = inflater.inflate(R.layout.row_manage_parts,null);
         holder.partsImageView = rowView.findViewById(R.id.partsManageImageView);
-        holder.txtPartName = rowView.findViewById(R.id.txtManagePartName);
+        holder.txtPartName = rowView.findViewById(R.id.txtManageName);
         holder.txtMake = rowView.findViewById(R.id.txtManageMake);
         holder.txtYear = rowView.findViewById(R.id.txtManageYear);
         holder.txtModel = rowView.findViewById(R.id.txtManageModel);
@@ -62,7 +63,7 @@ public class ManagePartsAdapter extends BaseAdapter {
         holder.txtPrice = rowView.findViewById(R.id.txtManagePrice);
         holder.txtNegotiable = rowView.findViewById(R.id.txtManageNegotiable);
         holder.txtCondition = rowView.findViewById(R.id.txtManageCondition);
-        holder.delete = rowView.findViewById(R.id.icon_delete);
+        holder.delete = rowView.findViewById(R.id.deleteIcon);
         JSONObject obj = data.optJSONObject(position);
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

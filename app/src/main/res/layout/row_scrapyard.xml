@@ -35,93 +35,81 @@
                 android:id="@+id/scrapYardImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginBottom="@dimen/loginViewsMargin"
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile_def_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/circle" />
 
-            <LinearLayout
-                android:id="@+id/linear"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txtScrapYardName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@+id/callScrapYardButton"
-                app:layout_constraintHorizontal_bias="0.3"
+                android:layout_marginTop="35dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Name"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@id/callScrapYardButton"
                 app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/txtScrapYardName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:text="Name"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:layout_constraintEnd_toStartOf="@id/callScrapYardButton"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
-                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!--        <TextView-->
-                <!--            android:id="@+id/txtLocation"-->
-                <!--            android:layout_width="wrap_content"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="@dimen/loginViewsMargin"-->
-                <!--            android:text="Location"-->
-                <!--            android:textColor="@color/colorPrimaryDark" />-->
-
-                <TextView
-                    android:id="@+id/txtScrapYardSpecialization"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:text="Specialization"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/rateScrapYardButton"
-                    app:layout_constraintHorizontal_bias="0.3"
-                    app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
-                    app:layout_constraintTop_toBottomOf="@id/txtScrapYardName" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/txtScrapYardSpecialization"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Specialization"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toStartOf="@id/callScrapYardButton"
+                app:layout_constraintStart_toEndOf="@id/scrapYardImageView"
+                app:layout_constraintBottom_toBottomOf="@id/scrapYardImageView"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/callScrapYardButton"
                 style="@style/circleButton"
                 android:layout_width="49dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginEnd="20dp"
                 android:drawableStart="@drawable/ic_call"
-                app:layout_constraintEnd_toStartOf="@+id/locationScrapYardButton"
-                app:layout_constraintStart_toEndOf="@id/linear"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txtScrapYardName"
+                app:layout_constraintEnd_toStartOf="@id/locationScrapYardButton"/>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/locationScrapYardButton"
                 style="@style/circleButton"
                 android:layout_width="49dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginEnd="10dp"
                 android:drawableStart="@drawable/location_icon"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/callScrapYardButton"
                 app:layout_constraintStart_toEndOf="@id/callScrapYardButton"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/rateScrapYardButton"
                 style="@style/circleButton"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/star_rate_icon"
                 android:text="5/5"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/scrapYardImageView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/linear"
+                app:layout_constraintStart_toEndOf="@id/txtScrapYardSpecialization"
                 app:layout_constraintTop_toBottomOf="@id/locationScrapYardButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
