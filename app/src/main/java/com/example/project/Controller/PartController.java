@@ -212,6 +212,7 @@ public class PartController {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listener.onError("Error fetching data: " + error.getMessage());
+                Log.d("test",error.toString());
             }
         }) {
             // Override getParams() to pass filter criteria to PHP script

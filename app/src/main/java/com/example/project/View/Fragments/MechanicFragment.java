@@ -58,7 +58,7 @@ public class MechanicFragment extends BaseFragment {
         mechanicsListView = view.findViewById(R.id.mechanicsListView);
         controller=new MechanicController();
 
-        controller.getAllMechanicsData(requireContext(), filtered, String.valueOf(UserData.getId()),new MechanicController.AllMechanicDataListener() {
+        controller.getAllMechanicsData(requireContext(),String.valueOf(UserData.getId()), filtered ,new MechanicController.AllMechanicDataListener() {
             @Override
             public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
                 MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);
@@ -67,7 +67,7 @@ public class MechanicFragment extends BaseFragment {
 
             @Override
             public void onError(VolleyError error) {
-                Log.e("error",error.toString());
+                Log.e("error",error.getMessage());
             }
         });
 
@@ -91,7 +91,7 @@ public class MechanicFragment extends BaseFragment {
                     mechanicsFilterText.setVisibility(View.GONE);
                     mechanicsFilter.setBackground(null);
                     filtered="false";
-                    controller.getAllMechanicsData(requireContext(), filtered, String.valueOf(UserData.getId()), new MechanicController.AllMechanicDataListener() {
+                    controller.getAllMechanicsData(requireContext(),String.valueOf(UserData.getId()), filtered, new MechanicController.AllMechanicDataListener() {
                         @Override
                         public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
                             MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);
@@ -108,7 +108,7 @@ public class MechanicFragment extends BaseFragment {
                     mechanicsFilterText.setVisibility(View.VISIBLE);
                     mechanicsFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
                     filtered="true";
-                    controller.getAllMechanicsData(requireContext(), filtered, String.valueOf(UserData.getId()), new MechanicController.AllMechanicDataListener() {
+                    controller.getAllMechanicsData(requireContext(),  String.valueOf(UserData.getId()),filtered, new MechanicController.AllMechanicDataListener() {
                         @Override
                         public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
                             MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);

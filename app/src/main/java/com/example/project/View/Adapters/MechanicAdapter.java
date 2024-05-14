@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Controller.MechanicController;
+import com.example.project.Controller.UserData;
 import com.example.project.Model.MechanicModel;
 import com.example.project.R;
 import com.example.project.View.Activities.MapsLocationActivity;
@@ -139,9 +143,21 @@ public class MechanicAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         currentRating = ratingBar.getRating();
-                        holder.rateMechanicButton.setText(currentRating+"");
-                        Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
-                        dismissDialog();
+                        MechanicController controller = new MechanicController();
+
+                        controller.submitRating(context, currentRating, UserData.getId(), mechanic.getMechanic_id(), new MechanicController.MechanicRateListener() {
+                            @Override
+                            public void onrateMechanicDataReceived(Float rate) {
+                                holder.rateMechanicButton.setText(rate+"/5");
+                                Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
+                                dismissDialog();
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                Log.d("error",error.getMessage());
+                            }
+                        });
                     }
                 });
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +171,7 @@ public class MechanicAdapter extends BaseAdapter {
                 ratingDialog.show();
             }
         });
-        return null;
+        return rowView;
     }
 
     private void dismissDialog() {

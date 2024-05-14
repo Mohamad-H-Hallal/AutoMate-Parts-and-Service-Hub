@@ -3,12 +3,14 @@ package com.example.project.Controller;
 import static com.example.project.Controller.Configuration.IP;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Model.MechanicModel;
 
@@ -28,16 +30,16 @@ public class MechanicController {
     }
     public void getAllMechanicsData(Context context,String user_id,String filtered, MechanicController.AllMechanicDataListener listener) {
 
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_all_mechanics.php? filtered ="+filtered+" & user_id = "+user_id, null,
+        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_all_mechanics.php?filtered=" + filtered + "&user_id=" + user_id,null,
                 new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONArray  response) {
                         List<MechanicModel> all_mechanics = new ArrayList<>();
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                int id = jsonObject.getInt("mechanic_id");
+                                int id = jsonObject.getInt("id");
                                 String name = jsonObject.getString("name");
                                 String email = jsonObject.getString("email");
                                 double latitude = jsonObject.getDouble("latitude");
@@ -47,7 +49,7 @@ public class MechanicController {
                                 String end_date = jsonObject.getString("end_date");
                                 String phone = jsonObject.getString("phone");
                                 String specialization = jsonObject.getString("specialization");
-                                String biography = jsonObject.getString("biography");
+                                String biography = jsonObject.optString("biography", null);
                                 String subscription = jsonObject.getString("subscription");
                                 int year_of_experience = jsonObject.getInt("year_of_experience");
                                 float rating = (float) jsonObject.getDouble("rating");
@@ -71,7 +73,7 @@ public class MechanicController {
                     public void onErrorResponse(VolleyError error) {
                         // Handle Volley error
                         error.printStackTrace();
-                        // Pass the error to the listener
+
                         listener.onError(error);
                     }
                 });
@@ -80,4 +82,42 @@ public class MechanicController {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
+
+    public interface MechanicRateListener {
+        void onrateMechanicDataReceived(Float rate);
+
+        void onError(VolleyError error);
+    }
+
+    public void submitRating(Context context, float rate, int user_id,int mechanic_id, MechanicController.MechanicRateListener listener) {
+        String url = IP + "submit_rating.php?rate=" + rate + "&user_id=" + user_id+"&mechanic_id="+mechanic_id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("test",response);
+                            float newRating = Float.parseFloat(response);
+                            listener.onrateMechanicDataReceived(newRating);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            listener.onError(new VolleyError("Rating response parsing error: " + e.getMessage()));
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle Volley error
+                        error.printStackTrace();
+                        listener.onError(error);
+                    }
+                });
+
+        // Add the request to the RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+    }
+
 }
