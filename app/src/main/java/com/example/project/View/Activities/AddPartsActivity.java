@@ -6,10 +6,14 @@ import static com.example.project.Controller.GetImagePath.getRealPath;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -144,12 +148,20 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String makeChoice = make.getSelectedItem().toString();
-                String modelChoice = model.getSelectedItem().toString();
-                String yearChoice = year.getSelectedItem().toString();
-                String categoryChoice = category.getSelectedItem().toString();
-                String subcategoryChoice = subcategories.getSelectedItem().toString();
-                String conditionChoice = condition.getSelectedItem().toString();
+                Context englishContext = new EnglishContextWrapper(AddPartsActivity.this);
+                String makeChoice = englishContext.getResources().getStringArray(R.array.make_choices)[make.getSelectedItemPosition()];
+                String yearChoice = englishContext.getResources().getStringArray(R.array.year_choices)[year.getSelectedItemPosition()];
+                String categoryChoice = englishContext.getResources().getStringArray(R.array.categories_choices)[category.getSelectedItemPosition()];
+                String conditionChoice = englishContext.getResources().getStringArray(R.array.condition_choices)[condition.getSelectedItemPosition()];
+
+                String subcategoriesArray = englishContext.getResources().getStringArray(R.array.subcategories_choices)[category.getSelectedItemPosition()];
+                String[] subcategoryChoices = subcategoriesArray.split(";");
+                String subcategoryChoice = subcategoryChoices[subcategories.getSelectedItemPosition()];
+
+                String modelArray = englishContext.getResources().getStringArray(R.array.model_choices)[make.getSelectedItemPosition()];
+                String[] modelChoices = modelArray.split(";");
+                String modelChoice = modelChoices[model.getSelectedItemPosition()];
+
                 boolean nego = addPartNegotiable.isChecked();
                 String name = addPartName.getText().toString();
                 String price = addPartPrice.getText().toString();
@@ -188,6 +200,20 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         adapter = new ImageAddAdapter(this, imageList, this);
         addPartHorizontalScrollView.setAdapter(adapter);
 
+    }
+
+    // EnglishContextWrapper class definition
+    public static class EnglishContextWrapper extends ContextWrapper {
+        public EnglishContextWrapper(Context base) {
+            super(base);
+        }
+
+        @Override
+        public Resources getResources() {
+            Configuration configuration = new Configuration(super.getResources().getConfiguration());
+            configuration.setLocale(new Locale("en"));
+            return createConfigurationContext(configuration).getResources();
+        }
     }
 
     public void fillSpinners() {

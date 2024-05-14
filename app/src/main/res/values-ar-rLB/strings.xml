@@ -71,7 +71,7 @@
     <string name="old_password">كلمة المرور القديمة</string>
     <string name="new_password">كلمة المرور الجديدة</string>
     <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
-    <string name="email_administrator_gmail_com">administrator@gmail.com :البريد الإلكتروني</string>
+    <string name="email_administrator_gmail_com">البريد الإلكتروني: administrator@gmail.com</string>
     <string name="phone_administrator">الهاتف: +96170123456</string>
     <string name="get_started">ابدأ الآن</string>
     <string name="get_started_body">لقد حصلت على تجربة مجانية لمدة 30 يومًا. بعد 30 يومًا، سيتحول اشتراكك تلقائيًا إلى خطة مدفوعة مقابل 10 دولارات أمريكية شهريًا.</string>
@@ -97,7 +97,7 @@
     <string name="last_name">اسم العائلة</string>
     <string name="subscription_completed">اكتمل الاشتراك!</string>
     <string name="yearofxp">:سنوات الخبرة</string>
-    <string name="subscription">:الاشتراك</string>
+    <string name="subscription">الاشراك:</string>
     <string name="add_part_description">الوصف</string>
     <string name="import_car_s_diagnostics">استيراد تشخيصات السيارة</string>
     <string name="day">اليوم:</string>
