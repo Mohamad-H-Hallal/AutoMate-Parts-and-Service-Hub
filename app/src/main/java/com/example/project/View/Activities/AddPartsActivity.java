@@ -159,7 +159,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                             public void onResponse(String status, String message) {
                                 if (status.equals("success")) {
                                     Toast.makeText(AddPartsActivity.this, message, Toast.LENGTH_SHORT).show();
-                                    clearInputFields();
+                                    restartApp();
                                 } else {
                                     Toast.makeText(AddPartsActivity.this, message, Toast.LENGTH_SHORT).show();
                                 }
@@ -176,20 +176,10 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                     }
                 }
             }
-            private void clearInputFields() {
-                addPartName.setText("");
-                addPartPrice.setText("");
-                addPartDescription.setText("");
-                make.setSelection(0);
-                model.setSelection(0);
-                year.setSelection(0);
-                category.setSelection(0);
-                subcategories.setSelection(0);
-                condition.setSelection(0);
-                addPartNegotiable.setChecked(false);
-                imagePaths.clear();
-                imageList.clear();
-                uriImages.clear();
+            private void restartApp() {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
 
