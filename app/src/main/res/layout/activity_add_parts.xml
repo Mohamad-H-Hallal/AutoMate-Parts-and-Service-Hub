@@ -118,8 +118,7 @@
                 android:backgroundTint="@color/themeColor"
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartMake"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:entries="@array/spinner"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/addPartModel"
@@ -144,8 +143,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartModel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartMakeSpinner"
-                android:entries="@array/spinner"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartMakeSpinner" />
 
             <TextView
                 android:id="@+id/addPartYear"
@@ -170,8 +168,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartYear"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartModelSpinner"
-                android:entries="@array/spinner"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartModelSpinner" />
 
             <TextView
                 android:id="@+id/addPartCategory"
@@ -196,8 +193,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartCategory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartYearSpinner"
-                android:entries="@array/spinner"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartYearSpinner" />
 
             <TextView
                 android:id="@+id/addPartSubCategory"
@@ -222,8 +218,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartSubCategory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartCategorySpinner"
-                android:entries="@array/spinner"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartCategorySpinner" />
 
             <TextView
                 android:id="@+id/addPartCondition"
@@ -248,8 +243,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/addPartCondition"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addPartSubCategorySpinner"
-                android:entries="@array/spinner"/>
+                app:layout_constraintTop_toBottomOf="@id/addPartSubCategorySpinner" />
 
             <CheckBox
                 android:id="@+id/addPartNegotiable"

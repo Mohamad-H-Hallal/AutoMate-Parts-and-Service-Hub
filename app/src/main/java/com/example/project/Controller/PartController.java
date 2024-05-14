@@ -112,7 +112,7 @@ public class PartController {
         void onError(String error);
     }
 
-    public static void addPart(Context context, String name, String make, String model, String year, String category, String subcategory, String description, String condition, String price, boolean negotiable, ArrayList<String> images, final PartCallback callback) {
+    public static void addPart(Context context, String name, String make, String model, int year, String category, String subcategory, String description, String condition, double price, boolean negotiable, ArrayList<String> images, final PartCallback callback) {
 
         String url = IP + "/add_part.php";
 
@@ -144,12 +144,13 @@ public class PartController {
                 params.put("name", name);
                 params.put("make", make);
                 params.put("model", model);
-                params.put("year", year);
+                params.put("year", String.valueOf(year));
                 params.put("category", category);
                 params.put("subcategory", subcategory);
                 params.put("condition", condition);
                 params.put("description", description);
-                params.put("price", price);
+                params.put("price", String.valueOf(price));
+                params.put("id", String.valueOf(UserData.getId()));
                 params.put("negotiable", String.valueOf(negotiable));
                 for (int i = 0; i < images.size(); i++) {
                     params.put("images[" + i + "]", images.get(i));

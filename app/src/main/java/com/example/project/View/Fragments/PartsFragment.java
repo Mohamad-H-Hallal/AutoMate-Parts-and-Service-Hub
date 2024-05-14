@@ -37,9 +37,9 @@ public class PartsFragment extends BaseFragment {
     private androidx.appcompat.widget.SearchView searchView;
     private ImageView partsFilter;
     private CardView partsCardFilter;
-    private Spinner partsMakeSpinner,partsModelSpinner,partsYearSpinner,partsCategorySpinner,partsSubCategorySpinner,partsConditionSpinner;
-    private CheckBox partsNegotiable,partsLocation;
-    private EditText partsPriceFromEditText,partsPriceToEditText;
+    private Spinner partsMakeSpinner, partsModelSpinner, partsYearSpinner, partsCategorySpinner, partsSubCategorySpinner, partsConditionSpinner;
+    private CheckBox partsNegotiable, partsLocation;
+    private EditText partsPriceFromEditText, partsPriceToEditText;
     private AppCompatButton partsFilterSubmit;
     private ListView partsListView;
 
@@ -65,12 +65,12 @@ public class PartsFragment extends BaseFragment {
         partsFilter = view.findViewById(R.id.partsFilter);
         partsCardFilter = view.findViewById(R.id.partsCardFilter);
         partsMakeSpinner = view.findViewById(R.id.partsMakeSpinner);
-        partsModelSpinner =view.findViewById(R.id.partsModelSpinner);
+        partsModelSpinner = view.findViewById(R.id.partsModelSpinner);
         partsYearSpinner = view.findViewById(R.id.partsYearSpinner);
         partsCategorySpinner = view.findViewById(R.id.partsCategorySpinner);
         partsSubCategorySpinner = view.findViewById(R.id.partsSubCategorySpinner);
         partsConditionSpinner = view.findViewById(R.id.partsConditionSpinner);
-        partsNegotiable =view.findViewById(R.id.partsNegotiable);
+        partsNegotiable = view.findViewById(R.id.partsNegotiable);
         partsLocation = view.findViewById(R.id.partsLocation);
         partsPriceFromEditText = view.findViewById(R.id.partsPriceFromEditText);
         partsPriceToEditText = view.findViewById(R.id.partsPriceToEditText);
@@ -93,10 +93,10 @@ public class PartsFragment extends BaseFragment {
         partsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(partsCardFilter.getVisibility() == View.VISIBLE){
+                if (partsCardFilter.getVisibility() == View.VISIBLE) {
                     partsCardFilter.setVisibility(View.GONE);
                     partsFilter.setBackground(null);
-                }else {
+                } else {
                     partsCardFilter.setVisibility(View.VISIBLE);
                     partsFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
                 }
@@ -104,26 +104,25 @@ public class PartsFragment extends BaseFragment {
         });
 
         PartController partc = new PartController();
-        partc.fetchParts(requireContext(),new PartController.PartFetchListener() {
+        partc.fetchParts(requireContext(), new PartController.PartFetchListener() {
 
-     @Override
-    public void onPartsFetched(List<PartModel> parts, ArrayList<String> image_path) {
-         PartsAdapter adapter = new PartsAdapter(requireContext(),parts,image_path);
-         partsListView.setAdapter(adapter);
+            @Override
+            public void onPartsFetched(List<PartModel> parts, ArrayList<String> image_path) {
+                PartsAdapter adapter = new PartsAdapter(requireContext(), parts, image_path);
+                partsListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d("error", error);
+            }
+        });
+
+
     }
 
-    @Override
-    public void onError(String error) {
-        Log.d("error",error);
-    }
-});
 
-
-
-    }
-
-
-    public void fill_filter(){
+    public void fill_filter() {
 
         Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
         Map<String, List<String>> makeModelMap = new HashMap<>();

@@ -21,6 +21,8 @@ import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,9 +60,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.OnImageRemoveListener {
@@ -111,7 +116,8 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartNegotiable = findViewById(R.id.addPartNegotiable);
         TwoDecimalPlacesInputFilter filter = new TwoDecimalPlacesInputFilter();
         addPartPrice.setFilters(new InputFilter[]{filter});
-
+        fillSpinners();
+        imagePaths = new ArrayList<>();
         uriImages = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -154,7 +160,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                 } else {
                     if (!uriImages.isEmpty()) {
                         uploadImages(uriImages);
-                        PartController.addPart(AddPartsActivity.this, name, makeChoice, modelChoice, yearChoice, categoryChoice, subcategoryChoice, description, conditionChoice, price, nego, imagePaths, new PartController.PartCallback() {
+                        PartController.addPart(AddPartsActivity.this, name, makeChoice, modelChoice, Integer.parseInt(yearChoice), categoryChoice, subcategoryChoice, description, conditionChoice, Double.parseDouble(price), nego, imagePaths, new PartController.PartCallback() {
                             @Override
                             public void onResponse(String status, String message) {
                                 if (status.equals("success")) {
@@ -182,6 +188,71 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         adapter = new ImageAddAdapter(this, imageList, this);
         addPartHorizontalScrollView.setAdapter(adapter);
 
+    }
+
+    public void fillSpinners() {
+
+        Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
+        Map<String, List<String>> makeModelMap = new HashMap<>();
+        String[] categoriesArray = getResources().getStringArray(R.array.categories_choices);
+        String[] years = getResources().getStringArray(R.array.year_choices);
+        String[] subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices);
+        String[] makeArray = getResources().getStringArray(R.array.make_choices);
+        String[] modelArray = getResources().getStringArray(R.array.model_choices);
+        String[] conditionArray = getResources().getStringArray(R.array.condition_choices);
+
+        for (int i = 0; i < categoriesArray.length; i++) {
+            String category = categoriesArray[i];
+            String[] subcategories = subcategoriesArray[i].split(";");
+            categorySubcategoryMap.put(category, Arrays.asList(subcategories));
+        }
+
+        for (int i = 0; i < makeArray.length; i++) {
+            String make = makeArray[i];
+            String[] model = modelArray[i].split(";");
+            makeModelMap.put(make, Arrays.asList(model));
+        }
+
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, conditionArray);
+        condition.setAdapter(conditionAdapter);
+        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, makeArray);
+        make.setAdapter(makeAdapter);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
+        year.setAdapter(yearAdapter);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesArray);
+        category.setAdapter(categoryAdapter);
+
+        make.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMake = (String) parent.getItemAtPosition(position);
+                List<String> modelList = makeModelMap.get(selectedMake);
+                ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, modelList);
+                model.setAdapter(modelAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle case where nothing is selected
+            }
+        });
+
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
+
+                // Populate the subcategorySpinner with subcategories for the selected category
+                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, subcategoriesList);
+                subcategories.setAdapter(subcategoryAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle case where nothing is selected
+            }
+        });
     }
 
     private void restartApp() {
