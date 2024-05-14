@@ -32,7 +32,7 @@
             android:layout_gravity="center_horizontal">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/partImageView"
+                android:id="@+id/partsManageImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="15dp"
@@ -45,7 +45,7 @@
                 app:shapeAppearance="@style/circle" />
 
             <TextView
-                android:id="@+id/txtPartName"
+                android:id="@+id/txtManageName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -56,12 +56,12 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/txtPrice"
+                app:layout_constraintEnd_toStartOf="@id/txtManagePrice"
                 app:layout_constraintTop_toBottomOf="@id/deleteIcon"
-                app:layout_constraintStart_toEndOf="@id/partImageView"/>
+                app:layout_constraintStart_toEndOf="@id/partsManageImageView"/>
 
             <TextView
-                android:id="@+id/txtMake"
+                android:id="@+id/txtManageMake"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -70,13 +70,13 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginStart="15dp"
-                app:layout_constraintEnd_toStartOf="@id/txtModel"
+                app:layout_constraintEnd_toStartOf="@id/txtManageModel"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintTop_toBottomOf="@id/txtPartName"
-                app:layout_constraintStart_toEndOf="@id/partImageView"/>
+                app:layout_constraintTop_toBottomOf="@id/txtManageName"
+                app:layout_constraintStart_toEndOf="@id/partsManageImageView"/>
 
             <TextView
-                android:id="@+id/txtYear"
+                android:id="@+id/txtManageYear"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -86,13 +86,13 @@
                 android:ellipsize="end"
                 android:layout_marginStart="15dp"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintEnd_toStartOf="@id/txtCategory"
-                app:layout_constraintTop_toBottomOf="@id/txtMake"
-                app:layout_constraintStart_toEndOf="@id/partImageView"
-                app:layout_constraintBottom_toBottomOf="@id/partImageView"/>
+                app:layout_constraintEnd_toStartOf="@id/txtManageCategory"
+                app:layout_constraintTop_toBottomOf="@id/txtManageMake"
+                app:layout_constraintStart_toEndOf="@id/partsManageImageView"
+                app:layout_constraintBottom_toBottomOf="@id/partsManageImageView"/>
 
             <TextView
-                android:id="@+id/txtModel"
+                android:id="@+id/txtManageModel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -101,13 +101,13 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintEnd_toStartOf="@id/txtPrice"
-                app:layout_constraintBaseline_toBaselineOf="@id/txtMake"
-                app:layout_constraintTop_toBottomOf="@id/txtPartName"
-                app:layout_constraintStart_toEndOf="@id/txtMake"/>
+                app:layout_constraintEnd_toStartOf="@id/txtManagePrice"
+                app:layout_constraintBaseline_toBaselineOf="@id/txtManageMake"
+                app:layout_constraintTop_toBottomOf="@id/txtManageName"
+                app:layout_constraintStart_toEndOf="@id/txtManageMake"/>
 
             <TextView
-                android:id="@+id/txtCategory"
+                android:id="@+id/txtManageCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/loginViewsMargin"
@@ -116,15 +116,15 @@
                 android:ellipsize="end"
                 android:text="Category"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintEnd_toStartOf="@id/txtPrice"
-                app:layout_constraintBaseline_toBaselineOf="@id/txtYear"
-                app:layout_constraintTop_toBottomOf="@id/txtModel"
-                app:layout_constraintStart_toEndOf="@id/txtYear"
-                app:layout_constraintBottom_toBottomOf="@id/partImageView"/>
+                app:layout_constraintEnd_toStartOf="@id/txtManagePrice"
+                app:layout_constraintBaseline_toBaselineOf="@id/txtManageYear"
+                app:layout_constraintTop_toBottomOf="@id/txtManageModel"
+                app:layout_constraintStart_toEndOf="@id/txtManageYear"
+                app:layout_constraintBottom_toBottomOf="@id/partsManageImageView"/>
 
 
             <TextView
-                android:id="@+id/txtPrice"
+                android:id="@+id/txtManagePrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="USD Price "
@@ -134,13 +134,13 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                app:layout_constraintBaseline_toBaselineOf="@id/txtPartName"
-                app:layout_constraintStart_toEndOf="@id/txtPartName"
+                app:layout_constraintBaseline_toBaselineOf="@id/txtManageName"
+                app:layout_constraintStart_toEndOf="@id/txtManageName"
                 app:layout_constraintTop_toBottomOf="@id/deleteIcon"
                 app:layout_constraintEnd_toStartOf="@id/deleteIcon"/>
 
             <TextView
-                android:id="@+id/txtNegotiable"
+                android:id="@+id/txtManageNegotiable"
                 android:layout_width="0dp"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -151,12 +151,12 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toStartOf="@id/deleteIcon"
-                app:layout_constraintBaseline_toBaselineOf="@id/txtModel"
-                app:layout_constraintTop_toBottomOf="@id/txtPrice"
-                app:layout_constraintStart_toEndOf="@id/txtPartName"/>
+                app:layout_constraintBaseline_toBaselineOf="@id/txtManageModel"
+                app:layout_constraintTop_toBottomOf="@id/txtManagePrice"
+                app:layout_constraintStart_toEndOf="@id/txtManageName"/>
 
             <TextView
-                android:id="@+id/txtCondition"
+                android:id="@+id/txtManageCondition"
                 android:layout_width="0dp"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -167,9 +167,9 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toStartOf="@id/deleteIcon"
-                app:layout_constraintBaseline_toBaselineOf="@id/txtCategory"
-                app:layout_constraintTop_toBottomOf="@id/txtNegotiable"
-                app:layout_constraintStart_toEndOf="@id/txtPartName"/>
+                app:layout_constraintBaseline_toBaselineOf="@id/txtManageCategory"
+                app:layout_constraintTop_toBottomOf="@id/txtManageNegotiable"
+                app:layout_constraintStart_toEndOf="@id/txtManageName"/>
 
             <ImageView
                 android:id="@+id/deleteIcon"
