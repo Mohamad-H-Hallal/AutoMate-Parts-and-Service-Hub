@@ -127,9 +127,8 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
     }
 
     public void resetPassword(View view) {
-        Intent resetPass = new Intent(this, EditPartActivity.class);
+        Intent resetPass = new Intent(this, PasswordResetActivity.class);
         startActivity(resetPass);
-        finish();
     }
 
     private String getLanguagePreference() {
