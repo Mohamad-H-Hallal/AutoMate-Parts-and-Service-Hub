@@ -22,8 +22,10 @@ import com.example.project.Controller.UserController;
 import com.example.project.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -66,13 +68,19 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(calendar.getTime());
-        if (endDate != null && endDate.equals(currentDate)) {
-            editTextEmail.setText("");
-            editTextPassword.setText("");
-            showUpgradePrompt();
-        } else {
-            startActivity(new Intent(this, BottomNavMenuActivity.class));
-            finish();
+        try {
+            Date parsedEndDate = dateFormat.parse(endDate);
+            Date currentDateObject = dateFormat.parse(currentDate);
+            if (endDate != null && (parsedEndDate.before(currentDateObject) || parsedEndDate.equals(currentDateObject))) {
+                editTextEmail.setText("");
+                editTextPassword.setText("");
+                showUpgradePrompt();
+            } else {
+                startActivity(new Intent(this, BottomNavMenuActivity.class));
+                finish();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
