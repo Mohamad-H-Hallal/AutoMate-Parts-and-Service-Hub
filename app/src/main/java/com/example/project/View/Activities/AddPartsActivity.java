@@ -187,6 +187,9 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                 subcategories.setSelection(0);
                 condition.setSelection(0);
                 addPartNegotiable.setChecked(false);
+                imagePaths.clear();
+                imageList.clear();
+                uriImages.clear();
             }
         });
 
