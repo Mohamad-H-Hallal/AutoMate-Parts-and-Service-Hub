@@ -3,6 +3,8 @@ package com.example.project.Controller;
 import static com.example.project.Controller.Configuration.IP;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -166,4 +168,74 @@ public class PartController {
         void onError(String error);
     }
 
+    public interface PartResponseListener {
+        void onSuccess(List<PartModel> parts,ArrayList<String> image_path);
+        void onError(String message);
+    }
+
+    public void getFilteredParts(Context context,int user_id,String make, String model, String year, String category, String subcategory,
+                                 String condition,String negotiable,String nearest_location, String minPrice, String maxPrice, PartResponseListener listener) {
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, IP+"filter_parts.php", null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        List<PartModel> parts = new ArrayList<>();
+                        ArrayList<String> image_path = new ArrayList<>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                PartModel part = new PartModel();
+                                part.setId(jsonObject.getInt("id"));
+                                part.setName(jsonObject.getString("name"));
+                                part.setMake(jsonObject.getString("make"));
+                                part.setModel(jsonObject.getString("model"));
+                                part.setYear(jsonObject.getInt("year"));
+                                part.setCategory(jsonObject.getString("category"));
+                                part.setSubcategory(jsonObject.getString("subcategory"));
+                                part.setDescription(jsonObject.getString("description"));
+                                part.setPart_condition(jsonObject.getString("part_condition"));
+                                part.setPrice(jsonObject.getDouble("price"));
+                                part.setNegotiable(jsonObject.getString("negotiable").equals("true"));
+                                part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
+                                parts.add(part);
+                                image_path.add(jsonObject.getString("image_path"));
+                            }
+                            listener.onSuccess(parts,image_path);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            listener.onError("Error parsing JSON");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onError("Error fetching data: " + error.getMessage());
+            }
+        }) {
+            // Override getParams() to pass filter criteria to PHP script
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("make", make);
+                params.put("model", model);
+                params.put("year", year);
+                params.put("category", category);
+                params.put("subcategory", subcategory);
+                params.put("condition", condition);
+                params.put("negotiable",negotiable);
+                params.put("min_price", minPrice);
+                params.put("max_price", maxPrice);
+                params.put("user_id", String.valueOf(user_id));
+                params.put("filter_by_nearest_location", nearest_location);
+                return params;
+            }
+        };
+
+        queue.add(jsonArrayRequest);
+    }
 }
+
+
+

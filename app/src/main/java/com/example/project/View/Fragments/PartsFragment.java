@@ -20,8 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.project.Controller.PartController;
+import com.example.project.Controller.UserData;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
 import com.example.project.View.Adapters.PartsAdapter;
@@ -75,6 +77,7 @@ public class PartsFragment extends BaseFragment {
         partsPriceFromEditText = view.findViewById(R.id.partsPriceFromEditText);
         partsPriceToEditText = view.findViewById(R.id.partsPriceToEditText);
         partsListView = view.findViewById(R.id.partsListView);
+        partsFilterSubmit = view.findViewById(R.id.partsFilterSubmit);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -118,7 +121,50 @@ public class PartsFragment extends BaseFragment {
             }
         });
 
+        partsFilterSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applyFilter();
+            }
+        });
 
+
+    }
+
+
+    private void applyFilter() {
+
+            String make = partsMakeSpinner.getSelectedItem().toString();
+            String model = partsModelSpinner.getSelectedItem().toString();
+            String year = partsYearSpinner.getSelectedItem().toString();
+            String category = partsCategorySpinner.getSelectedItem().toString();
+            String subcategory = partsSubCategorySpinner.getSelectedItem().toString();
+            String condition = partsConditionSpinner.getSelectedItem().toString();
+            String negotiable,filter_location=null;
+            if(partsNegotiable.isChecked())
+            {negotiable = "true";}
+            else {negotiable = "false";}
+            if(partsLocation.isChecked()){
+                filter_location = "true";
+            }
+            else{filter_location="false";}
+            String minPrice = partsPriceFromEditText.getText().toString();
+            String maxPrice = partsPriceToEditText.getText().toString();
+
+            PartController partcontroller = new PartController();
+            partcontroller.getFilteredParts(requireContext(),UserData.getId(),make, model, year, category, subcategory, condition,negotiable,filter_location, minPrice, maxPrice, new PartController.PartResponseListener() {
+            @Override
+            public void onSuccess(List<PartModel> parts,ArrayList<String> image_path) {
+                PartsAdapter adapter = new PartsAdapter(requireContext(),parts,image_path);
+                partsListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onError(String message) {
+                // Handle error response
+                Log.d("error",message);
+            }
+        });
     }
 
 
