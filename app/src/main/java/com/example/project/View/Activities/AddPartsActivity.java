@@ -176,17 +176,18 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                     }
                 }
             }
-            private void restartApp() {
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
         });
 
         imageList = new ArrayList<>();
         adapter = new ImageAddAdapter(this, imageList, this);
         addPartHorizontalScrollView.setAdapter(adapter);
 
+    }
+
+    private void restartApp() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     public void addImage(String imageRes) {
