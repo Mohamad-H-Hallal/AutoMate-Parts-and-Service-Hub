@@ -3,6 +3,7 @@ package com.example.project.View.Adapters;
 import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
+import com.example.project.View.Activities.PartDetailsActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
@@ -75,7 +77,7 @@ public class PartsAdapter extends BaseAdapter {
         holder.txtCategory.setText(part.getCategory());
         holder.txtMake.setText(part.getMake());
         holder.txtModel.setText(part.getModel());
-        holder.txtPrice.setText("USD"+ part.getPrice());
+        holder.txtPrice.setText("USD "+ part.getPrice());
         holder.txtCondition.setText(part.getPart_condition());
         holder.txtYear.setText(Integer.toString(part.getYear()));
         holder.txtPartName.setText(part.getName());
@@ -87,7 +89,17 @@ public class PartsAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .error(R.drawable.gear_def_icon)
                 .into(holder.partsImageView);
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PartDetailsActivity.class);
+                i.putExtra("part_id",part.getId());
+                context.startActivity(i);
+            }
+        });
 
         return rowView;
     }
+
+
 }

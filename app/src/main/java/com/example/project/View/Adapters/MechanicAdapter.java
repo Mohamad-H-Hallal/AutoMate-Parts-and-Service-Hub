@@ -1,5 +1,8 @@
 package com.example.project.View.Adapters;
 
+import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
+import static com.example.project.Controller.Configuration.USER_IMAGES_DIR;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +22,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Model.MechanicModel;
 import com.example.project.R;
 import com.example.project.View.Activities.MapsLocationActivity;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -26,20 +32,22 @@ import com.google.android.material.imageview.ShapeableImageView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MechanicAdapter extends BaseAdapter {
 
-    JSONArray data;
+    List<MechanicModel> data;
     Context context;
     double latitude = 33;
     double longitude = 35;
     int phoneNumber = 70707070;
-    private float currentRating = 3.5f;
+    private float currentRating = 0;
     private AlertDialog ratingDialog;
     LayoutInflater inflater = null;
 
-    public MechanicAdapter(Context context, JSONArray data) {
+    public MechanicAdapter(Context context, List<MechanicModel> data) {
         this.context = context;
         this.data = data;
         updateData();
@@ -64,7 +72,7 @@ public class MechanicAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.length();
+        return data.size();
     }
 
     @Override
@@ -88,7 +96,18 @@ public class MechanicAdapter extends BaseAdapter {
         holder.callMechanicButton = rowView.findViewById(R.id.callMechanicButton);
         holder.locationMechanicButton = rowView.findViewById(R.id.locationMechanicButton);
         holder.rateMechanicButton = rowView.findViewById(R.id.rateMechanicButton);
-        JSONObject obj = data.optJSONObject(position);
+
+        MechanicModel mechanic = data.get(position);
+        Glide.with(context).load(USER_IMAGES_DIR + mechanic.getIcon())
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.gear_def_icon)
+                .into(holder.mechanicImageView);
+        holder.txtMechanicName.setText(mechanic.getName());
+        holder.txtMechanicSpecialization.setText(mechanic.getSpecialization());
+        holder.rateMechanicButton.setText(mechanic.getRating() +"/5");
+        currentRating = mechanic.getRating();
+
         holder.locationMechanicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
