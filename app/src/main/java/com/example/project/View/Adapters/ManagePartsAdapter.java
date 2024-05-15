@@ -1,5 +1,7 @@
 package com.example.project.View.Adapters;
 
+import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,28 +11,37 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Model.PartModel;
 import com.example.project.R;
 import com.example.project.View.Activities.EditPartActivity;
+import com.example.project.View.Activities.PartDetailsActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ManagePartsAdapter extends BaseAdapter {
 
     Context context;
-    JSONArray data;
+    List<PartModel> data;
+    ArrayList<String> image_path;
     LayoutInflater inflater;
 
-    public ManagePartsAdapter(Context context, JSONArray data) {
+    public ManagePartsAdapter(Context context, List<PartModel> data, ArrayList<String> image_path) {
         this.context = context;
         this.data = data;
+        this.image_path=image_path;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
@@ -64,22 +75,34 @@ public class ManagePartsAdapter extends BaseAdapter {
         holder.txtNegotiable = rowView.findViewById(R.id.txtManageNegotiable);
         holder.txtCondition = rowView.findViewById(R.id.txtManageCondition);
         holder.delete = rowView.findViewById(R.id.deleteIcon);
-        JSONObject obj = data.optJSONObject(position);
+
+        PartModel part = data.get(position);
+
+        holder.txtCategory.setText(part.getCategory());
+        holder.txtMake.setText(part.getMake());
+        holder.txtModel.setText(part.getModel());
+        holder.txtPrice.setText("USD "+ part.getPrice());
+        holder.txtCondition.setText(part.getPart_condition());
+        holder.txtYear.setText(Integer.toString(part.getYear()));
+        holder.txtPartName.setText(part.getName());
+        if(part.isNegotiable()){
+            holder.txtNegotiable.setText(R.string.negotiable);}
+        else
+            holder.txtNegotiable.setText("");
+        Glide.with(context).load(Parts_IMAGES_DIR + image_path.get(position))
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.gear_def_icon)
+                .into(holder.partsImageView);
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditPartActivity.class);
-                intent.putExtra("id", obj.optString("id"));
-                context.startActivity(intent);
+                Intent i = new Intent(context, PartDetailsActivity.class);
+                i.putExtra("part_id",part.getId());
+                context.startActivity(i);
             }
         });
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //delete from databse
-                notifyDataSetChanged();
-            }
-        });
-            return null;
+
+            return rowView;
     }
 }

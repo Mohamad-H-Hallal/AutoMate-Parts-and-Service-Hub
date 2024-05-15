@@ -239,6 +239,58 @@ public class PartController {
         queue.add(jsonArrayRequest);
     }
 
+    public void manageParts(Context context, String subcategory, final PartManageListener listener) {
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(context);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_manage_parts.php?user_id=" + UserData.getId() + "&subcategory=" + subcategory, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            List<PartModel> parts = new ArrayList<>();
+                            ArrayList<String> imagePaths = new ArrayList<>();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                PartModel part = new PartModel();
+                                part.setId(jsonObject.getInt("id"));
+                                part.setName(jsonObject.getString("name"));
+                                part.setMake(jsonObject.getString("make"));
+                                part.setModel(jsonObject.getString("model"));
+                                part.setYear(jsonObject.getInt("year"));
+                                part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
+                                part.setPart_condition(jsonObject.getString("part_condition"));
+                                part.setCategory(jsonObject.getString("category"));
+                                part.setSubcategory(jsonObject.getString("subcategory"));
+                                part.setDescription(jsonObject.getString("description"));
+                                part.setNegotiable(Boolean.parseBoolean(jsonObject.getString("negotiable")));
+                                part.setPrice(jsonObject.getDouble("price"));
+                                parts.add(part);
+                                if (!jsonObject.isNull("image_path")) {
+                                    imagePaths.add(jsonObject.getString("image_path"));
+                                } else {
+                                    imagePaths.add("default_image_path.png");
+                                }
+                            }
+                            listener.onPartsManage(parts, imagePaths);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        listener.onError(error.toString());
+                    }
+                });
+
+        mRequestQueue.add(jsonArrayRequest);
+    }
+
+    public interface PartManageListener {
+        void onPartsManage(List<PartModel> parts, ArrayList<String> imagePaths);
+        void onError(String error);
+    }
 
 
 }

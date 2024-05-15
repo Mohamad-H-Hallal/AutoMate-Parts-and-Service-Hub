@@ -68,11 +68,11 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 if (viewer == 0) {
                     Intent i = new Intent(context, ManagePartsActivity.class);
-                    i.putExtra("categories", childText);
+                    i.putExtra("subcategory", childText);
                     context.startActivity(i);
                 } else {
                     Intent i = new Intent(context, ViewPartsActivity.class);
-                    i.putExtra("categories", childText);
+                    i.putExtra("subcategory", childText);
                     context.startActivity(i);
                 }
             }
