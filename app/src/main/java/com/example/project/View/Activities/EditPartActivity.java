@@ -108,12 +108,14 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         Intent i = getIntent();
         String part_id = i.getStringExtra("part_id");
 
+        Toast.makeText(this, part_id, Toast.LENGTH_SHORT).show();
         part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
             @Override
             public void onImagePathReceived(ArrayList<String> imageUrls) {
                 imageListfromdb = imageUrls;
             }
         });
+
 
         imageListfromuser = new ArrayList<>();
         adapter = new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this);

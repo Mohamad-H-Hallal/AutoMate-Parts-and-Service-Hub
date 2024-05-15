@@ -148,10 +148,9 @@ public class ProfileFragment extends BaseFragment {
         yearofxptext.setEnabled(false);
         editing = false;
         UserController usercontroller = new UserController();
-        UserData userdata = new UserData(requireContext());
-        if (userdata.getAccountType().equals("General User")) {
+        if (UserData.getAccountType().equals("General User")) {
             Log.d("test", "i am in the setInitialize");
-            usercontroller.getUserData(requireContext(), userdata.getId(), new UserController.UserDataListener() {
+            usercontroller.getUserData(requireContext(), UserData.getId(), new UserController.UserDataListener() {
                 @Override
                 public void onUserDataReceived(UserModel user) {
                     name.setText(user.getName());
@@ -184,8 +183,8 @@ public class ProfileFragment extends BaseFragment {
                     Log.d("test", error.toString());
                 }
             });
-        } else if (userdata.getAccountType().equals("Mechanic")) {
-            usercontroller.getMechanicData(requireContext(), userdata.getId(), new UserController.MechanicDataListener() {
+        } else if (UserData.getAccountType().equals("Mechanic")) {
+            usercontroller.getMechanicData(requireContext(), UserData.getId(), new UserController.MechanicDataListener() {
                 @Override
                 public void onMechanicDataReceived(MechanicModel user) {
 
@@ -228,8 +227,8 @@ public class ProfileFragment extends BaseFragment {
                 }
             });
 
-        } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
-            usercontroller.getScrapyardData(requireContext(), userdata.getId(), new UserController.ScrapyardDataListener() {
+        } else if (UserData.getAccountType().equals("Scrap-Yard Vendor")) {
+            usercontroller.getScrapyardData(requireContext(), UserData.getId(), new UserController.ScrapyardDataListener() {
                 @Override
                 public void onScrapyardDataReceived(ScrapyardModel user) {
                     name.setText(user.getName());

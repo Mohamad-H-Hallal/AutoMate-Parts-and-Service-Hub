@@ -87,7 +87,7 @@ public class ManagePartsAdapter extends BaseAdapter {
         holder.delete = rowView.findViewById(R.id.deleteIcon);
 
         PartModel part = data.get(position);
-
+        int id = part.getId();
         holder.txtCategory.setText(part.getCategory());
         holder.txtMake.setText(part.getMake());
         holder.txtModel.setText(part.getModel());
@@ -108,7 +108,7 @@ public class ManagePartsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, EditPartActivity.class);
-                i.putExtra("part_id",part.getId());
+                i.putExtra("part_id",String.valueOf(id));
                 context.startActivity(i);
             }
         });
