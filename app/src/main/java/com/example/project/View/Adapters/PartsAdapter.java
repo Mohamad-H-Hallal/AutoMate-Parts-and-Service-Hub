@@ -73,7 +73,7 @@ public class PartsAdapter extends BaseAdapter {
         holder.txtCondition = rowView.findViewById(R.id.txtCondition);
 
         PartModel part = data.get(position);
-
+        int id = part.getId();
         holder.txtCategory.setText(part.getCategory());
         holder.txtMake.setText(part.getMake());
         holder.txtModel.setText(part.getModel());
@@ -93,7 +93,7 @@ public class PartsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, PartDetailsActivity.class);
-                i.putExtra("part_id",part.getId());
+                i.putExtra("part_id",String.valueOf(id));
                 context.startActivity(i);
             }
         });
