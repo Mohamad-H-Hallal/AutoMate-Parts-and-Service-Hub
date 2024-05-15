@@ -11,6 +11,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Model.PartModel;
@@ -343,6 +344,87 @@ public class PartController {
     public interface PartDeleteListener {
         void onDeleteSuccess(String message);
         void onDeleteError(String error);
+    }
+
+    public void fetchthePart(Context context, int part_id,final ParttheFetchListener listener) {
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(context);
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, IP + "get_the_part.php?part_id="+part_id, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                                JSONObject jsonObject = response;
+                                PartModel part = new PartModel();
+                                part.setId(jsonObject.getInt("id"));
+                                part.setName(jsonObject.getString("name"));
+                                part.setMake(jsonObject.getString("make"));
+                                part.setModel(jsonObject.getString("model"));
+                                part.setYear(jsonObject.getInt("year"));
+                                part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
+                                part.setPart_condition(jsonObject.getString("part_condition"));
+                                part.setCategory(jsonObject.getString("category"));
+                                part.setSubcategory(jsonObject.getString("subcategory"));
+                                part.setDescription(jsonObject.getString("description"));
+                                part.setNegotiable(Boolean.parseBoolean(jsonObject.getString("negotiable")));
+                                part.setPrice(jsonObject.getDouble("price"));
+
+                            listener.onthePartFetched(part);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Call listener with error
+                        listener.onError(error.toString());
+                    }
+                });
+
+        mRequestQueue.add(jsonArrayRequest);
+    }
+
+    public interface ParttheFetchListener {
+        void onthePartFetched(PartModel parts);
+        void onError(String error);
+    }
+
+    public interface imagesFetchListener {
+        void ontimagesFetched(ArrayList<String> images);
+        void onError(String error);
+    }
+
+    public void getimages(Context context,int part_id,final imagesFetchListener listener){
+        ArrayList<String> imagesList = new ArrayList<>();
+        RequestQueue mRequestQueue = Volley.newRequestQueue(context);
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, IP+"get_images.php?part_id="+part_id, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                String imagePath = response.getString(i);
+                                imagesList.add(imagePath);
+                            }
+                            listener.ontimagesFetched(imagesList);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        listener.onError(error.getMessage());
+                    }
+                });
+        mRequestQueue.add(request);
     }
 
 }
