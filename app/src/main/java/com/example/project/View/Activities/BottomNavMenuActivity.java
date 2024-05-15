@@ -2,6 +2,7 @@ package com.example.project.View.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BottomNavMenuActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bottomNavigationView;
-    int def_val = 0;
+    private int selectedItemId = R.id.nav_scrap_yard;
+    private static final String SELECTED_ITEM_ID_KEY = "selected_item_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,20 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        Intent i = getIntent();
-        def_val = i.getIntExtra("start_page",0);
-        if(def_val == 0)
-            bottomNavigationView.setSelectedItemId(R.id.nav_scrap_yard);
-        else
-            bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
+        if (savedInstanceState != null) {
+            selectedItemId = savedInstanceState.getInt(SELECTED_ITEM_ID_KEY);
+        }
+
+        bottomNavigationView.setSelectedItemId(selectedItemId);
     }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_ITEM_ID_KEY, selectedItemId);
+    }
+
     ScrapYardFragment firstFragment = new ScrapYardFragment();
     PartsFragment secondFragment = new PartsFragment();
     MechanicFragment thirdFragment = new MechanicFragment();
@@ -41,40 +50,31 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
     ProfileFragment fifthFragment = new ProfileFragment();
 
     @Override
-    public boolean
-    onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment selectedFragment = null;
 
-            if (item.getItemId()==R.id.nav_scrap_yard) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, firstFragment)
-                        .commit();
-                return true;
-            }else if(item.getItemId()==R.id.nav_parts) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, secondFragment)
-                        .commit();
-                return true;
-            }else if(item.getItemId()==R.id.nav_mechanics){
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, thirdFragment)
-                        .commit();
-                return true;
-            }else if(item.getItemId()==R.id.nav_diagnostics){
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fourthFragment)
-                        .commit();
-                return true;
-            }else if(item.getItemId()==R.id.nav_profile){
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, fifthFragment)
-                        .commit();
-                return true;
-            }
+        if (item.getItemId() == R.id.nav_scrap_yard) {
+            selectedFragment = firstFragment;
+        } else if (item.getItemId() == R.id.nav_parts) {
+            selectedFragment = secondFragment;
+        } else if (item.getItemId() == R.id.nav_mechanics) {
+            selectedFragment = thirdFragment;
+        } else if (item.getItemId() == R.id.nav_diagnostics) {
+            selectedFragment = fourthFragment;
+        } else if (item.getItemId() == R.id.nav_profile) {
+            selectedFragment = fifthFragment;
+        }
+
+        if (selectedFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit();
+            selectedItemId = item.getItemId();
+            return true;
+        }
+
         return false;
     }
+
 }

@@ -30,6 +30,7 @@ import com.example.project.Controller.UserData;
 import com.example.project.Model.ScrapyardModel;
 import com.example.project.R;
 import com.example.project.View.Activities.MapsLocationActivity;
+import com.example.project.View.Activities.ProfileViewActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
@@ -169,6 +170,15 @@ public class ScrapYardAdapter extends BaseAdapter {
                 ratingDialog = builder.create();
                 ratingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ratingDialog.show();
+            }
+        });
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, ProfileViewActivity.class);
+                i.putExtra("id",obj.getScrapyard_id());
+                i.putExtra("user_type",obj.getAccount_type());
+                context.startActivity(i);
             }
         });
         return rowView;
