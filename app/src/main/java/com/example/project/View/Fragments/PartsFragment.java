@@ -139,13 +139,13 @@ public class PartsFragment extends BaseFragment {
 
     private void applyFilter() {
 
-            String make = partsMakeSpinner.getSelectedItem().toString();
-            String model = partsModelSpinner.getSelectedItem().toString();
-            String year = partsYearSpinner.getSelectedItem().toString();
-            String category = partsCategorySpinner.getSelectedItem().toString();
-            String subcategory = partsSubCategorySpinner.getSelectedItem().toString();
-            String condition = partsConditionSpinner.getSelectedItem().toString();
-            String negotiable,filter_location=null;
+            String make = partsMakeSpinner.getSelectedItem().toString().equals(partsMakeSpinner.getItemAtPosition(0).toString())?"":partsMakeSpinner.getSelectedItem().toString();
+            String model = partsModelSpinner.getSelectedItem().toString().equals(partsModelSpinner.getItemAtPosition(0).toString())?"":partsModelSpinner.getSelectedItem().toString();
+            String year = partsYearSpinner.getSelectedItem().toString().equals(partsYearSpinner.getItemAtPosition(0).toString())?"":partsYearSpinner.getSelectedItem().toString();
+            String category = partsCategorySpinner.getSelectedItem().toString().equals(partsCategorySpinner.getItemAtPosition(0).toString())?"":partsCategorySpinner.getSelectedItem().toString();
+            String subcategory = partsSubCategorySpinner.getSelectedItem().toString().equals(partsSubCategorySpinner.getItemAtPosition(0).toString())?"":partsSubCategorySpinner.getSelectedItem().toString();
+            String condition = partsConditionSpinner.getSelectedItem().toString().equals(partsConditionSpinner.getItemAtPosition(0).toString())?"":partsConditionSpinner.getSelectedItem().toString();
+            String negotiable,filter_location;
             if(partsNegotiable.isChecked())
             {negotiable = "true";}
             else {negotiable = "false";}

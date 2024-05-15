@@ -14,12 +14,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Model.PartModel;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,15 +182,17 @@ public class PartController {
                                  String condition, String negotiable, String nearest_location, String minPrice, String maxPrice, PartResponseListener listener) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, IP + "filter_parts.php", null,
-                new Response.Listener<JSONArray>() {
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, IP+"filter_parts.php",
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(String response) {
                         List<PartModel> parts = new ArrayList<>();
                         ArrayList<String> image_path = new ArrayList<>();
+
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
+                            JSONArray jsonarray = new JSONArray(response);
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonObject = jsonarray.getJSONObject(i);
                                 PartModel part = new PartModel();
                                 part.setId(jsonObject.getInt("id"));
                                 part.setName(jsonObject.getString("name"));
@@ -203,7 +207,7 @@ public class PartController {
                                 part.setNegotiable(jsonObject.getString("negotiable").equals("true"));
                                 part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
                                 parts.add(part);
-                                image_path.add(jsonObject.getString("image_path"));
+                                image_path.add(jsonObject.getString("first_image"));
                             }
                             listener.onSuccess(parts, image_path);
                         } catch (JSONException e) {

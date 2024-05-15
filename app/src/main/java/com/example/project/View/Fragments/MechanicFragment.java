@@ -33,6 +33,7 @@ public class MechanicFragment extends BaseFragment {
     public String filtered="false";
     MechanicController controller;
     private ListView mechanicsListView;
+    MechanicAdapter adapter;
 
     public MechanicFragment() {
     }
@@ -61,7 +62,7 @@ public class MechanicFragment extends BaseFragment {
         controller.getAllMechanicsData(requireContext(),String.valueOf(UserData.getId()), filtered ,new MechanicController.AllMechanicDataListener() {
             @Override
             public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
-                MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);
+                adapter = new MechanicAdapter(requireContext(),all_mechanics);
                 mechanicsListView.setAdapter(adapter);
             }
 
@@ -94,7 +95,7 @@ public class MechanicFragment extends BaseFragment {
                     controller.getAllMechanicsData(requireContext(),String.valueOf(UserData.getId()), filtered, new MechanicController.AllMechanicDataListener() {
                         @Override
                         public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
-                            MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);
+                            adapter = new MechanicAdapter(requireContext(),all_mechanics);
                             mechanicsListView.setAdapter(adapter);
                         }
 
@@ -111,7 +112,7 @@ public class MechanicFragment extends BaseFragment {
                     controller.getAllMechanicsData(requireContext(),  String.valueOf(UserData.getId()),filtered, new MechanicController.AllMechanicDataListener() {
                         @Override
                         public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
-                            MechanicAdapter adapter = new MechanicAdapter(requireContext(),all_mechanics);
+                            adapter = new MechanicAdapter(requireContext(),all_mechanics);
                             mechanicsListView.setAdapter(adapter);
                         }
 

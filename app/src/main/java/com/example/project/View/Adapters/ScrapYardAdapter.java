@@ -1,5 +1,8 @@
 package com.example.project.View.Adapters;
 
+import static com.example.project.Controller.Configuration.USER_IMAGES_DIR;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +22,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Controller.ScrapyardController;
+import com.example.project.Controller.UserData;
+import com.example.project.Model.ScrapyardModel;
 import com.example.project.R;
 import com.example.project.View.Activities.MapsLocationActivity;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -26,11 +35,12 @@ import com.google.android.material.imageview.ShapeableImageView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Locale;
 
-public class ScarpYardAdapter extends BaseAdapter {
+public class ScrapYardAdapter extends BaseAdapter {
 
-    JSONArray data;
+    List<ScrapyardModel> data;
     Context context;
     double latitude = 33;
     double longitude = 35;
@@ -39,7 +49,7 @@ public class ScarpYardAdapter extends BaseAdapter {
     private AlertDialog ratingDialog;
     LayoutInflater inflater = null;
 
-    public ScarpYardAdapter(Context context, JSONArray data) {
+    public ScrapYardAdapter(Context context, List<ScrapyardModel> data) {
         this.context = context;
         this.data = data;
         updateData();
@@ -65,7 +75,7 @@ public class ScarpYardAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.length();
+        return data.size();
     }
 
     @Override
@@ -78,6 +88,7 @@ public class ScarpYardAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Holder holder = new Holder();
@@ -89,20 +100,31 @@ public class ScarpYardAdapter extends BaseAdapter {
         holder.callScrapYardButton = rowView.findViewById(R.id.callScrapYardButton);
         holder.locationScrapYardButton = rowView.findViewById(R.id.locationScrapYardButton);
         holder.rateScrapYardButton = rowView.findViewById(R.id.rateScrapYardButton);
-        JSONObject obj = data.optJSONObject(position);
+        ScrapyardModel obj = data.get(position);
+
+        Glide.with(context).load(USER_IMAGES_DIR + obj.getIcon())
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.profile_def_icon)
+                .into(holder.scrapYardImageView);
+        holder.txtScrapYardName.setText(obj.getName());
+        holder.txtScrapYardSpecialization.setText(obj.getSpecialization());
+        holder.rateScrapYardButton.setText(obj.getRating() +"/5");
+        currentRating = obj.getRating();
+
         holder.locationScrapYardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, MapsLocationActivity.class);
-                i.putExtra("latitude", latitude);
-                i.putExtra("longitude", longitude);
+                i.putExtra("latitude", obj.getLatitude());
+                i.putExtra("longitude", obj.getLongitude());
                 context.startActivity(i);
             }
         });
         holder.callScrapYardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri number = Uri.parse("tel:" + phoneNumber);
+                Uri number = Uri.parse("tel:" + obj.getPhone());
                 Intent i = new Intent(Intent.ACTION_DIAL, number);
                 context.startActivity(i);
             }
@@ -121,9 +143,21 @@ public class ScarpYardAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         currentRating = ratingBar.getRating();
-                        holder.rateScrapYardButton.setText(currentRating + "");
-                        Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
-                        dismissDialog();
+                        ScrapyardController controller = new ScrapyardController();
+                        controller.submitRating(context, currentRating, UserData.getId(), obj.getScrapyard_id(), new ScrapyardController.ScrapyardRateListener() {
+                            @Override
+                            public void onrateScrapyardDataReceived(Float rate) {
+                                holder.rateScrapYardButton.setText(rate + "/5");
+                                Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
+                                dismissDialog();
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+
+                            }
+                        });
+
                     }
                 });
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +171,7 @@ public class ScarpYardAdapter extends BaseAdapter {
                 ratingDialog.show();
             }
         });
-        return null;
+        return rowView;
     }
 
     private void dismissDialog() {

@@ -2,6 +2,7 @@ package com.example.project.View.Adapters;
 
 import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class PartsAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Holder holder = new Holder();
@@ -83,6 +85,7 @@ public class PartsAdapter extends BaseAdapter {
         holder.txtPartName.setText(part.getName());
         if(part.isNegotiable()){
         holder.txtNegotiable.setText(R.string.negotiable);}
+        else{holder.txtNegotiable.setText("");}
 
         Glide.with(context).load(Parts_IMAGES_DIR + image_path.get(position))
                 .skipMemoryCache(true)
