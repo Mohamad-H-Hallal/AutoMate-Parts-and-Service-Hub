@@ -44,9 +44,6 @@ public class MechanicAdapter extends BaseAdapter {
 
     List<MechanicModel> data;
     Context context;
-    double latitude = 33;
-    double longitude = 35;
-    int phoneNumber = 70707070;
     private float currentRating = 0;
     private AlertDialog ratingDialog;
     LayoutInflater inflater = null;
@@ -105,7 +102,7 @@ public class MechanicAdapter extends BaseAdapter {
         Glide.with(context).load(USER_IMAGES_DIR + mechanic.getIcon())
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .error(R.drawable.gear_def_icon)
+                .error(R.drawable.profile_def_icon)
                 .into(holder.mechanicImageView);
         holder.txtMechanicName.setText(mechanic.getName());
         holder.txtMechanicSpecialization.setText(mechanic.getSpecialization());
@@ -116,15 +113,15 @@ public class MechanicAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, MapsLocationActivity.class);
-                i.putExtra("latitude",latitude);
-                i.putExtra("longitude",longitude);
+                i.putExtra("latitude",mechanic.getLatitude());
+                i.putExtra("longitude",mechanic.getLongitude());
                 context.startActivity(i);
             }
         });
         holder.callMechanicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri number = Uri.parse("tel:"+phoneNumber);
+                Uri number = Uri.parse("tel:"+mechanic.getPhone());
                 Intent i = new Intent(Intent.ACTION_DIAL,number);
                 context.startActivity(i);
             }
