@@ -82,7 +82,8 @@
                 android:layout_width="49dp"
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/ic_call"
+                android:paddingEnd="13dp"
+                android:drawableEnd="@drawable/ic_call"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtMechanicName"
                 app:layout_constraintEnd_toStartOf="@id/locationMechanicButton"/>
@@ -105,6 +106,8 @@
                 style="@style/circleButton"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 android:drawableStart="@drawable/star_rate_icon"
                 android:text="5/5"
                 app:layout_constraintBottom_toBottomOf="@id/mechanicImageView"

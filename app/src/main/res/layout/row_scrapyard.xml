@@ -82,7 +82,8 @@
                 android:layout_width="49dp"
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/ic_call"
+                android:paddingEnd="13dp"
+                android:drawableEnd="@drawable/ic_call"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtScrapYardName"
                 app:layout_constraintEnd_toStartOf="@id/locationScrapYardButton"/>
@@ -107,6 +108,8 @@
                 android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/star_rate_icon"
                 android:text="5/5"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/scrapYardImageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txtScrapYardSpecialization"
