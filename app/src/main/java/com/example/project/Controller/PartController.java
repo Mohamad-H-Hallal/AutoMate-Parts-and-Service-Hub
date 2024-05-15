@@ -26,7 +26,11 @@ import java.util.Map;
 
 public class PartController {
 
-    public ArrayList<String> imagespath(Context context, int part_id) {
+    public interface ImagePathListener {
+        void onImagePathReceived(ArrayList<String> imageUrls);
+    }
+
+    public void getImagesPath(Context context, int part_id, final ImagePathListener listener) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         final ArrayList<String> imageUrls = new ArrayList<>();
         String url = IP + "/get_part_images.php?partId=" + part_id;
@@ -40,6 +44,8 @@ public class PartController {
                                 String imageUrl = response.getString(i);
                                 imageUrls.add(imageUrl);
                             }
+                            // Notify the listener with the image URLs
+                            listener.onImagePathReceived(imageUrls);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -53,9 +59,8 @@ public class PartController {
                 });
 
         requestQueue.add(jsonArrayRequest);
-
-        return imageUrls;
     }
+
 
     public void fetchParts(Context context, final PartFetchListener listener) {
 
@@ -292,6 +297,49 @@ public class PartController {
         void onError(String error);
     }
 
+    public void deletePart(Context context, int partId, final PartDeleteListener listener) {
+        String url = IP + "delete_part.php";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            if (status.equals("success")) {
+                                listener.onDeleteSuccess(message);
+                            } else {
+                                listener.onDeleteError(message);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            listener.onDeleteError("Error: " + e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onDeleteError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("part_id", String.valueOf(partId));
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface PartDeleteListener {
+        void onDeleteSuccess(String message);
+        void onDeleteError(String error);
+    }
 
 }
 

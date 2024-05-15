@@ -1,6 +1,5 @@
 package com.example.project.View.Activities;
 
-import static com.example.project.Controller.Configuration.IP;
 import static com.example.project.Controller.GetImagePath.getRealPath;
 
 import android.app.AlertDialog;
@@ -8,7 +7,6 @@ import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -43,20 +41,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.project.Controller.PartController;
 import com.example.project.Controller.TwoDecimalPlacesInputFilter;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.R;
 import com.example.project.View.Adapters.ImageAddAdapter;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -90,7 +80,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     ArrayList<Uri> uriImages;
     private AlertDialog Dialog;
     private AppCompatButton addPartButton;
-    private Spinner make, model, year, category, subcategories, condition;
+    private Spinner make, model, year, category, subcategory, condition;
     private TextInputLayout textInputAddPartName, textInputAddPartPrice, textInputAddPartDescription;
     private EditText addPartName, addPartPrice, addPartDescription;
     private CheckBox addPartNegotiable;
@@ -109,7 +99,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         model = findViewById(R.id.addPartModelSpinner);
         year = findViewById(R.id.addPartYearSpinner);
         category = findViewById(R.id.addPartCategorySpinner);
-        subcategories = findViewById(R.id.addPartSubCategorySpinner);
+        subcategory = findViewById(R.id.addPartSubCategorySpinner);
         condition = findViewById(R.id.addPartConditionSpinner);
         textInputAddPartName = findViewById(R.id.textInputAddPartName);
         textInputAddPartPrice = findViewById(R.id.textInputAddPartPrice);
@@ -156,7 +146,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
 
                 String subcategoriesArray = englishContext.getResources().getStringArray(R.array.subcategories_choices)[category.getSelectedItemPosition()];
                 String[] subcategoryChoices = subcategoriesArray.split(";");
-                String subcategoryChoice = subcategoryChoices[subcategories.getSelectedItemPosition()];
+                String subcategoryChoice = subcategoryChoices[subcategory.getSelectedItemPosition()];
 
                 String modelArray = englishContext.getResources().getStringArray(R.array.model_choices)[make.getSelectedItemPosition()];
                 String[] modelChoices = modelArray.split(";");
@@ -167,7 +157,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                 String price = addPartPrice.getText().toString();
                 String description = addPartDescription.getText().toString();
 
-                if (makeChoice.equals(make.getItemAtPosition(0).toString()) || modelChoice.equals(model.getItemAtPosition(0).toString()) || yearChoice.equals(year.getItemAtPosition(0).toString()) || categoryChoice.equals(category.getItemAtPosition(0).toString()) || subcategoryChoice.equals(subcategories.getItemAtPosition(0).toString()) || conditionChoice.equals(condition.getItemAtPosition(0).toString()) || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
+                if (makeChoice.equals(make.getItemAtPosition(0).toString()) || modelChoice.equals(model.getItemAtPosition(0).toString()) || yearChoice.equals(year.getItemAtPosition(0).toString()) || categoryChoice.equals(category.getItemAtPosition(0).toString()) || subcategoryChoice.equals(subcategory.getItemAtPosition(0).toString()) || conditionChoice.equals(condition.getItemAtPosition(0).toString()) || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
                     Toast.makeText(AddPartsActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     if (!uriImages.isEmpty()) {
@@ -263,22 +253,24 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             }
         });
 
-        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedCategory = (String) parent.getItemAtPosition(position);
+        Intent intent = getIntent();
+        if (intent != null) {
+            String sendCategory = intent.getStringExtra("category");
+            String sendSubcategory = intent.getStringExtra("subcategory");
+
+            if (sendCategory != null) {
+                int categoryPosition = categoryAdapter.getPosition(sendCategory);
+                category.setSelection(categoryPosition);
+                String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
                 List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-
-                // Populate the subcategorySpinner with subcategories for the selected category
-                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, subcategoriesList);
-                subcategories.setAdapter(subcategoryAdapter);
+                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
+                subcategory.setAdapter(subcategoryAdapter);
+                if (sendSubcategory != null) {
+                    int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+                    subcategory.setSelection(subcategoryPosition);
+                }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case where nothing is selected
-            }
-        });
+        }
     }
 
     private void restartApp() {
@@ -371,7 +363,8 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

@@ -4,19 +4,28 @@ import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.project.Controller.PartController;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
 import com.example.project.View.Activities.EditPartActivity;
 import com.example.project.View.Activities.PartDetailsActivity;
+import com.example.project.View.Activities.SettingActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONArray;
@@ -24,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ManagePartsAdapter extends BaseAdapter {
 
@@ -97,12 +107,55 @@ public class ManagePartsAdapter extends BaseAdapter {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PartDetailsActivity.class);
+                Intent i = new Intent(context, EditPartActivity.class);
                 i.putExtra("part_id",part.getId());
                 context.startActivity(i);
             }
         });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int partId = part.getId();
+                PartController partController = new PartController();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View DialogView = LayoutInflater.from(context).inflate(R.layout.delete_dialog, null);
+                final AppCompatButton yesButton = DialogView.findViewById(R.id.del_yes_button);
+                final AppCompatButton noButton = DialogView.findViewById(R.id.del_no_button);
+                builder.setView(DialogView);
+                final AlertDialog Dialog = builder.create();
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        partController.deletePart(context, partId, new PartController.PartDeleteListener() {
+                            @Override
+                            public void onDeleteSuccess(String message) {
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                data.remove(position);
+                                notifyDataSetChanged();
+                            }
 
+                            @Override
+                            public void onDeleteError(String error) {
+                                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog.show();
+            }
+        });
             return rowView;
     }
 }

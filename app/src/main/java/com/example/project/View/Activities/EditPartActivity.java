@@ -79,14 +79,12 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     private static final int GALLERY_REQUEST_CODE = 110;
     private static final int CAMERA_REQUEST_CODE = 120;
     private static final int MAP_REQUEST_CODE = 130;
-    PartController part_controller ;
+    PartController part_controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_part);
-        Intent i = getIntent();
-        String part = i.getStringExtra("id");
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         horizontalScrollView = findViewById(R.id.e_horizontalScrollView);
         miniMapView = findViewById(R.id.e_miniMapView);
@@ -96,7 +94,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         add = findViewById(R.id.e_add_image);
         editpartdefault = findViewById(R.id.editpartdefault);
         part_controller = new PartController();
-        uriImage=new ArrayList<Uri>();
+        uriImage = new ArrayList<Uri>();
+        imageListfromdb = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -106,10 +105,18 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             back.setImageResource(R.drawable.ic_back_ar);
         }
 
-//        imageListfromdb = part_controller.imagespath(this,lid lal part);
+        Intent i = getIntent();
+        String part_id = i.getStringExtra("part_id");
 
-        imageListfromuser=new ArrayList<>();
-        adapter =new ImageEditAdapter(this,imageListfromdb,imageListfromuser,this);
+        part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
+            @Override
+            public void onImagePathReceived(ArrayList<String> imageUrls) {
+                imageListfromdb = imageUrls;
+            }
+        });
+
+        imageListfromuser = new ArrayList<>();
+        adapter = new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this);
         horizontalScrollView.setAdapter(adapter);
 
         miniMapView.onCreate(savedInstanceState);
@@ -124,7 +131,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
 
 
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,9 +141,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MapsLocationActivity.class);
-                i.putExtra("latitude",33);
-                i.putExtra("longitude",35);
+                Intent i = new Intent(getApplicationContext(), MapsLocationActivity.class);
+                i.putExtra("latitude", 33);
+                i.putExtra("longitude", 35);
                 startActivityForResult(i, MAP_REQUEST_CODE);
             }
         });
@@ -185,9 +191,10 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
         } else {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
-        startActivityForResult(chooser, CAMERA_REQUEST_CODE);}
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
+            startActivityForResult(chooser, CAMERA_REQUEST_CODE);
+        }
     }
 
     private void openGallery() {
@@ -195,10 +202,11 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
         } else {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);}
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            startActivityForResult(intent, GALLERY_REQUEST_CODE);
+        }
     }
 
     @Override
@@ -228,7 +236,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     public void addImage(String imageRes) {
         imageListfromuser.add(imageRes);
         adapter.notifyDataSetChanged();
-        if(!imageListfromuser.isEmpty() || !imageListfromdb.isEmpty()) {
+        if (!imageListfromuser.isEmpty() || !imageListfromdb.isEmpty()) {
             editpartdefault.setVisibility(View.GONE);
         }
     }
@@ -263,11 +271,11 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     }
 
 
-
     @Override
     public void onImageRemoved(int position) {
         deleteImage(position);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -302,7 +310,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                             } else {
                                 Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show();
                             }
-                        }else {
+                        } else {
                             Toast.makeText(this, "Failed to get image from camera", Toast.LENGTH_SHORT).show();
                         }
                     } else {
@@ -322,9 +330,10 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         }
     }
-    private void uploadImages(ArrayList<Uri> imagesuri){
+
+    private void uploadImages(ArrayList<Uri> imagesuri) {
         for (int i = 0; i < imagesuri.size(); i++) {
-            String filePath=null;
+            String filePath = null;
 
             if (Objects.equals(imagesuri.get(i).getScheme(), "content")) {
                 filePath = getRealPath(this, imagesuri.get(i));
@@ -347,7 +356,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 @Override
                 public void onFailed(String error) {
                 }
-            });}
+            });
+        }
     }
 
     private File saveImageToFile(Bitmap imageBitmap) {
@@ -380,6 +390,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
         return mediaFile;
     }
+
     // Remember to manage the lifecycle of the MapView
     @Override
     protected void onResume() {

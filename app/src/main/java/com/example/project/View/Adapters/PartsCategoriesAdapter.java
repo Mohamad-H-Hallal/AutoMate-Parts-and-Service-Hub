@@ -56,23 +56,26 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String childText = (String) getChild(groupPosition, childPosition);
+        final String category = (String) getGroup(groupPosition);
+        final String subcategory = (String) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.row_subcategories, null);
         }
         TextView txtListChild = convertView.findViewById(R.id.subcategories_name);
-        txtListChild.setText(childText);
+        txtListChild.setText(subcategory);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (viewer == 0) {
                     Intent i = new Intent(context, ManagePartsActivity.class);
-                    i.putExtra("subcategory", childText);
+                    i.putExtra("category", category);
+                    i.putExtra("subcategory", subcategory);
                     context.startActivity(i);
                 } else {
                     Intent i = new Intent(context, ViewPartsActivity.class);
-                    i.putExtra("subcategory", childText);
+                    i.putExtra("category", category);
+                    i.putExtra("subcategory", subcategory);
                     context.startActivity(i);
                 }
             }
