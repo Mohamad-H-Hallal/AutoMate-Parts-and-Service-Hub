@@ -100,25 +100,50 @@ public class SettingActivity extends BaseActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 if (language.equals("English") || language.equals("الإنجليزية")) {
                     editor.putString("selected_language", "en");
-
                     Locale locale = new Locale("en");
                     Locale.setDefault(locale);
                     Configuration config = new Configuration();
                     config.locale = locale;
                     SettingActivity.this.getResources().updateConfiguration(config, SettingActivity.this.getResources().getDisplayMetrics());
+                    editor.apply();
+                    restartApp();
                 } else if (language.equals("Arabic") || language.equals("العربية")) {
-                    editor.putString("selected_language", "ar");
-
-                    Locale locale = new Locale("ar");
-                    Locale.setDefault(locale);
-                    Configuration config = new Configuration();
-                    config.locale = locale;
-                    SettingActivity.this.getResources().updateConfiguration(config, SettingActivity.this.getResources().getDisplayMetrics());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                    View DialogView = LayoutInflater.from(SettingActivity.this).inflate(R.layout.arabic_dialog, null);
+                    final AppCompatButton yesButton = DialogView.findViewById(R.id.ch_yes_button);
+                    final AppCompatButton noButton = DialogView.findViewById(R.id.ch_no_button);
+                    builder.setView(DialogView);
+                    final AlertDialog Dialog = builder.create();
+                    yesButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editor.putString("selected_language", "ar");
+                            Locale locale = new Locale("ar");
+                            Locale.setDefault(locale);
+                            Configuration config = new Configuration();
+                            config.locale = locale;
+                            SettingActivity.this.getResources().updateConfiguration(config, SettingActivity.this.getResources().getDisplayMetrics());
+                            if (Dialog != null && Dialog.isShowing()) {
+                                editor.apply();
+                                restartApp();
+                                Dialog.dismiss();
+                            }
+                        }
+                    });
+                    noButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (Dialog != null && Dialog.isShowing()) {
+                                Dialog.dismiss();
+                            }
+                        }
+                    });
+                    Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    Dialog.show();
                 }
-                editor.apply();
-                restartApp();
             }
         });
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

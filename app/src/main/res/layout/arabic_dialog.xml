@@ -11,22 +11,16 @@
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/loginViewsMargin"
-            android:src="@drawable/delete_icon" />
+        android:orientation="horizontal"
+        android:gravity="right">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/loginViewsMargin"
-            android:layout_marginEnd="@dimen/loginViewsMargin"
-            android:text="@string/delete_image"
+            android:text="تغيير اللغة!"
+            android:layout_marginRight="@dimen/loginViewsMargin"
+            android:drawableRight="@drawable/language"
             android:textColor="@color/darkTextColor"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -40,7 +34,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/are_you_sure_you_want_to_delete"/>
+        android:text="خاصية اللغة العربية لا تزال قيد التطوير. قد ترى بعض القيم باللغة الإنجليزية. هل أنت متأكد أنك تريد ضبط اللغة على اللغة العربية؟"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,8 +46,8 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/del_yes_button"
-            style="@style/loginButton"
+            android:id="@+id/ch_no_button"
+            style="@style/reverseLoginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -62,11 +56,11 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:elevation="4dp"
-            android:text="@string/yes" />
+            android:text="كلا" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/del_no_button"
-            style="@style/reverseLoginButton"
+            android:id="@+id/ch_yes_button"
+            style="@style/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -75,7 +69,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:elevation="4dp"
-            android:text="@string/no" />
+            android:text="نعم" />
 
     </LinearLayout>
 
