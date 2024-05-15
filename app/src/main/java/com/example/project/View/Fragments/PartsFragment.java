@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.project.Controller.PartController;
+import com.example.project.Controller.TwoDecimalPlacesInputFilter;
 import com.example.project.Controller.UserData;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
@@ -76,6 +78,9 @@ public class PartsFragment extends BaseFragment {
         partsLocation = view.findViewById(R.id.partsLocation);
         partsPriceFromEditText = view.findViewById(R.id.partsPriceFromEditText);
         partsPriceToEditText = view.findViewById(R.id.partsPriceToEditText);
+        TwoDecimalPlacesInputFilter filter = new TwoDecimalPlacesInputFilter();
+        partsPriceFromEditText.setFilters(new InputFilter[]{filter});
+        partsPriceToEditText.setFilters(new InputFilter[]{filter});
         partsListView = view.findViewById(R.id.partsListView);
         partsFilterSubmit = view.findViewById(R.id.partsFilterSubmit);
 

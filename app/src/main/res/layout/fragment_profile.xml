@@ -79,6 +79,7 @@
 
                     <EditText
                         android:id="@+id/name"
+                        android:maxLines="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -207,9 +208,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="your phone number"
+                        android:maxLines="1"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
+                        android:inputType="number"
                         app:layout_constraintBaseline_toBaselineOf="@+id/phone"
                         app:layout_constraintStart_toEndOf="@+id/phone" />
 
@@ -286,6 +289,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="0"
+                        android:maxLines="1"
+                        android:inputType="number"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:visibility="visible"
