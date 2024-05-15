@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ public class ManagePartsActivity extends BaseActivity {
     private ImageButton backButton;
     private FloatingActionButton fab;
     private ListView parts_list;
+    String subcategory,category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,8 @@ public class ManagePartsActivity extends BaseActivity {
         parts_list = findViewById(R.id.parts_list);
 
         Intent intent = getIntent();
-        String subcategory = intent.getStringExtra("subcategory");
+        subcategory = intent.getStringExtra("subcategory");
+        category = intent.getStringExtra("category");
 
         PartController partCont = new PartController();
         partCont.manageParts(this, subcategory, new PartController.PartManageListener() {
@@ -51,7 +54,7 @@ public class ManagePartsActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(ManagePartsActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,7 +76,10 @@ public class ManagePartsActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ManagePartsActivity.this, AddPartsActivity.class));
+                Intent i = new Intent(ManagePartsActivity.this, AddPartsActivity.class);
+                i.putExtra("subcategory",subcategory);
+                i.putExtra("category",category);
+                startActivity(i);
             }
         });
     }
