@@ -202,13 +202,15 @@ public class ProfileFragment extends BaseFragment {
                     yearofxptext.setVisibility(View.VISIBLE);
                     yearofxptext.setText(String.valueOf(user.getYear_of_experience()));
                     biographytext.setVisibility(View.VISIBLE);
-                    if (!user.getBiography().equals("NULL")) {
+                    if (!user.getBiography().equals("null")) {
                         biographytext.setText(user.getBiography());
+                    }else{
+                        biographytext.setText(getResources().getString(R.string.def_bio));
                     }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
-                    subscriptiontext.setText(user.getSubscription());
+                    subscriptiontext.setText(user.getSubscription()+" until "+user.getEnd_date());
                     manageparts.setVisibility(View.GONE);
                     pay.setVisibility(View.VISIBLE);
                     p_rating_bar.setVisibility(View.VISIBLE);
@@ -244,13 +246,16 @@ public class ProfileFragment extends BaseFragment {
                     yearofxp.setVisibility(View.GONE);
                     yearofxptext.setVisibility(View.GONE);
                     biographytext.setVisibility(View.VISIBLE);
-                    if (!user.getBiography().equals("NULL")) {
+                    if (!user.getBiography().equals("null")) {
                         biographytext.setText(user.getBiography());
                     }
+                    else{
+                        biographytext.setText(getResources().getString(R.string.def_bio));
+                        }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
-                    subscriptiontext.setText(user.getSubscription());
+                    subscriptiontext.setText(user.getSubscription()+" until "+user.getEnd_date());
                     manageparts.setVisibility(View.VISIBLE);
                     pay.setVisibility(View.VISIBLE);
                     p_rating_bar.setVisibility(View.VISIBLE);
@@ -427,6 +432,8 @@ public class ProfileFragment extends BaseFragment {
         name.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         phonetext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         specializationtext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        biographytext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        yearofxptext.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
 
@@ -441,6 +448,8 @@ public class ProfileFragment extends BaseFragment {
         name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         phonetext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         specializationtext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        biographytext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        yearofxptext.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         Toast.makeText(getContext(), "Edit Mode", Toast.LENGTH_SHORT).show();
     }
 

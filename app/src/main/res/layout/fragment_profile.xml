@@ -155,12 +155,13 @@
 
                     <TextView
                         android:id="@+id/emailtext"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="test@example.com"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/gl2"
                         app:layout_constraintBaseline_toBaselineOf="@+id/email"
                         app:layout_constraintStart_toEndOf="@+id/email" />
 
@@ -213,6 +214,7 @@
                         android:textSize="16sp"
                         android:visibility="visible"
                         android:inputType="number"
+                        android:ellipsize="end"
                         app:layout_constraintBaseline_toBaselineOf="@+id/phone"
                         app:layout_constraintStart_toEndOf="@+id/phone" />
 
@@ -232,13 +234,16 @@
 
                     <EditText
                         android:id="@+id/specializationtext"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="text"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:visibility="visible"
+                        app:layout_constraintEnd_toStartOf="@id/gl2"
                         app:layout_constraintBaseline_toBaselineOf="@id/specialization"
                         app:layout_constraintStart_toEndOf="@id/specialization" />
 
@@ -290,6 +295,7 @@
                         android:layout_marginStart="8dp"
                         android:text="0"
                         android:maxLines="1"
+                        android:ellipsize="end"
                         android:inputType="number"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"

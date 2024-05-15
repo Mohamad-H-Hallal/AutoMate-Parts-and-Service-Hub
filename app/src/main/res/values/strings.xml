@@ -113,6 +113,7 @@
     <string name="error_occurred">File transfer failed. Please check the connection and try again.</string>
     <string name="delete_image">Delete Image!</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="def_bio">No Biography.</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
