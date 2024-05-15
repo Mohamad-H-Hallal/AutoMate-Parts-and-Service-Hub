@@ -19,7 +19,6 @@ import java.util.Map;
 
 public class PartsCategoriesActivity extends BaseActivity {
     private ExpandableListView parts_list;
-    private ExpandableListAdapter PartsCategoriesAdapter;
     private ImageButton back;
 
     @Override
@@ -50,7 +49,7 @@ public class PartsCategoriesActivity extends BaseActivity {
         Intent i = getIntent();
         int v = i.getIntExtra("viewer", 0);
 
-        com.example.project.View.Adapters.PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap,v);
+        PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap,v);
         parts_list.setAdapter(adapter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -57,11 +57,11 @@ public class PartController {
         return imageUrls;
     }
 
-    public void fetchParts(Context context,final PartFetchListener listener) {
+    public void fetchParts(Context context, final PartFetchListener listener) {
 
-        RequestQueue mRequestQueue=Volley.newRequestQueue(context);
+        RequestQueue mRequestQueue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, IP+"get_all_parts.php", null,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_all_parts.php", null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -92,7 +92,7 @@ public class PartController {
                                 }
                             }
 
-                            listener.onPartsFetched(parts,image_path);
+                            listener.onPartsFetched(parts, image_path);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,7 +110,8 @@ public class PartController {
     }
 
     public interface PartFetchListener {
-        void onPartsFetched(List<PartModel> parts,ArrayList<String> image_path);
+        void onPartsFetched(List<PartModel> parts, ArrayList<String> image_path);
+
         void onError(String error);
     }
 
@@ -165,19 +166,21 @@ public class PartController {
 
     public interface PartCallback {
         void onResponse(String status, String message);
+
         void onError(String error);
     }
 
     public interface PartResponseListener {
-        void onSuccess(List<PartModel> parts,ArrayList<String> image_path);
+        void onSuccess(List<PartModel> parts, ArrayList<String> image_path);
+
         void onError(String message);
     }
 
-    public void getFilteredParts(Context context,int user_id,String make, String model, String year, String category, String subcategory,
-                                 String condition,String negotiable,String nearest_location, String minPrice, String maxPrice, PartResponseListener listener) {
+    public void getFilteredParts(Context context, int user_id, String make, String model, String year, String category, String subcategory,
+                                 String condition, String negotiable, String nearest_location, String minPrice, String maxPrice, PartResponseListener listener) {
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, IP+"filter_parts.php", null,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, IP + "filter_parts.php", null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -202,7 +205,7 @@ public class PartController {
                                 parts.add(part);
                                 image_path.add(jsonObject.getString("image_path"));
                             }
-                            listener.onSuccess(parts,image_path);
+                            listener.onSuccess(parts, image_path);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             listener.onError("Error parsing JSON");
@@ -212,7 +215,7 @@ public class PartController {
             @Override
             public void onErrorResponse(VolleyError error) {
                 listener.onError("Error fetching data: " + error.getMessage());
-                Log.d("test",error.toString());
+                Log.d("test", error.toString());
             }
         }) {
             // Override getParams() to pass filter criteria to PHP script
@@ -225,7 +228,7 @@ public class PartController {
                 params.put("category", category);
                 params.put("subcategory", subcategory);
                 params.put("condition", condition);
-                params.put("negotiable",negotiable);
+                params.put("negotiable", negotiable);
                 params.put("min_price", minPrice);
                 params.put("max_price", maxPrice);
                 params.put("user_id", String.valueOf(user_id));
@@ -233,9 +236,11 @@ public class PartController {
                 return params;
             }
         };
-
         queue.add(jsonArrayRequest);
     }
+
+
+
 }
 
 
