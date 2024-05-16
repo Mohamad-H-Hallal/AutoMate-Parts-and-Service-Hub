@@ -115,6 +115,7 @@
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
     <string name="def_bio">No Biography.</string>
     <string name="view_location">View Location</string>
+    <string name="active_until">Active until</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

@@ -116,6 +116,7 @@
     <string name="are_you_sure_you_want_to_delete">هل أنت متأكد أنك تريد الحذف؟</string>
     <string name="def_bio">لا سيرة ذاتية.</string>
     <string name="view_location">عرض الموقع</string>
+    <string name="active_until">نشط حتى</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
