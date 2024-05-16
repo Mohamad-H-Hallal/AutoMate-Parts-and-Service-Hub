@@ -35,8 +35,8 @@ public class PartController {
 
     public void getImagesPath(Context context, int part_id, final ImagePathListener listener) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        final ArrayList<String> imageUrls = new ArrayList<>();
-        String url = IP + "/get_part_images.php?partId=" + part_id;
+        ArrayList<String> imageUrls = new ArrayList<>();
+        String url = IP + "get_part_images.php?partId=" + part_id;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -44,7 +44,8 @@ public class PartController {
                         Log.d("Response", "Response received: " + response.toString());
                         try {
                             for (int i = 0; i < response.length(); i++) {
-                                String imageUrl = response.getString(i);
+                                JSONObject obj = response.getJSONObject(i);
+                                String imageUrl = obj.getString("path");
                                 imageUrls.add(imageUrl);
                             }
                             listener.onImagePathReceived(imageUrls);

@@ -133,6 +133,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         scrap_controller = new UserController();
         uriImage = new ArrayList<Uri>();
         imageListfromdb = new ArrayList<>();
+        imageListfromuser = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -144,6 +145,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
         Intent i = getIntent();
         String part_id = i.getStringExtra("part_id");
+        filltheimages(part_id);
 
         scrap_controller.getScrapyardData(this, UserData.getId(), new UserController.ScrapyardDataListener() {
             @Override
@@ -159,17 +161,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
 
-        part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
-            @Override
-            public void onImagePathReceived(ArrayList<String> imageUrls) {
-                if (imageUrls != null && !imageUrls.isEmpty()) {
-                    imageListfromdb = imageUrls;
-                    Log.d("ImageList", "Images received: " + imageUrls.toString());
-                } else {
-                    Log.d("ImageList", "No images found.");
-                }
-            }
-        });
+
+
+
 
         part_controller.fetchthePart(this, Integer.parseInt(part_id), new PartController.ParttheFetchListener() {
             @SuppressLint("SetTextI18n")
@@ -189,9 +183,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
 
 
-        imageListfromuser = new ArrayList<>();
-        adapter = new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this);
-        horizontalScrollView.setAdapter(adapter);
+
+
+        Toast.makeText(EditPartActivity.this, imageListfromdb.toString(), Toast.LENGTH_SHORT).show();
 
         miniMapView.onCreate(savedInstanceState);
         miniMapView.getMapAsync(new OnMapReadyCallback() {
@@ -229,6 +223,21 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
 
+    }
+    public void filltheimages(String part_id){
+        part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
+            @Override
+            public void onImagePathReceived(ArrayList<String> imageUrls) {
+                imageListfromdb=imageUrls;
+                if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
+                    editpartdefault.setVisibility(View.VISIBLE);
+                }else{
+                    editpartdefault.setVisibility(View.GONE);
+                adapter = new ImageEditAdapter(EditPartActivity.this, imageListfromdb, imageListfromuser, EditPartActivity.this);
+                horizontalScrollView.setAdapter(adapter);}
+
+            }
+        });
     }
 //    public void fillSpinners() {
 //
