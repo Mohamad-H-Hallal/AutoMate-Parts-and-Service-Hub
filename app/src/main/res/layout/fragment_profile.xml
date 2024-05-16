@@ -175,7 +175,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/email" />
+                        app:layout_constraintTop_toBottomOf="@+id/emailtext" />
 
                     <TextView
                         android:id="@+id/locationtext"
@@ -200,7 +200,7 @@
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/location" />
+                        app:layout_constraintTop_toBottomOf="@+id/locationtext" />
 
                     <EditText
                         android:id="@+id/phonetext"
@@ -229,7 +229,7 @@
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/phone" />
+                        app:layout_constraintTop_toBottomOf="@+id/phonetext" />
 
                     <EditText
                         android:id="@+id/specializationtext"
@@ -252,14 +252,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="25dp"
                         android:text="@string/subscription"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/specialization" />
+                        app:layout_constraintTop_toBottomOf="@+id/specializationtext" />
 
                     <TextView
                         android:id="@+id/subscriptiontext"
@@ -281,14 +281,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="30dp"
                         android:text="@string/yearofxp"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/subscription" />
+                        app:layout_constraintTop_toBottomOf="@+id/subscriptiontext" />
 
                     <EditText
                         android:id="@+id/yearofxptext"
@@ -317,7 +317,7 @@
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@+id/gl"
-                        app:layout_constraintTop_toBottomOf="@+id/yearofxp" />
+                        app:layout_constraintTop_toBottomOf="@+id/yearofxptext" />
 
                     <EditText
                         android:id="@+id/biographytext"

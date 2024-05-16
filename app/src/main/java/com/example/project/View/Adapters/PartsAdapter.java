@@ -5,6 +5,8 @@ import static com.example.project.Controller.Configuration.Parts_IMAGES_DIR;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,12 +86,26 @@ public class PartsAdapter extends BaseAdapter implements Filterable {
 
         PartModel part = filteredData.get(position);
         int id = part.getId();
-        holder.txtCategory.setText(part.getCategory());
+        String[] categoryArray = part.getCategory().split("-");
+        String[] yearArray = part.getYear().split("-");
+        String[] conditionArray = part.getPart_condition().split("-");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String selectedLanguage = preferences.getString("selected_language", "");
+        if (selectedLanguage.equals("en")) {
+            holder.txtCategory.setText(categoryArray[0]);
+            holder.txtCondition.setText(conditionArray[0]);
+            holder.txtYear.setText(yearArray[0]);
+        } else if (selectedLanguage.equals("ar")) {
+            holder.txtCategory.setText(categoryArray[1]);
+            holder.txtCondition.setText(conditionArray[1]);
+            holder.txtYear.setText(yearArray[1]);
+        }
+
         holder.txtMake.setText(part.getMake());
         holder.txtModel.setText(part.getModel());
         holder.txtPrice.setText("USD " + part.getPrice());
-        holder.txtCondition.setText(part.getPart_condition());
-        holder.txtYear.setText(Integer.toString(part.getYear()));
+
         holder.txtPartName.setText(part.getName());
         if (part.isNegotiable()) {
             holder.txtNegotiable.setText(R.string.negotiable);

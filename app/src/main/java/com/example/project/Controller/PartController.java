@@ -83,7 +83,7 @@ public class PartController {
                                 part.setName(jsonObject.getString("name"));
                                 part.setMake(jsonObject.getString("make"));
                                 part.setModel(jsonObject.getString("model"));
-                                part.setYear(jsonObject.getInt("year"));
+                                part.setYear(jsonObject.getString("year"));
                                 part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
                                 part.setPart_condition(jsonObject.getString("part_condition"));
                                 part.setCategory(jsonObject.getString("category"));
@@ -123,7 +123,7 @@ public class PartController {
         void onError(String error);
     }
 
-    public static void addPart(Context context, String name, String make, String model, int year, String category, String subcategory, String description, String condition, double price, boolean negotiable, ArrayList<String> images, final PartCallback callback) {
+    public static void addPart(Context context, String name, String make, String model, String year, String category, String subcategory, String description, String condition, double price, boolean negotiable, ArrayList<String> images, final PartCallback callback) {
 
         String url = IP + "/add_part.php";
 
@@ -155,7 +155,7 @@ public class PartController {
                 params.put("name", name);
                 params.put("make", make);
                 params.put("model", model);
-                params.put("year", String.valueOf(year));
+                params.put("year", year);
                 params.put("category", category);
                 params.put("subcategory", subcategory);
                 params.put("condition", condition);
@@ -204,7 +204,7 @@ public class PartController {
                                 part.setName(jsonObject.getString("name"));
                                 part.setMake(jsonObject.getString("make"));
                                 part.setModel(jsonObject.getString("model"));
-                                part.setYear(jsonObject.getInt("year"));
+                                part.setYear(jsonObject.getString("year"));
                                 part.setCategory(jsonObject.getString("category"));
                                 part.setSubcategory(jsonObject.getString("subcategory"));
                                 part.setDescription(jsonObject.getString("description"));
@@ -266,7 +266,7 @@ public class PartController {
                                 part.setName(jsonObject.getString("name"));
                                 part.setMake(jsonObject.getString("make"));
                                 part.setModel(jsonObject.getString("model"));
-                                part.setYear(jsonObject.getInt("year"));
+                                part.setYear(jsonObject.getString("year"));
                                 part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
                                 part.setPart_condition(jsonObject.getString("part_condition"));
                                 part.setCategory(jsonObject.getString("category"));
@@ -362,7 +362,7 @@ public class PartController {
                                 part.setName(jsonObject.getString("name"));
                                 part.setMake(jsonObject.getString("make"));
                                 part.setModel(jsonObject.getString("model"));
-                                part.setYear(jsonObject.getInt("year"));
+                                part.setYear(jsonObject.getString("year"));
                                 part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
                                 part.setPart_condition(jsonObject.getString("part_condition"));
                                 part.setCategory(jsonObject.getString("category"));

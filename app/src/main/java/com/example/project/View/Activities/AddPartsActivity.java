@@ -2,6 +2,7 @@ package com.example.project.View.Activities;
 
 import static com.example.project.Controller.GetImagePath.getRealPath;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -147,17 +148,17 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context englishContext = new EnglishContextWrapper(AddPartsActivity.this);
-                String makeChoice = englishContext.getResources().getStringArray(R.array.make_choices)[make.getSelectedItemPosition()];
-                String yearChoice = englishContext.getResources().getStringArray(R.array.year_choices)[year.getSelectedItemPosition()];
-                String categoryChoice = englishContext.getResources().getStringArray(R.array.categories_choices)[category.getSelectedItemPosition()];
-                String conditionChoice = englishContext.getResources().getStringArray(R.array.condition_choices)[condition.getSelectedItemPosition()];
+//                Context englishContext = new EnglishContextWrapper(AddPartsActivity.this);
+                String makeChoice = getResources().getStringArray(R.array.make_choices)[make.getSelectedItemPosition()];
+                String yearChoice = getResources().getStringArray(R.array.year_choices_combined)[year.getSelectedItemPosition()];
+                String categoryChoice = getResources().getStringArray(R.array.categories_choices_combined)[category.getSelectedItemPosition()];
+                String conditionChoice = getResources().getStringArray(R.array.condition_choices_combined)[condition.getSelectedItemPosition()];
 
-                String subcategoriesArray = englishContext.getResources().getStringArray(R.array.subcategories_choices)[category.getSelectedItemPosition()];
+                String subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices_combined)[category.getSelectedItemPosition()];
                 String[] subcategoryChoices = subcategoriesArray.split(";");
                 String subcategoryChoice = subcategoryChoices[subcategory.getSelectedItemPosition()];
 
-                String modelArray = englishContext.getResources().getStringArray(R.array.model_choices)[make.getSelectedItemPosition()];
+                String modelArray = getResources().getStringArray(R.array.model_choices)[make.getSelectedItemPosition()];
                 String[] modelChoices = modelArray.split(";");
                 String modelChoice = modelChoices[model.getSelectedItemPosition()];
 
@@ -171,7 +172,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
                 } else {
                     if (!uriImages.isEmpty()) {
                         uploadImages(uriImages);
-                        PartController.addPart(AddPartsActivity.this, name, makeChoice, modelChoice, Integer.parseInt(yearChoice), categoryChoice, subcategoryChoice, description, conditionChoice, Double.parseDouble(price), nego, imagePaths, new PartController.PartCallback() {
+                        PartController.addPart(AddPartsActivity.this, name, makeChoice, modelChoice, yearChoice, categoryChoice, subcategoryChoice, description, conditionChoice, Double.parseDouble(price), nego, imagePaths, new PartController.PartCallback() {
                             @Override
                             public void onResponse(String status, String message) {
                                 if (status.equals("success")) {
@@ -201,19 +202,19 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
 
     }
 
-    // EnglishContextWrapper class definition
-    public static class EnglishContextWrapper extends ContextWrapper {
-        public EnglishContextWrapper(Context base) {
-            super(base);
-        }
-
-        @Override
-        public Resources getResources() {
-            Configuration configuration = new Configuration(super.getResources().getConfiguration());
-            configuration.setLocale(new Locale("en"));
-            return createConfigurationContext(configuration).getResources();
-        }
-    }
+//    // EnglishContextWrapper class definition
+//    public static class EnglishContextWrapper extends ContextWrapper {
+//        public EnglishContextWrapper(Context base) {
+//            super(base);
+//        }
+//
+//        @Override
+//        public Resources getResources() {
+//            Configuration configuration = new Configuration(super.getResources().getConfiguration());
+//            configuration.setLocale(new Locale("en"));
+//            return createConfigurationContext(configuration).getResources();
+//        }
+//    }
 
     public void fillSpinners(String sendCategory, String sendSubcategory) {
 
@@ -262,16 +263,29 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             }
         });
 
+        String[] categorySplit = sendCategory.split("-");
+        String[] subcategorySplit = sendSubcategory.split("-");
+        String sentCategory = "";
+        String sentSubcategory = "";
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AddPartsActivity.this);
+        String selectedLanguage = preferences.getString("selected_language", "");
+        if (selectedLanguage.equals("en")) {
+            sentCategory = categorySplit[0];
+            sentSubcategory = subcategorySplit[0];
+        } else if (selectedLanguage.equals("ar")) {
+            sentCategory = categorySplit[1];
+            sentSubcategory = subcategorySplit[1];
+        }
 
-        if (sendCategory != null) {
-            int categoryPosition = categoryAdapter.getPosition(sendCategory);
+        if (sentCategory != null) {
+            int categoryPosition = categoryAdapter.getPosition(sentCategory);
             category.setSelection(categoryPosition);
             String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
             List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
             ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
             subcategory.setAdapter(subcategoryAdapter);
-            if (sendSubcategory != null) {
-                int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+            if (sentSubcategory != null) {
+                int subcategoryPosition = subcategoryAdapter.getPosition(sentSubcategory);
                 subcategory.setSelection(subcategoryPosition);
             }
         }
@@ -344,9 +358,9 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     }
 
     private void captureImage() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
         } else {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             Intent chooser = Intent.createChooser(cameraIntent, "Select Image Source");
@@ -355,9 +369,9 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
     }
 
     private void openGallery() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
         } else {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");

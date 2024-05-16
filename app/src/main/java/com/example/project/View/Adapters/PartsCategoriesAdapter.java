@@ -15,6 +15,7 @@ import com.example.project.R;
 import com.example.project.View.Activities.ManagePartsActivity;
 import com.example.project.View.Activities.ViewPartsActivity;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -64,18 +65,28 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
         }
         TextView txtListChild = convertView.findViewById(R.id.subcategories_name);
         txtListChild.setText(subcategory);
+
+        String[] parentList = context.getResources().getStringArray(R.array.categories_choices_combined);
+        String[] subcategories = context.getResources().getStringArray(R.array.subcategories_choices_combined);
+        Map<String, String[]> childMap =  new HashMap<>();
+        for (int i = 1; i < parentList.length; i++) {
+            childMap.put(parentList[i], subcategories[i].split(";"));
+        }
+        final String sendCategory = (String) parentList[groupPosition+1];
+        final String sendSubcategory = (String) Objects.requireNonNull(childMap.get(sendCategory))[childPosition+1];
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (viewer == 0) {
                     Intent i = new Intent(context, ManagePartsActivity.class);
-                    i.putExtra("category", category);
-                    i.putExtra("subcategory", subcategory);
+                    i.putExtra("category", sendCategory);
+                    i.putExtra("subcategory", sendSubcategory);
                     context.startActivity(i);
                 } else {
                     Intent i = new Intent(context, ViewPartsActivity.class);
-                    i.putExtra("category", category);
-                    i.putExtra("subcategory", subcategory);
+                    i.putExtra("category", sendCategory);
+                    i.putExtra("subcategory", sendSubcategory);
                     context.startActivity(i);
                 }
             }

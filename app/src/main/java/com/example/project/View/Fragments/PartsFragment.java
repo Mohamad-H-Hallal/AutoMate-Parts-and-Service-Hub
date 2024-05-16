@@ -162,35 +162,35 @@ public class PartsFragment extends BaseFragment {
 
     }
 
-    // EnglishContextWrapper class definition
-    public static class EnglishContextWrapper extends ContextWrapper {
-        public EnglishContextWrapper(Context base) {
-            super(base);
-        }
-
-        @Override
-        public Resources getResources() {
-            Configuration configuration = new Configuration(super.getResources().getConfiguration());
-            configuration.setLocale(new Locale("en"));
-            return createConfigurationContext(configuration).getResources();
-        }
-    }
+//    // EnglishContextWrapper class definition
+//    public static class EnglishContextWrapper extends ContextWrapper {
+//        public EnglishContextWrapper(Context base) {
+//            super(base);
+//        }
+//
+//        @Override
+//        public Resources getResources() {
+//            Configuration configuration = new Configuration(super.getResources().getConfiguration());
+//            configuration.setLocale(new Locale("en"));
+//            return createConfigurationContext(configuration).getResources();
+//        }
+//    }
 
     private void applyFilter() {
-        Context englishContext = new AddPartsActivity.EnglishContextWrapper(getContext());
+//        Context englishContext = new AddPartsActivity.EnglishContextWrapper(getContext());
 
-        String subcategoriesArray = englishContext.getResources().getStringArray(R.array.subcategories_choices)[partsCategorySpinner.getSelectedItemPosition()];
+        String subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices_combined)[partsCategorySpinner.getSelectedItemPosition()];
         String[] subcategoryChoices = subcategoriesArray.split(";");
 
-        String modelArray = englishContext.getResources().getStringArray(R.array.model_choices)[partsMakeSpinner.getSelectedItemPosition()];
+        String modelArray = getResources().getStringArray(R.array.model_choices)[partsMakeSpinner.getSelectedItemPosition()];
         String[] modelChoices = modelArray.split(";");
 
-        String make = partsMakeSpinner.getSelectedItem().toString().equals(partsMakeSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.make_choices)[partsMakeSpinner.getSelectedItemPosition()];
+        String make = partsMakeSpinner.getSelectedItem().toString().equals(partsMakeSpinner.getItemAtPosition(0).toString()) ? "" : getResources().getStringArray(R.array.make_choices)[partsMakeSpinner.getSelectedItemPosition()];
         String model = partsModelSpinner.getSelectedItem().toString().equals(partsModelSpinner.getItemAtPosition(0).toString()) ? "" : modelChoices[partsModelSpinner.getSelectedItemPosition()];
-        String year = partsYearSpinner.getSelectedItem().toString().equals(partsYearSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.year_choices)[partsYearSpinner.getSelectedItemPosition()];
-        String category = partsCategorySpinner.getSelectedItem().toString().equals(partsCategorySpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.categories_choices)[partsCategorySpinner.getSelectedItemPosition()];
+        String year = partsYearSpinner.getSelectedItem().toString().equals(partsYearSpinner.getItemAtPosition(0).toString()) ? "" : getResources().getStringArray(R.array.year_choices_combined)[partsYearSpinner.getSelectedItemPosition()];
+        String category = partsCategorySpinner.getSelectedItem().toString().equals(partsCategorySpinner.getItemAtPosition(0).toString()) ? "" : getResources().getStringArray(R.array.categories_choices_combined)[partsCategorySpinner.getSelectedItemPosition()];
         String subcategory = partsSubCategorySpinner.getSelectedItem().toString().equals(partsSubCategorySpinner.getItemAtPosition(0).toString()) ? "" : subcategoryChoices[partsSubCategorySpinner.getSelectedItemPosition()];
-        String condition = partsConditionSpinner.getSelectedItem().toString().equals(partsConditionSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.condition_choices)[partsConditionSpinner.getSelectedItemPosition()];
+        String condition = partsConditionSpinner.getSelectedItem().toString().equals(partsConditionSpinner.getItemAtPosition(0).toString()) ? "" : getResources().getStringArray(R.array.condition_choices_combined)[partsConditionSpinner.getSelectedItemPosition()];
 
         String negotiable, filter_location;
         if (partsNegotiable.isChecked()) {

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class UserData {
 
-    private static SharedPreferences sharedPreferences = null;
+    private static SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
 
     public UserData(Context context) {
