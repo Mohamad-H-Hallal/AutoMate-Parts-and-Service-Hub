@@ -82,7 +82,9 @@ public class MechanicFragment extends BaseFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
+                if (adapter != null) {
+                    adapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });

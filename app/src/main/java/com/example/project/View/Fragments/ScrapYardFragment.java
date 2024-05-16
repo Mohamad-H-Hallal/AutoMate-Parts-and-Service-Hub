@@ -32,6 +32,7 @@ public class ScrapYardFragment extends BaseFragment {
     boolean isfiltered = false;
     ScrapYardAdapter adapter;
     private ListView scrapYardListView;
+
     public ScrapYardFragment() {
     }
 
@@ -58,7 +59,7 @@ public class ScrapYardFragment extends BaseFragment {
         controller.getAllScrapyardsData(requireContext(), String.valueOf(UserData.getId()), "false", new ScrapyardController.AllScrapyardDataListener() {
             @Override
             public void onAllScrapyardDataReceived(List<ScrapyardModel> all_scrapyard) {
-                adapter = new ScrapYardAdapter(requireContext(),all_scrapyard);
+                adapter = new ScrapYardAdapter(requireContext(), all_scrapyard);
                 scrapYardListView.setAdapter(adapter);
             }
 
@@ -76,7 +77,9 @@ public class ScrapYardFragment extends BaseFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
+                if (adapter != null) {
+                    adapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });
@@ -85,10 +88,10 @@ public class ScrapYardFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 isfiltered = !isfiltered;
-                if(isfiltered){
+                if (isfiltered) {
                     scrapYardFilterText.setVisibility(View.VISIBLE);
                     scrapYardFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
-                }else {
+                } else {
                     scrapYardFilterText.setVisibility(View.GONE);
                     scrapYardFilter.setBackground(null);
                 }

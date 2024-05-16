@@ -47,6 +47,7 @@ public class PartsFragment extends BaseFragment {
 
     private androidx.appcompat.widget.SearchView searchView;
     private ImageView partsFilter;
+    private PartsAdapter adapter;
     private CardView partsCardFilter;
     private Spinner partsMakeSpinner, partsModelSpinner, partsYearSpinner, partsCategorySpinner, partsSubCategorySpinner, partsConditionSpinner;
     private CheckBox partsNegotiable, partsLocation;
@@ -93,19 +94,6 @@ public class PartsFragment extends BaseFragment {
         partsFilterSubmit = view.findViewById(R.id.partsFilterSubmit);
         partsClearAll = view.findViewById(R.id.partsClearAll);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
         fill_filter();
         partsFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,16 +110,30 @@ public class PartsFragment extends BaseFragment {
 
         PartController partc = new PartController();
         partc.fetchParts(requireContext(), new PartController.PartFetchListener() {
-
             @Override
             public void onPartsFetched(List<PartModel> parts, ArrayList<String> image_path) {
-                PartsAdapter adapter = new PartsAdapter(requireContext(), parts, image_path);
+                adapter = new PartsAdapter(requireContext(), parts, image_path);
                 partsListView.setAdapter(adapter);
             }
 
             @Override
             public void onError(String error) {
                 Log.d("error", error);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (adapter != null) {
+                    adapter.getFilter().filter(newText);
+                }
+                return false;
             }
         });
 
