@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.Controller.PartController;
@@ -52,6 +53,7 @@ public class PartsFragment extends BaseFragment {
     private EditText partsPriceFromEditText, partsPriceToEditText;
     private AppCompatButton partsFilterSubmit;
     private ListView partsListView;
+    private TextView partsClearAll;
 
     public PartsFragment() {
     }
@@ -89,6 +91,7 @@ public class PartsFragment extends BaseFragment {
         partsPriceToEditText.setFilters(new InputFilter[]{filter});
         partsListView = view.findViewById(R.id.partsListView);
         partsFilterSubmit = view.findViewById(R.id.partsFilterSubmit);
+        partsClearAll = view.findViewById(R.id.partsClearAll);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -139,6 +142,21 @@ public class PartsFragment extends BaseFragment {
             }
         });
 
+        partsClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                partsMakeSpinner.setSelection(0);
+                partsModelSpinner.setSelection(0);
+                partsYearSpinner.setSelection(0);
+                partsCategorySpinner.setSelection(0);
+                partsSubCategorySpinner.setSelection(0);
+                partsConditionSpinner.setSelection(0);
+                partsPriceFromEditText.setText("");
+                partsPriceToEditText.setText("");
+                partsNegotiable.setChecked(false);
+                partsLocation.setChecked(false);
+            }
+        });
 
     }
 
