@@ -93,7 +93,7 @@ public class DiagnosticsFragment extends BaseFragment {
         String[] monthArray = getResources().getStringArray(R.array.month_choices);
         ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, monthArray);
         monthSpinner.setAdapter(monthAdapter);
-        String[] yearArray = getResources().getStringArray(R.array.year_choices);
+        String[] yearArray = getResources().getStringArray(R.array.year_choice_d);
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, yearArray);
         yearSpinner.setAdapter(yearAdapter);
         String[] hourArray = getResources().getStringArray(R.array.hour_choices);
