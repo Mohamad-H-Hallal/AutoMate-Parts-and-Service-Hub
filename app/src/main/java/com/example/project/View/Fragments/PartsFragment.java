@@ -1,5 +1,9 @@
 package com.example.project.View.Fragments;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,12 +32,14 @@ import com.example.project.Controller.TwoDecimalPlacesInputFilter;
 import com.example.project.Controller.UserData;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
+import com.example.project.View.Activities.AddPartsActivity;
 import com.example.project.View.Adapters.PartsAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PartsFragment extends BaseFragment {
@@ -136,38 +142,62 @@ public class PartsFragment extends BaseFragment {
 
     }
 
+    // EnglishContextWrapper class definition
+    public static class EnglishContextWrapper extends ContextWrapper {
+        public EnglishContextWrapper(Context base) {
+            super(base);
+        }
+
+        @Override
+        public Resources getResources() {
+            Configuration configuration = new Configuration(super.getResources().getConfiguration());
+            configuration.setLocale(new Locale("en"));
+            return createConfigurationContext(configuration).getResources();
+        }
+    }
 
     private void applyFilter() {
+        Context englishContext = new AddPartsActivity.EnglishContextWrapper(getContext());
 
-            String make = partsMakeSpinner.getSelectedItem().toString().equals(partsMakeSpinner.getItemAtPosition(0).toString())?"":partsMakeSpinner.getSelectedItem().toString();
-            String model = partsModelSpinner.getSelectedItem().toString().equals(partsModelSpinner.getItemAtPosition(0).toString())?"":partsModelSpinner.getSelectedItem().toString();
-            String year = partsYearSpinner.getSelectedItem().toString().equals(partsYearSpinner.getItemAtPosition(0).toString())?"":partsYearSpinner.getSelectedItem().toString();
-            String category = partsCategorySpinner.getSelectedItem().toString().equals(partsCategorySpinner.getItemAtPosition(0).toString())?"":partsCategorySpinner.getSelectedItem().toString();
-            String subcategory = partsSubCategorySpinner.getSelectedItem().toString().equals(partsSubCategorySpinner.getItemAtPosition(0).toString())?"":partsSubCategorySpinner.getSelectedItem().toString();
-            String condition = partsConditionSpinner.getSelectedItem().toString().equals(partsConditionSpinner.getItemAtPosition(0).toString())?"":partsConditionSpinner.getSelectedItem().toString();
-            String negotiable,filter_location;
-            if(partsNegotiable.isChecked())
-            {negotiable = "true";}
-            else {negotiable = "false";}
-            if(partsLocation.isChecked()){
-                filter_location = "true";
-            }
-            else{filter_location="false";}
-            String minPrice = partsPriceFromEditText.getText().toString();
-            String maxPrice = partsPriceToEditText.getText().toString();
+        String subcategoriesArray = englishContext.getResources().getStringArray(R.array.subcategories_choices)[partsCategorySpinner.getSelectedItemPosition()];
+        String[] subcategoryChoices = subcategoriesArray.split(";");
 
-            PartController partcontroller = new PartController();
-            partcontroller.getFilteredParts(requireContext(),UserData.getId(),make, model, year, category, subcategory, condition,negotiable,filter_location, minPrice, maxPrice, new PartController.PartResponseListener() {
+        String modelArray = englishContext.getResources().getStringArray(R.array.model_choices)[partsMakeSpinner.getSelectedItemPosition()];
+        String[] modelChoices = modelArray.split(";");
+
+        String make = partsMakeSpinner.getSelectedItem().toString().equals(partsMakeSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.make_choices)[partsMakeSpinner.getSelectedItemPosition()];
+        String model = partsModelSpinner.getSelectedItem().toString().equals(partsModelSpinner.getItemAtPosition(0).toString()) ? "" : modelChoices[partsModelSpinner.getSelectedItemPosition()];
+        String year = partsYearSpinner.getSelectedItem().toString().equals(partsYearSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.year_choices)[partsYearSpinner.getSelectedItemPosition()];
+        String category = partsCategorySpinner.getSelectedItem().toString().equals(partsCategorySpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.categories_choices)[partsCategorySpinner.getSelectedItemPosition()];
+        String subcategory = partsSubCategorySpinner.getSelectedItem().toString().equals(partsSubCategorySpinner.getItemAtPosition(0).toString()) ? "" : subcategoryChoices[partsSubCategorySpinner.getSelectedItemPosition()];
+        String condition = partsConditionSpinner.getSelectedItem().toString().equals(partsConditionSpinner.getItemAtPosition(0).toString()) ? "" : englishContext.getResources().getStringArray(R.array.condition_choices)[partsConditionSpinner.getSelectedItemPosition()];
+
+        String negotiable, filter_location;
+        if (partsNegotiable.isChecked()) {
+            negotiable = "true";
+        } else {
+            negotiable = "false";
+        }
+        if (partsLocation.isChecked()) {
+            filter_location = "true";
+        } else {
+            filter_location = "false";
+        }
+        String minPrice = partsPriceFromEditText.getText().toString();
+        String maxPrice = partsPriceToEditText.getText().toString();
+
+        PartController partcontroller = new PartController();
+        partcontroller.getFilteredParts(requireContext(), UserData.getId(), make, model, year, category, subcategory, condition, negotiable, filter_location, minPrice, maxPrice, new PartController.PartResponseListener() {
             @Override
-            public void onSuccess(List<PartModel> parts,ArrayList<String> image_path) {
-                PartsAdapter adapter = new PartsAdapter(requireContext(),parts,image_path);
+            public void onSuccess(List<PartModel> parts, ArrayList<String> image_path) {
+                PartsAdapter adapter = new PartsAdapter(requireContext(), parts, image_path);
                 partsListView.setAdapter(adapter);
             }
 
             @Override
             public void onError(String message) {
                 // Handle error response
-                Log.d("error",message);
+                Log.d("error", message);
             }
         });
     }
