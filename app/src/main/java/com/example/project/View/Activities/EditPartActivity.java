@@ -102,7 +102,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     PartController part_controller;
     UserController scrap_controller;
     String nameofscrap;
-    String Category, Subcategory;
+    String sendCategory, sendSubcategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
         Intent i = getIntent();
         String part_id = i.getStringExtra("part_id");
+        sendCategory = i.getStringExtra("category");
+        sendSubcategory = i.getStringExtra("subcategory");
         filltheimages(part_id);
 
         scrap_controller.getScrapyardData(this, UserData.getId(), new UserController.ScrapyardDataListener() {
@@ -152,7 +155,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             public void onScrapyardDataReceived(ScrapyardModel user) {
                 longitude = user.getLongitude();
                 latitude = user.getLatitude();
-                nameofscrap = user.getName();
+                e_scrapyardname_detailtxt.setText(user.getName());
+                phone.setText(user.getPhone());
             }
 
             @Override
@@ -170,12 +174,21 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 e_pricetxt.setText(Double.toString(parts.getPrice()));
                 e_descriptiontxt.setText(parts.getDescription());
                 e_negotiable_detail.setChecked(parts.isNegotiable());
-//                e_condition_detailtxt.setsel
+
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditPartActivity.this);
+                String selectedLanguage = preferences.getString("selected_language", "");
+                if (selectedLanguage.equals("en")) {
+                    fillSpinners(parts.getCategory().split("-")[0],parts.getSubcategory().split("-")[0],parts.getModel(),parts.getMake(), String.valueOf(parts.getYear()).split("-")[0],parts.getPart_condition().split("-")[0]);
+                } else if (selectedLanguage.equals("ar")) {
+                    fillSpinners(parts.getCategory().split("-")[1],parts.getSubcategory().split("-")[1],parts.getModel(),parts.getMake(), String.valueOf(parts.getYear()).split("-")[1],parts.getPart_condition().split("-")[1]);
+                }
+
             }
 
             @Override
             public void onError(String error) {
-
+            Log.e("error",error);
             }
         });
 
@@ -234,70 +247,76 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
     }
-//    public void fillSpinners() {
-//
-//        Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
-//        Map<String, List<String>> makeModelMap = new HashMap<>();
-//        String[] categoriesArray = getResources().getStringArray(R.array.categories_choices);
-//        String[] years = getResources().getStringArray(R.array.year_choices);
-//        String[] subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices);
-//        String[] makeArray = getResources().getStringArray(R.array.make_choices);
-//        String[] modelArray = getResources().getStringArray(R.array.model_choices);
-//        String[] conditionArray = getResources().getStringArray(R.array.condition_choices);
-//
-//        for (int i = 0; i < categoriesArray.length; i++) {
-//            String category = categoriesArray[i];
-//            String[] subcategories = subcategoriesArray[i].split(";");
-//            categorySubcategoryMap.put(category, Arrays.asList(subcategories));
-//        }
-//
-//        for (int i = 0; i < makeArray.length; i++) {
-//            String make = makeArray[i];
-//            String[] model = modelArray[i].split(";");
-//            makeModelMap.put(make, Arrays.asList(model));
-//        }
-//
-//        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, conditionArray);
-//        e_condition_detailtxt.setAdapter(conditionAdapter);
-//        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, makeArray);
-//        e_make_detailtxt.setAdapter(makeAdapter);
-//        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
-//        e_year_detailtxt.setAdapter(yearAdapter);
-//        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesArray);
-//        e_category_detailtxt.setAdapter(categoryAdapter);
-//
-//        e_make_detailtxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedMake = (String) parent.getItemAtPosition(position);
-//                List<String> modelList = makeModelMap.get(selectedMake);
-//                ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
-//                e_model_detailtxt.setAdapter(modelAdapter);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // Handle case where nothing is selected
-//            }
-//        });
-//
-//        Intent intent = getIntent();
-//        if (intent != null) {
-//
-//            if (sendCategory != null) {
-//                int categoryPosition = categoryAdapter.getPosition(sendCategory);
-//                e_category_detailtxt.setSelection(categoryPosition);
-//                String selectedCategory = (String) e_category_detailtxt.getItemAtPosition(categoryPosition);
-//                List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-//                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
-//                e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
-//                if (sendSubcategory != null) {
-//                    int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
-//                    e_category_detailtxt.setSelection(subcategoryPosition);
-//                }
-//            }
-//        }
-//    }
+
+    public void fillSpinners(String sendCategory,String sendSubcategory,String model,String make,String year,String condition) {
+
+        Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
+        Map<String, List<String>> makeModelMap = new HashMap<>();
+        String[] categoriesArray = getResources().getStringArray(R.array.categories_choices);
+        String[] years = getResources().getStringArray(R.array.year_choices);
+        String[] subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices);
+        String[] makeArray = getResources().getStringArray(R.array.make_choices);
+        String[] modelArray = getResources().getStringArray(R.array.model_choices);
+        String[] conditionArray = getResources().getStringArray(R.array.condition_choices);
+
+        for (int i = 0; i < categoriesArray.length; i++) {
+            String category = categoriesArray[i];
+            String[] subcategories = subcategoriesArray[i].split(";");
+            categorySubcategoryMap.put(category, Arrays.asList(subcategories));
+        }
+
+        for (int i = 0; i < makeArray.length; i++) {
+            String makee = makeArray[i];
+            String[] modell = modelArray[i].split(";");
+            makeModelMap.put(makee, Arrays.asList(modell));
+        }
+
+        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, conditionArray);
+        e_condition_detailtxt.setAdapter(conditionAdapter);
+        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, makeArray);
+        e_make_detailtxt.setAdapter(makeAdapter);
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
+        e_year_detailtxt.setAdapter(yearAdapter);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesArray);
+        e_category_detailtxt.setAdapter(categoryAdapter);
+
+        if (year != null) {
+            int yearPosition = yearAdapter.getPosition(year);
+            e_year_detailtxt.setSelection(yearPosition);
+        }
+        if (condition != null) {
+            int conditionPosition = yearAdapter.getPosition(year);
+            e_condition_detailtxt.setSelection(conditionPosition);
+        }
+
+        if (make != null) {
+            int makePosition = makeAdapter.getPosition(make);
+            e_make_detailtxt.setSelection(makePosition);
+            String selectedMake = (String) e_make_detailtxt.getItemAtPosition(makePosition);
+            List<String> modelList = makeModelMap.get(selectedMake);
+            ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelList);
+            e_model_detailtxt.setAdapter(modelAdapter);
+            if (model != null) {
+                int modelPosition = modelAdapter.getPosition(model);
+                e_model_detailtxt.setSelection(modelPosition);
+            }
+
+        }
+
+        if (sendCategory != null) {
+            int categoryPosition = categoryAdapter.getPosition(sendCategory);
+            e_category_detailtxt.setSelection(categoryPosition);
+            String selectedCategory = (String) e_category_detailtxt.getItemAtPosition(categoryPosition);
+            List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
+            ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
+            e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
+            if (sendSubcategory != null) {
+                int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+                e_subcategory_detailtxt.setSelection(subcategoryPosition);
+            }
+
+        }
+    }
 
     private void showImagePickerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -388,25 +407,25 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?path=" + imageListfromdb.get(position), response -> {
                 Log.d("test", response);
                 Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
-                // Remove the image path from the list after successful deletion
+
                 imageListfromdb.remove(position);
                 horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
-                // Check if both lists are empty and show the default view if necessary
+
                 if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
                     editpartdefault.setVisibility(View.VISIBLE);
                 }
             }, error -> {
-                // Error handling
+
             });
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
         } else {
-            // If the image is from the user's list, remove it from the user's list
+
             int adjustedPosition = position - imageListfromdb.size();
             imageListfromuser.remove(adjustedPosition);
             uriImage.remove(adjustedPosition);
             horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
-            // Check if both lists are empty and show the default view if necessary
+
             if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
                 editpartdefault.setVisibility(View.VISIBLE);
             }

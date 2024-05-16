@@ -350,30 +350,32 @@ public class PartController {
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(context);
 
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, IP + "get_the_part.php?part_id="+part_id, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, IP + "get_the_part.php?part_id="+part_id, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            // Parse the JSON object directly
+                            PartModel part = new PartModel();
+                            part.setId(response.getInt("id"));
+                            part.setName(response.getString("name"));
+                            part.setMake(response.getString("make"));
+                            part.setModel(response.getString("model"));
+                            part.setYear(response.getString("year"));
+                            part.setScrapyard_id(response.getInt("scrapyard_id"));
+                            part.setPart_condition(response.getString("part_condition"));
+                            part.setCategory(response.getString("category"));
+                            part.setSubcategory(response.getString("subcategory"));
+                            part.setDescription(response.getString("description"));
+                            part.setNegotiable(Boolean.parseBoolean(response.getString("negotiable")));
+                            part.setPrice(response.getDouble("price"));
 
-                                JSONObject jsonObject = response;
-                                PartModel part = new PartModel();
-                                part.setId(jsonObject.getInt("id"));
-                                part.setName(jsonObject.getString("name"));
-                                part.setMake(jsonObject.getString("make"));
-                                part.setModel(jsonObject.getString("model"));
-                                part.setYear(jsonObject.getString("year"));
-                                part.setScrapyard_id(jsonObject.getInt("scrapyard_id"));
-                                part.setPart_condition(jsonObject.getString("part_condition"));
-                                part.setCategory(jsonObject.getString("category"));
-                                part.setSubcategory(jsonObject.getString("subcategory"));
-                                part.setDescription(jsonObject.getString("description"));
-                                part.setNegotiable(Boolean.parseBoolean(jsonObject.getString("negotiable")));
-                                part.setPrice(jsonObject.getDouble("price"));
-
+                            // Notify listener with the fetched part
                             listener.onthePartFetched(part);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            // Call listener with error
+                            listener.onError(e.toString());
                         }
                     }
                 },
@@ -385,7 +387,7 @@ public class PartController {
                     }
                 });
 
-        mRequestQueue.add(jsonArrayRequest);
+        mRequestQueue.add(jsonObjectRequest);
     }
 
     public interface ParttheFetchListener {
