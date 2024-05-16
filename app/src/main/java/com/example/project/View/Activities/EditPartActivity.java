@@ -3,6 +3,7 @@ package com.example.project.View.Activities;
 import static com.example.project.Controller.Configuration.IP;
 import static com.example.project.Controller.GetImagePath.getRealPath;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
@@ -21,7 +22,12 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,11 +41,17 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Controller.PartController;
+import com.example.project.Controller.ScrapyardController;
+import com.example.project.Controller.UserController;
+import com.example.project.Controller.UserData;
 import com.example.project.CustomMapView;
 import com.example.project.FileUpload.ImageUploaderClass;
+import com.example.project.Model.PartModel;
+import com.example.project.Model.ScrapyardModel;
 import com.example.project.R;
 import com.example.project.View.Adapters.ImageEditAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -55,8 +67,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class EditPartActivity extends BaseActivity implements ImageEditAdapter.OnImageRemoveListener {
@@ -69,7 +85,10 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     ArrayList<String> imageListfromdb;
     ArrayList<String> imageListfromuser;
     ImageEditAdapter adapter;
-    TextView add;
+    TextView e_scrapyardname_detailtxt,add;
+    private EditText e_name_part,e_pricetxt,e_descriptiontxt;
+    private Spinner e_model_detailtxt,e_make_detailtxt,e_year_detailtxt,e_category_detailtxt,e_subcategory_detailtxt,e_condition_detailtxt;
+    private CheckBox e_negotiable_detail;
     private AlertDialog Dialog;
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
@@ -80,6 +99,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     private static final int CAMERA_REQUEST_CODE = 120;
     private static final int MAP_REQUEST_CODE = 130;
     PartController part_controller;
+    UserController scrap_controller;
+    String nameofscrap;
+    String Category,Subcategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +114,22 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         location = findViewById(R.id.e_location_part_click);
         phone = findViewById(R.id.e_phone_detailtxt);
         add = findViewById(R.id.e_add_image);
+
+        e_name_part = findViewById(R.id.e_name_part);
+        e_pricetxt = findViewById(R.id.e_pricetxt);
+        e_descriptiontxt = findViewById(R.id.e_descriptiontxt);
+        e_make_detailtxt = findViewById(R.id.e_make_detailtxt);
+        e_model_detailtxt = findViewById(R.id.e_model_detailtxt);
+        e_category_detailtxt = findViewById(R.id.e_category_detailtxt);
+        e_subcategory_detailtxt = findViewById(R.id.e_subcategory_detailtxt);
+        e_scrapyardname_detailtxt = findViewById(R.id.e_scrapyardname_detailtxt);
+        e_year_detailtxt = findViewById(R.id.e_year_detailtxt);
+        e_condition_detailtxt = findViewById(R.id.e_condition_detailtxt);
+        e_negotiable_detail = findViewById(R.id.e_negotiable_detail);
+
         editpartdefault = findViewById(R.id.editpartdefault);
         part_controller = new PartController();
+        scrap_controller = new UserController();
         uriImage = new ArrayList<Uri>();
         imageListfromdb = new ArrayList<>();
 
@@ -108,10 +144,43 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         Intent i = getIntent();
         String part_id = i.getStringExtra("part_id");
 
+        scrap_controller.getScrapyardData(this, UserData.getId(), new UserController.ScrapyardDataListener() {
+            @Override
+            public void onScrapyardDataReceived(ScrapyardModel user) {
+                longitude = user.getLongitude();
+                latitude = user.getLatitude();
+                nameofscrap= user.getName();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+
+        Toast.makeText(this, part_id, Toast.LENGTH_SHORT).show();
         part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
             @Override
             public void onImagePathReceived(ArrayList<String> imageUrls) {
                 imageListfromdb = imageUrls;
+
+            }
+        });
+
+        part_controller.fetchthePart(this, Integer.parseInt(part_id), new PartController.ParttheFetchListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onthePartFetched(PartModel parts) {
+                e_name_part.setText(parts.getName());
+                e_pricetxt.setText(Double.toString(parts.getPrice()));
+                e_descriptiontxt.setText(parts.getDescription());
+                e_negotiable_detail.setChecked(parts.isNegotiable());
+//                e_condition_detailtxt.setsel
+            }
+
+            @Override
+            public void onError(String error) {
+
             }
         });
 
@@ -125,8 +194,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // Customize the map as needed
-                LatLng location = new LatLng(33, 35);
-                googleMap.addMarker(new MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"));
+                LatLng location = new LatLng(latitude, longitude);
+                googleMap.addMarker(new MarkerOptions().position(location).title(nameofscrap).snippet("ScrapYard"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
             }
         });
@@ -143,9 +212,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MapsLocationActivity.class);
-                i.putExtra("latitude", 33);
-                i.putExtra("longitude", 35);
-                startActivityForResult(i, MAP_REQUEST_CODE);
+                i.putExtra("latitude", latitude);
+                i.putExtra("longitude", longitude);
+                startActivity(i);
             }
         });
 
@@ -157,6 +226,70 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
 
     }
+//    public void fillSpinners() {
+//
+//        Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
+//        Map<String, List<String>> makeModelMap = new HashMap<>();
+//        String[] categoriesArray = getResources().getStringArray(R.array.categories_choices);
+//        String[] years = getResources().getStringArray(R.array.year_choices);
+//        String[] subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices);
+//        String[] makeArray = getResources().getStringArray(R.array.make_choices);
+//        String[] modelArray = getResources().getStringArray(R.array.model_choices);
+//        String[] conditionArray = getResources().getStringArray(R.array.condition_choices);
+//
+//        for (int i = 0; i < categoriesArray.length; i++) {
+//            String category = categoriesArray[i];
+//            String[] subcategories = subcategoriesArray[i].split(";");
+//            categorySubcategoryMap.put(category, Arrays.asList(subcategories));
+//        }
+//
+//        for (int i = 0; i < makeArray.length; i++) {
+//            String make = makeArray[i];
+//            String[] model = modelArray[i].split(";");
+//            makeModelMap.put(make, Arrays.asList(model));
+//        }
+//
+//        ArrayAdapter<String> conditionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, conditionArray);
+//        e_condition_detailtxt.setAdapter(conditionAdapter);
+//        ArrayAdapter<String> makeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, makeArray);
+//        e_make_detailtxt.setAdapter(makeAdapter);
+//        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, years);
+//        e_year_detailtxt.setAdapter(yearAdapter);
+//        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesArray);
+//        e_category_detailtxt.setAdapter(categoryAdapter);
+//
+//        e_make_detailtxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedMake = (String) parent.getItemAtPosition(position);
+//                List<String> modelList = makeModelMap.get(selectedMake);
+//                ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
+//                e_model_detailtxt.setAdapter(modelAdapter);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                // Handle case where nothing is selected
+//            }
+//        });
+//
+//        Intent intent = getIntent();
+//        if (intent != null) {
+//
+//            if (sendCategory != null) {
+//                int categoryPosition = categoryAdapter.getPosition(sendCategory);
+//                e_category_detailtxt.setSelection(categoryPosition);
+//                String selectedCategory = (String) e_category_detailtxt.getItemAtPosition(categoryPosition);
+//                List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
+//                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
+//                e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
+//                if (sendSubcategory != null) {
+//                    int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+//                    e_category_detailtxt.setSelection(subcategoryPosition);
+//                }
+//            }
+//        }
+//    }
 
     private void showImagePickerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -316,15 +449,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                         }
                     } else {
                         Toast.makeText(this, "Error capturing image", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case MAP_REQUEST_CODE:
-                    if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
-                        Bundle bundle = data.getExtras();
-                        latitude = bundle.getDouble("latitude");
-                        longitude = bundle.getDouble("longitude");
-                    } else {
-                        Toast.makeText(this, "Error retrieving location data", Toast.LENGTH_SHORT).show();
                     }
                     break;
 

@@ -29,6 +29,13 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        Intent i = getIntent();
+        int def_val = i.getIntExtra("start_page",0);
+        if(def_val == 0)
+            bottomNavigationView.setSelectedItemId(R.id.nav_scrap_yard);
+        else
+            bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
 
         if (savedInstanceState != null) {
             selectedItemId = savedInstanceState.getInt(SELECTED_ITEM_ID_KEY);

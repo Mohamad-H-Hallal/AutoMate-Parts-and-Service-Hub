@@ -41,7 +41,7 @@ public class PartController {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // Parse the JSON response to get image URLs
+
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 String imageUrl = response.getString(i);
