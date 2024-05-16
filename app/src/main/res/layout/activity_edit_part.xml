@@ -119,6 +119,7 @@
                 android:text="200$"
                 android:textColor="@color/themeColor"
                 android:textSize="35sp"
+                android:inputType="numberDecimal"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/e_details"
                 app:layout_constraintEnd_toEndOf="parent"
