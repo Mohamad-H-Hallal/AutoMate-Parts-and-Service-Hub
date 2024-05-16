@@ -115,6 +115,7 @@
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
     <string name="def_bio">No Biography.</string>
     <string name="view_location">View Location</string>
+    <string name="active_until">Active until</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
@@ -478,7 +479,7 @@
         <item>12</item>
     </string-array>
 
-    <string-array name="year_choise_d">
+    <string-array name="year_choice_d">
         <item>Select Year</item>
         <item>2024</item>
     </string-array>
@@ -510,5 +511,174 @@
         <item>22</item>
         <item>23</item>
     </string-array>
+
+    <string-array name="categories_choices_combined">
+        <item>Select Category-اختر الفئة</item>
+        <item>Engine Components-المحرك</item>
+        <item>Transmission and Drivetrain-ناقل الحركة ونظام الدفع</item>
+        <item>Suspension and Steering-نظام التعليق والتوجيه</item>
+        <item>Braking System-نظام الفرامل</item>
+        <item>Electrical System-النظام الكهربائي</item>
+        <item>Cooling System-نظام التبريد</item>
+        <item>Exhaust System-نظام العادم (شكمان)</item>
+        <item>Fuel System-نظام الوقود</item>
+        <item>Interior Components-العناصر الداخلية</item>
+        <item>Exterior Components-العناصر الخارجية</item>
+        <item>Lighting System-نظام الإضاءة</item>
+        <item>Body Parts and Panels-أجزاء وألواح الهيكل</item>
+        <item>Wheels and Tires-العجلات والإطارات</item>
+        <item>Heating and Air Conditioning-التدفئة وتكييف الهواء</item>
+        <item>Aftermarket and Performance Parts-قطع الغيار بعد البيع وقطع الأداء</item>
+    </string-array>
+
+
+    <string-array name="subcategories_choices_combined">
+        <item>Select SubCategory-اختر الفئة الفرعية</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Cylinder block-بلوك الأسطوانة;Pistons-المكابس;Crankshaft-عمود المرفق;Camshaft-عمود الكامات;Valves-الصمامات;Timing belt/chain-سير التوقيت/سلسلة التوقيت;Intake manifold-منظومة السحب;Exhaust manifold-منظومة العادم;Fuel injectors-حاقنات الوقود;Spark plugs-شمعات الإشعال;Engine control unit (ECU)-وحدة التحكم بالمحرك (وحدة التحكم الإلكتروني للمحرك)</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Transmission (manual or automatic)-التروس (يدوي أو أوتوماتيكي);Clutch (for manual transmission)-القابض (للتروس اليدوية);Gearbox-صندوق التروس;Drive shafts-عمود الدفع;Differential-التفاضلي;Axles-محاور;Transfer case (for 4 wheel drive)-علبة التحويل (للدفع الرباعي)</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Shock absorbers/Struts-ممتصات الصدمات/الدعامات;Springs-نوابض (زنبرك);Control arms-ذراع التحكم;Tie rods-قضبان التعادل;Steering rack-قضيب المقود;Power steering pump-مضخة التوجيه;Ball joints-المفاصل الكروية;Bushings-البوشات</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Brake calipers-فرامل الفرجار;Brake pads-دواسات الفرامل;Brake rotors-أقراص الفرامل (اسطوانة الكبح);Brake lines-خطوط الفرامل (مواسير);Brake master cylinder-اسطوانة الفرامل الرئيسية;Brake booster-معزز للفرامل;Parking brake assembly-مجموعة الفرامل اليدوية</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Battery-البطارية;Alternator-المولّد;Starter motor-محرك البدء;Ignition system-نظام الإشعال;Wiring harnesses-كبلات التوصيل;Fuses and relays-الفيوزات والريلايات;Sensors (ABS sensors, oxygen sensors, etc.)-الحساسات (حساسات نظام الفرامل المانعة للانغلاق، حساسات الأكسجين، إلخ)</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Radiator-المبرّد (رادياتير);Water pump-مضخة الماء;Thermostat-المحدّد الحراري (ترموستات);Cooling fans-مراوح التبريد;Hoses-الخراطيم;Coolant reservoir-خزان السائل التبريدي</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Exhaust pipes-أنابيب العادم (شكمان);Catalytic converter-المحول الحفاز;Muffler-كاتم صوت;Exhaust manifold-منظومة العادم (شكمان)</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Fuel tank-خزان الوقود;Fuel pump-مضخة الوقود;Fuel filter-فلتر الوقود;Fuel injectors-حاقنات الوقود;Throttle body-جسم الدفع;Air filter-فلتر الهواء</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Seats-المقاعد;Dashboard-لوحة القيادة;Steering wheel-عجلة القيادة;Instrument cluster-مجموعة العدادات;HVAC system (heating, ventilation, and air conditioning)-نظام التدفئة والتهوية وتكييف الهواء;Audio system-نظام الصوت</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Body panels-ألواح الهيكل;Bumpers-الصدامات;Mirrors-المرايا;Windows-النوافذ;Windshield wipers and washer system-نظام مساحات الزجاج وغسيلها</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Headlights-المصابيح الأمامية;Taillights-المصابيح الخلفية;Brake Lights-أضواء الفرامل;Turn Signals-إشارات الانعطاف;Fog Lights-أضواء الضباب;Interior Lights-أضواء الداخلية</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Hood-غطاء المحرك;Fenders-الرفارف;Doors-الأبواب;Trunk Lid-غطاء الصندوق;Roof-السقف;Quarter Panels-ألواح الربع</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Wheels (size, material)-العجلات (الحجم، المادة);Tires (size, type all season, performance, etc.)-الإطارات (الحجم، النوع لكل الفصول، الأداء، إلخ.)</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Heater Core-قلب التدفئة;Air Conditioner Compressor-ضاغط مكيف الهواء;Condenser-المكثف;Evaporator-المبخر;Blower Motor-موتور النفخ</item>
+        <item>Select SubCategory-اختر الفئة الفرعية;Engine Performance (intakes, exhaust systems)-أداء المحرك (المداخل، أنظمة العادم);Suspension Upgrades (coilovers, sway bars)-تحديثات التعليق (ممتصات الصدمات، قضبان التوازن);Wheels and Tires (performance tires, rims)-العجلات والإطارات (إطارات الأداء، الجنوط);Interior Accessories (shift knobs, gauges)-إكسسوارات الداخلية (مقابض التغيير، العدادات)</item>
+    </string-array>
+
+    <string-array name="condition_choices_combined">
+        <item>Select Condition-اختر الحالة</item>
+        <item>New-جديد</item>
+        <item>Used-مستعمل</item>
+    </string-array>
+
+    <string-array name="year_choices_combined">
+        <item>Select Year-اختر سنة</item>
+        <item>1990-١٩٩٠</item>
+        <item>1991-١٩٩١</item>
+        <item>1992-١٩٩٢</item>
+        <item>1993-١٩٩٣</item>
+        <item>1994-١٩٩٤</item>
+        <item>1995-١٩٩٥</item>
+        <item>1996-١٩٩٦</item>
+        <item>1997-١٩٩٧</item>
+        <item>1998-١٩٩٨</item>
+        <item>1999-١٩٩٩</item>
+        <item>2000-٢٠٠٠</item>
+        <item>2001-٢٠٠١</item>
+        <item>2002-٢٠٠٢</item>
+        <item>2003-٢٠٠٣</item>
+        <item>2004-٢٠٠٤</item>
+        <item>2005-٢٠٠٥</item>
+        <item>2006-٢٠٠٦</item>
+        <item>2007-٢٠٠٧</item>
+        <item>2008-٢٠٠٨</item>
+        <item>2009-٢٠٠٩</item>
+        <item>2010-٢٠١٠</item>
+        <item>2011-٢٠١١</item>
+        <item>2012-٢٠١٢</item>
+        <item>2013-٢٠١٣</item>
+        <item>2014-٢٠١٤</item>
+        <item>2015-٢٠١٥</item>
+        <item>2016-٢٠١٦</item>
+        <item>2017-٢٠١٧</item>
+        <item>2018-٢٠١٨</item>
+        <item>2019-٢٠١٩</item>
+        <item>2020-٢٠٢٠</item>
+        <item>2021-٢٠٢١</item>
+        <item>2022-٢٠٢٢</item>
+        <item>2023-٢٠٢٣</item>
+        <item>2024-٢٠٢٤</item>
+    </string-array>
+
+    <string-array name="day_choices_combined">
+        <item>Select Day-اختر اليوم</item>
+        <item>1-١</item>
+        <item>2-٢</item>
+        <item>3-٣</item>
+        <item>4-٤</item>
+        <item>5-٥</item>
+        <item>6-٦</item>
+        <item>7-٧</item>
+        <item>8-٨</item>
+        <item>9-٩</item>
+        <item>10-١٠</item>
+        <item>11-١١</item>
+        <item>12-١٢</item>
+        <item>13-١٣</item>
+        <item>14-١٤</item>
+        <item>15-١٥</item>
+        <item>16-١٦</item>
+        <item>17-١٧</item>
+        <item>18-١٨</item>
+        <item>19-١٩</item>
+        <item>20-٢٠</item>
+        <item>21-٢١</item>
+        <item>22-٢٢</item>
+        <item>23-٢٣</item>
+        <item>24-٢٤</item>
+        <item>25-٢٥</item>
+        <item>26-٢٦</item>
+        <item>27-٢٧</item>
+        <item>28-٢٨</item>
+        <item>29-٢٩</item>
+        <item>30-٣٠</item>
+        <item>31-٣١</item>
+    </string-array>
+
+    <string-array name="month_choices_combined">
+        <item>Select Month-اختر الشهر</item>
+        <item>1-١</item>
+        <item>2-٢</item>
+        <item>3-٣</item>
+        <item>4-٤</item>
+        <item>5-٥</item>
+        <item>6-٦</item>
+        <item>7-٧</item>
+        <item>8-٨</item>
+        <item>9-٩</item>
+        <item>10-١٠</item>
+        <item>11-١١</item>
+        <item>12-١٢</item>
+    </string-array>
+
+    <string-array name="year_choice_d_combined">
+        <item>Select Year-اختر السنة</item>
+        <item>2024-٢٠٢٤</item>
+    </string-array>
+
+    <string-array name="hour_choices_combined">
+        <item>Select Hour-اختر الساعة</item>
+        <item>00-٠٠</item>
+        <item>01-٠١</item>
+        <item>02-٠٢</item>
+        <item>03-٠٣</item>
+        <item>04-٠٤</item>
+        <item>05-٠٥</item>
+        <item>06-٠٦</item>
+        <item>07-٠٧</item>
+        <item>08-٠٨</item>
+        <item>09-٠٩</item>
+        <item>10-١٠</item>
+        <item>11-١١</item>
+        <item>12-١٢</item>
+        <item>13-١٣</item>
+        <item>14-١٤</item>
+        <item>15-١٥</item>
+        <item>16-١٦</item>
+        <item>17-١٧</item>
+        <item>18-١٨</item>
+        <item>19-١٩</item>
+        <item>20-٢٠</item>
+        <item>21-٢١</item>
+        <item>22-٢٢</item>
+        <item>23-٢٣</item>
+    </string-array>
+
 
 </resources>

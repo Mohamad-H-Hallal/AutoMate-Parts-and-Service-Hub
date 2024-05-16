@@ -57,7 +57,7 @@ public class PartController {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Handle error
+                        Log.e("VolleyError", "Error: " + error.toString());
                     }
                 });
 

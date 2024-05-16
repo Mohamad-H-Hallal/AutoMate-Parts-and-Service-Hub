@@ -193,13 +193,11 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
 
 
-        Toast.makeText(EditPartActivity.this, imageListfromdb.toString(), Toast.LENGTH_SHORT).show();
-
         miniMapView.onCreate(savedInstanceState);
         miniMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
+                // Customize the map as needed
                 LatLng location = new LatLng(latitude, longitude);
                 googleMap.addMarker(new MarkerOptions().position(location).title(nameofscrap).snippet("ScrapYard"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
@@ -406,7 +404,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
     public void deleteImage(int position) {
         if (position < imageListfromdb.size()) {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?name=" + imageListfromdb.get(position), response -> {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?path=" + imageListfromdb.get(position), response -> {
+                Log.d("test", response);
                 Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
                 // Remove the image path from the list after successful deletion
                 imageListfromdb.remove(position);
