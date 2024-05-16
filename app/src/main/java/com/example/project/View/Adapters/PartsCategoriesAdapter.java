@@ -24,13 +24,14 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
     private Context context;
     private String[] parentList;
     private Map<String, String[]> childMap;
-    private int viewer;
+    private int viewer, id;
 
-    public PartsCategoriesAdapter(Context context, String[] parentList, Map<String, String[]> childMap, int viewer) {
+    public PartsCategoriesAdapter(Context context, String[] parentList, Map<String, String[]> childMap, int viewer, int id) {
         this.context = context;
         this.parentList = parentList;
         this.childMap = childMap;
         this.viewer = viewer;
+        this.id = id;
         updateData();
     }
 
@@ -85,6 +86,7 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
                     context.startActivity(i);
                 } else {
                     Intent i = new Intent(context, ViewPartsActivity.class);
+                    i.putExtra("id", id);
                     i.putExtra("category", sendCategory);
                     i.putExtra("subcategory", sendSubcategory);
                     context.startActivity(i);

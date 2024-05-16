@@ -125,15 +125,6 @@ public class ManagePartsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, EditPartActivity.class);
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-                String selectedLanguage = preferences.getString("selected_language", "");
-                if (selectedLanguage.equals("en")) {
-                    i.putExtra("category",categoryArray[0]);
-                    i.putExtra("subcategory",subcategoryArray[0]);
-                } else if (selectedLanguage.equals("ar")) {
-                    i.putExtra("category",categoryArray[1]);
-                    i.putExtra("subcategory",subcategoryArray[1]);
-                }
                 i.putExtra("part_id",String.valueOf(id));
                 context.startActivity(i);
             }

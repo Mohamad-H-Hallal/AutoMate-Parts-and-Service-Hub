@@ -40,7 +40,7 @@
     <string name="searchMechanics">ابحث عن ميكانيكي…</string>
     <string name="searchParts">ابحث عن قطع…</string>
     <string name="search_scrap_yards">ابحث عن ساحة خردة…</string>
-    <string name="part_details">تفصيل القطعة</string>
+    <string name="part_details">تفاصيل القطعة</string>
     <string name="price">السعر:</string>
     <string name="description">الوصف:</string>
     <string name="filter">فلتر</string>
@@ -117,6 +117,7 @@
     <string name="def_bio">لا سيرة ذاتية.</string>
     <string name="view_location">عرض الموقع</string>
     <string name="active_until">نشط حتى</string>
+    <string name="edit_part">تعديل القطعة</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

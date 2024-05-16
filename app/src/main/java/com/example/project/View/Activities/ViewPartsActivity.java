@@ -25,6 +25,7 @@ public class ViewPartsActivity extends BaseActivity {
     ImageButton backButton;
     ListView lv;
     String subcategory,category;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,10 @@ public class ViewPartsActivity extends BaseActivity {
         Intent intent = getIntent();
         subcategory = intent.getStringExtra("subcategory");
         category = intent.getStringExtra("category");
+        id = intent.getIntExtra("id",0);
 
         PartController partCont = new PartController();
-        partCont.manageParts(this, subcategory, new PartController.PartManageListener() {
+        partCont.manageParts(this, id, subcategory, new PartController.PartManageListener() {
             @Override
             public void onPartsManage(List<PartModel> parts, ArrayList<String> imagePaths) {
                 PartsAdapter adapter = new PartsAdapter(ViewPartsActivity.this, parts, imagePaths);

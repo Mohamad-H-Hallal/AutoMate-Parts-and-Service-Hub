@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Controller.PartController;
 import com.example.project.Controller.ScrapyardController;
+import com.example.project.Controller.TwoDecimalPlacesInputFilter;
 import com.example.project.Controller.UserController;
 import com.example.project.Controller.UserData;
 import com.example.project.CustomMapView;
@@ -102,7 +104,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     PartController part_controller;
     UserController scrap_controller;
     String nameofscrap;
-    String sendCategory, sendSubcategory;
 
 
     @Override
@@ -116,9 +117,10 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         location = findViewById(R.id.e_location_part_click);
         phone = findViewById(R.id.e_phone_detailtxt);
         add = findViewById(R.id.e_add_image);
-
         e_name_part = findViewById(R.id.e_name_part);
         e_pricetxt = findViewById(R.id.e_pricetxt);
+        TwoDecimalPlacesInputFilter filter = new TwoDecimalPlacesInputFilter();
+        e_pricetxt.setFilters(new InputFilter[]{filter});
         e_descriptiontxt = findViewById(R.id.e_descriptiontxt);
         e_make_detailtxt = findViewById(R.id.e_make_detailtxt);
         e_model_detailtxt = findViewById(R.id.e_model_detailtxt);
@@ -146,8 +148,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
         Intent i = getIntent();
         String part_id = i.getStringExtra("part_id");
-        sendCategory = i.getStringExtra("category");
-        sendSubcategory = i.getStringExtra("subcategory");
         filltheimages(part_id);
 
         scrap_controller.getScrapyardData(this, UserData.getId(), new UserController.ScrapyardDataListener() {
@@ -171,24 +171,29 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             @Override
             public void onthePartFetched(PartModel parts) {
                 e_name_part.setText(parts.getName());
-                e_pricetxt.setText(Double.toString(parts.getPrice()));
+                e_pricetxt.setText("" + parts.getPrice());
                 e_descriptiontxt.setText(parts.getDescription());
                 e_negotiable_detail.setChecked(parts.isNegotiable());
 
-
+                String[] cat = parts.getCategory().split("-");
+                String[] subcat = parts.getSubcategory().split("-");
+                String mod = parts.getModel();
+                String mak = parts.getMake();
+                String[] yea = parts.getYear().split("-");
+                String[] cond = parts.getPart_condition().split("-");
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditPartActivity.this);
                 String selectedLanguage = preferences.getString("selected_language", "");
                 if (selectedLanguage.equals("en")) {
-                    fillSpinners(parts.getCategory().split("-")[0],parts.getSubcategory().split("-")[0],parts.getModel(),parts.getMake(), String.valueOf(parts.getYear()).split("-")[0],parts.getPart_condition().split("-")[0]);
+                    fillSpinners(cat[0], subcat[0], mod, mak, yea[0], cond[0]);
                 } else if (selectedLanguage.equals("ar")) {
-                    fillSpinners(parts.getCategory().split("-")[1],parts.getSubcategory().split("-")[1],parts.getModel(),parts.getMake(), String.valueOf(parts.getYear()).split("-")[1],parts.getPart_condition().split("-")[1]);
+                    fillSpinners(cat[1], subcat[1], mod, mak, yea[1], cond[1]);
                 }
 
             }
 
             @Override
             public void onError(String error) {
-            Log.e("error",error);
+                Log.e("error", error);
             }
         });
 
@@ -248,7 +253,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
     }
 
-    public void fillSpinners(String sendCategory,String sendSubcategory,String model,String make,String year,String condition) {
+    public void fillSpinners(String sendCategory, String sendSubcategory, String model, String make, String year, String condition) {
 
         Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
         Map<String, List<String>> makeModelMap = new HashMap<>();
@@ -285,7 +290,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             e_year_detailtxt.setSelection(yearPosition);
         }
         if (condition != null) {
-            int conditionPosition = yearAdapter.getPosition(year);
+            int conditionPosition = conditionAdapter.getPosition(condition);
             e_condition_detailtxt.setSelection(conditionPosition);
         }
 

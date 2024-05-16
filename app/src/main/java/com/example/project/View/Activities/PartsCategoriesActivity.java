@@ -48,8 +48,9 @@ public class PartsCategoriesActivity extends BaseActivity {
 
         Intent i = getIntent();
         int v = i.getIntExtra("viewer", 0);
+        int id = i.getIntExtra("id",0);
 
-        PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap,v);
+        PartsCategoriesAdapter adapter = new PartsCategoriesAdapter(this,parentList, childMap,v,id);
         parts_list.setAdapter(adapter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

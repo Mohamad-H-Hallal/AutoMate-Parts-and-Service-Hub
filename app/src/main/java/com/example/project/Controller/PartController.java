@@ -249,10 +249,10 @@ public class PartController {
         queue.add(jsonArrayRequest);
     }
 
-    public void manageParts(Context context, String subcategory, final PartManageListener listener) {
+    public void manageParts(Context context, int id, String subcategory, final PartManageListener listener) {
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_manage_parts.php?user_id=" + UserData.getId() + "&subcategory=" + subcategory, null,
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_manage_parts.php?user_id=" + id + "&subcategory=" + subcategory, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

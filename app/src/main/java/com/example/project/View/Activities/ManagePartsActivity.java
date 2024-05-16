@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.Controller.PartController;
+import com.example.project.Controller.UserData;
 import com.example.project.Model.PartModel;
 import com.example.project.R;
 import com.example.project.View.Adapters.ManagePartsAdapter;
@@ -48,7 +49,7 @@ public class ManagePartsActivity extends BaseActivity {
         category = intent.getStringExtra("category");
 
         PartController partCont = new PartController();
-        partCont.manageParts(this, subcategory, new PartController.PartManageListener() {
+        partCont.manageParts(this, UserData.getId(), subcategory, new PartController.PartManageListener() {
             @Override
             public void onPartsManage(List<PartModel> parts, ArrayList<String> imagePaths) {
                 adapter = new ManagePartsAdapter(ManagePartsActivity.this, parts, imagePaths);

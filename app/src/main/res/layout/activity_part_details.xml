@@ -347,32 +347,19 @@
                         app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/subcategory_detailtxt" />
 
-                    <TextView
+                    <CheckBox
                         android:id="@+id/negotiable_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginStart="15dp"
                         android:text="@string/negotiable"
+                        android:editable="false"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/condition_detail" />
 
-                    <TextView
-                        android:id="@+id/negotiable_detailtxt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="@dimen/loginViewsMargin"
-                        android:layout_marginTop="30dp"
-                        android:text="negotiable"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBaseline_toBaselineOf="@id/negotiable_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
-                        app:layout_constraintTop_toBottomOf="@id/condition_detailtxt" />
 
                     <TextView
                         android:id="@+id/phone_detail"

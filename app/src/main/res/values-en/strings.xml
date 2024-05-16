@@ -116,6 +116,7 @@
     <string name="def_bio">No Biography.</string>
     <string name="view_location">View Location</string>
     <string name="active_until">Active until</string>
+    <string name="edit_part">Edit Part</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
