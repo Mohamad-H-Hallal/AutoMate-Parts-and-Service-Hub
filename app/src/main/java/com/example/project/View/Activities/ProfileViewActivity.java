@@ -187,8 +187,10 @@ public class ProfileViewActivity extends BaseActivity {
                     v_specializationtext.setText(user.getSpecialization());
                     bar.setRating(user.getRating());
 
-                    if (!user.getBiography().equals("NULL")) {
+                    if (!user.getBiography().equals("null")) {
                         v_biographytext.setText(user.getBiography());
+                    }else{
+                        v_biographytext.setText(getResources().getString(R.string.def_bio));
                     }
 
                     latitude = user.getLatitude();
@@ -225,8 +227,10 @@ public class ProfileViewActivity extends BaseActivity {
                     v_phonetext.setText(user.getPhone());
                     v_specializationtext.setText(user.getSpecialization());
                     bar.setRating(user.getRating());
-                    if (!user.getBiography().equals("NULL")) {
+                    if (!user.getBiography().equals("null")) {
                         v_biographytext.setText(user.getBiography());
+                    }else{
+                        v_biographytext.setText(getResources().getString(R.string.def_bio));
                     }
                     v_yearofxp.setVisibility(View.VISIBLE);
                     v_yearofxptext.setVisibility(View.VISIBLE);

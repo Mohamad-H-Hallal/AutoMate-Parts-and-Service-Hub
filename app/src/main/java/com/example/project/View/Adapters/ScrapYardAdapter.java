@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,26 +35,24 @@ import com.example.project.View.Activities.MapsLocationActivity;
 import com.example.project.View.Activities.ProfileViewActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ScrapYardAdapter extends BaseAdapter {
+public class ScrapYardAdapter extends BaseAdapter implements Filterable {
 
-    List<ScrapyardModel> data;
-    Context context;
-    double latitude = 33;
-    double longitude = 35;
-    int phoneNumber = 70707070;
+    private List<ScrapyardModel> data;
+    private List<ScrapyardModel> filteredData;
+    private Context context;
+    private LayoutInflater inflater;
     private float currentRating = 3.5f;
     private AlertDialog ratingDialog;
-    LayoutInflater inflater = null;
+    private ItemFilter mFilter = new ItemFilter();
 
     public ScrapYardAdapter(Context context, List<ScrapyardModel> data) {
         this.context = context;
         this.data = data;
+        this.filteredData = data;
         updateData();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -76,32 +76,39 @@ public class ScrapYardAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+        return filteredData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return filteredData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Holder holder = new Holder();
-        final View rowView;
-        rowView = inflater.inflate(R.layout.row_scrapyard, null);
-        holder.scrapYardImageView = rowView.findViewById(R.id.scrapYardImageView);
-        holder.txtScrapYardName = rowView.findViewById(R.id.txtScrapYardName);
-        holder.txtScrapYardSpecialization = rowView.findViewById(R.id.txtScrapYardSpecialization);
-        holder.callScrapYardButton = rowView.findViewById(R.id.callScrapYardButton);
-        holder.locationScrapYardButton = rowView.findViewById(R.id.locationScrapYardButton);
-        holder.rateScrapYardButton = rowView.findViewById(R.id.rateScrapYardButton);
-        ScrapyardModel obj = data.get(position);
+        final Holder holder;
+        View rowView = convertView;
+        if (rowView == null) {
+            holder = new Holder();
+            rowView = inflater.inflate(R.layout.row_scrapyard, parent, false);
+            holder.scrapYardImageView = rowView.findViewById(R.id.scrapYardImageView);
+            holder.txtScrapYardName = rowView.findViewById(R.id.txtScrapYardName);
+            holder.txtScrapYardSpecialization = rowView.findViewById(R.id.txtScrapYardSpecialization);
+            holder.callScrapYardButton = rowView.findViewById(R.id.callScrapYardButton);
+            holder.locationScrapYardButton = rowView.findViewById(R.id.locationScrapYardButton);
+            holder.rateScrapYardButton = rowView.findViewById(R.id.rateScrapYardButton);
+            rowView.setTag(holder);
+        } else {
+            holder = (Holder) rowView.getTag();
+        }
+
+        ScrapyardModel obj = filteredData.get(position);
 
         Glide.with(context).load(USER_IMAGES_DIR + obj.getIcon())
                 .skipMemoryCache(true)
@@ -110,77 +117,60 @@ public class ScrapYardAdapter extends BaseAdapter {
                 .into(holder.scrapYardImageView);
         holder.txtScrapYardName.setText(obj.getName());
         holder.txtScrapYardSpecialization.setText(obj.getSpecialization());
-        holder.rateScrapYardButton.setText(obj.getRating() +"/5");
+        holder.rateScrapYardButton.setText(obj.getRating() + "/5");
         currentRating = obj.getRating();
 
-        holder.locationScrapYardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, MapsLocationActivity.class);
-                i.putExtra("latitude", obj.getLatitude());
-                i.putExtra("longitude", obj.getLongitude());
-                context.startActivity(i);
-            }
+        holder.locationScrapYardButton.setOnClickListener(v -> {
+            Intent i = new Intent(context, MapsLocationActivity.class);
+            i.putExtra("latitude", obj.getLatitude());
+            i.putExtra("longitude", obj.getLongitude());
+            context.startActivity(i);
         });
-        holder.callScrapYardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri number = Uri.parse("tel:" + obj.getPhone());
-                Intent i = new Intent(Intent.ACTION_DIAL, number);
-                context.startActivity(i);
-            }
+
+        holder.callScrapYardButton.setOnClickListener(v -> {
+            Uri number = Uri.parse("tel:" + obj.getPhone());
+            Intent i = new Intent(Intent.ACTION_DIAL, number);
+            context.startActivity(i);
         });
-        holder.rateScrapYardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View ratingDialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog, null);
-                final RatingBar ratingBar = ratingDialogView.findViewById(R.id.rating_bar);
-                final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
-                final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
-                ratingBar.setRating(currentRating);
-                builder.setView(ratingDialogView);
-                submitButton.setOnClickListener(new View.OnClickListener() {
+
+        holder.rateScrapYardButton.setOnClickListener(v -> {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View ratingDialogView = LayoutInflater.from(context).inflate(R.layout.rating_dialog, null);
+            final RatingBar ratingBar = ratingDialogView.findViewById(R.id.rating_bar);
+            final AppCompatButton submitButton = ratingDialogView.findViewById(R.id.submit_button);
+            final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
+            ratingBar.setRating(currentRating);
+            builder.setView(ratingDialogView);
+            submitButton.setOnClickListener(v1 -> {
+                currentRating = ratingBar.getRating();
+                ScrapyardController controller = new ScrapyardController();
+                controller.submitRating(context, currentRating, UserData.getId(), obj.getScrapyard_id(), new ScrapyardController.ScrapyardRateListener() {
                     @Override
-                    public void onClick(View v) {
-                        currentRating = ratingBar.getRating();
-                        ScrapyardController controller = new ScrapyardController();
-                        controller.submitRating(context, currentRating, UserData.getId(), obj.getScrapyard_id(), new ScrapyardController.ScrapyardRateListener() {
-                            @Override
-                            public void onrateScrapyardDataReceived(Float rate) {
-                                holder.rateScrapYardButton.setText(rate + "/5");
-                                Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
-                                dismissDialog();
-                            }
-
-                            @Override
-                            public void onError(VolleyError error) {
-
-                            }
-                        });
-
-                    }
-                });
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    public void onrateScrapyardDataReceived(Float rate) {
+                        holder.rateScrapYardButton.setText(rate + "/5");
+                        Toast.makeText(context, "Rating submitted: " + currentRating, Toast.LENGTH_SHORT).show();
                         dismissDialog();
                     }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        // Handle error
+                    }
                 });
-                ratingDialog = builder.create();
-                ratingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                ratingDialog.show();
-            }
+            });
+            cancelButton.setOnClickListener(v12 -> dismissDialog());
+            ratingDialog = builder.create();
+            ratingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            ratingDialog.show();
         });
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, ProfileViewActivity.class);
-                i.putExtra("id",obj.getScrapyard_id());
-                i.putExtra("user_type",obj.getAccount_type());
-                context.startActivity(i);
-            }
+
+        rowView.setOnClickListener(v -> {
+            Intent i = new Intent(context, ProfileViewActivity.class);
+            i.putExtra("id", obj.getScrapyard_id());
+            i.putExtra("user_type", obj.getAccount_type());
+            context.startActivity(i);
         });
+
         return rowView;
     }
 
@@ -190,4 +180,37 @@ public class ScrapYardAdapter extends BaseAdapter {
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+            FilterResults results = new FilterResults();
+            final List<ScrapyardModel> list = data;
+            int count = list.size();
+            final ArrayList<ScrapyardModel> nlist = new ArrayList<>(count);
+            ScrapyardModel filterableModel;
+            for (int i = 0; i < count; i++) {
+                filterableModel = list.get(i);
+                if (filterableModel.getName().toLowerCase().contains(filterString) ||
+                        filterableModel.getSpecialization().toLowerCase().contains(filterString)) {
+                    nlist.add(filterableModel);
+                }
+            }
+            results.values = nlist;
+            results.count = nlist.size();
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<ScrapyardModel>) results.values;
+            notifyDataSetChanged();
+        }
+    }
 }

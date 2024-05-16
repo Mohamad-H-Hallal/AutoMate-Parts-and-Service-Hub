@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,23 +20,23 @@ import com.example.project.R;
 import com.example.project.View.Activities.PartDetailsActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class PartsAdapter extends BaseAdapter {
+public class PartsAdapter extends BaseAdapter implements Filterable {
 
-    List<PartModel> data;
-    ArrayList<String> image_path;
-    Context context;
-    LayoutInflater inflater = null;
+    private List<PartModel> data;
+    private List<PartModel> filteredData;
+    private ArrayList<String> imagePath;
+    private Context context;
+    private LayoutInflater inflater;
+    private ItemFilter mFilter = new ItemFilter();
 
-    public PartsAdapter(Context context, List<PartModel> data, ArrayList<String> image_path) {
+    public PartsAdapter(Context context, List<PartModel> data, ArrayList<String> imagePath) {
         this.context = context;
         this.data = data;
-        this.image_path=image_path;
+        this.filteredData = data;
+        this.imagePath = imagePath;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -45,64 +47,110 @@ public class PartsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+        return filteredData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return filteredData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Holder holder = new Holder();
-        final View rowView;
-        rowView = inflater.inflate(R.layout.row_parts,null);
-        holder.partsImageView = rowView.findViewById(R.id.partImageView);
-        holder.txtPartName = rowView.findViewById(R.id.txtPartName);
-        holder.txtMake = rowView.findViewById(R.id.txtMake);
-        holder.txtYear = rowView.findViewById(R.id.txtYear);
-        holder.txtModel = rowView.findViewById(R.id.txtModel);
-        holder.txtCategory = rowView.findViewById(R.id.txtCategory);
-        holder.txtPrice = rowView.findViewById(R.id.txtPrice);
-        holder.txtNegotiable = rowView.findViewById(R.id.txtNegotiable);
-        holder.txtCondition = rowView.findViewById(R.id.txtCondition);
+        final Holder holder;
+        View rowView = convertView;
+        if (rowView == null) {
+            holder = new Holder();
+            rowView = inflater.inflate(R.layout.row_parts, parent, false);
+            holder.partsImageView = rowView.findViewById(R.id.partImageView);
+            holder.txtPartName = rowView.findViewById(R.id.txtPartName);
+            holder.txtMake = rowView.findViewById(R.id.txtMake);
+            holder.txtYear = rowView.findViewById(R.id.txtYear);
+            holder.txtModel = rowView.findViewById(R.id.txtModel);
+            holder.txtCategory = rowView.findViewById(R.id.txtCategory);
+            holder.txtPrice = rowView.findViewById(R.id.txtPrice);
+            holder.txtNegotiable = rowView.findViewById(R.id.txtNegotiable);
+            holder.txtCondition = rowView.findViewById(R.id.txtCondition);
+            rowView.setTag(holder);
+        } else {
+            holder = (Holder) rowView.getTag();
+        }
 
-        PartModel part = data.get(position);
+        PartModel part = filteredData.get(position);
         int id = part.getId();
         holder.txtCategory.setText(part.getCategory());
         holder.txtMake.setText(part.getMake());
         holder.txtModel.setText(part.getModel());
-        holder.txtPrice.setText("USD "+ part.getPrice());
+        holder.txtPrice.setText("USD " + part.getPrice());
         holder.txtCondition.setText(part.getPart_condition());
         holder.txtYear.setText(Integer.toString(part.getYear()));
         holder.txtPartName.setText(part.getName());
-        if(part.isNegotiable()){
-        holder.txtNegotiable.setText(R.string.negotiable);}
-        else{holder.txtNegotiable.setText("");}
+        if (part.isNegotiable()) {
+            holder.txtNegotiable.setText(R.string.negotiable);
+        } else {
+            holder.txtNegotiable.setText("");
+        }
 
-        Glide.with(context).load(Parts_IMAGES_DIR + image_path.get(position))
+        Glide.with(context).load(Parts_IMAGES_DIR + imagePath.get(position))
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .error(R.drawable.gear_def_icon)
                 .into(holder.partsImageView);
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, PartDetailsActivity.class);
-                i.putExtra("part_id",String.valueOf(id));
-                context.startActivity(i);
-            }
+
+        rowView.setOnClickListener(v -> {
+            Intent i = new Intent(context, PartDetailsActivity.class);
+            i.putExtra("part_id", String.valueOf(id));
+            context.startActivity(i);
         });
 
         return rowView;
     }
 
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
 
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterString = constraint.toString().toLowerCase();
+            FilterResults results = new FilterResults();
+            final List<PartModel> list = data;
+            int count = list.size();
+            final ArrayList<PartModel> nlist = new ArrayList<>(count);
+            String nego = context.getResources().getString(R.string.negotiable);
+            PartModel filterableModel;
+            for (int i = 0; i < count; i++) {
+                filterableModel = list.get(i);
+                if (filterableModel.getName().toLowerCase().contains(filterString) ||
+                        filterableModel.getCategory().toLowerCase().contains(filterString) ||
+                        filterableModel.getMake().toLowerCase().contains(filterString) ||
+                        filterableModel.getModel().toLowerCase().contains(filterString)||
+                        String.valueOf(filterableModel.getYear()).toLowerCase().contains(filterString) ||
+                        String.valueOf(filterableModel.getPrice()).toLowerCase().contains(filterString) ||
+                        (filterableModel.isNegotiable() ? nego : "").toLowerCase().contains(filterString) ||
+                        filterableModel.getPart_condition().toLowerCase().contains(filterString)) {
+                    nlist.add(filterableModel);
+                }
+            }
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<PartModel>) results.values;
+            notifyDataSetChanged();
+        }
+    }
 }

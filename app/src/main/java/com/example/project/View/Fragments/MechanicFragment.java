@@ -1,5 +1,7 @@
 package com.example.project.View.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -58,7 +60,7 @@ public class MechanicFragment extends BaseFragment {
         mechanicsFilterText = view.findViewById(R.id.mechanicsFilterText);
         mechanicsListView = view.findViewById(R.id.mechanicsListView);
         controller=new MechanicController();
-
+        loadFilterState();
         controller.getAllMechanicsData(requireContext(),String.valueOf(UserData.getId()), filtered ,new MechanicController.AllMechanicDataListener() {
             @Override
             public void onAllMechanicDataReceived(List<MechanicModel> all_mechanics) {
@@ -80,7 +82,9 @@ public class MechanicFragment extends BaseFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                adapter.getFilter().filter(newText);
+                if (adapter != null) {
+                    adapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });
@@ -123,7 +127,30 @@ public class MechanicFragment extends BaseFragment {
                     });
 
                 }
+                saveFilterState(filtered, mechanicsFilterText.getVisibility() == View.VISIBLE);
             }
         });
+    }
+
+    private void saveFilterState(String filterText, boolean isFilterVisible) {
+        SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("filteredText", filterText);
+        editor.putBoolean("isFilterVisible", isFilterVisible);
+        editor.apply(); // Use apply() for asynchronous saving
+    }
+    private void loadFilterState() {
+        SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        filtered = sharedPref.getString("filteredText", "false"); // Default value
+        boolean isVisible = sharedPref.getBoolean("isFilterVisible", false);
+
+        // Check if mechanicsFilterText is initialized before setting visibility
+        if (mechanicsFilterText != null) {
+            mechanicsFilterText.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        } else {
+            Log.e("MechanicFragment", "mechanicsFilterText is null");
+        }
+
+        mechanicsFilter.setBackground(isVisible ? ContextCompat.getDrawable(getContext(), R.drawable.filter_circle) : null);
     }
 }
