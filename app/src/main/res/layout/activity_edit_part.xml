@@ -14,10 +14,10 @@
         android:background="@color/colorAccent"
         android:paddingStart="52dp"
         android:paddingTop="10dp"
+        android:paddingBottom="1dp"
         android:text="@string/part_details"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="32sp"
-        android:paddingBottom="1dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +37,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/e_part_details_title">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,12 +63,12 @@
                 android:id="@+id/e_add_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
                 android:drawableStart="@drawable/add_circle"
                 android:text="@string/add_image"
                 android:textColor="@color/colorAccent"
-                android:layout_marginTop="@dimen/loginViewsMargin"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="15dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/e_horizontalScrollView"
@@ -79,8 +79,8 @@
                 android:id="@+id/editpartdefault"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="30dp"
                 app:cardCornerRadius="20dp"
@@ -163,7 +163,8 @@
                         android:id="@+id/e_scrapyardname_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
                         android:text="@string/scrapyard_name"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -172,94 +173,108 @@
 
                     <TextView
                         android:id="@+id/e_scrapyardname_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="name"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_scrapyardname_detail"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/e_model_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
                         android:text="@string/model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detail" />
-
-                    <Spinner
-                        android:id="@+id/e_model_detailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_marginTop="30dp"
-                        android:text="model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/e_model_detail"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detailtxt" />
-
-                    <TextView
-                        android:id="@+id/e_make_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:text="@string/make"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_model_detail" />
-
-                    <Spinner
-                        android:id="@+id/e_make_detailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_marginTop="30dp"
-                        android:text="model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintBaseline_toBaselineOf="@id/e_make_detail"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_model_detailtxt" />
-
-                    <TextView
-                        android:id="@+id/e_year_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:text="@string/year"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_make_detail" />
 
                     <Spinner
-                        android:id="@+id/e_year_detailtxt"
+                        android:id="@+id/e_model_detailtxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/e_model_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/e_make_detailtxt" />
+
+                    <TextView
+                        android:id="@+id/e_make_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:text="@string/make"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detail" />
+
+                    <Spinner
+                        android:id="@+id/e_make_detailtxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/e_make_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detailtxt" />
+
+                    <TextView
+                        android:id="@+id/e_year_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/year"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/e_model_detail" />
+
+                    <Spinner
+                        android:id="@+id/e_year_detailtxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_year_detail"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/e_make_detailtxt" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/e_model_detailtxt" />
 
                     <TextView
                         android:id="@+id/e_category_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
                         android:text="@string/category"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -268,22 +283,25 @@
 
                     <Spinner
                         android:id="@+id/e_category_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_category_detail"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_year_detailtxt" />
 
                     <TextView
                         android:id="@+id/e_subcategory_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
                         android:text="@string/subcategory"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -292,22 +310,25 @@
 
                     <Spinner
                         android:id="@+id/e_subcategory_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_subcategory_detail"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_category_detailtxt" />
 
                     <TextView
                         android:id="@+id/e_condition_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
                         android:text="@string/condition"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -316,37 +337,38 @@
 
                     <Spinner
                         android:id="@+id/e_condition_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:backgroundTint="@color/themeColor"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_condition_detail"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_subcategory_detailtxt" />
 
                     <CheckBox
                         android:id="@+id/e_negotiable_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:layout_marginBottom="30dp"
-                        android:layout_marginStart="25dp"
                         android:text="@string/negotiable"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/e_condition_detail" />
 
-
-
                     <TextView
                         android:id="@+id/e_phone_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/phone"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -356,17 +378,19 @@
 
                     <TextView
                         android:id="@+id/e_phone_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
                         android:text="70 055678"
                         android:textColor="@color/themeColor"
                         android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_phone_detail"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_negotiable_detail" />
 
 
@@ -412,7 +436,7 @@
                         android:id="@+id/e_descriptiontxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="good product!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+                        android:text="good product!"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -468,6 +492,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/FloatingActionButton"

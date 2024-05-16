@@ -150,7 +150,8 @@
                         android:id="@+id/scrapyardname_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/scrapyard_name"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -159,90 +160,114 @@
 
                     <TextView
                         android:id="@+id/scrapyardname_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:text="name"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/model_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scrapyardname_detail" />
-
-                    <TextView
-                        android:id="@+id/model_detailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_marginTop="30dp"
-                        android:text="model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scrapyardname_detailtxt" />
-
-                    <TextView
-                        android:id="@+id/make_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:text="@string/make"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/model_detail" />
-
-                    <TextView
-                        android:id="@+id/make_detailtxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
-                        android:layout_marginTop="30dp"
-                        android:text="model"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/model_detailtxt" />
-
-                    <TextView
-                        android:id="@+id/year_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
-                        android:text="@string/year"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/make_detail" />
 
                     <TextView
-                        android:id="@+id/year_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/model_detailtxt"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
                         android:text="model"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/model_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/make_detailtxt" />
+
+                    <TextView
+                        android:id="@+id/make_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:text="@string/make"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/make_detailtxt" />
+                        app:layout_constraintTop_toBottomOf="@id/scrapyardname_detail" />
+
+                    <TextView
+                        android:id="@+id/make_detailtxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
+                        android:text="make"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/make_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/scrapyardname_detailtxt" />
+
+                    <TextView
+                        android:id="@+id/year_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
+                        android:text="@string/year"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/model_detail" />
+
+                    <TextView
+                        android:id="@+id/year_detailtxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:layout_marginTop="30dp"
+                        android:text="year"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/year_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintTop_toBottomOf="@id/model_detailtxt" />
 
                     <TextView
                         android:id="@+id/category_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/category"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -251,21 +276,27 @@
 
                     <TextView
                         android:id="@+id/category_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
+                        android:text="category"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/category_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/year_detailtxt" />
 
                     <TextView
                         android:id="@+id/subcategory_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/subcategory"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -274,21 +305,27 @@
 
                     <TextView
                         android:id="@+id/subcategory_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:text="subcategory"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/subcategory_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/category_detailtxt" />
 
                     <TextView
                         android:id="@+id/condition_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/condition"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -297,21 +334,25 @@
 
                     <TextView
                         android:id="@+id/condition_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:text="condition"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/condition_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/subcategory_detailtxt" />
 
                     <TextView
                         android:id="@+id/negotiable_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/negotiable"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -320,21 +361,26 @@
 
                     <TextView
                         android:id="@+id/negotiable_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
-                        android:text="model"
+                        android:text="negotiable"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/negotiable_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/condition_detailtxt" />
 
                     <TextView
                         android:id="@+id/phone_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="30dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginStart="@dimen/loginViewsMargin"
                         android:text="@string/phone"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
@@ -344,16 +390,19 @@
 
                     <TextView
                         android:id="@+id/phone_detailtxt"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
-                        android:text="70 055678"
+                        android:text="70 123456"
                         android:textColor="@color/themeColor"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/phone_detail"
+                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
                         app:layout_constraintTop_toBottomOf="@id/negotiable_detailtxt" />
 
 
@@ -399,7 +448,7 @@
                         android:id="@+id/descriptiontxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="good product!qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+                        android:text="good product!"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
