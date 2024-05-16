@@ -108,6 +108,8 @@ public class ManagePartsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, EditPartActivity.class);
+                i.putExtra("category",part.getCategory());
+                i.putExtra("subcategory",part.getSubcategory());
                 i.putExtra("part_id",String.valueOf(id));
                 context.startActivity(i);
             }
