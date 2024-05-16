@@ -390,7 +390,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
     public void deleteImage(int position) {
         if (position < imageListfromdb.size()) {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?name=" + imageListfromdb.get(position), response -> {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?path=" + imageListfromdb.get(position), response -> {
                 Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
                 // Remove the image path from the list after successful deletion
                 imageListfromdb.remove(position);
