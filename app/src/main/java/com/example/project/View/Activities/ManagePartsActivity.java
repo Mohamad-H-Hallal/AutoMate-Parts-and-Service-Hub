@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class ManagePartsActivity extends BaseActivity {
     private FloatingActionButton fab;
     private ListView parts_list;
     String subcategory,category;
+    ManagePartsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class ManagePartsActivity extends BaseActivity {
         partCont.manageParts(this, subcategory, new PartController.PartManageListener() {
             @Override
             public void onPartsManage(List<PartModel> parts, ArrayList<String> imagePaths) {
-                ManagePartsAdapter adapter = new ManagePartsAdapter(ManagePartsActivity.this, parts, imagePaths);
+                adapter = new ManagePartsAdapter(ManagePartsActivity.this, parts, imagePaths);
                 parts_list.setAdapter(adapter);
             }
 
@@ -80,7 +82,9 @@ public class ManagePartsActivity extends BaseActivity {
                 i.putExtra("subcategory",subcategory);
                 i.putExtra("category",category);
                 startActivity(i);
+                finish();
             }
         });
     }
+
 }

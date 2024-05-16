@@ -110,9 +110,14 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartNegotiable = findViewById(R.id.addPartNegotiable);
         TwoDecimalPlacesInputFilter filter = new TwoDecimalPlacesInputFilter();
         addPartPrice.setFilters(new InputFilter[]{filter});
-        fillSpinners();
         imagePaths = new ArrayList<>();
         uriImages = new ArrayList<>();
+
+        Intent intent = getIntent();
+        String sendCategory = intent.getStringExtra("category");
+        String sendSubcategory = intent.getStringExtra("subcategory");
+
+        fillSpinners(sendCategory, sendSubcategory);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -124,6 +129,10 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(AddPartsActivity.this, ManagePartsActivity.class);
+                i.putExtra("category",sendCategory);
+                i.putExtra("subcategory",sendSubcategory);
+                startActivity(i);
                 finish();
             }
         });
@@ -206,7 +215,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         }
     }
 
-    public void fillSpinners() {
+    public void fillSpinners(String sendCategory, String sendSubcategory) {
 
         Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
         Map<String, List<String>> makeModelMap = new HashMap<>();
@@ -253,24 +262,20 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             }
         });
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            String sendCategory = intent.getStringExtra("category");
-            String sendSubcategory = intent.getStringExtra("subcategory");
 
-            if (sendCategory != null) {
-                int categoryPosition = categoryAdapter.getPosition(sendCategory);
-                category.setSelection(categoryPosition);
-                String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
-                List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
-                subcategory.setAdapter(subcategoryAdapter);
-                if (sendSubcategory != null) {
-                    int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
-                    subcategory.setSelection(subcategoryPosition);
-                }
+        if (sendCategory != null) {
+            int categoryPosition = categoryAdapter.getPosition(sendCategory);
+            category.setSelection(categoryPosition);
+            String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
+            List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
+            ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
+            subcategory.setAdapter(subcategoryAdapter);
+            if (sendSubcategory != null) {
+                int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+                subcategory.setSelection(subcategoryPosition);
             }
         }
+
     }
 
     private void restartApp() {

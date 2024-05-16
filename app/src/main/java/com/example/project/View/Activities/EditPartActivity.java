@@ -86,9 +86,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     ArrayList<String> imageListfromdb;
     ArrayList<String> imageListfromuser;
     ImageEditAdapter adapter;
-    TextView e_scrapyardname_detailtxt,add;
-    private EditText e_name_part,e_pricetxt,e_descriptiontxt;
-    private Spinner e_model_detailtxt,e_make_detailtxt,e_year_detailtxt,e_category_detailtxt,e_subcategory_detailtxt,e_condition_detailtxt;
+    TextView e_scrapyardname_detailtxt, add;
+    private EditText e_name_part, e_pricetxt, e_descriptiontxt;
+    private Spinner e_model_detailtxt, e_make_detailtxt, e_year_detailtxt, e_category_detailtxt, e_subcategory_detailtxt, e_condition_detailtxt;
     private CheckBox e_negotiable_detail;
     private AlertDialog Dialog;
     private String typeOfeachImage = "";
@@ -102,7 +102,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     PartController part_controller;
     UserController scrap_controller;
     String nameofscrap;
-    String Category,Subcategory;
+    String Category, Subcategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             public void onScrapyardDataReceived(ScrapyardModel user) {
                 longitude = user.getLongitude();
                 latitude = user.getLatitude();
-                nameofscrap= user.getName();
+                nameofscrap = user.getName();
             }
 
             @Override
@@ -160,9 +160,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
 
             }
         });
-
-
-
 
 
         part_controller.fetchthePart(this, Integer.parseInt(part_id), new PartController.ParttheFetchListener() {
@@ -182,10 +179,6 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
 
-
-
-
-        Toast.makeText(EditPartActivity.this, imageListfromdb.toString(), Toast.LENGTH_SHORT).show();
 
         miniMapView.onCreate(savedInstanceState);
         miniMapView.getMapAsync(new OnMapReadyCallback() {
@@ -224,17 +217,19 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         });
 
     }
-    public void filltheimages(String part_id){
+
+    public void filltheimages(String part_id) {
         part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
             @Override
             public void onImagePathReceived(ArrayList<String> imageUrls) {
-                imageListfromdb=imageUrls;
+                imageListfromdb = imageUrls;
                 if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
                     editpartdefault.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     editpartdefault.setVisibility(View.GONE);
-                adapter = new ImageEditAdapter(EditPartActivity.this, imageListfromdb, imageListfromuser, EditPartActivity.this);
-                horizontalScrollView.setAdapter(adapter);}
+                    adapter = new ImageEditAdapter(EditPartActivity.this, imageListfromdb, imageListfromuser, EditPartActivity.this);
+                    horizontalScrollView.setAdapter(adapter);
+                }
 
             }
         });
@@ -391,6 +386,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     public void deleteImage(int position) {
         if (position < imageListfromdb.size()) {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?path=" + imageListfromdb.get(position), response -> {
+                Log.d("test", response);
                 Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
                 // Remove the image path from the list after successful deletion
                 imageListfromdb.remove(position);
