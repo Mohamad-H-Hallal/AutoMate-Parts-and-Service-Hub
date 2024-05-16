@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".View.Activities.ViewPartsActivity">
+
     <TextView
         android:id="@+id/v_categories"
         android:layout_width="match_parent"
@@ -12,10 +14,10 @@
         android:background="@color/colorAccent"
         android:paddingStart="52dp"
         android:paddingTop="10dp"
+        android:paddingBottom="1dp"
         android:text="@string/parts"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="32sp"
-        android:paddingBottom="1dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +38,8 @@
         android:id="@+id/v_parts_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:divider="@color/transparent"
+        android:dividerHeight="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
