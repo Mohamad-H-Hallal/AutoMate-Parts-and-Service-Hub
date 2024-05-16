@@ -407,25 +407,25 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             StringRequest stringRequest = new StringRequest(Request.Method.GET, IP + "delete_image.php?path=" + imageListfromdb.get(position), response -> {
                 Log.d("test", response);
                 Toast.makeText(EditPartActivity.this, response.trim(), Toast.LENGTH_SHORT).show();
-                // Remove the image path from the list after successful deletion
+
                 imageListfromdb.remove(position);
                 horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
-                // Check if both lists are empty and show the default view if necessary
+
                 if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
                     editpartdefault.setVisibility(View.VISIBLE);
                 }
             }, error -> {
-                // Error handling
+
             });
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
         } else {
-            // If the image is from the user's list, remove it from the user's list
+
             int adjustedPosition = position - imageListfromdb.size();
             imageListfromuser.remove(adjustedPosition);
             uriImage.remove(adjustedPosition);
             horizontalScrollView.setAdapter(new ImageEditAdapter(this, imageListfromdb, imageListfromuser, this));
-            // Check if both lists are empty and show the default view if necessary
+
             if (imageListfromuser.isEmpty() && imageListfromdb.isEmpty()) {
                 editpartdefault.setVisibility(View.VISIBLE);
             }
