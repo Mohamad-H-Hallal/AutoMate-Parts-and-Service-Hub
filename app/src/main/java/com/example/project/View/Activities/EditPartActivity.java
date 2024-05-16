@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -158,12 +159,15 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
 
-        Toast.makeText(this, part_id, Toast.LENGTH_SHORT).show();
         part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
             @Override
             public void onImagePathReceived(ArrayList<String> imageUrls) {
-                imageListfromdb = imageUrls;
-
+                if (imageUrls != null && !imageUrls.isEmpty()) {
+                    imageListfromdb = imageUrls;
+                    Log.d("ImageList", "Images received: " + imageUrls.toString());
+                } else {
+                    Log.d("ImageList", "No images found.");
+                }
             }
         });
 

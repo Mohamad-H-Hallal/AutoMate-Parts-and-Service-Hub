@@ -41,13 +41,12 @@ public class PartController {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
+                        Log.d("Response", "Response received: " + response.toString());
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 String imageUrl = response.getString(i);
                                 imageUrls.add(imageUrl);
                             }
-                            // Notify the listener with the image URLs
                             listener.onImagePathReceived(imageUrls);
                         } catch (JSONException e) {
                             e.printStackTrace();
