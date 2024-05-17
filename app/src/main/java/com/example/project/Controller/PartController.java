@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.project.Model.PartModel;
+import com.example.project.Model.ScrapyardModel;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -395,38 +396,60 @@ public class PartController {
         void onError(String error);
     }
 
-    public interface imagesFetchListener {
-        void ontimagesFetched(ArrayList<String> images);
-        void onError(String error);
-    }
 
-    public void getimages(Context context,int part_id,final imagesFetchListener listener){
-        ArrayList<String> imagesList = new ArrayList<>();
+    public void fetchPartDetails(Context context, int part_id, final PartDetailsFetchListener listener) {
         RequestQueue mRequestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, IP+"get_images.php?part_id="+part_id, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Configuration.IP + "get_the_part.php?part_id=" + part_id, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                String imagePath = response.getString(i);
-                                imagesList.add(imagePath);
-                            }
-                            listener.ontimagesFetched(imagesList);
+                            // Parse the JSON object for part details
+                            PartModel part = new PartModel();
+                            part.setId(response.getInt("id"));
+                            part.setName(response.getString("name"));
+                            part.setMake(response.getString("make"));
+                            part.setModel(response.getString("model"));
+                            part.setYear(response.getString("year"));
+                            part.setScrapyard_id(response.getInt("scrapyard_id"));
+                            part.setPart_condition(response.getString("part_condition"));
+                            part.setCategory(response.getString("category"));
+                            part.setSubcategory(response.getString("subcategory"));
+                            part.setDescription(response.getString("description"));
+                            part.setNegotiable(response.getBoolean("negotiable"));
+                            part.setPrice(response.getDouble("price"));
+
+                            // Parse the JSON object for scrapyard details
+                            ScrapyardModel scrapyard = new ScrapyardModel();
+                            scrapyard.setName(response.getString("scrapyard_name"));
+                            scrapyard.setPhone(response.getString("scrapyard_phone"));
+                            scrapyard.setLatitude(response.getDouble("latitude"));
+                            scrapyard.setLongitude(response.getDouble("longitude"));
+
+                            // Notify listener with the fetched part and scrapyard details
+                            listener.onPartDetailsFetched(part, scrapyard);
                         } catch (JSONException e) {
                             e.printStackTrace();
-
+                            // Call listener with error
+                            listener.onError(e.toString());
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        listener.onError(error.getMessage());
+                        // Call listener with error
+                        listener.onError(error.toString());
                     }
                 });
-        mRequestQueue.add(request);
+
+        mRequestQueue.add(jsonObjectRequest);
+    }
+
+    public interface PartDetailsFetchListener {
+        void onPartDetailsFetched(PartModel part, ScrapyardModel scrapyard);
+        void onError(String error);
     }
 
 }
