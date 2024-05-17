@@ -29,7 +29,7 @@ public class BaseFragment extends Fragment {
 
     private void applyLanguageChange(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String language = preferences.getString("selected_language", "");
+        String language = preferences.getString("selected_language", "en");
 
         // If no language preference is set, use the default system language
         if (language.isEmpty()) {

@@ -37,7 +37,7 @@ public class PartsCategoriesAdapter extends BaseExpandableListAdapter {
 
     public void updateData() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String language = preferences.getString("selected_language", "");
+        String language = preferences.getString("selected_language", "en");
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
         Configuration config = new Configuration();

@@ -139,7 +139,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         imageListfromuser = new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {
@@ -182,7 +182,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 String[] yea = parts.getYear().split("-");
                 String[] cond = parts.getPart_condition().split("-");
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditPartActivity.this);
-                String selectedLanguage = preferences.getString("selected_language", "");
+                String selectedLanguage = preferences.getString("selected_language", "en");
                 Log.d("test",selectedLanguage);
                 if (selectedLanguage.equals("en")) {
 

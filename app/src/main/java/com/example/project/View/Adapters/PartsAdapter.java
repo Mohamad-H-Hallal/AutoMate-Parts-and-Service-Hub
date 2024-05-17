@@ -91,7 +91,7 @@ public class PartsAdapter extends BaseAdapter implements Filterable {
         String[] conditionArray = part.getPart_condition().split("-");
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             holder.txtCategory.setText(categoryArray[0]);
             holder.txtCondition.setText(conditionArray[0]);

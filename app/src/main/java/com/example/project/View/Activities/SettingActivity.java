@@ -73,7 +73,7 @@ public class SettingActivity extends BaseActivity {
         });
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             lang.setSelection(0); // English
             back.setImageResource(R.drawable.ic_back_en);

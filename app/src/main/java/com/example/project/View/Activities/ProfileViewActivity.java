@@ -80,7 +80,7 @@ public class ProfileViewActivity extends BaseActivity {
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {

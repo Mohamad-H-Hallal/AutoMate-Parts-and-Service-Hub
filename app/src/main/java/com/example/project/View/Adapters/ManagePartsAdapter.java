@@ -97,7 +97,7 @@ public class ManagePartsAdapter extends BaseAdapter {
         String[] subcategoryArray = part.getSubcategory().split("-");
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             holder.txtCategory.setText(categoryArray[0]);
             holder.txtCondition.setText(conditionArray[0]);

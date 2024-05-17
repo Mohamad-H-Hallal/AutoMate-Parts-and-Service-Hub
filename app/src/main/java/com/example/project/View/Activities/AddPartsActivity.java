@@ -121,7 +121,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         fillSpinners(sendCategory, sendSubcategory);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {
@@ -131,8 +131,8 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AddPartsActivity.this, ManagePartsActivity.class);
-                i.putExtra("category",sendCategory);
-                i.putExtra("subcategory",sendSubcategory);
+                i.putExtra("category", sendCategory);
+                i.putExtra("subcategory", sendSubcategory);
                 startActivity(i);
                 finish();
             }
@@ -148,7 +148,6 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         addPartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Context englishContext = new EnglishContextWrapper(AddPartsActivity.this);
                 String makeChoice = getResources().getStringArray(R.array.make_choices)[make.getSelectedItemPosition()];
                 String yearChoice = getResources().getStringArray(R.array.year_choices_combined)[year.getSelectedItemPosition()];
                 String categoryChoice = getResources().getStringArray(R.array.categories_choices_combined)[category.getSelectedItemPosition()];
@@ -202,20 +201,6 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
 
     }
 
-//    // EnglishContextWrapper class definition
-//    public static class EnglishContextWrapper extends ContextWrapper {
-//        public EnglishContextWrapper(Context base) {
-//            super(base);
-//        }
-//
-//        @Override
-//        public Resources getResources() {
-//            Configuration configuration = new Configuration(super.getResources().getConfiguration());
-//            configuration.setLocale(new Locale("en"));
-//            return createConfigurationContext(configuration).getResources();
-//        }
-//    }
-
     public void fillSpinners(String sendCategory, String sendSubcategory) {
 
         Map<String, List<String>> categorySubcategoryMap = new HashMap<>();
@@ -253,13 +238,17 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedMake = (String) parent.getItemAtPosition(position);
                 List<String> modelList = makeModelMap.get(selectedMake);
-                ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, modelList);
-                model.setAdapter(modelAdapter);
+                if (modelList != null) {
+                    ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, modelList);
+                    model.setAdapter(modelAdapter);
+                } else {
+                    model.setAdapter(null);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case where nothing is selected
+                model.setAdapter(null);
             }
         });
 
@@ -268,7 +257,7 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
         String sentCategory = "";
         String sentSubcategory = "";
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AddPartsActivity.this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             sentCategory = categorySplit[0];
             sentSubcategory = subcategorySplit[0];
@@ -282,14 +271,17 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             category.setSelection(categoryPosition);
             String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
             List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-            ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
-            subcategory.setAdapter(subcategoryAdapter);
-            if (sentSubcategory != null) {
-                int subcategoryPosition = subcategoryAdapter.getPosition(sentSubcategory);
-                subcategory.setSelection(subcategoryPosition);
+            if (subcategoriesList != null) {
+                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
+                subcategory.setAdapter(subcategoryAdapter);
+                if (sentSubcategory != null) {
+                    int subcategoryPosition = subcategoryAdapter.getPosition(sentSubcategory);
+                    subcategory.setSelection(subcategoryPosition);
+                }
+            } else {
+                subcategory.setAdapter(null);
             }
         }
-
     }
 
     private void restartApp() {

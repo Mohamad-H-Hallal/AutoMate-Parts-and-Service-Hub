@@ -13,7 +13,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(newBase);
-        String language = preferences.getString("selected_language", "");
+        String language = preferences.getString("selected_language", "en");
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
         Configuration config = new Configuration();

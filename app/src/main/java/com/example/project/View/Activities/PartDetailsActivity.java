@@ -74,7 +74,7 @@ public class PartDetailsActivity extends BaseActivity {
         String part_id = i.getStringExtra("part_id");
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {
@@ -172,7 +172,7 @@ public class PartDetailsActivity extends BaseActivity {
                 String[] yea = part.getYear().split("-");
                 String[] cond = part.getPart_condition().split("-");
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PartDetailsActivity.this);
-                String selectedLanguage = preferences.getString("selected_language", "");
+                String selectedLanguage = preferences.getString("selected_language", "en");
                 if (selectedLanguage.equals("en")) {
                     year_detailtxt.setText(yea[0]);
                     category_detailtxt.setText(cat[0]);

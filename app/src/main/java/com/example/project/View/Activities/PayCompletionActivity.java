@@ -47,7 +47,7 @@ public class PayCompletionActivity extends BaseActivity {
         LN = textInputLN.getEditText();
         paymentSubmit = findViewById(R.id.paymentSubmit);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String selectedLanguage = preferences.getString("selected_language", "");
+        String selectedLanguage = preferences.getString("selected_language", "en");
         if (selectedLanguage.equals("en")) {
             back.setImageResource(R.drawable.ic_back_en);
         } else if (selectedLanguage.equals("ar")) {

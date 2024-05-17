@@ -400,7 +400,7 @@ public class PartController {
     public void fetchPartDetails(Context context, int part_id, final PartDetailsFetchListener listener) {
         RequestQueue mRequestQueue = Volley.newRequestQueue(context);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Configuration.IP + "get_the_part.php?part_id=" + part_id, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Configuration.IP + "get_part_details.php?part_id=" + part_id, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

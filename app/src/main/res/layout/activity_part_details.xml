@@ -354,7 +354,7 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginStart="15dp"
                         android:text="@string/negotiable"
-                        android:editable="false"
+                        android:enabled="false"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
