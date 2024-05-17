@@ -183,7 +183,9 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 String[] cond = parts.getPart_condition().split("-");
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(EditPartActivity.this);
                 String selectedLanguage = preferences.getString("selected_language", "");
+                Log.d("test",selectedLanguage);
                 if (selectedLanguage.equals("en")) {
+
                     fillSpinners(cat[0], subcat[0], mod, mak, yea[0], cond[0]);
                 } else if (selectedLanguage.equals("ar")) {
                     fillSpinners(cat[1], subcat[1], mod, mak, yea[1], cond[1]);

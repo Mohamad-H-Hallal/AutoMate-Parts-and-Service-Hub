@@ -139,7 +139,7 @@ public class LoginActivity extends BaseActivity implements UserController.Authen
 
     private String getLanguagePreference() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        return preferences.getString("language", "");
+        return preferences.getString("selected_language", "en");
     }
 
     private void setLocale(String languageCode) {
