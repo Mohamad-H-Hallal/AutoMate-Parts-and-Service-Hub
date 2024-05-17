@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,7 +17,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.project.Controller.PartController;
 import com.example.project.CustomMapView;
+import com.example.project.Model.PartModel;
+import com.example.project.Model.ScrapyardModel;
 import com.example.project.R;
+import com.example.project.View.Adapters.ImageEditAdapter;
 import com.example.project.View.Adapters.ImageSliderAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,16 +30,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PartDetailsActivity extends BaseActivity {
     ViewPager horizontalScrollView;
     CustomMapView miniMapView;
     ImageButton back;
     ShapeableImageView location;
-    TextView phone;
+    TextView phone, name_part, pricetxt, scrapyardname, make_detailtxt, model_detailtxt, year_detailtxt, category_detailtxt, subcategory_detailtxt, condition_detailtxt, descriptiontxt;
+    CheckBox negotiable_detail;
     CardView partDetailCardView;
     PartController part_controller;
+    ArrayList<String> imageList;
+    ImageSliderAdapter adapter;
+
+    private double scrapyardLatitude;
+    private double scrapyardLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +56,22 @@ public class PartDetailsActivity extends BaseActivity {
         back = findViewById(R.id.back_arrow4);
         location = findViewById(R.id.location_part_click);
         phone = findViewById(R.id.phone_detailtxt);
+        name_part = findViewById(R.id.name_part);
+        pricetxt = findViewById(R.id.pricetxt);
+        scrapyardname = findViewById(R.id.scrapyardname_detailtxt);
+        make_detailtxt = findViewById(R.id.make_detailtxt);
+        model_detailtxt = findViewById(R.id.model_detailtxt);
+        year_detailtxt = findViewById(R.id.year_detailtxt);
+        category_detailtxt = findViewById(R.id.category_detailtxt);
+        subcategory_detailtxt = findViewById(R.id.subcategory_detailtxt);
+        condition_detailtxt = findViewById(R.id.condition_detailtxt);
+        descriptiontxt = findViewById(R.id.descriptiontxt);
+        negotiable_detail = findViewById(R.id.negotiable_detail);
         partDetailCardView = findViewById(R.id.partDetailCardView);
         part_controller = new PartController();
+
+        Intent i = getIntent();
+        String part_id = i.getStringExtra("part_id");
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "");
@@ -80,26 +103,35 @@ public class PartDetailsActivity extends BaseActivity {
             }
         });
 
-        ArrayList<String> imageList = new ArrayList<>();
-//        imageList = part_controller.imagespath(this,lid lal part);
+        imageList = new ArrayList<>();
+        part_controller.getImagesPath(this, Integer.parseInt(part_id), new PartController.ImagePathListener() {
+            @Override
+            public void onImagePathReceived(ArrayList<String> imageUrls) {
+                imageList = imageUrls;
+                if (imageList.isEmpty()) {
+                    partDetailCardView.setVisibility(View.VISIBLE);
+                } else {
+                    partDetailCardView.setVisibility(View.GONE);
+                    adapter = new ImageSliderAdapter(PartDetailsActivity.this, imageList);
+                    horizontalScrollView.setAdapter(adapter);
+                }
 
+            }
+        });
 
-
-        if(!imageList.isEmpty()){
+        if (!imageList.isEmpty()) {
             partDetailCardView.setVisibility(View.GONE);
         }
-        ImageSliderAdapter adapter = new ImageSliderAdapter(this, imageList);
-        horizontalScrollView.setAdapter(adapter);
 
         miniMapView = findViewById(R.id.miniMapView);
 
-// Set up the map asynchronously
+        // Set up the map asynchronously
         miniMapView.onCreate(savedInstanceState);
         miniMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // Customize the map as needed
-                LatLng location = new LatLng(33, 35);
+                LatLng location = new LatLng(scrapyardLatitude, scrapyardLongitude);
                 googleMap.addMarker(new MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
             }
@@ -108,9 +140,9 @@ public class PartDetailsActivity extends BaseActivity {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MapsLocationActivity.class);
-                i.putExtra("latitude",33);
-                i.putExtra("longitude",35);
+                Intent i = new Intent(getApplicationContext(), MapsLocationActivity.class);
+                i.putExtra("latitude", scrapyardLatitude);
+                i.putExtra("longitude", scrapyardLongitude);
                 startActivity(i);
             }
         });
@@ -125,6 +157,58 @@ public class PartDetailsActivity extends BaseActivity {
             }
         });
 
+        // Fetch part details
+        part_controller.fetchPartDetails(this, Integer.parseInt(part_id), new PartController.PartDetailsFetchListener() {
+            @Override
+            public void onPartDetailsFetched(PartModel part, ScrapyardModel scrapyard) {
+                // Set part details
+                name_part.setText(part.getName());
+                pricetxt.setText("USD " + part.getPrice());
+                make_detailtxt.setText(part.getMake());
+                model_detailtxt.setText(part.getModel());
+
+                String[] cat = part.getCategory().split("-");
+                String[] subcat = part.getSubcategory().split("-");
+                String[] yea = part.getYear().split("-");
+                String[] cond = part.getPart_condition().split("-");
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PartDetailsActivity.this);
+                String selectedLanguage = preferences.getString("selected_language", "");
+                if (selectedLanguage.equals("en")) {
+                    year_detailtxt.setText(yea[0]);
+                    category_detailtxt.setText(cat[0]);
+                    subcategory_detailtxt.setText(subcat[0]);
+                    condition_detailtxt.setText(cond[0]);
+                } else if (selectedLanguage.equals("ar")) {
+                    year_detailtxt.setText(yea[1]);
+                    category_detailtxt.setText(cat[1]);
+                    subcategory_detailtxt.setText(subcat[1]);
+                    condition_detailtxt.setText(cond[1]);
+                }
+
+                descriptiontxt.setText(part.getDescription());
+                negotiable_detail.setChecked(part.isNegotiable());
+                // Set scrapyard details
+                scrapyardname.setText(scrapyard.getName());
+                phone.setText(scrapyard.getPhone());
+                scrapyardLatitude = scrapyard.getLatitude();
+                scrapyardLongitude = scrapyard.getLongitude();
+
+                // Update map with scrapyard location
+                miniMapView.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        LatLng scrapyardLocation = new LatLng(scrapyardLatitude, scrapyardLongitude);
+                        googleMap.addMarker(new MarkerOptions().position(scrapyardLocation).title(scrapyard.getName()));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scrapyardLocation, 12f));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                // Handle the error
+            }
+        });
     }
 
     // Remember to manage the lifecycle of the MapView
@@ -151,6 +235,4 @@ public class PartDetailsActivity extends BaseActivity {
         super.onLowMemory();
         miniMapView.onLowMemory();
     }
-
-
 }

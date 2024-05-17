@@ -22,6 +22,9 @@ public class ScrapyardModel {
         this.longitude = longitude;
         this.rating = rating;
     }
+    public ScrapyardModel() {
+
+    }
 
     public String getEnd_date() {
         return end_date;
