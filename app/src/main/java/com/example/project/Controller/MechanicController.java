@@ -29,7 +29,7 @@ public class MechanicController {
         void onError(VolleyError error);
     }
 
-    public void getAllMechanicsData(Context context, String user_id, String filtered, MechanicController.AllMechanicDataListener listener) {
+    public void getAllMechanicsData(Context context, int user_id, String filtered, MechanicController.AllMechanicDataListener listener) {
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_all_mechanics.php?filtered=" + filtered + "&user_id=" + user_id, null,
                 new Response.Listener<JSONArray>() {

@@ -56,7 +56,7 @@ public class ScrapYardFragment extends BaseFragment {
         scrapYardListView = view.findViewById(R.id.scrapYardListView);
         controller = new ScrapyardController();
 
-        controller.getAllScrapyardsData(requireContext(), String.valueOf(UserData.getId()), "false", new ScrapyardController.AllScrapyardDataListener() {
+        controller.getAllScrapyardsData(requireContext(), UserData.getId(), "false", new ScrapyardController.AllScrapyardDataListener() {
             @Override
             public void onAllScrapyardDataReceived(List<ScrapyardModel> all_scrapyard) {
                 adapter = new ScrapYardAdapter(requireContext(), all_scrapyard);
@@ -95,7 +95,7 @@ public class ScrapYardFragment extends BaseFragment {
                     scrapYardFilterText.setVisibility(View.GONE);
                     scrapYardFilter.setBackground(null);
                 }
-                controller.getAllScrapyardsData(requireContext(), String.valueOf(UserData.getId()), String.valueOf(isfiltered), new ScrapyardController.AllScrapyardDataListener() {
+                controller.getAllScrapyardsData(requireContext(), UserData.getId(), String.valueOf(isfiltered), new ScrapyardController.AllScrapyardDataListener() {
                     @Override
                     public void onAllScrapyardDataReceived(List<ScrapyardModel> all_scrapyard) {
                         adapter = new ScrapYardAdapter(requireContext(), all_scrapyard);

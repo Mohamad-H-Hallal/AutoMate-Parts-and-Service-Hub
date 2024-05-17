@@ -31,7 +31,7 @@ public class ScrapyardController {
         void onError(VolleyError error);
     }
 
-    public void getAllScrapyardsData(Context context, String user_id, String filtered, ScrapyardController.AllScrapyardDataListener listener) {
+    public void getAllScrapyardsData(Context context, int user_id, String filtered, ScrapyardController.AllScrapyardDataListener listener) {
 
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, IP + "get_all_scrapyards.php?filtered=" + filtered + "&user_id=" + user_id,null,
                 new Response.Listener<JSONArray>() {

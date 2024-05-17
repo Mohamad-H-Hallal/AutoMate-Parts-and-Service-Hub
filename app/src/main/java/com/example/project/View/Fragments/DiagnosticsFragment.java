@@ -1,10 +1,23 @@
 package com.example.project.View.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,58 +26,39 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import com.example.project.R;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-
-import com.example.project.R;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class DiagnosticsFragment extends BaseFragment {
 
     private ImageView carDataFilter;
     private CardView carDataCardFilter;
     private AppCompatButton importData;
-    private static final String TAG = "BluetoothClient";
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Same as server UUID
-    private static final String DEVICE_ADDRESS = "2C:CF:67:03:A4:11"; // Replace with server MAC address
+    private static final String TAG = "DiagnosticsFragment";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 2;
+    private static final String SERVER_ADDRESS = "2C:CF:67:03:A4:11"; // Replace with your server's Bluetooth address
+    private static final UUID SERVER_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Replace with your server's UUID
 
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothSocket socket;
-    private ProgressBar progressBar;
-    private TextView statusText;
+    private BluetoothSocket bluetoothSocket;
+    private InputStream inputStream;
+    private List<String> fileNames;
     private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
 
     public DiagnosticsFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -77,11 +71,10 @@ public class DiagnosticsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         carDataFilter = view.findViewById(R.id.carDataFilter);
         carDataCardFilter = view.findViewById(R.id.carDataCardFilter);
         importData = view.findViewById(R.id.importData);
-        progressBar = view.findViewById(R.id.progress_bar_id);
-        statusText = view.findViewById(R.id.status_text);
         daySpinner = view.findViewById(R.id.daySpinner);
         monthSpinner = view.findViewById(R.id.monthSpinner);
         yearSpinner = view.findViewById(R.id.yearSpinner);
@@ -100,31 +93,30 @@ public class DiagnosticsFragment extends BaseFragment {
         ArrayAdapter<String> hourAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, hourArray);
         hourSpinner.setAdapter(hourAdapter);
 
-        importData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isBluetoothEnabled()) {
-                    requestBluetoothEnable();
-                    return;
-                }
-                checkAndRequestPermissions();
+        // Initialize fileNames list
+        fileNames = new ArrayList<>();
+
+        importData.setOnClickListener(v -> {
+            if (!isBluetoothEnabled()) {
+                requestBluetoothEnable();
+                return;
             }
+            checkAndRequestPermissions();
         });
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
             Toast.makeText(getContext(), "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show();
             return;
         }
-        carDataFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (carDataCardFilter.getVisibility() == View.VISIBLE) {
-                    carDataCardFilter.setVisibility(View.GONE);
-                    carDataFilter.setBackground(null);
-                } else {
-                    carDataCardFilter.setVisibility(View.VISIBLE);
-                    carDataFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
-                }
+
+        carDataFilter.setOnClickListener(v -> {
+            if (carDataCardFilter.getVisibility() == View.VISIBLE) {
+                carDataCardFilter.setVisibility(View.GONE);
+                carDataFilter.setBackground(null);
+            } else {
+                carDataCardFilter.setVisibility(View.VISIBLE);
+                carDataFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
             }
         });
     }
@@ -145,7 +137,6 @@ public class DiagnosticsFragment extends BaseFragment {
         startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
     }
 
-
     private void checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
@@ -165,7 +156,8 @@ public class DiagnosticsFragment extends BaseFragment {
             } else {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
             }
-        } else if (requestCode == REQUEST_ENABLE_BT) {
+        } else if (requestCode == REQUEST_ENABLE_BT
+        ) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 checkAndRequestPermissions();
             } else {
@@ -186,144 +178,85 @@ public class DiagnosticsFragment extends BaseFragment {
         }
     }
 
-
+    @SuppressLint("MissingPermission")
     private void connectToDevice() {
-        Log.d("test","i am in the connectToDevice method");
-        new ConnectTask().execute();
+        new Thread(() -> {
+            try {
+                BluetoothDevice device = bluetoothAdapter.getRemoteDevice(SERVER_ADDRESS);
+                bluetoothSocket = device.createRfcommSocketToServiceRecord(SERVER_UUID);
+                bluetoothSocket.connect();
+                inputStream = bluetoothSocket.getInputStream();
+                receiveZipFile(inputStream);
+            } catch (IOException e) {
+                Log.e(TAG, "Error connecting to Raspberry Pi: " + e.getMessage(), e);
+                // Handle connection error gracefully
+                getActivity().runOnUiThread(() -> {
+                    Toast.makeText(getContext(), "Failed to connect to Raspberry Pi", Toast.LENGTH_SHORT).show();
+                });
+            } finally {
+                try {
+                    if (bluetoothSocket != null) bluetoothSocket.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Error closing socket: " + e.getMessage(), e);
+                }
+            }
+        }).start();
     }
 
-    private class ConnectTask extends AsyncTask<Void, Integer, Boolean> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE); // Show progress bar
-            statusText.setText(getResources().getString(R.string.connecting)); // Update status text
-        }
-
-        private void sendSignal(BluetoothSocket socket) throws IOException {
-            OutputStream outputStream = socket.getOutputStream();
-            String signal = "START_TRANSFER"; // Define your signal here
-            outputStream.write(signal.getBytes());
-            outputStream.flush();
-        }
-        private boolean waitForSignal(BluetoothSocket socket) throws IOException {
-            InputStream inputStream = socket.getInputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = inputStream.read(buffer);
-            String receivedSignal = new String(buffer, 0, bytesRead);
-            return receivedSignal.equals("START_TRANSFER"); // Adjust the condition based on your signal
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            try {
-                BluetoothDevice device = bluetoothAdapter.getRemoteDevice(DEVICE_ADDRESS);
-                bluetoothAdapter.cancelDiscovery();
-                socket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
-                try {
-                    socket.connect();
-                    sendSignal(socket);
-                    if (waitForSignal(socket)) {
-                        receiveFile(socket); // Start receiving the file
-                        return true; // File transfer successful
-                    } else {
-                        return false; // Server didn't acknowledge the signal
-                    }
-                } catch (IOException e) {
-                    Log.e(TAG, "Error connecting to server", e);
-                    try {
-                        socket.close();
-                    } catch (IOException closeException) {
-                        Log.e(TAG, "Could not close the client socket", closeException);
-                    }
-                }
-
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        if (socket != null && !socket.isConnected()) {
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                Log.e(TAG, "Could not close the client socket", e);
-                            }
-                        }
-                    }
-                }, 10000);
-
-
-            } catch (IOException e) {
-                Log.e(TAG, "Error creating socket", e);
-                return false; // Failed to create socket
-            } catch (SecurityException e) {
-                Log.e(TAG, "Security exception during connection", e);
-                return false; // Security exception occurred
-            }
-            return false;
-        }
-
-
-
-        private void receiveFile(BluetoothSocket socket) throws IOException {
-            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File file = new File(directory, "car_data.zip");
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = new FileOutputStream(file);
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            long totalBytes = 0;
-            int fileSize = inputStream.available(); // Assuming file size can be obtained
-
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-                totalBytes += bytesRead;
-                progressBar.setProgress((int) ((totalBytes * 1.0f) / fileSize * 100));
+    private void receiveZipFile(InputStream inputStream) {
+        try {
+            File storageDir = new File(Environment.getExternalStorageDirectory(), "BluetoothFiles");
+            if (!storageDir.exists()) {
+                storageDir.mkdirs();
             }
 
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            File zipFile = new File(storageDir, "received_files.zip");
+            try (FileOutputStream fos = new FileOutputStream(zipFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
                 }
             }
 
-            Log.d(TAG, "File received: " + file.getAbsolutePath());
-            publishProgress(); // Trigger UI update on successful file reception
-        }
+            unzip(zipFile.getAbsolutePath(), storageDir.getAbsolutePath());
+            zipFile.delete();
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            int progress = values[0];
-            progressBar.setProgress(progress);
-            statusText.setText(getResources().getString(R.string.downloading)); // Update status text during download
-        }
+            for (File file : storageDir.listFiles()) {
+                if (file.isFile()) {
+                    fileNames.add(file.getName());
+                }
+            }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            progressBar.setVisibility(View.GONE);
-            if (result) {
-                statusText.setText(getResources().getString(R.string.file_saved));
-            } else {
-                statusText.setText(getResources().getString(R.string.error_occurred));
+        } catch (IOException e) {
+            Log.e(TAG, "Error receiving file: " + e.getMessage(), e);
+        }
+    }
+
+    private void unzip(String zipFilePath, String destDirectory) throws IOException {
+        try (ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath))) {
+            ZipEntry entry = zipIn.getNextEntry();
+            while (entry != null) {
+                String filePath = destDirectory + File.separator + entry.getName();
+                if (!entry.isDirectory()) {
+                    extractFile(zipIn, filePath);
+                } else {
+                    File dir = new File(filePath);
+                    dir.mkdir();
+                }
+                zipIn.closeEntry();
+                entry = zipIn.getNextEntry();
+            }
+        }
+    }
+
+    private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath))) {
+            byte[] bytesIn = new byte[1024];
+            int read;
+            while ((read = zipIn.read(bytesIn)) != -1) {
+                bos.write(bytesIn, 0, read);
             }
         }
     }
