@@ -390,7 +390,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/phone_detail"
                         app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
-                        app:layout_constraintTop_toBottomOf="@id/negotiable_detailtxt" />
+                        app:layout_constraintTop_toBottomOf="@id/negotiable_detail" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
