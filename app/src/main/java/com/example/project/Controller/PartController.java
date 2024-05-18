@@ -452,6 +452,61 @@ public class PartController {
         void onError(String error);
     }
 
+    public void editPart(Context context,String id, String name, String make, String model, String year, String category, String subcategory, String description, String condition, double price, boolean negotiable, ArrayList<String> images, final EditPartCallback callback) {
+
+        String url = IP + "edit_part.php";
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {Log.d("test",response);
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String status = jsonResponse.getString("status");
+                            String message = jsonResponse.getString("message");
+                            callback.onResponse(status, message);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onError("Error: " + e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError("Error: " + error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", name);
+                params.put("make", make);
+                params.put("model", model);
+                params.put("year", year);
+                params.put("category", category);
+                params.put("subcategory", subcategory);
+                params.put("condition", condition);
+                params.put("description", description);
+                params.put("price", String.valueOf(price));
+                params.put("id", id);
+                params.put("negotiable", String.valueOf(negotiable));
+                for (int i = 0; i < images.size(); i++) {
+                    params.put("images[" + i + "]", images.get(i));
+                }
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    public interface EditPartCallback {
+        void onResponse(String status, String message);
+
+        void onError(String error);
+    }
+
 }
 
 

@@ -62,6 +62,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
@@ -96,6 +97,8 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
     private String typeOfeachImage = "";
     private String nameOfeachImage = "";
     private ArrayList<Uri> uriImage;
+    ArrayList<String> imagePaths;
+    private FloatingActionButton save;
     private double latitude = 33;
     private double longitude = 35;
     private static final int GALLERY_REQUEST_CODE = 110;
@@ -130,6 +133,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         e_year_detailtxt = findViewById(R.id.e_year_detailtxt);
         e_condition_detailtxt = findViewById(R.id.e_condition_detailtxt);
         e_negotiable_detail = findViewById(R.id.e_negotiable_detail);
+        save = findViewById(R.id.fab);
 
         editpartdefault = findViewById(R.id.editpartdefault);
         part_controller = new PartController();
@@ -137,6 +141,7 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
         uriImage = new ArrayList<Uri>();
         imageListfromdb = new ArrayList<>();
         imageListfromuser = new ArrayList<>();
+        imagePaths=new ArrayList<>();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "en");
@@ -236,6 +241,81 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             }
         });
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String makeChoice = getResources().getStringArray(R.array.make_choices)[e_make_detailtxt.getSelectedItemPosition()];
+                String yearChoice = getResources().getStringArray(R.array.year_choices_combined)[e_year_detailtxt.getSelectedItemPosition()];
+                String categoryChoice = getResources().getStringArray(R.array.categories_choices_combined)[e_category_detailtxt.getSelectedItemPosition()];
+                String conditionChoice = getResources().getStringArray(R.array.condition_choices_combined)[e_condition_detailtxt.getSelectedItemPosition()];
+
+                String subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices_combined)[e_category_detailtxt.getSelectedItemPosition()];
+                String[] subcategoryChoices = subcategoriesArray.split(";");
+                String subcategoryChoice = subcategoryChoices[e_subcategory_detailtxt.getSelectedItemPosition()];
+
+                String modelArray = getResources().getStringArray(R.array.model_choices)[e_make_detailtxt.getSelectedItemPosition()];
+                String[] modelChoices = modelArray.split(";");
+                String modelChoice = modelChoices[e_model_detailtxt.getSelectedItemPosition()];
+
+                boolean nego = e_negotiable_detail.isChecked();
+                String name = e_name_part.getText().toString();
+                String price = e_pricetxt.getText().toString();
+                String description = e_descriptiontxt.getText().toString();
+
+                if (makeChoice.equals(e_make_detailtxt.getItemAtPosition(0).toString()) || modelChoice.equals(e_model_detailtxt.getItemAtPosition(0).toString()) || yearChoice.equals(e_year_detailtxt.getItemAtPosition(0).toString()) || categoryChoice.equals(e_category_detailtxt.getItemAtPosition(0).toString()) || subcategoryChoice.equals(e_subcategory_detailtxt.getItemAtPosition(0).toString()) || conditionChoice.equals(e_condition_detailtxt.getItemAtPosition(0).toString()) || name.isEmpty() || price.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(EditPartActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditPartActivity.this);
+                View dialogView = LayoutInflater.from(EditPartActivity.this).inflate(R.layout.edit_mode_dialog, null);
+                final AppCompatButton yesButton = dialogView.findViewById(R.id.cs_yes_button);
+                final AppCompatButton noButton = dialogView.findViewById(R.id.cs_no_button);
+                builder.setView(dialogView);
+
+
+                final AlertDialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCanceledOnTouchOutside(false); // Prevent dismissal by clicking outside
+
+
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        uploadImages(uriImage);
+                        part_controller.editPart(EditPartActivity.this, part_id, name, makeChoice, modelChoice, yearChoice, categoryChoice, subcategoryChoice, description, conditionChoice, Double.parseDouble(price), nego, imagePaths, new PartController.EditPartCallback() {
+                            @Override
+                            public void onResponse(String status, String message) {
+                                if (status.equals("success")) {
+                                    Toast.makeText(EditPartActivity.this, message, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(EditPartActivity.this, "test", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditPartActivity.this, message, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                Log.d("error",error);
+
+                            }
+                        });
+
+
+
+                        dialog.dismiss(); // Dismiss the dialog
+                    }
+                });
+
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss(); // Dismiss the dialog
+                    }
+                });
+
+                // Show the dialog
+                dialog.show();
+            }}
+        });
     }
 
     public void filltheimages(String part_id) {
@@ -296,33 +376,64 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             e_condition_detailtxt.setSelection(conditionPosition);
         }
 
-        if (make != null) {
-            int makePosition = makeAdapter.getPosition(make);
-            e_make_detailtxt.setSelection(makePosition);
-            String selectedMake = (String) e_make_detailtxt.getItemAtPosition(makePosition);
-            List<String> modelList = makeModelMap.get(selectedMake);
-            ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelList);
-            e_model_detailtxt.setAdapter(modelAdapter);
-            if (model != null) {
-                int modelPosition = modelAdapter.getPosition(model);
-                e_model_detailtxt.setSelection(modelPosition);
+
+        e_make_detailtxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedMake = (String) parent.getItemAtPosition(position);
+                List<String> modelList = makeModelMap.get(selectedMake);
+                if (modelList != null) {
+                    if (make != null) {
+                        int makePosition = makeAdapter.getPosition(make);
+                        e_make_detailtxt.setSelection(makePosition);
+                        ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
+                        e_model_detailtxt.setAdapter(modelAdapter);
+                        if (model != null) {
+                            int modelPosition = modelAdapter.getPosition(model);
+                            e_model_detailtxt.setSelection(modelPosition);
+                        }
+
+                    }
+                    ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
+                    e_model_detailtxt.setAdapter(modelAdapter);
+                } else {
+                    e_model_detailtxt.setAdapter(null);
+                }
             }
-
-        }
-
-        if (sendCategory != null) {
-            int categoryPosition = categoryAdapter.getPosition(sendCategory);
-            e_category_detailtxt.setSelection(categoryPosition);
-            String selectedCategory = (String) e_category_detailtxt.getItemAtPosition(categoryPosition);
-            List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-            ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
-            e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
-            if (sendSubcategory != null) {
-                int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
-                e_subcategory_detailtxt.setSelection(subcategoryPosition);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                e_model_detailtxt.setAdapter(null);
             }
+        });
 
-        }
+
+        e_category_detailtxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                List<String> subcategoryList = categorySubcategoryMap.get(selectedCategory);
+                if (subcategoryList != null) {
+                    if (sendCategory != null) {
+                        int categoryPosition = categoryAdapter.getPosition(sendCategory);
+                        e_category_detailtxt.setSelection(categoryPosition);
+                        ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, subcategoryList);
+                        e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
+                        if (sendSubcategory != null) {
+                            int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+                            e_subcategory_detailtxt.setSelection(subcategoryPosition);
+                        }
+
+                    }
+
+                } else {
+                    e_subcategory_detailtxt.setAdapter(null);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                e_subcategory_detailtxt.setAdapter(null);
+            }
+        });
     }
 
     private void showImagePickerDialog() {
@@ -504,8 +615,10 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
             typeOfeachImage = cr.getType(imagesuri.get(i));
             if (typeOfeachImage != null) {
                 nameOfeachImage = "icon_" + System.currentTimeMillis() + "." + typeOfeachImage.replace("image/", "");
+                imagePaths.add(nameOfeachImage);
             } else {
                 nameOfeachImage = "icon_" + System.currentTimeMillis() + ".jpg";
+                imagePaths.add(nameOfeachImage);
             }
             ImageUploaderClass.uploadImage(filePath, nameOfeachImage, "images/parts", new ImageUploaderClass.onSuccessfulTask() {
                 @Override
