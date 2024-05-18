@@ -10,13 +10,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,34 +32,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.project.R;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import com.example.project.SendPostRequest;
 
 public class DiagnosticsFragment extends BaseFragment {
 
     private ImageView carDataFilter;
+    private EditText ipUserInput, ipServerInput;
     private CardView carDataCardFilter;
     private AppCompatButton importData;
-    private static final String TAG = "DiagnosticsFragment";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 2;
-    private static final String SERVER_ADDRESS = "2C:CF:67:03:A4:11"; // Replace with your server's Bluetooth address
-    private static final UUID SERVER_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Replace with your server's UUID
 
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothSocket bluetoothSocket;
-    private InputStream inputStream;
-    private List<String> fileNames;
     private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
 
     public DiagnosticsFragment() {
@@ -79,6 +68,53 @@ public class DiagnosticsFragment extends BaseFragment {
         monthSpinner = view.findViewById(R.id.monthSpinner);
         yearSpinner = view.findViewById(R.id.yearSpinner);
         hourSpinner = view.findViewById(R.id.hourSpinner);
+        ipUserInput = view.findViewById(R.id.ipUserInput);
+        ipServerInput = view.findViewById(R.id.ipServerInput);
+
+        ipServerInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (!text.matches("^\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}$")) {
+                    ipServerInput.setError("Invalid format. Please use XXX.XXX.XXX.XXX");
+                    importData.setEnabled(false);
+                } else {
+                    ipServerInput.setError(null);
+                    importData.setEnabled(true);
+                }
+            }
+        });
+
+        ipUserInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (!text.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$")) {
+                    ipUserInput.setError("Invalid format. Please use XX:XX:XX:XX:XX:XX");
+                    importData.setEnabled(false);
+                } else {
+                    ipUserInput.setError(null);
+                    importData.setEnabled(true);
+                }
+            }
+        });
+
 
         String[] dayArray = getResources().getStringArray(R.array.day_choices);
         ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, dayArray);
@@ -92,9 +128,6 @@ public class DiagnosticsFragment extends BaseFragment {
         String[] hourArray = getResources().getStringArray(R.array.hour_choices);
         ArrayAdapter<String> hourAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, hourArray);
         hourSpinner.setAdapter(hourAdapter);
-
-        // Initialize fileNames list
-        fileNames = new ArrayList<>();
 
         importData.setOnClickListener(v -> {
             if (!isBluetoothEnabled()) {
@@ -143,7 +176,13 @@ public class DiagnosticsFragment extends BaseFragment {
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
         } else {
-            connectToDevice();
+            String ipServer = ipServerInput.getText().toString();
+            String ipUser = ipUserInput.getText().toString();
+            if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
+                new SendPostRequest(getContext()).execute(ipServer, ipUser);
+            } else {
+                Toast.makeText(getContext(), "Please enter an IP prefix", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -152,12 +191,17 @@ public class DiagnosticsFragment extends BaseFragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_WRITE_STORAGE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                connectToDevice();
+                String ipServer = ipServerInput.getText().toString();
+                String ipUser = ipUserInput.getText().toString();
+                if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
+                    new SendPostRequest(getContext()).execute(ipServer, ipUser);
+                } else {
+                    Toast.makeText(getContext(), "Please enter an IP prefix", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
             }
-        } else if (requestCode == REQUEST_ENABLE_BT
-        ) {
+        } else if (requestCode == REQUEST_ENABLE_BT) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                 checkAndRequestPermissions();
             } else {
@@ -174,89 +218,6 @@ public class DiagnosticsFragment extends BaseFragment {
                 checkAndRequestPermissions();
             } else {
                 Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private void connectToDevice() {
-        new Thread(() -> {
-            try {
-                BluetoothDevice device = bluetoothAdapter.getRemoteDevice(SERVER_ADDRESS);
-                bluetoothSocket = device.createRfcommSocketToServiceRecord(SERVER_UUID);
-                bluetoothSocket.connect();
-                inputStream = bluetoothSocket.getInputStream();
-                receiveZipFile(inputStream);
-            } catch (IOException e) {
-                Log.e(TAG, "Error connecting to Raspberry Pi: " + e.getMessage(), e);
-                // Handle connection error gracefully
-                getActivity().runOnUiThread(() -> {
-                    Toast.makeText(getContext(), "Failed to connect to Raspberry Pi", Toast.LENGTH_SHORT).show();
-                });
-            } finally {
-                try {
-                    if (bluetoothSocket != null) bluetoothSocket.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Error closing socket: " + e.getMessage(), e);
-                }
-            }
-        }).start();
-    }
-
-
-    private void receiveZipFile(InputStream inputStream) {
-        try {
-            File storageDir = new File(Environment.getExternalStorageDirectory(), "BluetoothFiles");
-            if (!storageDir.exists()) {
-                storageDir.mkdirs();
-            }
-
-            File zipFile = new File(storageDir, "received_files.zip");
-            try (FileOutputStream fos = new FileOutputStream(zipFile)) {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    fos.write(buffer, 0, bytesRead);
-                }
-            }
-
-            unzip(zipFile.getAbsolutePath(), storageDir.getAbsolutePath());
-            zipFile.delete();
-
-            for (File file : storageDir.listFiles()) {
-                if (file.isFile()) {
-                    fileNames.add(file.getName());
-                }
-            }
-
-        } catch (IOException e) {
-            Log.e(TAG, "Error receiving file: " + e.getMessage(), e);
-        }
-    }
-
-    private void unzip(String zipFilePath, String destDirectory) throws IOException {
-        try (ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath))) {
-            ZipEntry entry = zipIn.getNextEntry();
-            while (entry != null) {
-                String filePath = destDirectory + File.separator + entry.getName();
-                if (!entry.isDirectory()) {
-                    extractFile(zipIn, filePath);
-                } else {
-                    File dir = new File(filePath);
-                    dir.mkdir();
-                }
-                zipIn.closeEntry();
-                entry = zipIn.getNextEntry();
-            }
-        }
-    }
-
-    private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
-        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath))) {
-            byte[] bytesIn = new byte[1024];
-            int read;
-            while ((read = zipIn.read(bytesIn)) != -1) {
-                bos.write(bytesIn, 0, read);
             }
         }
     }
