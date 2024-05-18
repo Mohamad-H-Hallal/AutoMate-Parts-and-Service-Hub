@@ -172,7 +172,7 @@
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/scrapyardname_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -201,7 +201,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/model_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/make_detailtxt" />
 
                     <TextView
@@ -230,7 +230,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/make_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/scrapyardname_detailtxt" />
 
                     <TextView
@@ -259,7 +259,7 @@
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/year_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/model_detailtxt" />
 
                     <TextView
@@ -288,7 +288,7 @@
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/category_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/year_detailtxt" />
 
                     <TextView
@@ -317,7 +317,7 @@
                         android:ellipsize="end"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/subcategory_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/category_detailtxt" />
 
                     <TextView
@@ -344,7 +344,7 @@
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/condition_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/subcategory_detailtxt" />
 
                     <CheckBox
@@ -389,7 +389,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/phone_detail"
-                        app:layout_constraintStart_toEndOf="@id/scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/negotiable_detail" />
 
 

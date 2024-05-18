@@ -383,57 +383,69 @@ public class EditPartActivity extends BaseActivity implements ImageEditAdapter.O
                 String selectedMake = (String) parent.getItemAtPosition(position);
                 List<String> modelList = makeModelMap.get(selectedMake);
                 if (modelList != null) {
-                    if (make != null) {
-                        int makePosition = makeAdapter.getPosition(make);
-                        e_make_detailtxt.setSelection(makePosition);
-                        ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
-                        e_model_detailtxt.setAdapter(modelAdapter);
-                        if (model != null) {
-                            int modelPosition = modelAdapter.getPosition(model);
-                            e_model_detailtxt.setSelection(modelPosition);
-                        }
-
-                    }
                     ArrayAdapter<String> modelAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, modelList);
                     e_model_detailtxt.setAdapter(modelAdapter);
+
+                    // Check if sentSubcategory exists and set it
+                    if (model != null) {
+                        int modelPosition = modelAdapter.getPosition(model);
+                        if (modelPosition >= 0) {
+                            e_model_detailtxt.setSelection(modelPosition);
+                        }
+                    }
                 } else {
                     e_model_detailtxt.setAdapter(null);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 e_model_detailtxt.setAdapter(null);
             }
         });
 
+        if (make != null) {
+            int makePosition = makeAdapter.getPosition(make);
+            if (makePosition >= 0) {
+                e_make_detailtxt.setSelection(makePosition);
+            }
+        }
+
 
         e_category_detailtxt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedCategory = (String) parent.getItemAtPosition(position);
-                List<String> subcategoryList = categorySubcategoryMap.get(selectedCategory);
-                if (subcategoryList != null) {
-                    if (sendCategory != null) {
-                        int categoryPosition = categoryAdapter.getPosition(sendCategory);
-                        e_category_detailtxt.setSelection(categoryPosition);
-                        ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, subcategoryList);
-                        e_subcategory_detailtxt.setAdapter(subcategoryAdapter);
-                        if (sendSubcategory != null) {
-                            int subcategoryPosition = subcategoryAdapter.getPosition(sendSubcategory);
+                List<String> subCategoryList = categorySubcategoryMap.get(selectedCategory);
+                if (subCategoryList != null) {
+                    ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<>(EditPartActivity.this, android.R.layout.simple_spinner_item, subCategoryList);
+                    e_subcategory_detailtxt.setAdapter(subCategoryAdapter);
+
+                    // Check if sentSubcategory exists and set it
+                    if (sendSubcategory != null) {
+                        int subcategoryPosition = subCategoryAdapter.getPosition(sendSubcategory);
+                        if (subcategoryPosition >= 0) {
                             e_subcategory_detailtxt.setSelection(subcategoryPosition);
                         }
-
                     }
-
                 } else {
                     e_subcategory_detailtxt.setAdapter(null);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 e_subcategory_detailtxt.setAdapter(null);
             }
         });
+
+        if (sendCategory != null) {
+            int categoryPosition = categoryAdapter.getPosition(sendCategory);
+            if (categoryPosition >= 0) {
+                e_category_detailtxt.setSelection(categoryPosition);
+            }
+        }
+
     }
 
     private void showImagePickerDialog() {

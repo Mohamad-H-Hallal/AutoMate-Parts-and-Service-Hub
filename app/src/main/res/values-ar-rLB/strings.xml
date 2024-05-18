@@ -54,7 +54,7 @@
     <string name="details">تفاصيل:</string>
     <string name="from">من</string>
     <string name="to">الى</string>
-    <string name="scrapyard_name">اسم ساحة الخردة:</string>
+    <string name="scrapyard_name">ساحة الخردة:</string>
     <string name="clear_all">امسح الكل</string>
     <string name="nearest_location">أقرب موقع</string>
     <string name="filtered_by_nearest_location_n">تمت تصفيته حسب أقرب موقع\n</string>
@@ -118,6 +118,8 @@
     <string name="view_location">عرض الموقع</string>
     <string name="active_until">نشط حتى</string>
     <string name="edit_part">تعديل القطعة</string>
+    <string name="enter_ip">عنوان IP (على سبيل المثال، 192.168.118.25)</string>
+    <string name="bluetooth_mac_address_e_g_8c_6a_3b_05_46_e4">عنوان MAC الخاص بالبلوتوث (على سبيل المثال، 8C:6A:3B:05:46:E4)</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>

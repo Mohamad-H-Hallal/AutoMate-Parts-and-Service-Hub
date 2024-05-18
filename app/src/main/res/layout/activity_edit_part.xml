@@ -175,7 +175,7 @@
                         android:id="@+id/e_scrapyardname_detailtxt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:ellipsize="end"
@@ -185,7 +185,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_scrapyardname_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -212,7 +212,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_model_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_make_detailtxt" />
 
                     <TextView
@@ -239,7 +239,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_make_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_scrapyardname_detailtxt" />
 
                     <TextView
@@ -266,7 +266,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_year_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_model_detailtxt" />
 
                     <TextView
@@ -293,7 +293,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_category_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_year_detailtxt" />
 
                     <TextView
@@ -320,7 +320,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_subcategory_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_category_detailtxt" />
 
                     <TextView
@@ -347,7 +347,7 @@
                         android:textSize="18sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_condition_detail"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_subcategory_detailtxt" />
 
                     <CheckBox
@@ -380,7 +380,7 @@
                         android:id="@+id/e_phone_detailtxt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginEnd="@dimen/loginViewsMargin"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
@@ -390,7 +390,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBaseline_toBaselineOf="@id/e_phone_detail"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/e_scrapyardname_detail"
+                        app:layout_constraintStart_toEndOf="@id/e_subcategory_detail"
                         app:layout_constraintTop_toBottomOf="@id/e_negotiable_detail" />
 
 

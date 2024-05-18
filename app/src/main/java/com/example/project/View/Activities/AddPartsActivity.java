@@ -266,22 +266,41 @@ public class AddPartsActivity extends BaseActivity implements ImageAddAdapter.On
             sentSubcategory = subcategorySplit[1];
         }
 
-        if (sentCategory != null) {
-            int categoryPosition = categoryAdapter.getPosition(sentCategory);
-            category.setSelection(categoryPosition);
-            String selectedCategory = (String) category.getItemAtPosition(categoryPosition);
-            List<String> subcategoriesList = categorySubcategoryMap.get(selectedCategory);
-            if (subcategoriesList != null) {
-                ArrayAdapter<String> subcategoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subcategoriesList);
-                subcategory.setAdapter(subcategoryAdapter);
-                if (sentSubcategory != null) {
-                    int subcategoryPosition = subcategoryAdapter.getPosition(sentSubcategory);
-                    subcategory.setSelection(subcategoryPosition);
+        String finalSentSubcategory = sentSubcategory;
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                List<String> subCategoryList = categorySubcategoryMap.get(selectedCategory);
+                if (subCategoryList != null) {
+                    ArrayAdapter<String> subCategoryAdapter = new ArrayAdapter<>(AddPartsActivity.this, android.R.layout.simple_spinner_item, subCategoryList);
+                    subcategory.setAdapter(subCategoryAdapter);
+
+                    // Check if sentSubcategory exists and set it
+                    if (finalSentSubcategory != null) {
+                        int subcategoryPosition = subCategoryAdapter.getPosition(finalSentSubcategory);
+                        if (subcategoryPosition >= 0) {
+                            subcategory.setSelection(subcategoryPosition);
+                        }
+                    }
+                } else {
+                    subcategory.setAdapter(null);
                 }
-            } else {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
                 subcategory.setAdapter(null);
             }
+        });
+
+        if (sentCategory != null) {
+            int categoryPosition = categoryAdapter.getPosition(sentCategory);
+            if (categoryPosition >= 0) {
+                category.setSelection(categoryPosition);
+            }
         }
+
     }
 
     private void restartApp() {
