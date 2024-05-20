@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
@@ -68,6 +69,7 @@ public class PartDetailsActivity extends BaseActivity {
         descriptiontxt = findViewById(R.id.descriptiontxt);
         negotiable_detail = findViewById(R.id.negotiable_detail);
         partDetailCardView = findViewById(R.id.partDetailCardView);
+        miniMapView = findViewById(R.id.miniMapView);
         part_controller = new PartController();
 
         Intent i = getIntent();
@@ -80,6 +82,59 @@ public class PartDetailsActivity extends BaseActivity {
         } else if (selectedLanguage.equals("ar")) {
             back.setImageResource(R.drawable.ic_back_ar);
         }
+
+        part_controller.fetchPartDetails(this, Integer.parseInt(part_id), new PartController.PartDetailsFetchListener() {
+            @Override
+            public void onPartDetailsFetched(PartModel part, ScrapyardModel scrapyard) {
+                // Set part details
+                name_part.setText(part.getName());
+                pricetxt.setText("USD " + part.getPrice());
+                make_detailtxt.setText(part.getMake());
+                model_detailtxt.setText(part.getModel());
+
+                String[] cat = part.getCategory().split("-");
+                String[] subcat = part.getSubcategory().split("-");
+                String[] yea = part.getYear().split("-");
+                String[] cond = part.getPart_condition().split("-");
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PartDetailsActivity.this);
+                String selectedLanguage = preferences.getString("selected_language", "en");
+                if (selectedLanguage.equals("en")) {
+                    year_detailtxt.setText(yea[0]);
+                    category_detailtxt.setText(cat[0]);
+                    subcategory_detailtxt.setText(subcat[0]);
+                    condition_detailtxt.setText(cond[0]);
+                } else if (selectedLanguage.equals("ar")) {
+                    year_detailtxt.setText(yea[1]);
+                    category_detailtxt.setText(cat[1]);
+                    subcategory_detailtxt.setText(subcat[1]);
+                    condition_detailtxt.setText(cond[1]);
+                }
+
+                descriptiontxt.setText(part.getDescription());
+                negotiable_detail.setChecked(part.isNegotiable());
+                // Set scrapyard details
+                scrapyardname.setText(scrapyard.getName());
+                phone.setText(scrapyard.getPhone());
+                scrapyardLatitude = scrapyard.getLatitude();
+                scrapyardLongitude = scrapyard.getLongitude();
+
+                Log.d("test",scrapyardLatitude+" "+scrapyardLongitude);
+                miniMapView.onCreate(savedInstanceState);
+                miniMapView.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        LatLng scrapyardLocation = new LatLng(scrapyardLatitude, scrapyardLongitude);
+                        googleMap.addMarker(new MarkerOptions().position(scrapyardLocation).title(scrapyard.getName()));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scrapyardLocation, 12f));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
 
         miniMapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -123,19 +178,11 @@ public class PartDetailsActivity extends BaseActivity {
             partDetailCardView.setVisibility(View.GONE);
         }
 
-        miniMapView = findViewById(R.id.miniMapView);
+
 
         // Set up the map asynchronously
-        miniMapView.onCreate(savedInstanceState);
-        miniMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                // Customize the map as needed
-                LatLng location = new LatLng(scrapyardLatitude, scrapyardLongitude);
-                googleMap.addMarker(new MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12f));
-            }
-        });
+
+
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,57 +205,7 @@ public class PartDetailsActivity extends BaseActivity {
         });
 
         // Fetch part details
-        part_controller.fetchPartDetails(this, Integer.parseInt(part_id), new PartController.PartDetailsFetchListener() {
-            @Override
-            public void onPartDetailsFetched(PartModel part, ScrapyardModel scrapyard) {
-                // Set part details
-                name_part.setText(part.getName());
-                pricetxt.setText("USD " + part.getPrice());
-                make_detailtxt.setText(part.getMake());
-                model_detailtxt.setText(part.getModel());
 
-                String[] cat = part.getCategory().split("-");
-                String[] subcat = part.getSubcategory().split("-");
-                String[] yea = part.getYear().split("-");
-                String[] cond = part.getPart_condition().split("-");
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PartDetailsActivity.this);
-                String selectedLanguage = preferences.getString("selected_language", "en");
-                if (selectedLanguage.equals("en")) {
-                    year_detailtxt.setText(yea[0]);
-                    category_detailtxt.setText(cat[0]);
-                    subcategory_detailtxt.setText(subcat[0]);
-                    condition_detailtxt.setText(cond[0]);
-                } else if (selectedLanguage.equals("ar")) {
-                    year_detailtxt.setText(yea[1]);
-                    category_detailtxt.setText(cat[1]);
-                    subcategory_detailtxt.setText(subcat[1]);
-                    condition_detailtxt.setText(cond[1]);
-                }
-
-                descriptiontxt.setText(part.getDescription());
-                negotiable_detail.setChecked(part.isNegotiable());
-                // Set scrapyard details
-                scrapyardname.setText(scrapyard.getName());
-                phone.setText(scrapyard.getPhone());
-                scrapyardLatitude = scrapyard.getLatitude();
-                scrapyardLongitude = scrapyard.getLongitude();
-
-                // Update map with scrapyard location
-                miniMapView.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        LatLng scrapyardLocation = new LatLng(scrapyardLatitude, scrapyardLongitude);
-                        googleMap.addMarker(new MarkerOptions().position(scrapyardLocation).title(scrapyard.getName()));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(scrapyardLocation, 12f));
-                    }
-                });
-            }
-
-            @Override
-            public void onError(String error) {
-                // Handle the error
-            }
-        });
     }
 
     // Remember to manage the lifecycle of the MapView

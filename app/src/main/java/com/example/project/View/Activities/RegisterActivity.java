@@ -352,9 +352,10 @@ public class RegisterActivity extends BaseActivity {
                     }
                     break;
                 case MAP_REQUEST_CODE:
-                    if (data != null) {
-                        latitude = data.getDoubleExtra("latitude", 0);
-                        longitude = data.getDoubleExtra("longitude", 0);
+                    if (data != null && data.getExtras() != null) {
+                        Bundle bundle = data.getExtras();
+                        latitude = bundle.getDouble("latitude");
+                        longitude = bundle.getDouble("longitude");
                         locationText.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
                     } else {
                         Toast.makeText(this, "Error retrieving location data", Toast.LENGTH_SHORT).show();

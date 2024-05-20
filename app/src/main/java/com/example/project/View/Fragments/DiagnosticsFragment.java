@@ -83,13 +83,12 @@ public class DiagnosticsFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String text = s.toString();
-                if (!text.matches("^\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}$")) {
-                    ipServerInput.setError("Invalid format. Please use XXX.XXX.XXX.XXX");
-                    importData.setEnabled(false);
+                if (!isValidIp(text)) {
+                    ipServerInput.setError("Invalid format. Please use XXX.XXX.XXX.XXX with each segment between 0 and 255");
                 } else {
                     ipServerInput.setError(null);
-                    importData.setEnabled(true);
                 }
+                checkBothFields();
             }
         });
 
@@ -107,11 +106,10 @@ public class DiagnosticsFragment extends BaseFragment {
                 String text = s.toString();
                 if (!text.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$")) {
                     ipUserInput.setError("Invalid format. Please use XX:XX:XX:XX:XX:XX");
-                    importData.setEnabled(false);
                 } else {
                     ipUserInput.setError(null);
-                    importData.setEnabled(true);
                 }
+                checkBothFields();
             }
         });
 
@@ -152,6 +150,38 @@ public class DiagnosticsFragment extends BaseFragment {
                 carDataFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
             }
         });
+    }
+
+    private void checkBothFields() {
+        String ipText = ipServerInput.getText().toString();
+        String macText = ipUserInput.getText().toString();
+
+        boolean isIpValid = isValidIp(ipText);
+        boolean isMacValid = macText.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$");
+
+        if (isIpValid && isMacValid) {
+            importData.setEnabled(true);
+        } else {
+            importData.setEnabled(false);
+        }
+    }
+
+    private boolean isValidIp(String ip) {
+        String[] parts = ip.split("\\.");
+        if (parts.length != 4) {
+            return false;
+        }
+        for (String part : parts) {
+            try {
+                int value = Integer.parseInt(part);
+                if (value < 0 || value > 255) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isBluetoothEnabled() {

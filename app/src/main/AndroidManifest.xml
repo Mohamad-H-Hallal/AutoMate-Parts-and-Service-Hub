@@ -75,10 +75,7 @@
             android:name=".View.Activities.PartsCategoriesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".View.Activities.EditLocationActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".View.Activities.MapsLocationActivity"
             android:exported="false"

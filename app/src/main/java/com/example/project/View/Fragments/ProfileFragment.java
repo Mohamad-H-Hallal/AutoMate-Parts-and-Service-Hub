@@ -42,7 +42,8 @@ import com.example.project.Model.MechanicModel;
 import com.example.project.Model.ScrapyardModel;
 import com.example.project.Model.UserModel;
 import com.example.project.R;
-import com.example.project.View.Activities.EditLocationActivity;
+
+import com.example.project.View.Activities.MapsActivity;
 import com.example.project.View.Activities.MapsLocationActivity;
 import com.example.project.View.Activities.PartsCategoriesActivity;
 import com.example.project.View.Activities.PaymentActivity;
@@ -284,7 +285,7 @@ public class ProfileFragment extends BaseFragment {
         locationtext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (editing) {
-                    Intent i = new Intent(getContext(), EditLocationActivity.class);
+                    Intent i = new Intent(getContext(), MapsActivity.class);
                     startActivityForResult(i, MAP_REQUEST_CODE);
                 } else {
                     Intent i = new Intent(getContext(), MapsLocationActivity.class);
@@ -505,7 +506,7 @@ public class ProfileFragment extends BaseFragment {
                     }
                     break;
                 case MAP_REQUEST_CODE:
-                    if (data != null && data.getExtras() != null && data.getExtras().containsKey("data")) {
+                    if (data != null && data.getExtras() != null) {
                         Bundle bundle = data.getExtras();
                         latitude = bundle.getDouble("latitude");
                         longitude = bundle.getDouble("longitude");
