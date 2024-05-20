@@ -43,6 +43,7 @@ public class ProfileViewActivity extends BaseActivity {
     private AlertDialog ratingDialog;
     UserController controller;
     int id;
+    String name;
     String user_type;
     double longitude=35,latitude=33;
     private TextView v_name,v_emailtext, v_phone,v_phonetext,v_specialization,v_specializationtext,v_yearofxp,v_yearofxptext,v_biography,v_biographytext;
@@ -100,6 +101,8 @@ public class ProfileViewActivity extends BaseActivity {
                 Intent i = new Intent(ProfileViewActivity.this, MapsLocationActivity.class);
                 i.putExtra("latitude", latitude);
                 i.putExtra("longitude", longitude);
+                i.putExtra("name",name);
+                i.putExtra("user_type",user_type);
                 startActivity(i);
 
             }
@@ -180,6 +183,7 @@ public class ProfileViewActivity extends BaseActivity {
                 public void onScrapyardDataReceived(ScrapyardModel user) {
 
                     v_name.setText(user.getName());
+                    name = user.getName();
                     v_emailtext.setText(user.getEmail());
 
                     v_phonetext.setText(user.getPhone());
@@ -189,10 +193,7 @@ public class ProfileViewActivity extends BaseActivity {
 
                     if (!user.getBiography().equals("null")) {
                         v_biographytext.setText(user.getBiography());
-                    }else{
-                        v_biographytext.setText(getResources().getString(R.string.def_bio));
                     }
-
                     latitude = user.getLatitude();
                     longitude = user.getLongitude();
                     Glide.with(ProfileViewActivity.this).load(USER_IMAGES_DIR + user.getIcon())
@@ -223,14 +224,13 @@ public class ProfileViewActivity extends BaseActivity {
                 @Override
                 public void onMechanicDataReceived(MechanicModel user) {
                     v_name.setText(user.getName());
+                    name = user.getName();
                     v_emailtext.setText(user.getEmail());
                     v_phonetext.setText(user.getPhone());
                     v_specializationtext.setText(user.getSpecialization());
                     bar.setRating(user.getRating());
                     if (!user.getBiography().equals("null")) {
                         v_biographytext.setText(user.getBiography());
-                    }else{
-                        v_biographytext.setText(getResources().getString(R.string.def_bio));
                     }
                     v_yearofxp.setVisibility(View.VISIBLE);
                     v_yearofxptext.setVisibility(View.VISIBLE);

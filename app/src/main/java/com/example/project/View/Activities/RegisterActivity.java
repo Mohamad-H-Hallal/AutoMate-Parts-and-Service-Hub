@@ -15,6 +15,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,6 +112,26 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+        editTextEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString().toLowerCase();
+                if (!isValidEmail(text)) {
+                    editTextEmail.setError("Invalid email address format");
+                } else {
+                    editTextEmail.setError(null);
+                }
+            }
+        });
+
         regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +213,16 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private boolean isValidEmail(String email) {
+        String[] validEmailProviders = {"gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "icloud.com"};
+        for (String provider : validEmailProviders) {
+            if (email.endsWith("@" + provider)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void showPaymentDialog() {

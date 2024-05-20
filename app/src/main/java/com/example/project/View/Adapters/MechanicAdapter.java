@@ -123,6 +123,7 @@ public class MechanicAdapter extends BaseAdapter implements Filterable {
             Intent i = new Intent(context, MapsLocationActivity.class);
             i.putExtra("latitude", mechanic.getLatitude());
             i.putExtra("longitude", mechanic.getLongitude());
+            i.putExtra("name",mechanic.getName());
             context.startActivity(i);
         });
 

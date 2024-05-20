@@ -124,6 +124,7 @@ public class ScrapYardAdapter extends BaseAdapter implements Filterable {
             Intent i = new Intent(context, MapsLocationActivity.class);
             i.putExtra("latitude", obj.getLatitude());
             i.putExtra("longitude", obj.getLongitude());
+            i.putExtra("name", obj.getName());
             context.startActivity(i);
         });
 

@@ -21,6 +21,7 @@ public class MapsLocationActivity extends BaseActivity implements OnMapReadyCall
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LatLng my_location;
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +36,14 @@ public class MapsLocationActivity extends BaseActivity implements OnMapReadyCall
         if (intent != null && intent.hasExtra("latitude") && intent.hasExtra("longitude")) {
             double lat = intent.getDoubleExtra("latitude", 0.0);
             double lang =intent.getDoubleExtra("longitude", 0.0);
+            name = intent.getStringExtra("name");
         my_location = new LatLng(lat, lang);}
     }
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        googleMap.addMarker(new MarkerOptions().position(my_location).title("Marker Title").snippet("Marker Description"));
+        googleMap.addMarker(new MarkerOptions().position(my_location).title(name));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(my_location, 12f));
 
     }

@@ -205,8 +205,6 @@ public class ProfileFragment extends BaseFragment {
                     biographytext.setVisibility(View.VISIBLE);
                     if (!user.getBiography().equals("null")) {
                         biographytext.setText(user.getBiography());
-                    }else{
-                        biographytext.setText(getResources().getString(R.string.def_bio));
                     }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
@@ -250,9 +248,6 @@ public class ProfileFragment extends BaseFragment {
                     if (!user.getBiography().equals("null")) {
                         biographytext.setText(user.getBiography());
                     }
-                    else{
-                        biographytext.setText(getResources().getString(R.string.def_bio));
-                        }
                     biography.setVisibility(View.VISIBLE);
                     subscription.setVisibility(View.VISIBLE);
                     subscriptiontext.setVisibility(View.VISIBLE);
