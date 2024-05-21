@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -32,13 +33,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".View.Activities.ViewDataActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.Activities.PayCompletionActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".View.Activities.PaymentActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".View.Activities.ChangePasswordActivity"
             android:exported="false"
@@ -75,7 +79,6 @@
             android:name=".View.Activities.PartsCategoriesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".View.Activities.MapsLocationActivity"
             android:exported="false"

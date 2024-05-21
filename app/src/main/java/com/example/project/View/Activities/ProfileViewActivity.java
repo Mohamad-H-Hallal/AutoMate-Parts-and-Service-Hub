@@ -45,9 +45,10 @@ public class ProfileViewActivity extends BaseActivity {
     int id;
     String name;
     String user_type;
-    double longitude=35,latitude=33;
-    private TextView v_name,v_emailtext, v_phone,v_phonetext,v_specialization,v_specializationtext,v_yearofxp,v_yearofxptext,v_biography,v_biographytext;
+    double longitude = 35, latitude = 33;
+    private TextView v_name, v_emailtext, v_phone, v_phonetext, v_specialization, v_specializationtext, v_yearofxp, v_yearofxptext, v_biography, v_biographytext;
     private ShapeableImageView v_profile_image;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +62,21 @@ public class ProfileViewActivity extends BaseActivity {
         rate = findViewById(R.id.v_rating);
         partsview = findViewById(R.id.v_manageparts);
         v_name = findViewById(R.id.v_name);
-        v_emailtext=findViewById(R.id.v_emailtext);
-        v_phone=findViewById(R.id.v_phone);
-        v_phonetext=findViewById(R.id.v_phonetext);
-        v_specialization=findViewById(R.id.v_specialization);
-        v_specializationtext=findViewById(R.id.v_specializationtext);
-        v_yearofxp=findViewById(R.id.v_yearofxp);
-        v_yearofxptext=findViewById(R.id.v_yearofxptext);
-        v_biography=findViewById(R.id.v_bio);
-        v_biographytext=findViewById(R.id.v_biotext);
-        v_profile_image=findViewById(R.id.v_profile_image);
+        v_emailtext = findViewById(R.id.v_emailtext);
+        v_phone = findViewById(R.id.v_phone);
+        v_phonetext = findViewById(R.id.v_phonetext);
+        v_specialization = findViewById(R.id.v_specialization);
+        v_specializationtext = findViewById(R.id.v_specializationtext);
+        v_yearofxp = findViewById(R.id.v_yearofxp);
+        v_yearofxptext = findViewById(R.id.v_yearofxptext);
+        v_biography = findViewById(R.id.v_bio);
+        v_biographytext = findViewById(R.id.v_biotext);
+        v_profile_image = findViewById(R.id.v_profile_image);
         controller = new UserController();
 
-        Intent i =getIntent();
-        id = i.getIntExtra("id",0);
-        user_type=i.getStringExtra("user_type");
+        Intent i = getIntent();
+        id = i.getIntExtra("id", 0);
+        user_type = i.getStringExtra("user_type");
         v_yearofxp.setVisibility(View.GONE);
         v_yearofxptext.setVisibility(View.GONE);
 
@@ -101,8 +102,8 @@ public class ProfileViewActivity extends BaseActivity {
                 Intent i = new Intent(ProfileViewActivity.this, MapsLocationActivity.class);
                 i.putExtra("latitude", latitude);
                 i.putExtra("longitude", longitude);
-                i.putExtra("name",name);
-                i.putExtra("user_type",user_type);
+                i.putExtra("name", name);
+                i.putExtra("user_type", user_type);
                 startActivity(i);
 
             }
@@ -119,14 +120,13 @@ public class ProfileViewActivity extends BaseActivity {
                 final AppCompatButton cancelButton = ratingDialogView.findViewById(R.id.cancel_button);
 
 
-
                 ratingBar.setRating(currentRating);
                 builder.setView(ratingDialogView);
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         currentRating = ratingBar.getRating();
-                        if(user_type.equals("Scrap-Yard Vendor")){
+                        if (user_type.equals("Scrap-Yard Vendor")) {
                             ScrapyardController scrapcontroller = new ScrapyardController();
                             scrapcontroller.submitRating(ProfileViewActivity.this, ratingBar.getRating(), UserData.getId(), id, new ScrapyardController.ScrapyardRateListener() {
                                 @Override
@@ -177,7 +177,7 @@ public class ProfileViewActivity extends BaseActivity {
         if (user_type.equals("Scrap-Yard Vendor")) {
             partsview.setVisibility(View.VISIBLE);
             rate.setVisibility(View.VISIBLE);
-            Log.d("test",String.valueOf(id));
+            Log.d("test", String.valueOf(id));
             controller.getScrapyardData(this, id, new UserController.ScrapyardDataListener() {
                 @Override
                 public void onScrapyardDataReceived(ScrapyardModel user) {
@@ -213,12 +213,12 @@ public class ProfileViewActivity extends BaseActivity {
                 public void onClick(View v) {
                     Intent i = new Intent(ProfileViewActivity.this, PartsCategoriesActivity.class);
                     i.putExtra("viewer", 1);
-                    i.putExtra("id",id);
+                    i.putExtra("id", id);
                     startActivity(i);
                 }
             });
 
-        }else if(user_type.equals("Mechanic")){
+        } else if (user_type.equals("Mechanic")) {
             partsview.setVisibility(View.GONE);
             controller.getMechanicData(this, id, new UserController.MechanicDataListener() {
                 @Override

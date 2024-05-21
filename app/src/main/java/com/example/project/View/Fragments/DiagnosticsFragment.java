@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -46,6 +47,7 @@ import java.util.Objects;
 
 public class DiagnosticsFragment extends BaseFragment {
 
+    private static final int FILE_SELECT_CODE = 14;
     private ImageView carDataFilter;
     private EditText ipUserInput, ipServerInput;
     private CardView carDataCardFilter;
@@ -223,7 +225,7 @@ public class DiagnosticsFragment extends BaseFragment {
             if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
                 new SendPostRequest(getContext()).execute(ipServer, ipUser);
             } else {
-                Toast.makeText(getContext(), "Please enter an IP prefix", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -238,7 +240,7 @@ public class DiagnosticsFragment extends BaseFragment {
                 if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
                     new SendPostRequest(getContext()).execute(ipServer, ipUser);
                 } else {
-                    Toast.makeText(getContext(), "Please enter an IP prefix", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
@@ -261,8 +263,15 @@ public class DiagnosticsFragment extends BaseFragment {
             } else {
                 Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
             }
+        } else if (requestCode == FILE_SELECT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = data.getData();
+                String path = getRealPath(getContext(), uri);
+                uploadFile(path);
+            }
         }
     }
+
     private void locateAndUnzipFile() {
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         File file = findFileInDirectory(downloadsPath, FILE_NAME);
@@ -318,19 +327,33 @@ public class DiagnosticsFragment extends BaseFragment {
         }
     }
 
-    private void uploadFile() {
+    private void uploadFile(String filePath) {
+        FileUploaderClass.uploadFile(filePath, "", "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
+            @Override
+            public void onSuccess() {
+                locateAndUnzipFile();
+                deleteLocalFiles();
+            }
 
+            @Override
+            public void onFailed(String error) {
+                Log.d("error", error);
+            }
+        });
+    }
 
-//        FileUploaderClass.uploadFile(filePath, "", "diagnostics/"+ UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
-//            @Override
-//            public void onSuccess() {
-//
-//            }
-//
-//            @Override
-//            public void onFailed(String error) {
-//                Log.d("error", error);
-//            }
-//        });
+    private void deleteLocalFiles() {
+        File zipFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), FILE_NAME);
+        if (zipFile.exists()) {
+            zipFile.delete();
+        }
+
+        File unzipDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), UNZIP_DESTINATION);
+        if (unzipDir.exists() && unzipDir.isDirectory()) {
+            for (File file : unzipDir.listFiles()) {
+                file.delete();
+            }
+            unzipDir.delete();
+        }
     }
 }

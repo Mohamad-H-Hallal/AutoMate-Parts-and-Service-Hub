@@ -120,6 +120,7 @@
     <string name="edit_part">تعديل القطعة</string>
     <string name="enter_ip">عنوان IP (مثال، 192.168.118.25)</string>
     <string name="bluetooth_mac_address_e_g_8c_6a_3b_05_46_e4">عنوان MAC الخاص بالبلوتوث (مثال، 8C:6A:3B:05:46:E4)</string>
+    <string name="report">تقرير</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
