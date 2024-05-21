@@ -1,7 +1,7 @@
 package com.example.project.Model;
 
 public class DiagnosticDataModel {
-    String vin,date_time,file,user_id;
+    String vin, date_time, file, user_id;
 
     public DiagnosticDataModel(String vin, String date_time, String file, String user_id) {
         this.vin = vin;

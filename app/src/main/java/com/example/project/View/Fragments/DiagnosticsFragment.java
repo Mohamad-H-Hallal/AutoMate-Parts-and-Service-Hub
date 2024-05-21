@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,14 +37,27 @@ import androidx.core.content.ContextCompat;
 
 import com.example.project.Controller.UnzipUtil;
 import com.example.project.Controller.UserData;
+import com.example.project.FileUpload.AppFilesService;
 import com.example.project.FileUpload.FileUploaderClass;
 import com.example.project.FileUpload.ImageUploaderClass;
+import com.example.project.FileUpload.RetrofitApiClient;
+import com.example.project.Model.DiagnosticDataModel;
 import com.example.project.R;
 import com.example.project.SendPostRequest;
+import com.example.project.View.Adapters.DiagnosticsAdapter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DiagnosticsFragment extends BaseFragment {
 
@@ -51,11 +65,12 @@ public class DiagnosticsFragment extends BaseFragment {
     private ImageView carDataFilter;
     private EditText ipUserInput, ipServerInput;
     private CardView carDataCardFilter;
-    private AppCompatButton importData;
+    private AppCompatButton importData, carDataFilterSubmit;
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 2;
     private static String FILE_NAME = "car_data.zip";
     private static final String UNZIP_DESTINATION = "unzipped";
+    private ListView dataListView;
 
     private BluetoothAdapter bluetoothAdapter;
     private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
@@ -84,6 +99,8 @@ public class DiagnosticsFragment extends BaseFragment {
         hourSpinner = view.findViewById(R.id.hourSpinner);
         ipUserInput = view.findViewById(R.id.ipUserInput);
         ipServerInput = view.findViewById(R.id.ipServerInput);
+        carDataFilterSubmit = view.findViewById(R.id.carDataFilterSubmit);
+        dataListView = view.findViewById(R.id.dataListView);
 
         ipServerInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -147,6 +164,29 @@ public class DiagnosticsFragment extends BaseFragment {
                 return;
             }
             checkAndRequestPermissions();
+        });
+
+        carDataFilterSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String day = "";
+                String month = "";
+                String year = "";
+                String hour = "";
+                if(!daySpinner.getSelectedItem().equals(daySpinner.getItemAtPosition(0).toString())) {
+                    day = daySpinner.getSelectedItem().toString();
+                }
+                if(!monthSpinner.getSelectedItem().equals(monthSpinner.getItemAtPosition(0).toString())) {
+                    month = monthSpinner.getSelectedItem().toString();
+                }
+                if(!yearSpinner.getSelectedItem().equals(yearSpinner.getItemAtPosition(0).toString())) {
+                    year = yearSpinner.getSelectedItem().toString();
+                }
+                if(!hourSpinner.getSelectedItem().equals(hourSpinner.getItemAtPosition(0).toString())) {
+                    hour = hourSpinner.getSelectedItem().toString();
+                }
+                filterFilesByDateTime(day, month, year, hour);
+            }
         });
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -356,4 +396,54 @@ public class DiagnosticsFragment extends BaseFragment {
             unzipDir.delete();
         }
     }
+
+    private void fetchRecentFiles() {
+        AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
+        Call<List<DiagnosticDataModel>> call = apiInterface.getRecentFiles();
+
+        call.enqueue(new Callback<List<DiagnosticDataModel>>() {
+            @Override
+            public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
+                if (response.body() != null) {
+                    ArrayList<File> files = new ArrayList<>();
+                    for (DiagnosticDataModel metadata : response.body()) {
+                        files.add(new File(metadata.getFile()));
+                    }
+                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), files);
+                    dataListView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DiagnosticDataModel>> call, Throwable t) {
+                Toast.makeText(getContext(), "Failed to fetch files", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void filterFilesByDateTime(String day, String month, String year, String hour) {
+        AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
+        Call<List<DiagnosticDataModel>> call = apiInterface.filterFiles(day, month, year, hour);
+
+        call.enqueue(new Callback<List<DiagnosticDataModel>>() {
+            @Override
+            public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
+                if (response.body() != null) {
+                    ArrayList<File> files = new ArrayList<>();
+                    for (DiagnosticDataModel metadata : response.body()) {
+                        files.add(new File(metadata.getFile()));
+                    }
+                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), files);
+                    dataListView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DiagnosticDataModel>> call, Throwable t) {
+                Toast.makeText(getContext(), "Failed to fetch files", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }
