@@ -373,6 +373,7 @@ public class DiagnosticsFragment extends BaseFragment {
             public void onSuccess() {
                 locateAndUnzipFile();
                 deleteLocalFiles();
+                fetchRecentFiles();
             }
 
             @Override
