@@ -20,9 +20,6 @@ public class UserData {
         editor.apply();
     }
 
-    public boolean isLogin() {
-        return sharedPreferences.getBoolean("isLogin", false);
-    }
 
     public static int getId() {
         return sharedPreferences.getInt("id", 0);

@@ -1,10 +1,10 @@
 package com.example.project.Model;
 
 public class ScrapyardModel {
-    String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
-    int scrapyard_id;
-    double latitude,longitude;
-    float rating;
+    private String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
+    private int scrapyard_id;
+    private double latitude,longitude;
+    private float rating;
 
     public ScrapyardModel(String name, String email, String account_type, String icon, String date,String end_date, String phone, String specialization, String biography, String subscription, int scrapyard_id, double latitude, double longitude, float rating) {
         this.name = name;

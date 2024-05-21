@@ -1,10 +1,10 @@
 package com.example.project.Model;
 
 public class PartModel {
-    String make,model,category,subcategory,description,part_condition,name,first_image, year;
-    int id,scrapyard_id;
-    boolean negotiable;
-    double price;
+   private String make,model,category,subcategory,description,part_condition,name, year;
+    private int id,scrapyard_id;
+    private boolean negotiable;
+    private double price;
 
     public PartModel(String make, String model, String category, String subcategory, String description, String part_condition, String name, int id, String year, int scrapyard_id, boolean negotiable, double price) {
         this.make = make;
@@ -21,29 +21,7 @@ public class PartModel {
         this.price = price;
     }
 
-    public String getFirst_image() {
-        return first_image;
-    }
 
-    public void setFirst_image(String first_image) {
-        this.first_image = first_image;
-    }
-
-    public PartModel(String make, String model, String category, String subcategory, String description, String part_condition, String first_image, String name, int id, int scrapyard_id, boolean negotiable, double price, String year) {
-        this.make = make;
-        this.model = model;
-        this.category = category;
-        this.subcategory = subcategory;
-        this.description = description;
-        this.part_condition = part_condition;
-        this.first_image = first_image;
-        this.name = name;
-        this.id = id;
-        this.scrapyard_id = scrapyard_id;
-        this.negotiable = negotiable;
-        this.price = price;
-        this.year = year;
-    }
 
     public PartModel() {
 

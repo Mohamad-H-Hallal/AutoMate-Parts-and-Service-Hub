@@ -1,10 +1,10 @@
 package com.example.project.Model;
 
 public class MechanicModel {
-    String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
-        int mechanic_id,year_of_experience;
-        double latitude,longitude;
-        float rating;
+    private String name,email,account_type,icon,date,end_date,phone,specialization,biography,subscription;
+    private  int mechanic_id,year_of_experience;
+    private   double latitude,longitude;
+    private  float rating;
 
     public MechanicModel(String name, String email, double latitude, double longitude, String account_type, String icon, String date,String end_date, String phone, String specialization, String biography,String subscription, int mechanic_id, int year_of_experience,float rating) {
         this.name = name;

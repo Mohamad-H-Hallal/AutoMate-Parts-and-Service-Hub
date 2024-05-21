@@ -1,5 +1,7 @@
 package com.example.project.View.Fragments;
 
+import static com.example.project.Controller.GetImagePath.getRealPath;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,8 +33,16 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.project.Controller.UnzipUtil;
+import com.example.project.Controller.UserData;
+import com.example.project.FileUpload.FileUploaderClass;
+import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.R;
 import com.example.project.SendPostRequest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 public class DiagnosticsFragment extends BaseFragment {
 
@@ -42,6 +52,8 @@ public class DiagnosticsFragment extends BaseFragment {
     private AppCompatButton importData;
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 2;
+    private static String FILE_NAME = "car_data.zip";
+    private static final String UNZIP_DESTINATION = "unzipped";
 
     private BluetoothAdapter bluetoothAdapter;
     private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
@@ -250,5 +262,75 @@ public class DiagnosticsFragment extends BaseFragment {
                 Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private void locateAndUnzipFile() {
+        String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        File file = findFileInDirectory(downloadsPath, FILE_NAME);
+
+        if (file == null) {
+            String bluetoothPath = Environment.getExternalStorageDirectory().getPath() + "/Bluetooth";
+            file = findFileInDirectory(bluetoothPath, FILE_NAME);
+        }
+
+        if (file != null) {
+            Toast.makeText(getContext(), "File found: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+            try {
+                String unzipDestPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + UNZIP_DESTINATION;
+                UnzipUtil.unzip(file.getAbsolutePath(), unzipDestPath);
+                displayUnzippedFilesContent(new File(unzipDestPath));
+            } catch (IOException e) {
+                Toast.makeText(getContext(), "Failed to unzip file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "File not found.", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private File findFileInDirectory(String directoryPath, String fileName) {
+        File directory = new File(directoryPath);
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().equals(fileName)) {
+                        return file;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    private void displayUnzippedFilesContent(File directory) {
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile() && file.getName().endsWith(".txt")) {
+                        try {
+                            String content = UnzipUtil.readFile(file);
+                            // You can now display this content, send it, or use it as needed
+                            Toast.makeText(getContext(), "Content of " + file.getName() + ":\n" + content, Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            Toast.makeText(getContext(), "Failed to read file: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void uploadFile() {
+
+
+//        FileUploaderClass.uploadFile(filePath, "", "diagnostics/"+ UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
+//            @Override
+//            public void onSuccess() {
+//
+//            }
+//
+//            @Override
+//            public void onFailed(String error) {
+//                Log.d("error", error);
+//            }
+//        });
     }
 }

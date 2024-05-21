@@ -1,9 +1,9 @@
 package com.example.project.Model;
 
 public class UserModel {
-    int id;
-    String name,email,account_type,icon;
-    double latitude,longitude;
+    private int id;
+    private  String name,email,account_type,icon;
+    private double latitude,longitude;
     public UserModel(int id, String name, String email, double latitude, double longitude, String account_type, String icon) {
         this.id = id;
         this.name = name;
