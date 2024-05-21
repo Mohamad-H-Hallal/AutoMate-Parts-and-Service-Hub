@@ -170,10 +170,10 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         carDataFilterSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String day = "";
-                String month = "";
-                String year = "";
-                String hour = "";
+                String day = "0";
+                String month = "0";
+                String year = "0";
+                String hour = "-1";
                 if(!daySpinner.getSelectedItem().equals(daySpinner.getItemAtPosition(0).toString())) {
                     day = daySpinner.getSelectedItem().toString();
                 }
