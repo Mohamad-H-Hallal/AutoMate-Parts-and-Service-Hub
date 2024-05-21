@@ -25,7 +25,7 @@ public class FileUploaderClass {
             AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
             File file = new File(filePath);
             RequestBody requestFile = RequestBody.create(MediaType.parse("*/*"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", name, requestFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
             MultipartBody.Part folder = MultipartBody.Part.createFormData("folder", folder_name);
             MultipartBody.Part userIdPart = MultipartBody.Part.createFormData("user_id", String.valueOf(user_id));
 
