@@ -368,7 +368,7 @@ public class DiagnosticsFragment extends BaseFragment {
     }
 
     private void uploadFile(String filePath) {
-        FileUploaderClass.uploadFile(filePath, "", "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
+        FileUploaderClass.uploadFile(filePath, "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
                 locateAndUnzipFile();

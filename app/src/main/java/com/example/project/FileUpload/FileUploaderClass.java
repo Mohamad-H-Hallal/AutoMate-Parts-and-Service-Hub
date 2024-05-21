@@ -20,7 +20,7 @@ public class FileUploaderClass {
         void onFailed(String error);
     }
 
-    public static void uploadFile(String filePath, String name, String folder_name, int user_id, onSuccessfulTask task) {
+    public static void uploadFile(String filePath, String folder_name, int user_id, onSuccessfulTask task) {
         try {
             AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
             File file = new File(filePath);
