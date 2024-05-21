@@ -24,7 +24,7 @@ public class ViewDataActivity extends AppCompatActivity {
         back = findViewById(R.id.back_arrow12);
         content = findViewById(R.id.dataContent);
         Intent i = getIntent();
-        String con = i.getStringExtra("content");
+        String con = i.getStringExtra("path");
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "en");

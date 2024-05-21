@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.Controller.UnzipUtil;
+import com.example.project.Model.DiagnosticDataModel;
 import com.example.project.R;
 import com.example.project.View.Activities.ViewDataActivity;
 
@@ -19,14 +20,15 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiagnosticsAdapter extends BaseAdapter {
 
-    private ArrayList<File> files;
+    private List<DiagnosticDataModel> files;
     Context context;
     LayoutInflater inflater = null;
 
-    public DiagnosticsAdapter(Context context, ArrayList<File> files) {
+    public DiagnosticsAdapter(Context context, List<DiagnosticDataModel> files) {
         this.context = context;
         this.files = files;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,19 +59,15 @@ public class DiagnosticsAdapter extends BaseAdapter {
         final View rowView;
         rowView = inflater.inflate(R.layout.row_diagnostics,null);
         holder.dateTimeName = rowView.findViewById(R.id.dateTimeName);
-        File file = files.get(position);
-        holder.dateTimeName.setText(file.getName());
+        holder.dateTimeName.setText(files.get(position).getDate_time());
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    String content = UnzipUtil.readFile(file);
+
                     Intent i = new Intent(context, ViewDataActivity.class);
-                    i.putExtra("content",content);
+                    i.putExtra("path",files.get(position).getFile());
                     context.startActivity(i);
-                } catch (IOException e) {
-                    Toast.makeText(context, "Failed to read file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+
             }
         });
         return rowView;

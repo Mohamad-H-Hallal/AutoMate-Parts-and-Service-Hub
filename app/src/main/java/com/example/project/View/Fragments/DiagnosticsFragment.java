@@ -209,8 +209,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
 
     @Override
     public void onDataSentSuccessfully() {
-        // Handle the successful data transmission here
-        // For example, update UI elements or trigger another process
+        uploadfiles(locateAndUnzipFile());
         Toast.makeText(getContext(), "Data sent successfully!", Toast.LENGTH_SHORT).show();
     }
 
@@ -313,16 +312,10 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             } else {
                 Toast.makeText(getContext(), "Bluetooth enablement cancelled. Cannot continue.", Toast.LENGTH_SHORT).show();
             }
-        } else if (requestCode == FILE_SELECT_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getData();
-                String path = getRealPath(getContext(), uri);
-                uploadFile(path);
-            }
         }
     }
 
-    private void locateAndUnzipFile() {
+    private String locateAndUnzipFile() {
         String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         File file = findFileInDirectory(downloadsPath, FILE_NAME);
 
@@ -336,13 +329,14 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             try {
                 String unzipDestPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + UNZIP_DESTINATION;
                 UnzipUtil.unzip(file.getAbsolutePath(), unzipDestPath);
-                displayUnzippedFilesContent(new File(unzipDestPath));
+                return unzipDestPath;
             } catch (IOException e) {
                 Toast.makeText(getContext(), "Failed to unzip file: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(getContext(), "File not found.", Toast.LENGTH_SHORT).show();
         }
+        return null;
     }
     private File findFileInDirectory(String directoryPath, String fileName) {
         File directory = new File(directoryPath);
@@ -358,6 +352,18 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         }
         return null;
     }
+    private void uploadfiles(String directoryPath) {
+        File directory = new File(directoryPath);
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    uploadFile(file.getPath());
+                }
+            }
+        }
+    }
+
     private void displayUnzippedFilesContent(File directory) {
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
@@ -381,7 +387,6 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         FileUploaderClass.uploadFile(filePath, "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
-                locateAndUnzipFile();
                 deleteLocalFiles();
                 fetchRecentFiles();
             }
@@ -416,11 +421,8 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             @Override
             public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
                 if (response.body() != null) {
-                    ArrayList<File> files = new ArrayList<>();
-                    for (DiagnosticDataModel metadata : response.body()) {
-                        files.add(new File(metadata.getFile()));
-                    }
-                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), files);
+
+                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
                 }
             }
@@ -440,14 +442,12 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             @Override
             public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
                 if (response.body() != null) {
-                    ArrayList<File> files = new ArrayList<>();
-                    for (DiagnosticDataModel metadata : response.body()) {
-                        files.add(new File(metadata.getFile()));
-                    }
-                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), files);
+
+                    DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<DiagnosticDataModel>> call, Throwable t) {
