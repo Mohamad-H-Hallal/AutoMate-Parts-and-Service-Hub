@@ -1,5 +1,7 @@
 package com.example.project.View.Activities;
 
+import static com.example.project.Controller.Configuration.IP;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +12,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project.Controller.UserData;
 import com.example.project.R;
 
-public class ViewDataActivity extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+public class ViewDataActivity extends BaseActivity {
 
     ImageButton back;
     private TextView content;
@@ -41,7 +51,32 @@ public class ViewDataActivity extends AppCompatActivity {
             }
         });
 
-        content.setText(con);
+        String downloadedText = downloadTextFile(IP + con);
+        content.setText(downloadedText);
 
+    }
+
+    public String downloadTextFile(String url) {
+        String textContent = "";
+        try {
+            URL fileUrl = new URL(url);
+            URLConnection connection = fileUrl.openConnection();
+            connection.connect();
+
+            InputStream inputStream = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+
+            textContent = stringBuilder.toString();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return textContent;
     }
 }

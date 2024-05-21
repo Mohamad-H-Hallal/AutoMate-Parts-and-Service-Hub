@@ -27,9 +27,9 @@ public class FileUploaderClass {
             RequestBody requestFile = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("uploaded_file", file.getName(), requestFile);
             MultipartBody.Part folder = MultipartBody.Part.createFormData("folder", folder_name);
-            MultipartBody.Part userIdPart = MultipartBody.Part.createFormData("user_id", String.valueOf(user_id));
+            MultipartBody.Part userId = MultipartBody.Part.createFormData("user_id", String.valueOf(user_id));
 
-            Call<String> call = apiInterface.UploadFile(body, folder, userIdPart);
+            Call<String> call = apiInterface.UploadFile(body, folder, userId);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
