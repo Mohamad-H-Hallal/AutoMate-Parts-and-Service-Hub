@@ -17,7 +17,6 @@ public class FileUploaderClass {
 
     public interface onSuccessfulTask {
         void onSuccess();
-
         void onFailed(String error);
     }
 
