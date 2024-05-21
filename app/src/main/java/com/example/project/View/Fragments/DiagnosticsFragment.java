@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.project.Controller.UnzipUtil;
 import com.example.project.Controller.UserData;
+import com.example.project.DataSentListener;
 import com.example.project.FileUpload.AppFilesService;
 import com.example.project.FileUpload.FileUploaderClass;
 import com.example.project.FileUpload.ImageUploaderClass;
@@ -59,7 +60,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DiagnosticsFragment extends BaseFragment {
+public class DiagnosticsFragment extends BaseFragment implements DataSentListener {
 
     private static final int FILE_SELECT_CODE = 14;
     private ImageView carDataFilter;
@@ -206,6 +207,13 @@ public class DiagnosticsFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onDataSentSuccessfully() {
+        // Handle the successful data transmission here
+        // For example, update UI elements or trigger another process
+        Toast.makeText(getContext(), "Data sent successfully!", Toast.LENGTH_SHORT).show();
+    }
+
     private void checkBothFields() {
         String ipText = ipServerInput.getText().toString();
         String macText = ipUserInput.getText().toString();
@@ -263,7 +271,8 @@ public class DiagnosticsFragment extends BaseFragment {
             String ipServer = ipServerInput.getText().toString();
             String ipUser = ipUserInput.getText().toString();
             if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
-                new SendPostRequest(getContext()).execute(ipServer, ipUser);
+                DataSentListener dataSentListener = this;
+                new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
             } else {
                 Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
             }
@@ -278,7 +287,8 @@ public class DiagnosticsFragment extends BaseFragment {
                 String ipServer = ipServerInput.getText().toString();
                 String ipUser = ipUserInput.getText().toString();
                 if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
-                    new SendPostRequest(getContext()).execute(ipServer, ipUser);
+                    DataSentListener dataSentListener = this;
+                    new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
                 } else {
                     Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
                 }

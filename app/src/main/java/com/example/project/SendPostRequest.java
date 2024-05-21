@@ -19,9 +19,11 @@ import okhttp3.Response;
 public class SendPostRequest extends AsyncTask<String, Void, String> {
 
     private Context context;
+    private DataSentListener dataSentListener;
 
-    public SendPostRequest(Context context) {
+    public SendPostRequest(Context context, DataSentListener dataSentListener) {
         this.context = context;
+        this.dataSentListener = dataSentListener;
     }
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -60,7 +62,7 @@ public class SendPostRequest extends AsyncTask<String, Void, String> {
         } else if (result.startsWith("Error")) {
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Data sent successfully", Toast.LENGTH_SHORT).show();
+            dataSentListener.onDataSentSuccessfully();
         }
     }
 
