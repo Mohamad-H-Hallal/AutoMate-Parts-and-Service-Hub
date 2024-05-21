@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
-                android:text="YYYY-MM-DD H:M:S"
+                android:text="YYYY-MM-DD_H:M:S"
                 android:textColor="@color/darkTextColor"
                 android:textSize="25sp"
                 android:textStyle="bold"
