@@ -162,22 +162,7 @@ public class PartsFragment extends BaseFragment {
 
     }
 
-//    // EnglishContextWrapper class definition
-//    public static class EnglishContextWrapper extends ContextWrapper {
-//        public EnglishContextWrapper(Context base) {
-//            super(base);
-//        }
-//
-//        @Override
-//        public Resources getResources() {
-//            Configuration configuration = new Configuration(super.getResources().getConfiguration());
-//            configuration.setLocale(new Locale("en"));
-//            return createConfigurationContext(configuration).getResources();
-//        }
-//    }
-
     private void applyFilter() {
-//        Context englishContext = new AddPartsActivity.EnglishContextWrapper(getContext());
 
         String subcategoriesArray = getResources().getStringArray(R.array.subcategories_choices_combined)[partsCategorySpinner.getSelectedItemPosition()];
         String[] subcategoryChoices = subcategoriesArray.split(";");

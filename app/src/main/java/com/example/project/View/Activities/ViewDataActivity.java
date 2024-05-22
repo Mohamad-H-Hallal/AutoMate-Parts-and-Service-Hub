@@ -4,6 +4,7 @@ import static com.example.project.Controller.Configuration.IP;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -11,8 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
-import com.example.project.Controller.UserData;
 import com.example.project.R;
 
 import java.io.BufferedReader;
@@ -22,7 +23,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class ViewDataActivity extends BaseActivity {
+public class ViewDataActivity extends AppCompatActivity {
 
     ImageButton back;
     private TextView content;
@@ -31,6 +32,7 @@ public class ViewDataActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_data);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         back = findViewById(R.id.back_arrow12);
         content = findViewById(R.id.dataContent);
         Intent i = getIntent();
@@ -51,32 +53,42 @@ public class ViewDataActivity extends BaseActivity {
             }
         });
 
-        String downloadedText = downloadTextFile(IP + con);
-        content.setText(downloadedText);
-
+        new DownloadTextTask().execute(IP + con);
     }
 
-    public String downloadTextFile(String url) {
-        String textContent = "";
-        try {
-            URL fileUrl = new URL(url);
-            URLConnection connection = fileUrl.openConnection();
-            connection.connect();
-
-            InputStream inputStream = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
-            }
-
-            textContent = stringBuilder.toString();
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private class DownloadTextTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return downloadTextFile(urls[0]);
         }
-        return textContent;
+
+        @Override
+        protected void onPostExecute(String result) {
+            content.setText(result);
+        }
+
+        private String downloadTextFile(String url) {
+            String textContent = "";
+            try {
+                URL fileUrl = new URL(url);
+                URLConnection connection = fileUrl.openConnection();
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                }
+
+                textContent = stringBuilder.toString();
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return textContent;
+        }
     }
 }

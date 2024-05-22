@@ -120,6 +120,9 @@
     <string name="enter_ip">IP Address (e.g., 192.168.118.25)</string>
     <string name="bluetooth_mac_address_e_g_8c_6a_3b_05_46_e4">Bluetooth MAC Address (e.g., 8C:6A:3B:05:46:E4)</string>
     <string name="report">Report</string>
+    <string name="ok">OK</string>
+    <string name="diagnostics_configuration">Diagnostics Configuration</string>
+    <string name="this_feature_needs_pre_configuration_before_you_can_use_it_please_check_the_info_for_more_information">This feature needs pre configuration before you can use it. Please check the info for more information.</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

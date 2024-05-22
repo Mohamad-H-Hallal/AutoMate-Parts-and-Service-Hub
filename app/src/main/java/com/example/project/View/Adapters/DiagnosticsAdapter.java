@@ -57,17 +57,15 @@ public class DiagnosticsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final Holder holder = new Holder();
         final View rowView;
-        rowView = inflater.inflate(R.layout.row_diagnostics,null);
+        rowView = inflater.inflate(R.layout.row_diagnostics, null);
         holder.dateTimeName = rowView.findViewById(R.id.dateTimeName);
         holder.dateTimeName.setText(files.get(position).getDate_time());
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    Intent i = new Intent(context, ViewDataActivity.class);
-                    i.putExtra("path",files.get(position).getFile());
-                    context.startActivity(i);
-
+                Intent i = new Intent(context, ViewDataActivity.class);
+                i.putExtra("path", files.get(position).getFile());
+                context.startActivity(i);
             }
         });
         return rowView;

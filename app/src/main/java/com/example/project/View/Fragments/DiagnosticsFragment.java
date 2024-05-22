@@ -5,11 +5,16 @@ import static com.example.project.Controller.GetImagePath.getRealPath;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,6 +39,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.project.Controller.UnzipUtil;
 import com.example.project.Controller.UserData;
@@ -43,13 +49,20 @@ import com.example.project.FileUpload.FileUploaderClass;
 import com.example.project.FileUpload.ImageUploaderClass;
 import com.example.project.FileUpload.RetrofitApiClient;
 import com.example.project.Model.DiagnosticDataModel;
+import com.example.project.Model.UserDataResponse;
 import com.example.project.R;
 import com.example.project.SendPostRequest;
+import com.example.project.View.Activities.InfoActivity;
+import com.example.project.View.Activities.LoginActivity;
+import com.example.project.View.Activities.SettingActivity;
 import com.example.project.View.Adapters.DiagnosticsAdapter;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,8 +75,7 @@ import retrofit2.Response;
 
 public class DiagnosticsFragment extends BaseFragment implements DataSentListener {
 
-    private static final int FILE_SELECT_CODE = 14;
-    private ImageView carDataFilter;
+    private ImageView carDataFilter, infoData;
     private EditText ipUserInput, ipServerInput;
     private CardView carDataCardFilter;
     private AppCompatButton importData, carDataFilterSubmit;
@@ -72,6 +84,10 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     private static String FILE_NAME = "car_data.zip";
     private static final String UNZIP_DESTINATION = "unzipped";
     private ListView dataListView;
+    private static final int PICK_FILE_REQUEST_CODE = 1;
+    private AlertDialog Dialog;
+    private TextView dataClearAll;
+
 
     private BluetoothAdapter bluetoothAdapter;
     private Spinner daySpinner, monthSpinner, yearSpinner, hourSpinner;
@@ -102,6 +118,8 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         ipServerInput = view.findViewById(R.id.ipServerInput);
         carDataFilterSubmit = view.findViewById(R.id.carDataFilterSubmit);
         dataListView = view.findViewById(R.id.dataListView);
+        infoData = view.findViewById(R.id.infoData);
+        dataClearAll = view.findViewById(R.id.dataClearAll);
 
         ipServerInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -167,6 +185,38 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             checkAndRequestPermissions();
         });
 
+        infoData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View DialogView = LayoutInflater.from(getContext()).inflate(R.layout.info_data_dialog, null);
+                final AppCompatButton infoButton = DialogView.findViewById(R.id.infoButton);
+                final AppCompatButton okButton = DialogView.findViewById(R.id.okButton);
+                builder.setView(DialogView);
+                infoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), InfoActivity.class);
+                        startActivity(intent);
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Dialog != null && Dialog.isShowing()) {
+                            Dialog.dismiss();
+                        }
+                    }
+                });
+                Dialog = builder.create();
+                Dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog.show();
+            }
+        });
+
         carDataFilterSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,19 +224,19 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
                 String month = "0";
                 String year = "0";
                 String hour = "-1";
-                if(!daySpinner.getSelectedItem().equals(daySpinner.getItemAtPosition(0).toString())) {
+                if (!daySpinner.getSelectedItem().equals(daySpinner.getItemAtPosition(0).toString())) {
                     day = daySpinner.getSelectedItem().toString();
                 }
-                if(!monthSpinner.getSelectedItem().equals(monthSpinner.getItemAtPosition(0).toString())) {
+                if (!monthSpinner.getSelectedItem().equals(monthSpinner.getItemAtPosition(0).toString())) {
                     month = monthSpinner.getSelectedItem().toString();
                 }
-                if(!yearSpinner.getSelectedItem().equals(yearSpinner.getItemAtPosition(0).toString())) {
+                if (!yearSpinner.getSelectedItem().equals(yearSpinner.getItemAtPosition(0).toString())) {
                     year = yearSpinner.getSelectedItem().toString();
                 }
-                if(!hourSpinner.getSelectedItem().equals(hourSpinner.getItemAtPosition(0).toString())) {
+                if (!hourSpinner.getSelectedItem().equals(hourSpinner.getItemAtPosition(0).toString())) {
                     hour = hourSpinner.getSelectedItem().toString();
                 }
-                filterFilesByDateTime(day, month, year, hour);
+                filterFilesByDateTime(UserData.getId(), day, month, year, hour);
             }
         });
 
@@ -205,12 +255,31 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
                 carDataFilter.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter_circle));
             }
         });
+
+        dataClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                daySpinner.setSelection(0);
+                monthSpinner.setSelection(0);
+                yearSpinner.setSelection(0);
+                hourSpinner.setSelection(0);
+            }
+        });
     }
 
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/zip");
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+    }
+
+
     @Override
-    public void onDataSentSuccessfully() {
-        uploadfiles(locateAndUnzipFile());
-        Toast.makeText(getContext(), "Data sent successfully!", Toast.LENGTH_SHORT).show();
+    public void onDataSentSuccessfully() throws InterruptedException {
+        Thread.sleep(1000);
+        openFilePicker();
+
     }
 
     private void checkBothFields() {
@@ -269,7 +338,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         } else {
             String ipServer = ipServerInput.getText().toString();
             String ipUser = ipUserInput.getText().toString();
-            if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
+            if (!ipUser.isEmpty() || !ipServer.isEmpty()) {
                 DataSentListener dataSentListener = this;
                 new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
             } else {
@@ -285,7 +354,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 String ipServer = ipServerInput.getText().toString();
                 String ipUser = ipUserInput.getText().toString();
-                if (!ipUser.isEmpty()||!ipServer.isEmpty()) {
+                if (!ipUser.isEmpty() || !ipServer.isEmpty()) {
                     DataSentListener dataSentListener = this;
                     new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
                 } else {
@@ -304,9 +373,15 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ENABLE_BT) {
+        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri uri = data.getData();
+            if (uri != null) {
+                Log.d("FileNameDebug", "Selected file Uri: " + uri.toString());
+                handleSelectedFile(uri);
+            }
+        } else if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
                 checkAndRequestPermissions();
             } else {
@@ -315,43 +390,42 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         }
     }
 
-    private String locateAndUnzipFile() {
-        String downloadsPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-        File file = findFileInDirectory(downloadsPath, FILE_NAME);
-
-        if (file == null) {
-            String bluetoothPath = Environment.getExternalStorageDirectory().getPath() + "/Bluetooth";
-            file = findFileInDirectory(bluetoothPath, FILE_NAME);
-        }
-
-        if (file != null) {
-            Toast.makeText(getContext(), "File found: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-            try {
-                String unzipDestPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + UNZIP_DESTINATION;
-                UnzipUtil.unzip(file.getAbsolutePath(), unzipDestPath);
-                return unzipDestPath;
-            } catch (IOException e) {
-                Toast.makeText(getContext(), "Failed to unzip file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
+    private void handleSelectedFile(Uri uri) {
+        getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        String unzipDestPath = locateAndUnzipFile(uri);
+        if (unzipDestPath != null) {
+            uploadfiles(unzipDestPath);
+            Toast.makeText(getContext(), "Data sent successfully!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "File not found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "File not found or failed to unzip.", Toast.LENGTH_SHORT).show();
         }
-        return null;
     }
-    private File findFileInDirectory(String directoryPath, String fileName) {
-        File directory = new File(directoryPath);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.getName().equals(fileName)) {
-                        return file;
-                    }
+
+
+    private String locateAndUnzipFile(Uri uri) {
+        try {
+            InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                File tempFile = new File(getContext().getCacheDir(), FILE_NAME);
+                FileOutputStream outputStream = new FileOutputStream(tempFile);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
                 }
+                outputStream.close();
+                inputStream.close();
+
+                String unzipDestPath = getContext().getFilesDir().getAbsolutePath() + File.separator + UNZIP_DESTINATION;
+                UnzipUtil.unzip(tempFile.getAbsolutePath(), unzipDestPath);
+                return unzipDestPath;
             }
+        } catch (IOException e) {
+            Toast.makeText(getContext(), "Failed to unzip file: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;
     }
+
     private void uploadfiles(String directoryPath) {
         File directory = new File(directoryPath);
         if (directory.exists() && directory.isDirectory()) {
@@ -364,31 +438,12 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         }
     }
 
-    private void displayUnzippedFilesContent(File directory) {
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile() && file.getName().endsWith(".txt")) {
-                        try {
-                            String content = UnzipUtil.readFile(file);
-                            // You can now display this content, send it, or use it as needed
-                            Toast.makeText(getContext(), "Content of " + file.getName() + ":\n" + content, Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            Toast.makeText(getContext(), "Failed to read file: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private void uploadFile(String filePath) {
         FileUploaderClass.uploadFile(filePath, "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
                 deleteLocalFiles();
-                fetchRecentFiles();
+                fetchRecentFiles(UserData.getId());
             }
 
             @Override
@@ -399,12 +454,12 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     }
 
     private void deleteLocalFiles() {
-        File zipFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), FILE_NAME);
+        File zipFile = new File(getContext().getCacheDir(), FILE_NAME);
         if (zipFile.exists()) {
             zipFile.delete();
         }
 
-        File unzipDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), UNZIP_DESTINATION);
+        File unzipDir = new File(getContext().getFilesDir(), UNZIP_DESTINATION);
         if (unzipDir.exists() && unzipDir.isDirectory()) {
             for (File file : unzipDir.listFiles()) {
                 file.delete();
@@ -413,48 +468,78 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         }
     }
 
-    private void fetchRecentFiles() {
+    private void checkUserDataAndFetchFiles() {
+        int userId = UserData.getId();
         AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
-        Call<List<DiagnosticDataModel>> call = apiInterface.getRecentFiles();
+        Call<UserDataResponse> call = apiInterface.checkUserData(userId);
+
+        call.enqueue(new Callback<UserDataResponse>() {
+            @Override
+            public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
+                if (response.body() != null && response.body().isHasData()) {
+                    fetchRecentFiles(UserData.getId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDataResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Failed to check user data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchRecentFiles(int user_id) {
+        AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
+        Call<List<DiagnosticDataModel>> call = apiInterface.getRecentFiles(user_id);
 
         call.enqueue(new Callback<List<DiagnosticDataModel>>() {
             @Override
             public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
-                if (response.body() != null) {
-
+                if (response.isSuccessful() && response.body() != null) {
                     DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
+                } else {
+                    Log.e("Fetch Error", "Response code: " + response.code());
+                    Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<DiagnosticDataModel>> call, Throwable t) {
+                Log.e("Fetch Error", "Failure message: " + t.getMessage());
                 Toast.makeText(getContext(), "Failed to fetch files", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void filterFilesByDateTime(String day, String month, String year, String hour) {
+    private void filterFilesByDateTime(int user_id, String day, String month, String year, String hour) {
         AppFilesService apiInterface = RetrofitApiClient.getClient().create(AppFilesService.class);
-        Call<List<DiagnosticDataModel>> call = apiInterface.filterFiles(day, month, year, hour);
+        Call<List<DiagnosticDataModel>> call = apiInterface.filterFiles(user_id, day, month, year, hour);
 
         call.enqueue(new Callback<List<DiagnosticDataModel>>() {
             @Override
             public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
-                if (response.body() != null) {
-
+                if (response.isSuccessful() && response.body() != null) {
                     DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
+                }else {
+                    Log.e("Fetch Error", "Response code: " + response.code());
+                    Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 }
             }
 
-
             @Override
             public void onFailure(Call<List<DiagnosticDataModel>> call, Throwable t) {
+                Log.e("Fetch Error", "Failure message: " + t.getMessage());
                 Toast.makeText(getContext(), "Failed to fetch files", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkUserDataAndFetchFiles();
+    }
 
 }

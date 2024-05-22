@@ -45,15 +45,5 @@ public class UnzipUtil {
         }
     }
 
-    public static String readFile(File file) throws IOException {
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-        }
-        return content.toString();
-    }
 }
 

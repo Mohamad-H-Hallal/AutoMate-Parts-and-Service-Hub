@@ -33,8 +33,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".View.Activities.ViewDataActivity"
+            android:name=".View.Activities.InfoActivity"
             android:exported="false" />
+        <activity
+            android:name=".View.Activities.ViewDataActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".View.Activities.PayCompletionActivity"
             android:exported="false"

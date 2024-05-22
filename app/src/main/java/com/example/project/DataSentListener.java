@@ -1,5 +1,5 @@
 package com.example.project;
 
 public interface DataSentListener {
-    void onDataSentSuccessfully();
+    void onDataSentSuccessfully() throws InterruptedException;
 }

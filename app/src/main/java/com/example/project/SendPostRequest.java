@@ -62,7 +62,11 @@ public class SendPostRequest extends AsyncTask<String, Void, String> {
         } else if (result.startsWith("Error")) {
             Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         } else {
-            dataSentListener.onDataSentSuccessfully();
+            try {
+                dataSentListener.onDataSentSuccessfully();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
