@@ -245,9 +245,9 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
                 if (!hourSpinner.getSelectedItem().equals(hourSpinner.getItemAtPosition(0).toString())) {
                     hour = hourSpinner.getSelectedItem().toString();
                 }
-                if((month.equals("0") && year.equals("0") && hour.equals("-1") && !day.equals("0")) || (month.equals("0") && year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && hour.equals("-1") && !day.equals("0"))){
+                if ((month.equals("0") && year.equals("0") && hour.equals("-1") && !day.equals("0")) || (month.equals("0") && year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && hour.equals("-1") && !day.equals("0"))) {
                     Toast.makeText(getContext(), "Please enter a month with day!", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     filterFilesByDateTime(UserData.getId(), day, month, year, hour);
                 }
             }
@@ -287,9 +287,6 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
     }
 
-
-
-
 //    private void checkBothFields() {
 //        String ipText = ipServerInput.getText().toString();
 //        String macText = ipUserInput.getText().toString();
@@ -304,23 +301,23 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
 //        }
 //    }
 
-    private boolean isValidIp(String ip) {
-        String[] parts = ip.split("\\.");
-        if (parts.length != 4) {
-            return false;
-        }
-        for (String part : parts) {
-            try {
-                int value = Integer.parseInt(part);
-                if (value < 0 || value > 255) {
-                    return false;
-                }
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    private boolean isValidIp(String ip) {
+//        String[] parts = ip.split("\\.");
+//        if (parts.length != 4) {
+//            return false;
+//        }
+//        for (String part : parts) {
+//            try {
+//                int value = Integer.parseInt(part);
+//                if (value < 0 || value > 255) {
+//                    return false;
+//                }
+//            } catch (NumberFormatException e) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     private boolean isBluetoothEnabled() {
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
@@ -347,7 +344,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
             BluetoothDevice targetDevice = null;
             for (BluetoothDevice device : pairedDevices) {
-                
+
                 if (device.getName().equals("raspberrypi")) {
 
                     targetDevice = device;
@@ -355,11 +352,11 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
                     break;
                 }
             }
-                try {
-                    service.connect(targetDevice, this,requireContext().getApplicationContext());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                service.connect(targetDevice, this, requireContext().getApplicationContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
         }
@@ -384,7 +381,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
                     }
                 }
                 try {
-                    service.connect(targetDevice, this,requireContext().getApplicationContext());
+                    service.connect(targetDevice, this, requireContext().getApplicationContext());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -551,7 +548,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
                 if (response.isSuccessful() && response.body() != null) {
                     DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
-                }else {
+                } else {
                     Log.e("Fetch Error", "Response code: " + response.code());
                     Toast.makeText(getContext(), "No data found", Toast.LENGTH_SHORT).show();
                 }
@@ -601,15 +598,16 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             }
         }
     }
+
     private void processReceivedData(byte[] data) {
         // Process the received byte array
         String receivedMessage = new String(data); // Convert byte array to string (assuming it contains text data)
-        if(receivedMessage.equals("success")){
+        if (receivedMessage.equals("success")) {
             openFilePicker();
         } else if (receivedMessage.equals("fail")) {
             Toast.makeText(getContext(), "you should accept the file!", Toast.LENGTH_SHORT).show();
 
-        } else{
+        } else {
             Toast.makeText(getContext(), "Error Receiving the file!Try Again", Toast.LENGTH_SHORT).show();
         }
     }
