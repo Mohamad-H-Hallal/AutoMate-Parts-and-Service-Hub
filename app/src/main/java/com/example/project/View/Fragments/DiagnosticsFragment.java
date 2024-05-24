@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -52,6 +53,9 @@ import com.example.project.Model.DiagnosticDataModel;
 import com.example.project.Model.UserDataResponse;
 import com.example.project.R;
 import com.example.project.SendPostRequest;
+import com.example.project.SerialListener;
+import com.example.project.SerialService;
+
 import com.example.project.View.Activities.InfoActivity;
 import com.example.project.View.Activities.LoginActivity;
 import com.example.project.View.Activities.SettingActivity;
@@ -61,10 +65,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.Executors;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -73,7 +80,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DiagnosticsFragment extends BaseFragment implements DataSentListener {
+public class DiagnosticsFragment extends BaseFragment implements SerialListener {
 
     private ImageView carDataFilter, infoData;
     private EditText ipUserInput, ipServerInput;
@@ -86,7 +93,8 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     private ListView dataListView;
     private static final int PICK_FILE_REQUEST_CODE = 1;
     private AlertDialog Dialog;
-    private TextView dataClearAll, noData;
+    private TextView dataClearAll;
+    private SerialService service;
 
 
     private BluetoothAdapter bluetoothAdapter;
@@ -120,49 +128,49 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         dataListView = view.findViewById(R.id.dataListView);
         infoData = view.findViewById(R.id.infoData);
         dataClearAll = view.findViewById(R.id.dataClearAll);
-        noData = view.findViewById(R.id.noData);
+        service = new SerialService();
 
-        ipServerInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+//        ipServerInput.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String text = s.toString();
+//                if (!isValidIp(text)) {
+//                    ipServerInput.setError("Invalid format. Please use XXX.XXX.XXX.XXX with each segment between 0 and 255");
+//                } else {
+//                    ipServerInput.setError(null);
+//                }
+//                checkBothFields();
+//            }
+//        });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text = s.toString();
-                if (!isValidIp(text)) {
-                    ipServerInput.setError("Invalid format. Please use XXX.XXX.XXX.XXX with each segment between 0 and 255");
-                } else {
-                    ipServerInput.setError(null);
-                }
-                checkBothFields();
-            }
-        });
-
-        ipUserInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text = s.toString();
-                if (!text.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$")) {
-                    ipUserInput.setError("Invalid format. Please use XX:XX:XX:XX:XX:XX");
-                } else {
-                    ipUserInput.setError(null);
-                }
-                checkBothFields();
-            }
-        });
+//        ipUserInput.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String text = s.toString();
+//                if (!text.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$")) {
+//                    ipUserInput.setError("Invalid format. Please use XX:XX:XX:XX:XX:XX");
+//                } else {
+//                    ipUserInput.setError(null);
+//                }
+//                checkBothFields();
+//            }
+//        });
 
 
         String[] dayArray = getResources().getStringArray(R.array.day_choices);
@@ -280,26 +288,21 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     }
 
 
-    @Override
-    public void onDataSentSuccessfully() throws InterruptedException {
-        Thread.sleep(1000);
-        openFilePicker();
 
-    }
 
-    private void checkBothFields() {
-        String ipText = ipServerInput.getText().toString();
-        String macText = ipUserInput.getText().toString();
-
-        boolean isIpValid = isValidIp(ipText);
-        boolean isMacValid = macText.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$");
-
-        if (isIpValid && isMacValid) {
-            importData.setEnabled(true);
-        } else {
-            importData.setEnabled(false);
-        }
-    }
+//    private void checkBothFields() {
+//        String ipText = ipServerInput.getText().toString();
+//        String macText = ipUserInput.getText().toString();
+//
+//        boolean isIpValid = isValidIp(ipText);
+//        boolean isMacValid = macText.matches("^([0-9A-F]{2}:){5}[0-9A-F]{2}$");
+//
+//        if (isIpValid && isMacValid) {
+//            importData.setEnabled(true);
+//        } else {
+//            importData.setEnabled(false);
+//        }
+//    }
 
     private boolean isValidIp(String ip) {
         String[] parts = ip.split("\\.");
@@ -341,29 +344,49 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
                 ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT}, REQUEST_WRITE_STORAGE_PERMISSION);
         } else {
-            String ipServer = ipServerInput.getText().toString();
-            String ipUser = ipUserInput.getText().toString();
-            if (!ipUser.isEmpty() || !ipServer.isEmpty()) {
-                DataSentListener dataSentListener = this;
-                new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
-            } else {
-                Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+            BluetoothDevice targetDevice = null;
+            for (BluetoothDevice device : pairedDevices) {
+                
+                if (device.getName().equals("raspberrypi")) {
+
+                    targetDevice = device;
+
+                    break;
+                }
             }
+                try {
+                    service.connect(targetDevice, this,requireContext().getApplicationContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
         }
     }
 
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_WRITE_STORAGE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                String ipServer = ipServerInput.getText().toString();
-                String ipUser = ipUserInput.getText().toString();
-                if (!ipUser.isEmpty() || !ipServer.isEmpty()) {
-                    DataSentListener dataSentListener = this;
-                    new SendPostRequest(getContext(), dataSentListener).execute(ipServer, ipUser);
-                } else {
-                    Toast.makeText(getContext(), "Please enter need information!", Toast.LENGTH_SHORT).show();
+                Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+                BluetoothDevice targetDevice = null;
+                for (BluetoothDevice device : pairedDevices) {
+
+                    if (device.getName().equals("raspberrypi")) {
+
+                        targetDevice = device;
+
+                        break;
+                    }
+                }
+                try {
+                    service.connect(targetDevice, this,requireContext().getApplicationContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             } else {
                 Toast.makeText(getContext(), "Permissions denied. Cannot import data.", Toast.LENGTH_SHORT).show();
@@ -394,6 +417,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             }
         }
     }
+
 
     private void handleSelectedFile(Uri uri) {
         getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -482,10 +506,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             @Override
             public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
                 if (response.body() != null && response.body().isHasData()) {
-                    noData.setVisibility(View.GONE);
                     fetchRecentFiles(UserData.getId());
-                } else{
-                    noData.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -550,4 +571,52 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         checkUserDataAndFetchFiles();
     }
 
+    @Override
+    public void onSerialConnect() {
+        try {
+            service.write("Script1".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onSerialConnectError(Exception e) {
+
+    }
+
+    @Override
+    public void onSerialRead(byte[] data) {
+
+    }
+
+    @Override
+    public void onSerialRead(ArrayDeque<byte[]> datas) {
+        // Handle received data
+        while (!datas.isEmpty()) {
+            byte[] data = datas.poll(); // Retrieve and remove the first byte array from the deque
+            if (data != null) {
+                processReceivedData(data);
+            }
+        }
+    }
+    private void processReceivedData(byte[] data) {
+        // Process the received byte array
+        String receivedMessage = new String(data); // Convert byte array to string (assuming it contains text data)
+        if(receivedMessage.equals("success")){
+            openFilePicker();
+        } else if (receivedMessage.equals("fail")) {
+            Toast.makeText(getContext(), "you should accept the file!", Toast.LENGTH_SHORT).show();
+
+        } else{
+            Toast.makeText(getContext(), "Error Receiving the file!Try Again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onSerialIoError(Exception e) {
+
+    }
 }

@@ -83,5 +83,26 @@ public class BottomNavMenuActivity extends BaseActivity implements BottomNavigat
 
         return false;
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Add onDestroy logic here if needed
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Add onStop logic here if needed
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Add onResume logic here if needed
+    }
 
-}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Add onPause logic here if needed
+    }
+
+    }
