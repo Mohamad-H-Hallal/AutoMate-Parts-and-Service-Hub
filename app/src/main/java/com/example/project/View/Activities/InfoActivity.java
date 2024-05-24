@@ -17,10 +17,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project.R;
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends BaseActivity {
 
     ImageButton back;
-    private TextView content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.themeColor));
         back = findViewById(R.id.back_arrow13);
-        content = findViewById(R.id.infoContent);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguage = preferences.getString("selected_language", "en");

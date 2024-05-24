@@ -34,15 +34,18 @@ public class FileUploaderClass {
                 @Override
                 public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                     String responseBody = response.body();
-
+                    Log.d("test",response.message());
                     if (responseBody != null) {
                         if ("ok".equals(responseBody)) {
                             task.onSuccess();
+                            Log.d("test",response.message());
                         } else {
                             task.onFailed(responseBody);
+                            Log.d("test",response.message());
                         }
                     } else {
                         task.onFailed(null);
+                        Log.d("test",response.message());
                     }
                 }
 

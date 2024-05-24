@@ -86,7 +86,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
     private ListView dataListView;
     private static final int PICK_FILE_REQUEST_CODE = 1;
     private AlertDialog Dialog;
-    private TextView dataClearAll;
+    private TextView dataClearAll, noData;
 
 
     private BluetoothAdapter bluetoothAdapter;
@@ -120,6 +120,7 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
         dataListView = view.findViewById(R.id.dataListView);
         infoData = view.findViewById(R.id.infoData);
         dataClearAll = view.findViewById(R.id.dataClearAll);
+        noData = view.findViewById(R.id.noData);
 
         ipServerInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -477,7 +478,10 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
             @Override
             public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
                 if (response.body() != null && response.body().isHasData()) {
+                    noData.setVisibility(View.GONE);
                     fetchRecentFiles(UserData.getId());
+                } else{
+                    noData.setVisibility(View.VISIBLE);
                 }
             }
 
