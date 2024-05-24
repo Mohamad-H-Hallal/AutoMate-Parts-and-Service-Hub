@@ -237,7 +237,11 @@ public class DiagnosticsFragment extends BaseFragment implements DataSentListene
                 if (!hourSpinner.getSelectedItem().equals(hourSpinner.getItemAtPosition(0).toString())) {
                     hour = hourSpinner.getSelectedItem().toString();
                 }
-                filterFilesByDateTime(UserData.getId(), day, month, year, hour);
+                if((month.equals("0") && year.equals("0") && hour.equals("-1") && !day.equals("0")) || (month.equals("0") && year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && !hour.equals("-1") && !day.equals("0")) || (month.equals("0") && !year.equals("0") && hour.equals("-1") && !day.equals("0"))){
+                    Toast.makeText(getContext(), "Please enter a month with day!", Toast.LENGTH_SHORT).show();
+                }else {
+                    filterFilesByDateTime(UserData.getId(), day, month, year, hour);
+                }
             }
         });
 
