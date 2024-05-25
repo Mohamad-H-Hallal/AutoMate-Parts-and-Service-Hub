@@ -15,7 +15,7 @@
     <string name="new_user_register_now">New user? Register Now</string>
     <string name="parts">Parts</string>
     <string name="parts_categories">Parts Categories</string>
-    <string name="enter_the_your_email_to_reset_your_password">Enter the Your Email to Reset Your Password!</string>
+    <string name="enter_the_your_email_to_reset_your_password">Enter Your Email to Reset Your Password!</string>
     <string name="send">Send</string>
     <string name="here_s_nyour_first_nstep_with_nus">Here’s\nyour first\nstep with \nus!</string>
     <string name="name">Name</string>
@@ -123,54 +123,54 @@
     <string name="ok">OK</string>
     <string name="diagnostics_configuration">Diagnostics Configuration</string>
     <string name="this_feature_needs_pre_configuration_before_you_can_use_it_please_check_the_info_for_more_information">This feature needs pre configuration before you can use it. Please check the info for more information.</string>
-<!--    <string name="diagnostic_guide">-->
-<!--        "User Guide: Using the Diagnostic Feature in AutoMate\n\n-->
-<!--        To utilize the diagnostic feature of the AutoMate application, follow these steps. Ensure you have the necessary hardware and network configurations:\n\n-->
-<!--        Required Hardware and Connections:\n-->
-<!--        1. \tOBD-II Scanner (ELM327): This device connects to your car\'s OBD-II port and communicates diagnostic data.\n-->
-<!--        2. \tRaspberry Pi: This device will interface with the OBD-II scanner to collect data.\n-->
-<!--        3. \tBluetooth: For wireless communication between the Raspberry Pi and your phone.\n-->
-<!--        4. \tWi-Fi Connection: To connect the Raspberry Pi to your mobile hotspot for IP address retrieval.\n\n-->
-<!--        Steps to Configure and Use the Diagnostic Feature:\n\n-->
-<!--        1. \tSetup and Configure Raspberry Pi:\n-->
-<!--        \t- Ensure your Raspberry Pi is powered and has Bluetooth and Wi-Fi enabled.\n-->
-<!--        \t- Install necessary scripts to retrieve data from the OBD-II scanner and to send data to your phone.\n\n-->
-<!--        2. \tGet the Bluetooth MAC Address:\n-->
-<!--        \t- On your mobile device, navigate to Settings.\n-->
-<!--        \t- Go to About Phone.\n-->
-<!--        \t- Select Status Information.\n-->
-<!--        \t- Find the Bluetooth Address and note it down. This address is required to establish a Bluetooth connection with your Raspberry Pi.\n\n-->
-<!--        3. \tGet the IP Address of the Raspberry Pi:\n-->
-<!--        \t- Ensure your Raspberry Pi is connected to your mobile hotspot.\n-->
-<!--        \t- On your mobile device, go to Settings.\n-->
-<!--        \t- Select Connections.\n-->
-<!--        \t- Go to Mobile Hotspot and Tethering.\n-->
-<!--        \t- Select Mobile Hotspot.\n-->
-<!--        \t- Choose Manage Mobile Hotspot.\n-->
-<!--        \t- Find the Connected Devices section and note down the IP address of the Raspberry Pi.\n\n-->
-<!--        4. \tConnect Raspberry Pi to OBD-II Scanner:\n-->
-<!--        \t- Plug the OBD-II scanner into your car's OBD-II port (usually located under the dashboard).\n-->
-<!--        \t- Pair the OBD-II scanner with the Raspberry Pi via Bluetooth.\n\n-->
-<!--        5. \tConfigure AutoMate App:\n-->
-<!--        \t- Open the AutoMate app on your phone.\n-->
-<!--        \t- Navigate to the Diagnostics fragment.\n-->
-<!--        \t- If this is your first time, the list will be empty.\n-->
-<!--        \t- Click the Info button to review the configuration instructions if needed.\n-->
-<!--        \t- Click the Import button to start the data import process.\n\n-->
-<!--        6. \tEnter Bluetooth and IP Information:\n-->
-<!--        \t- Enter the Bluetooth MAC Address obtained in step 2.\n-->
-<!--        \t- Enter the Raspberry Pi IP Address obtained in step 3.\n-->
-<!--        \t- Click Connect to establish the Bluetooth connection and initiate the data transfer.\n\n-->
-<!--        7. \tImport Diagnostic Data:\n-->
-<!--        \t- Upon successful connection, an alert will prompt you to choose the diagnostic data file.\n-->
-<!--        \t- Select the car_data.zip file. This file contains all the diagnostic reports retrieved from the Raspberry Pi.\n-->
-<!--        \t- Once the import is complete, the list in the Diagnostics fragment will be updated with the new reports.\n\n-->
-<!--        8. \tView Diagnostic Reports:\n-->
-<!--        \t- The diagnostic reports will be listed in the Diagnostics fragment.\n-->
-<!--        \t- You can filter the reports by year, month, day, and hour using the filter options.\n-->
-<!--        \t- Click on a report to view detailed information about the diagnostic data.\n\n-->
-<!--        By following these steps, you can successfully use the diagnostic feature in the AutoMate application, leveraging the OBD-II scanner and Raspberry Pi to obtain and view car diagnostic reports directly on your phone."-->
-<!--    </string>-->
+    <!--    <string name="diagnostic_guide">-->
+    <!--        "User Guide: Using the Diagnostic Feature in AutoMate\n\n-->
+    <!--        To utilize the diagnostic feature of the AutoMate application, follow these steps. Ensure you have the necessary hardware and network configurations:\n\n-->
+    <!--        Required Hardware and Connections:\n-->
+    <!--        1. \tOBD-II Scanner (ELM327): This device connects to your car\'s OBD-II port and communicates diagnostic data.\n-->
+    <!--        2. \tRaspberry Pi: This device will interface with the OBD-II scanner to collect data.\n-->
+    <!--        3. \tBluetooth: For wireless communication between the Raspberry Pi and your phone.\n-->
+    <!--        4. \tWi-Fi Connection: To connect the Raspberry Pi to your mobile hotspot for IP address retrieval.\n\n-->
+    <!--        Steps to Configure and Use the Diagnostic Feature:\n\n-->
+    <!--        1. \tSetup and Configure Raspberry Pi:\n-->
+    <!--        \t- Ensure your Raspberry Pi is powered and has Bluetooth and Wi-Fi enabled.\n-->
+    <!--        \t- Install necessary scripts to retrieve data from the OBD-II scanner and to send data to your phone.\n\n-->
+    <!--        2. \tGet the Bluetooth MAC Address:\n-->
+    <!--        \t- On your mobile device, navigate to Settings.\n-->
+    <!--        \t- Go to About Phone.\n-->
+    <!--        \t- Select Status Information.\n-->
+    <!--        \t- Find the Bluetooth Address and note it down. This address is required to establish a Bluetooth connection with your Raspberry Pi.\n\n-->
+    <!--        3. \tGet the IP Address of the Raspberry Pi:\n-->
+    <!--        \t- Ensure your Raspberry Pi is connected to your mobile hotspot.\n-->
+    <!--        \t- On your mobile device, go to Settings.\n-->
+    <!--        \t- Select Connections.\n-->
+    <!--        \t- Go to Mobile Hotspot and Tethering.\n-->
+    <!--        \t- Select Mobile Hotspot.\n-->
+    <!--        \t- Choose Manage Mobile Hotspot.\n-->
+    <!--        \t- Find the Connected Devices section and note down the IP address of the Raspberry Pi.\n\n-->
+    <!--        4. \tConnect Raspberry Pi to OBD-II Scanner:\n-->
+    <!--        \t- Plug the OBD-II scanner into your car's OBD-II port (usually located under the dashboard).\n-->
+    <!--        \t- Pair the OBD-II scanner with the Raspberry Pi via Bluetooth.\n\n-->
+    <!--        5. \tConfigure AutoMate App:\n-->
+    <!--        \t- Open the AutoMate app on your phone.\n-->
+    <!--        \t- Navigate to the Diagnostics fragment.\n-->
+    <!--        \t- If this is your first time, the list will be empty.\n-->
+    <!--        \t- Click the Info button to review the configuration instructions if needed.\n-->
+    <!--        \t- Click the Import button to start the data import process.\n\n-->
+    <!--        6. \tEnter Bluetooth and IP Information:\n-->
+    <!--        \t- Enter the Bluetooth MAC Address obtained in step 2.\n-->
+    <!--        \t- Enter the Raspberry Pi IP Address obtained in step 3.\n-->
+    <!--        \t- Click Connect to establish the Bluetooth connection and initiate the data transfer.\n\n-->
+    <!--        7. \tImport Diagnostic Data:\n-->
+    <!--        \t- Upon successful connection, an alert will prompt you to choose the diagnostic data file.\n-->
+    <!--        \t- Select the car_data.zip file. This file contains all the diagnostic reports retrieved from the Raspberry Pi.\n-->
+    <!--        \t- Once the import is complete, the list in the Diagnostics fragment will be updated with the new reports.\n\n-->
+    <!--        8. \tView Diagnostic Reports:\n-->
+    <!--        \t- The diagnostic reports will be listed in the Diagnostics fragment.\n-->
+    <!--        \t- You can filter the reports by year, month, day, and hour using the filter options.\n-->
+    <!--        \t- Click on a report to view detailed information about the diagnostic data.\n\n-->
+    <!--        By following these steps, you can successfully use the diagnostic feature in the AutoMate application, leveraging the OBD-II scanner and Raspberry Pi to obtain and view car diagnostic reports directly on your phone."-->
+    <!--    </string>-->
     <string name="diagnostic_guide">
         "User Guide: Using the Diagnostic Feature in AutoMate\n\n
         To utilize the diagnostic feature of the AutoMate application, follow these steps. Ensure you have the necessary hardware:\n\n
@@ -202,6 +202,9 @@
         By following these steps, you can successfully use the diagnostic feature in the AutoMate application, leveraging the OBD-II scanner and Raspberry Pi to obtain and view car diagnostic reports directly on your phone."
     </string>
     <string name="no_data_found">No Data Found!</string>
+    <string name="enter_the_one_time_password_otp_received">Enter the One Time Password (OTP) Received</string>
+    <string name="reset">Reset</string>
+    <string name="reset_your_password">Reset Your Password</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>

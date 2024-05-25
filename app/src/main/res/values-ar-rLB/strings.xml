@@ -203,6 +203,9 @@
          باتباع هذه الخطوات، يمكنك استخدام ميزة التشخيص بنجاح في تطبيق AutoMate، والاستفادة من الماسح الضوئي OBD-II وRaspberry Pi للحصول على تقارير تشخيص السيارة وعرضها مباشرة على هاتفك."
     </string>
     <string name="no_data_found">لاتوجد بيانات!</string>
+    <string name="enter_the_one_time_password_otp_received">أدخل كلمة المرور لمرة واحدة (OTP) المستلمة</string>
+    <string name="reset">إعادة ضبط</string>
+    <string name="reset_your_password">اعد ضبط كلمه السر</string>
 
     <string-array name="spinner">
         <item>اختر نوع حسابك</item>
