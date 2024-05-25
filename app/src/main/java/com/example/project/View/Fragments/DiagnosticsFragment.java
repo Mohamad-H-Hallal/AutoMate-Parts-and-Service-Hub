@@ -9,16 +9,20 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -65,6 +69,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +100,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
     private AlertDialog Dialog;
     private TextView dataClearAll;
     private SerialService service;
+    private Uri zippedfile= null;
 
 
     private BluetoothAdapter bluetoothAdapter;
@@ -191,6 +197,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
                 requestBluetoothEnable();
                 return;
             }
+
             checkAndRequestPermissions();
         });
 
@@ -404,7 +411,14 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             Uri uri = data.getData();
             if (uri != null) {
                 Log.d("FileNameDebug", "Selected file Uri: " + uri.toString());
-                handleSelectedFile(uri);
+                if(isCarDataZip(getFileName(uri))){
+                    FILE_NAME=getFileName(uri);
+                    zippedfile = uri;
+                handleSelectedFile(uri);}
+                else{
+                    Toast.makeText(getContext(), "you didn't pick the correct file!", Toast.LENGTH_SHORT).show();
+                    openFilePicker();
+                }
             }
         } else if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) {
@@ -415,6 +429,11 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
         }
     }
 
+    public boolean isCarDataZip(String fileName) {
+        String regex = "^car_data.*\\.zip$";
+        return fileName.matches(regex);
+    }
+
 
     private void handleSelectedFile(Uri uri) {
         getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -422,6 +441,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
         if (unzipDestPath != null) {
             uploadfiles(unzipDestPath);
             Toast.makeText(getContext(), "Data sent successfully!", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(getContext(), "File not found or failed to unzip.", Toast.LENGTH_SHORT).show();
         }
@@ -468,6 +488,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
         FileUploaderClass.uploadFile(filePath, "diagnostics/" + UserData.getId(), UserData.getId(), new FileUploaderClass.onSuccessfulTask() {
             @Override
             public void onSuccess() {
+                performDelete(zippedfile);
                 deleteLocalFiles();
                 fetchRecentFiles(UserData.getId());
             }
@@ -478,8 +499,29 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             }
         });
     }
+    private void performDelete(Uri uri) {
+        try {
+            ContentResolver contentResolver = requireContext().getContentResolver();
+            if (DocumentsContract.isDocumentUri(requireContext(), uri)) {
+                DocumentsContract.deleteDocument(contentResolver, uri);
+
+            } else {
+                int rowsDeleted = contentResolver.delete(uri, null, null);
+                if (rowsDeleted > 0) {
+
+                } else {
+                    Toast.makeText(requireContext(), "File deletion failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(requireContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void deleteLocalFiles() {
+        File zipFiles = new File(zippedfile.toString());
+
         File zipFile = new File(getContext().getCacheDir(), FILE_NAME);
         if (zipFile.exists()) {
             zipFile.delete();
@@ -490,9 +532,29 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             for (File file : unzipDir.listFiles()) {
                 file.delete();
             }
-            unzipDir.delete();
+            Boolean.toString(unzipDir.delete());
         }
     }
+    @SuppressLint("Range")
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (Objects.equals(uri.getScheme(), "content")) {
+            try (Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
 
     private void checkUserDataAndFetchFiles() {
         int userId = UserData.getId();
@@ -580,7 +642,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
 
     @Override
     public void onSerialConnectError(Exception e) {
-
+        Toast.makeText(getContext(), "connection error!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -615,6 +677,6 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
 
     @Override
     public void onSerialIoError(Exception e) {
-
+        Toast.makeText(getContext(), "something wrong happened!", Toast.LENGTH_SHORT).show();
     }
 }
