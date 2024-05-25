@@ -171,6 +171,7 @@
         \t- Click on a report to view detailed information about the diagnostic data.\n\n
         By following these steps, you can successfully use the diagnostic feature in the AutoMate application, leveraging the OBD-II scanner and Raspberry Pi to obtain and view car diagnostic reports directly on your phone."
     </string>
+    <string name="no_data_found">No Data Found!</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
