@@ -98,7 +98,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
     private ListView dataListView;
     private static final int PICK_FILE_REQUEST_CODE = 1;
     private AlertDialog Dialog;
-    private TextView dataClearAll;
+    private TextView dataClearAll, noData;
     private SerialService service;
     private Uri zippedfile= null;
 
@@ -134,6 +134,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
         dataListView = view.findViewById(R.id.dataListView);
         infoData = view.findViewById(R.id.infoData);
         dataClearAll = view.findViewById(R.id.dataClearAll);
+        noData = view.findViewById(R.id.noData);
         service = new SerialService();
 
 //        ipServerInput.addTextChangedListener(new TextWatcher() {
@@ -565,7 +566,10 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             @Override
             public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
                 if (response.body() != null && response.body().isHasData()) {
+                    noData.setVisibility(View.GONE);
                     fetchRecentFiles(UserData.getId());
+                } else {
+                    noData.setVisibility(View.VISIBLE);
                 }
             }
 

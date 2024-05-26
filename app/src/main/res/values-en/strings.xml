@@ -15,7 +15,7 @@
     <string name="new_user_register_now">New user? Register Now</string>
     <string name="parts">Parts</string>
     <string name="parts_categories">Parts Categories</string>
-    <string name="enter_the_your_email_to_reset_your_password">Enter the Your Email to Reset Your Password!</string>
+    <string name="enter_the_your_email_to_reset_your_password">Enter Your Email to Reset Your Password!</string>
     <string name="send">Send</string>
     <string name="here_s_nyour_first_nstep_with_nus">Here’s\nyour first\nstep with \nus!</string>
     <string name="name">Name</string>
@@ -203,6 +203,9 @@
     </string>
 
     <string name="no_data_found">No Data Found!</string>
+    <string name="enter_the_one_time_password_otp_received">Enter the One Time Password (OTP) Received</string>
+    <string name="reset">Reset</string>
+    <string name="reset_your_password">Reset Your Password</string>
 
     <string-array name="spinner">
         <item>Choose Your Account Type</item>
