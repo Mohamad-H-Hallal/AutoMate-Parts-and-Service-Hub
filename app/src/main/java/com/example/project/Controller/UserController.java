@@ -308,13 +308,13 @@ public class UserController {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        Log.d("test2",response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.d("test2",error.getMessage());
                     }
                 }) {
             @Override

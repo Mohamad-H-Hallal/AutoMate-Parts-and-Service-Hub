@@ -384,21 +384,20 @@ public class ProfileFragment extends BaseFragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserData userdata = new UserData(requireContext());
                 UserController user = new UserController();
                 if (uriImage != null) {
                     uploadImage();
-                    user.updateUserImage(requireContext(), userdata.getId(), nameOfImage);
+                    Log.d("test",UserData.getId()+"");
+                    user.updateUserImage(requireContext(), UserData.getId(), nameOfImage);
                 }
                 String cname = name.getText().toString();
 
-                if (userdata.getAccountType().equals("General User")) {
-                    user.updateUser(requireContext(), userdata.getId(), cname, longitude, latitude);
-                } else if (userdata.getAccountType().equals("Mechanic")) {
-                    user.updateMechanic(requireContext(), userdata.getId(), cname, longitude, latitude, Integer.parseInt(yearofxptext.getText().toString()), specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
-                } else if (userdata.getAccountType().equals("Scrap-Yard Vendor")) {
-
-                    user.updateScrapyard(requireContext(), userdata.getId(), cname, longitude, latitude, specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
+                if (UserData.getAccountType().equals("General User")) {
+                    user.updateUser(requireContext(), UserData.getId(), cname, longitude, latitude);
+                } else if (UserData.getAccountType().equals("Mechanic")) {
+                    user.updateMechanic(requireContext(), UserData.getId(), cname, longitude, latitude, Integer.parseInt(yearofxptext.getText().toString()), specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
+                } else if (UserData.getAccountType().equals("Scrap-Yard Vendor")) {
+                    user.updateScrapyard(requireContext(), UserData.getId(), cname, longitude, latitude, specializationtext.getText().toString(), biographytext.getText().toString(), phonetext.getText().toString());
                 }
                 saveChanges();
                 dialog.dismiss(); // Dismiss the dialog
