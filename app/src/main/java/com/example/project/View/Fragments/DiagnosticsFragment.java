@@ -588,6 +588,7 @@ public class DiagnosticsFragment extends BaseFragment implements SerialListener 
             @Override
             public void onResponse(Call<List<DiagnosticDataModel>> call, Response<List<DiagnosticDataModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    noData.setVisibility(View.GONE);
                     DiagnosticsAdapter adapter = new DiagnosticsAdapter(getContext(), response.body());
                     dataListView.setAdapter(adapter);
                 } else {
